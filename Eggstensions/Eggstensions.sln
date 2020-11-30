@@ -1,0 +1,18 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30711.63
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Eggstensions", "Eggstensions\Eggstensions.shproj", "{06C05C2E-74EE-4478-AEBC-C42BD57E993D}"
+EndProject
+Global
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		Eggstensions\Eggstensions.projitems*{06c05c2e-74ee-4478-aebc-c42bd57e993d}*SharedItemsImports = 13
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {11361BB8-9EB3-42EF-9F36-EDFFB4028439}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects Condition="'$(MSBuildVersion)' == '' Or '$(MSBuildVersion)' &lt; '16.0'">$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>06c05c2e-74ee-4478-aebc-c42bd57e993d</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>Eggstensions</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Bethesda\Actor.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Bethesda\AIProcess.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Bethesda\BipedAnim.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Bethesda\BipedObject.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Bethesda\BSDismemberSkinInstance.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Bethesda\BSFixedString.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Bethesda\BSGeometry.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Bethesda\BSSpinLock.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Bethesda\BSTArray\BSTArray.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Bethesda\BSTArray\IntPtr.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Bethesda\BSTArray\UInt32.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Bethesda\BSTSet.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Bethesda\BSTSetEntry.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Bethesda\Character.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Bethesda\Events.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Bethesda\ConsoleLog.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethods\Array.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Bethesda\GridArray.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Bethesda\GridCellArray.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Bethesda\Havok.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Bethesda\hkpAllRayHitTempCollector.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Bethesda\Main.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Math\Library\Matrix.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Math\Library\Matrix33.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Math\Library\Vector.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Math\Library\Vector3.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Math\Managed\Matrix.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Math\Unmanaged\Matrix.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Math\Unmanaged\Matrix33.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Math\Unmanaged\Vector.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Math\Unmanaged\Vector3.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Bethesda\NiAVObject.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Bethesda\NiBoneNames.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Bethesda\NiMatrix33.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Bethesda\NiNode.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Bethesda\NiObject.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Bethesda\NiPoint3.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Bethesda\NiRTTI.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Bethesda\NiSkinInstance.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Bethesda\NiTObjectArray.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Bethesda\PlayerCharacter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Bethesda\ProcessLists.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Bethesda\Sky.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TemporaryObject.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Bethesda\TES.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Bethesda\TESDataHandler.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Bethesda\TESFile.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Bethesda\TESFlora.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Bethesda\TESForm.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Bethesda\TESNPC.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Bethesda\TESObjectARMA.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Bethesda\TESObjectARMO.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Bethesda\TESObjectCELL.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Bethesda\TESObjectREFR.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Bethesda\TESObjectTREE.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Bethesda\TESProduceForm.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Bethesda\TESRace.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Bethesda\UI.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)VirtualObject.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="$(MSBuildThisFileDirectory)Bethesda\" />
+  </ItemGroup>
+</Project>

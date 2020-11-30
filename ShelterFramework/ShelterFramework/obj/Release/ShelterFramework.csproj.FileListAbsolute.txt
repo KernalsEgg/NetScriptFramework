@@ -1,0 +1,12 @@
+C:\Users\Daniel\source\repos\ShelterFramework\ShelterFramework\bin\Release\ShelterFramework.dll
+C:\Users\Daniel\source\repos\ShelterFramework\ShelterFramework\bin\Release\ShelterFramework.pdb
+C:\Users\Daniel\source\repos\ShelterFramework\ShelterFramework\bin\Release\NetScriptFramework.dll
+C:\Users\Daniel\source\repos\ShelterFramework\ShelterFramework\bin\Release\NetScriptFramework.SkyrimSE.dll
+C:\Users\Daniel\source\repos\ShelterFramework\ShelterFramework\bin\Release\NetScriptFramework.pdb
+C:\Users\Daniel\source\repos\ShelterFramework\ShelterFramework\bin\Release\NetScriptFramework.xml
+C:\Users\Daniel\source\repos\ShelterFramework\ShelterFramework\bin\Release\NetScriptFramework.SkyrimSE.pdb
+C:\Users\Daniel\source\repos\ShelterFramework\ShelterFramework\bin\Release\NetScriptFramework.SkyrimSE.xml
+C:\Users\Daniel\source\repos\ShelterFramework\ShelterFramework\obj\Release\ShelterFramework.csproj.CoreCompileInputs.cache
+C:\Users\Daniel\source\repos\ShelterFramework\ShelterFramework\obj\Release\ShelterFramework.csproj.CopyComplete
+C:\Users\Daniel\source\repos\ShelterFramework\ShelterFramework\obj\Release\ShelterFramework.dll
+C:\Users\Daniel\source\repos\ShelterFramework\ShelterFramework\obj\Release\ShelterFramework.pdb
