@@ -18,7 +18,6 @@
 			return (ActorBaseFlags)NetScriptFramework.Memory.ReadUInt32(npc + 0x38);
 		}
 
-		/// <summary>&lt;SkyrimSE.exe&gt; + 0x363000 (VID24221)</summary>
 		/// <param name = "npc">TESNPC</param>
 		/// <returns>TESRace</returns>
 		static public System.IntPtr GetRace(System.IntPtr npc)
@@ -48,7 +47,7 @@
 				return npcSkin;
 			}
 
-			var raceSkin = NetScriptFramework.Memory.ReadPointer(TESNPC.GetRace(npcSkin) + 0x58);
+			var raceSkin = NetScriptFramework.Memory.ReadPointer(TESNPC.GetRace(npc) + 0x58);
 			if (raceSkin == System.IntPtr.Zero) { throw new Eggceptions.NullException("raceSkin"); }
 			if (!TESForm.HasFormType(raceSkin, FormTypes.TESObjectARMO)) { throw new Eggceptions.Bethesda.FormTypeException("raceSkin"); }
 

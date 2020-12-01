@@ -6,7 +6,6 @@ namespace Eggstensions.Bethesda
 {
 	static public class Character
 	{
-		/// <summary>&lt;SkyrimSE.exe&gt; + 0x5FC880 (VID36745)</summary>
 		/// <param name="character">Character</param>
 		/// <param name="target">Character</param>
 		static public System.Boolean HasLineOfSight(System.IntPtr character, System.IntPtr target)
@@ -16,11 +15,8 @@ namespace Eggstensions.Bethesda
 			if (!TESForm.HasFormType(character, FormTypes.Character)) { throw new Eggceptions.Bethesda.ArgumentFormTypeException("character"); }
 			if (!TESForm.HasFormType(target, FormTypes.Character)) { throw new Eggceptions.Bethesda.ArgumentFormTypeException("target"); }
 
-			var functionAddress = NetScriptFramework.Main.GameInfo.GetAddressOf(36745);
-			if (functionAddress == System.IntPtr.Zero) { throw new Eggceptions.NullException("functionAddress"); }
-
 			// Character, Character, 3u
-			return NetScriptFramework.Memory.InvokeCdecl(functionAddress, character, target, 3u).ToBool();
+			return NetScriptFramework.Memory.InvokeCdecl(VIDS.Character.HasLineOfSight, character, target, 3u).ToBool();
 		}
 	}
 }

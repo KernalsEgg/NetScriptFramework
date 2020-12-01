@@ -74,8 +74,6 @@ namespace Eggstensions.Bethesda
 			if (reference1 == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("reference1"); }
 			if (reference2 == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("reference2"); }
 
-			// Throw an exception if the current worldspace of reference1 and reference2 does not match
-
 			(var x1, var y1, var z1) = TESObjectREFR.GetPosition(reference1);
 			(var x2, var y2, var z2) = TESObjectREFR.GetPosition(reference2);
 
@@ -91,7 +89,6 @@ namespace Eggstensions.Bethesda
 			return (FormTypes)VirtualObject.InvokeVTableThisCall(reference, 0xA8).ToUInt8();
 		}
 
-		/// <summary>&lt;SkyrimSE.exe&gt; + 0x131F60 (VID12192)</summary>
 		/// <param name = "reference">TESObjectREFR</param>
 		/// <returns>ObjectRefHandle</returns>
 		static public System.UInt32 GetHandleFromReference(System.IntPtr reference)
@@ -101,11 +98,7 @@ namespace Eggstensions.Bethesda
 			using (var allocation = NetScriptFramework.Memory.Allocate(0x10))
 			{
 				allocation.Zero();
-
-				var functionAddress = NetScriptFramework.Main.GameInfo.GetAddressOf(12192);
-				if (functionAddress == System.IntPtr.Zero) { throw new Eggceptions.NullException("functionAddress"); }
-
-				NetScriptFramework.Memory.InvokeCdecl(functionAddress, allocation.Address, reference);
+				NetScriptFramework.Memory.InvokeCdecl(VIDS.TESObjectREFR.GetHandleFromReference, allocation.Address, reference);
 
 				return NetScriptFramework.Memory.ReadUInt32(allocation.Address);
 			}
@@ -154,7 +147,12 @@ namespace Eggstensions.Bethesda
 		{
 			if (reference == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("reference"); }
 
-			return (TESObjectREFR.GetPositionX(reference), TESObjectREFR.GetPositionY(reference), TESObjectREFR.GetPositionZ(reference));
+			return
+				(
+					TESObjectREFR.GetPositionX(reference),
+					TESObjectREFR.GetPositionY(reference),
+					TESObjectREFR.GetPositionZ(reference)
+				);
 		}
 
 		/// <param name="reference">TESObjectREFR</param>
@@ -184,7 +182,6 @@ namespace Eggstensions.Bethesda
 			return NetScriptFramework.Memory.ReadFloat(reference + 0x5C);
 		}
 
-		/// <summary>&lt;SkyrimSE.exe&gt; + 0x2130F0 (VID16828)</summary>
 		/// <param name = "handle">ObjectRefHandle</param>
 		/// <returns>TESObjectREFR</returns>
 		static public System.IntPtr GetReferenceFromHandle(System.UInt32 handle)
@@ -196,10 +193,7 @@ namespace Eggstensions.Bethesda
 				allocation.Zero();
 				NetScriptFramework.Memory.WriteUInt32(allocation.Address, handle);
 
-				var functionAddress = NetScriptFramework.Main.GameInfo.GetAddressOf(16828);
-				if (functionAddress == System.IntPtr.Zero) { throw new Eggceptions.NullException("functionAddress"); }
-
-				NetScriptFramework.Memory.InvokeCdecl(functionAddress, allocation.Address, allocation.Address + 0x10);
+				NetScriptFramework.Memory.InvokeCdecl(VIDS.TESObjectREFR.GetReferenceFromHandle, allocation.Address, allocation.Address + 0x10);
 				var reference = NetScriptFramework.Memory.ReadPointer(allocation.Address + 0x10);
 				if (reference == System.IntPtr.Zero) { throw new Eggceptions.NullException("reference"); }
 
@@ -213,7 +207,12 @@ namespace Eggstensions.Bethesda
 		{
 			if (reference == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("reference"); }
 
-			return (TESObjectREFR.GetRotationX(reference), TESObjectREFR.GetRotationY(reference), TESObjectREFR.GetRotationZ(reference));
+			return
+				(
+					TESObjectREFR.GetRotationX(reference),
+					TESObjectREFR.GetRotationY(reference),
+					TESObjectREFR.GetRotationZ(reference)
+				);
 		}
 
 		/// <param name="reference">TESObjectREFR</param>
@@ -262,16 +261,12 @@ namespace Eggstensions.Bethesda
 			return false;
 		}
 
-		/// <summary>&lt;SkyrimSE.exe&gt; + 0x29A330 (VID19400)</summary>
 		/// <param name = "reference">TESObjectREFR</param>
 		static public System.Boolean IsCrimeToActivate(System.IntPtr reference)
 		{
 			if (reference == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("reference"); }
 
-			var functionAddress = NetScriptFramework.Main.GameInfo.GetAddressOf(19400);
-			if (functionAddress == System.IntPtr.Zero) { throw new Eggceptions.NullException("functionAddress"); }
-
-			return NetScriptFramework.Memory.InvokeCdecl(functionAddress, reference).ToBool();
+			return NetScriptFramework.Memory.InvokeCdecl(VIDS.TESObjectREFR.IsCrimeToActivate, reference).ToBool();
 		}
 
 		/// <param name="reference">TESObjectREFR</param>

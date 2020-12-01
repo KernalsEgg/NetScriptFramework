@@ -2,28 +2,20 @@
 {
 	static public class TES
 	{
-		/// <summary>&lt;SkyrimSE.exe&gt; + 0x1DB3E28 (VID501244)</summary>
 		static public System.UInt32 GridsToLoad
 		{
 			get
 			{
-				var settingPointer = NetScriptFramework.Main.GameInfo.GetAddressOf(501244); // SettingT<INISettingCollection>
-				if (settingPointer == System.IntPtr.Zero) { throw new Eggceptions.NullException("settingPointer"); }
-
-				return NetScriptFramework.Memory.ReadUInt32(settingPointer + 0x8);
+				return NetScriptFramework.Memory.ReadUInt32(VIDS.TES.GridsToLoad + 0x8); // SettingT<INISettingCollection>
 			}
 		}
 
-		/// <summary>&lt;SkyrimSE.exe&gt; + 0x2F26B20 (VID516923)</summary>
 		/// <returns>TES</returns>
 		static public System.IntPtr Instance
 		{
 			get
 			{
-				var instancePointer = NetScriptFramework.Main.GameInfo.GetAddressOf(516923);
-				if (instancePointer == System.IntPtr.Zero) { throw new Eggceptions.NullException("instancePointer"); }
-
-				var instance = NetScriptFramework.Memory.ReadPointer(instancePointer);
+				var instance = NetScriptFramework.Memory.ReadPointer(VIDS.TES.Instance);
 				if (instance == System.IntPtr.Zero) { throw new Eggceptions.NullException("instance"); }
 
 				return instance;
@@ -49,7 +41,7 @@
 				}
 				else
 				{
-					foreach (var loadedCell in new GridCellArray(GridCellArray.GetInstance(tes)))
+					foreach (var loadedCell in new GridCellArray(TES.GetGridCellArray(tes)))
 					{
 						if (TESObjectCELL.IsAttached(loadedCell))
 						{
@@ -71,6 +63,18 @@
 			if (tes == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("tes"); }
 
 			return NetScriptFramework.Memory.ReadPointer(tes + 0xC0);
+		}
+
+		/// <param name="tes">TES</param>
+		/// <returns>GridCellArray</returns>
+		static public System.IntPtr GetGridCellArray(System.IntPtr tes)
+		{
+			if (tes == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("tes"); }
+
+			var gridCellArray = NetScriptFramework.Memory.ReadPointer(tes + 0x78);
+			if (gridCellArray == System.IntPtr.Zero) { throw new Eggceptions.NullException("gridCellArray"); }
+
+			return gridCellArray;
 		}
 	}
 }

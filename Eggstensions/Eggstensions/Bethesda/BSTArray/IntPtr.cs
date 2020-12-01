@@ -76,12 +76,7 @@
 
 			public System.Boolean MoveNext()
 			{
-				while (++_index < _count)
-				{
-					return true;
-				}
-
-				return false;
+				return ++_index < _count;
 			}
 
 			public void Reset()

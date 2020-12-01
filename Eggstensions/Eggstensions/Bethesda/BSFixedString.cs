@@ -34,7 +34,6 @@
 
 
 
-		/// <summary>&lt;SkyrimSE.exe&gt; + 0xC28BF0 (VID67819)</summary>
 		static public NetScriptFramework.MemoryAllocation Initialize(System.String text)
 		{
 			if (System.String.IsNullOrWhiteSpace(text)) { throw new Eggceptions.ArgumentNullOrWhiteSpaceException("text"); }
@@ -42,28 +41,20 @@
 			var bytes = System.Text.Encoding.UTF8.GetBytes(text);
 			var padding = 0x8 - (bytes.Length % 0x8);
 
-			var functionAddress = NetScriptFramework.Main.GameInfo.GetAddressOf(67819);
-			if (functionAddress == System.IntPtr.Zero) { throw new Eggceptions.NullException("functionAddress"); }
-
 			var allocation = NetScriptFramework.Memory.Allocate(0x10 + bytes.Length + padding);
 			allocation.Zero();
 			NetScriptFramework.Memory.WriteBytes(allocation.Address + 0x10, bytes);
-
-			NetScriptFramework.Memory.InvokeCdecl(functionAddress, allocation.Address, allocation.Address + 0x10);
+			NetScriptFramework.Memory.InvokeCdecl(VIDS.BSFixedString.Initialize, allocation.Address, allocation.Address + 0x10);
 
 			return allocation;
 		}
 
-		/// <summary>&lt;SkyrimSE.exe&gt; + 0xC28D40 (VID67822)</summary>
 		/// <param name = "bsFixedString">BSFixedString</param>
 		static public void Release(System.IntPtr bsFixedString)
 		{
 			if (bsFixedString == null) { throw new Eggceptions.ArgumentNullException("bsFixedString"); }
 
-			var functionAddress = NetScriptFramework.Main.GameInfo.GetAddressOf(67822);
-			if (functionAddress == System.IntPtr.Zero) { throw new Eggceptions.NullException("functionAddress"); }
-
-			NetScriptFramework.Memory.InvokeCdecl(functionAddress, bsFixedString);
+			NetScriptFramework.Memory.InvokeCdecl(VIDS.BSFixedString.Release, bsFixedString);
 		}
 
 		/// <param name = "bsFixedString">BSFixedString</param>

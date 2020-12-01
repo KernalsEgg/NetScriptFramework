@@ -27,6 +27,7 @@
 
 
 
+		/// <summary>&lt;SkyrimSE.exe&gt; + 0x1D4E60 (VID15713)</summary>
 		private class Enumerator : System.Collections.Generic.IEnumerator<System.IntPtr>
 		{
 			readonly private System.Int32 _length;
@@ -80,17 +81,16 @@
 			{
 			}
 
-			/// <summary>&lt;SkyrimSE.exe&gt; + 0x1D4E60 (VID15713)</summary>
 			public System.Boolean MoveNext()
 			{
-				while (++_column < _length)
+				if (++_column < _length)
 				{
 					return true;
 				}
 
-				while (++_row < _length)
+				if (++_row < _length)
 				{
-					_column = -1;
+					_column = 0;
 					return true;
 				}
 
@@ -115,18 +115,6 @@
 			if (begin == System.IntPtr.Zero) { throw new Eggceptions.NullException("begin"); }
 
 			return begin;
-		}
-
-		/// <param name="tes">TES</param>
-		/// <returns>GridCellArray</returns>
-		static public System.IntPtr GetInstance(System.IntPtr tes)
-		{
-			if (tes == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("tes"); }
-
-			var instance = NetScriptFramework.Memory.ReadPointer(tes + 0x78);
-			if (instance == System.IntPtr.Zero) { throw new Eggceptions.NullException("instance"); }
-
-			return instance;
 		}
 	}
 }

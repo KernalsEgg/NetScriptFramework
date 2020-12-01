@@ -75,7 +75,6 @@
 			return (AIProcessLevels)(NetScriptFramework.Memory.ReadUInt8(process + 0x137));
 		}
 
-		/// <summary>&lt;SkyrimSE.exe&gt; + 0x67E430 (VID38870)</summary>
 		/// <param name = "process">AIProcess</param>
 		static public Update3DModelFlags GetUpdate3DModelFlags(System.IntPtr process)
 		{
@@ -89,7 +88,6 @@
 			return Update3DModelFlags.None;
 		}
 
-		/// <summary>&lt;SkyrimSE.exe&gt; + 0x67E410 (VID38869)</summary>
 		/// <param name = "process">AIProcess</param>
 		static public System.Boolean HasUpdate3DModelFlags(System.IntPtr process, Update3DModelFlags update3DModelFlags)
 		{
@@ -104,7 +102,6 @@
 			return false;
 		}
 
-		/// <summary>&lt;SkyrimSE.exe&gt; + 0x67E3B0 (VID38867)</summary>
 		/// <param name = "process">AIProcess</param>
 		static public void SetUpdate3DModelFlags(System.IntPtr process, Update3DModelFlags update3DModelFlags)
 		{

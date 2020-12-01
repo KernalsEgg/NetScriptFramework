@@ -70,7 +70,6 @@ namespace Eggstensions.Bethesda
 
 
 
-		/// <summary>&lt;SkyrimSE.exe&gt; + 0x218CE0 (VID16986), TESFlora::Activate</summary>
 		static public class ActivateFloraEvent
 		{
 			static private NetScriptFramework.Event<Events.ActivateFloraEventArguments> _activateFloraEvent;
@@ -86,7 +85,7 @@ namespace Eggstensions.Bethesda
 						"ActivateFlora",
 						new NetScriptFramework.EventHookParameters<Events.ActivateFloraEventArguments>
 						(
-							address: NetScriptFramework.Main.GameInfo.GetAddressOf(16986),
+							address: VIDS.Events.ActivateFlora,
 							replaceLength: 7,
 							includeLength: 7,
 							pattern: "48 81 C1 C8 00 00 00",
@@ -104,7 +103,6 @@ namespace Eggstensions.Bethesda
 			}
 		}
 
-		/// <summary>&lt;SkyrimSE.exe&gt; + 0x231580 (VID17636), TESObjectTREE::Activate</summary>
 		static public class ActivateTreeEvent
 		{
 			static private NetScriptFramework.Event<Events.ActivateTreeEventArguments> _activateTreeEvent;
@@ -120,7 +118,7 @@ namespace Eggstensions.Bethesda
 						"ActivateTree",
 						new NetScriptFramework.EventHookParameters<Events.ActivateTreeEventArguments>
 						(
-							address: NetScriptFramework.Main.GameInfo.GetAddressOf(17636),
+							address: VIDS.Events.ActivateTree,
 							replaceLength: 5,
 							includeLength: 5,
 							pattern: "48 89 5C 24 08",
@@ -138,7 +136,6 @@ namespace Eggstensions.Bethesda
 			}
 		}
 
-		/// <summary>&lt;SkyrimSE.exe&gt; + 0x2D7750 (VID21029), GameFunc__native::GetIsCreatureType</summary>
 		static public class GetIsCreatureTypeEvent
 		{
 			static private NetScriptFramework.Event<Events.GetIsCreatureTypeEventArguments> _getIsCreatureTypeEvent;
@@ -147,17 +144,15 @@ namespace Eggstensions.Bethesda
 			
 			static GetIsCreatureTypeEvent()
 			{
-				var functionAddress = NetScriptFramework.Main.GameInfo.GetAddressOf(21029);
-				if (functionAddress == System.IntPtr.Zero) { throw new Eggceptions.NullException("functionAddress"); }
-
+				var address = VIDS.Events.GetIsCreatureType;
 				var offset = 0x4;
 
-				if (!NetScriptFramework.Memory.VerifyBytes(functionAddress + offset, "8B 0D", false)) { throw new Eggceptions.FormatException("8B 0D"); }   // mov ecx, DWORD PTR [rip+0x0]
-				NetScriptFramework.Memory.WriteBytes(functionAddress + offset, new System.Byte[] { 0x8B, 0x05 }, true);                                     // mov eax, DWORD PTR [rip+0x0]
+				if (!NetScriptFramework.Memory.VerifyBytes(address + offset, "8B 0D", false)) { throw new Eggceptions.FormatException("8B 0D"); }   // mov ecx, DWORD PTR [rip+0x0]
+				NetScriptFramework.Memory.WriteBytes(address + offset, new System.Byte[] { 0x8B, 0x05 }, true);                                     // mov eax, DWORD PTR [rip+0x0]
 				offset += 0x6;
 
-				if (!NetScriptFramework.Memory.VerifyBytes(functionAddress + offset, "65 48 8B 04 25", false)) { throw new Eggceptions.FormatException("65 48 8B 04 25"); }	// mov rax, QWORD PTR gs:0x0
-				NetScriptFramework.Memory.WriteBytes(functionAddress + offset, new System.Byte[] { 0x65, 0x4C, 0x8B, 0x04, 0x25 }, true);                                   // mov r8, QWORD PTR gs:0x0
+				if (!NetScriptFramework.Memory.VerifyBytes(address + offset, "65 48 8B 04 25", false)) { throw new Eggceptions.FormatException("65 48 8B 04 25"); }	// mov rax, QWORD PTR gs:0x0
+				NetScriptFramework.Memory.WriteBytes(address + offset, new System.Byte[] { 0x65, 0x4C, 0x8B, 0x04, 0x25 }, true);                                   // mov r8, QWORD PTR gs:0x0
 				offset += 0x9;
 
 				/*
@@ -170,8 +165,8 @@ namespace Eggstensions.Bethesda
 					0x45, 0x8A, 0x80, 0x00, 0x06, 0x00, 0x00
 				};
 
-				if (!NetScriptFramework.Memory.VerifyBytes(functionAddress + offset, "BA 00060000", false)) { throw new Eggceptions.FormatException("BA 00060000"); } // mov edx, 0x600
-				NetScriptFramework.Memory.WriteBytes(functionAddress + offset, bytes, true);
+				if (!NetScriptFramework.Memory.VerifyBytes(address + offset, "BA 00060000", false)) { throw new Eggceptions.FormatException("BA 00060000"); } // mov edx, 0x600
+				NetScriptFramework.Memory.WriteBytes(address + offset, bytes, true);
 				offset += bytes.Length;
 
 				_getIsCreatureTypeEvent =
@@ -181,10 +176,12 @@ namespace Eggstensions.Bethesda
 						"GetIsCreatureType",
 						new NetScriptFramework.EventHookParameters<Events.GetIsCreatureTypeEventArguments>
 						(
-							address: functionAddress + offset,
+							address: address + offset,
 							replaceLength: 0x44 - offset,
 							includeLength: 0x0,
-							pattern: "00 48 8B 04 C8",
+							pattern:
+								"00" +
+								"48 8B 04 C8",
 							argFunc: ctx =>
 							{
 								// RCX: Subject			(argument 1)

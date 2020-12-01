@@ -9,10 +9,6 @@
 
 	static public class TESObjectCELL
 	{
-		// 0x80: BSTSet<NiPointer<TESObjectREFR*>>
-
-
-
 		/// <param name = "cell">TESObjectCELL</param>
 		/// <returns>mutable BSSpinLock</returns>
 		static public System.IntPtr GetCellLock(System.IntPtr cell)
@@ -30,17 +26,13 @@
 			return (CellStates)NetScriptFramework.Memory.ReadUInt8(cell + 0x44);
 		}
 
-		/// <summary>&lt;SkyrimSE.exe&gt; + 0x2654C0 (VID18536)</summary>
 		/// <param name="cell">TESObjectCELL</param>
 		/// <returns>bhkWorld</returns>
 		static public System.IntPtr GetHavokWorld(System.IntPtr cell)
 		{
 			if (cell == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("cell"); }
 
-			var functionAddress = NetScriptFramework.Main.GameInfo.GetAddressOf(18536);
-			if (functionAddress == System.IntPtr.Zero) { throw new Eggceptions.NullException("functionAddress"); }
-
-			var havokWorld = NetScriptFramework.Memory.InvokeCdecl(functionAddress, cell);
+			var havokWorld = NetScriptFramework.Memory.InvokeCdecl(VIDS.TESObjectCELL.GetHavokWorld, cell);
 			if (havokWorld == System.IntPtr.Zero) { throw new Eggceptions.NullException("havokWorld"); }
 
 			return havokWorld;
@@ -86,6 +78,7 @@
 			{
 				var references = new System.Collections.Generic.HashSet<System.IntPtr>();
 
+				// BSTSet<NiPointer<TESObjectREFR>>
 				foreach (var reference in new BSTSet(cell + 0x80))
 				{
 					if (TESForm.GetFormType(TESObjectREFR.GetBaseForm(reference.value)) == formType)
@@ -138,6 +131,18 @@
 			{
 				BSSpinLock.Unlock(cellLock);
 			}
+		}
+
+		/// <param name="cell">TESObjectCELL</param>
+		/// <returns>TESWorldSpace</returns>
+		static public System.IntPtr GetWorldSpace(System.IntPtr cell)
+		{
+			if (cell == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("cell"); }
+
+			var worldSpace = NetScriptFramework.Memory.ReadPointer(cell + 0x120);
+			if (worldSpace == System.IntPtr.Zero) { throw new Eggceptions.NullException("worldSpace"); }
+
+			return worldSpace;
 		}
 
 		/// <param name = "cell">TESObjectCELL</param>

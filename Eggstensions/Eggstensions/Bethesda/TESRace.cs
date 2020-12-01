@@ -2,7 +2,6 @@
 {
 	static public class TESRace
 	{
-		/// <summary>&lt;SkyrimSE.exe&gt; + 0x226D70 (VID17359)</summary>
 		/// <param name = "race">TESRace</param>
 		/// <returns>TESRace, System.IntPtr.Zero</returns>
 		static public System.IntPtr GetArmorRace(System.IntPtr race)

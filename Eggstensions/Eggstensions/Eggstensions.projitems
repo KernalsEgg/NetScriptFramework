@@ -16,6 +16,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)Bethesda\BSDismemberSkinInstance.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bethesda\BSFixedString.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bethesda\BSGeometry.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Bethesda\BSParticleShaderEmitter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Bethesda\BSParticleShaderProperty.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bethesda\BSSpinLock.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bethesda\BSTArray\BSTArray.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bethesda\BSTArray\IntPtr.cs" />
@@ -25,6 +27,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)Bethesda\Character.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bethesda\Events.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bethesda\ConsoleLog.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Bethesda\NiPointer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Bethesda\VIDS.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Bethesda\Precipitation.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethods\Array.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bethesda\GridArray.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bethesda\GridCellArray.cs" />
@@ -68,8 +73,5 @@
     <Compile Include="$(MSBuildThisFileDirectory)Bethesda\TESRace.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bethesda\UI.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)VirtualObject.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="$(MSBuildThisFileDirectory)Bethesda\" />
   </ItemGroup>
 </Project>

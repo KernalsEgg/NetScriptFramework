@@ -2,20 +2,30 @@
 {
 	static public class Sky
 	{
-		/// <summary>&lt;SkyrimSE.exe&gt; + 0x177790 (VID13789)</summary>
 		/// <returns>Sky</returns>
 		static public System.IntPtr Instance
 		{
 			get
 			{
-				var functionAddress = NetScriptFramework.Main.GameInfo.GetAddressOf(13789);
-				if (functionAddress == System.IntPtr.Zero) { throw new Eggceptions.NullException("functionAddress"); }
-
-				var instance = NetScriptFramework.Memory.InvokeCdecl(functionAddress);
+				var instance = NetScriptFramework.Memory.InvokeCdecl(VIDS.Sky.Instance);
 				if (instance == System.IntPtr.Zero) { throw new Eggceptions.NullException("instance"); }
 
 				return instance;
 			}
+		}
+
+
+
+		/// <param name="sky">Sky</param>
+		/// <returns>Precipitation</returns>
+		static public System.IntPtr GetPrecipitation(System.IntPtr sky)
+		{
+			if (sky == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("sky"); }
+
+			var precipitation = NetScriptFramework.Memory.ReadPointer(sky + 0xA0);
+			if (precipitation == System.IntPtr.Zero) { throw new Eggceptions.NullException("precipitation"); }
+
+			return precipitation;
 		}
 	}
 }

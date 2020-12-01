@@ -32,16 +32,12 @@
 			return NetScriptFramework.Memory.ReadString(VirtualObject.InvokeVTableThisCall(form, 0x190), false);
 		}
 
-		/// <summary>&lt;SkyrimSE.exe&gt; + 0x194230 (VID14461)</summary>
 		/// <returns>TESForm, System.IntPtr.Zero</returns>
 		static public System.IntPtr GetForm(System.UInt32 globalFormID)
 		{
 			// globalFormID
 
-			var functionAddress = NetScriptFramework.Main.GameInfo.GetAddressOf(14461);
-			if (functionAddress == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("functionAddress"); }
-
-			return NetScriptFramework.Memory.InvokeCdecl(functionAddress, globalFormID);
+			return NetScriptFramework.Memory.InvokeCdecl(VIDS.TESForm.GetForm, globalFormID);
 		}
 		
 		/// <param name = "form">TESForm</param>

@@ -2,16 +2,12 @@
 {
 	static public class ProcessLists
 	{
-		/// <summary>&lt;SkyrimSE.exe&gt; + 0x1EBEAD0 (VID514167)</summary>
 		/// <returns>ProcessLists</returns>
 		static public System.IntPtr Instance
 		{
 			get
 			{
-				var instancePointer = NetScriptFramework.Main.GameInfo.GetAddressOf(514167);
-				if (instancePointer == System.IntPtr.Zero) { throw new Eggceptions.NullException("instancePointer"); }
-
-				var instance = NetScriptFramework.Memory.ReadPointer(instancePointer);
+				var instance = NetScriptFramework.Memory.ReadPointer(VIDS.ProcessLists.Instance);
 				if (instance == System.IntPtr.Zero) { throw new Eggceptions.NullException("instance"); }
 
 				return instance;

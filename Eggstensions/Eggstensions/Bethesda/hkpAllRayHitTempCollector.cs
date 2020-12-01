@@ -54,30 +54,21 @@
 
 
 
-		/// <summary>&lt;SkyrimSE.exe&gt; + 0x1AFE40 (VID15062)</summary>
 		static public NetScriptFramework.MemoryAllocation Constructor() // Instance
 		{
 			var allocation = NetScriptFramework.Memory.Allocate(0x320); // dtor (VTable + 0x8)
 			allocation.Zero();
-
-			var functionAddress = NetScriptFramework.Main.GameInfo.GetAddressOf(15062);
-			if (functionAddress == System.IntPtr.Zero) { throw new Eggceptions.NullException("functionAddress"); }
-
-			NetScriptFramework.Memory.InvokeCdecl(functionAddress, allocation.Address);
+			NetScriptFramework.Memory.InvokeCdecl(VIDS.hkpAllRayHitTempCollector.Constructor, allocation.Address);
 
 			return allocation;
 		}
 
-		/// <summary>&lt;SkyrimSE.exe&gt; + 0x1B02A0 (VID15073)</summary>
 		/// <param name="collector">hkpAllRayHitTempCollector</param>
 		static public void Destructor(System.IntPtr collector)
 		{
 			if (collector == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("collector"); }
-			
-			var functionAddress = NetScriptFramework.Main.GameInfo.GetAddressOf(15073);
-			if (functionAddress == System.IntPtr.Zero) { throw new Eggceptions.NullException("functionAddress"); }
 
-			NetScriptFramework.Memory.InvokeCdecl(functionAddress, collector);
+			NetScriptFramework.Memory.InvokeCdecl(VIDS.hkpAllRayHitTempCollector.Destructor, collector);
 		}
 
 		/// <param name="collector">hkpAllRayHitTempCollector</param>

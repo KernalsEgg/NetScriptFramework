@@ -19,7 +19,6 @@
 			NiAVObject.SetNiAVFlags(niAVObject, niAVFlags | NiAVObject.GetNiAVFlags(niAVObject));
 		}
 
-		/// <summary>&lt;SkyrimSE.exe&gt; + 0xD41970 (VID74481)</summary>
 		/// <param name = "niAVObject">NiAVObject</param>
 		/// <param name = "bsFixedString">BSFixedString</param>
 		/// <returns>NiNode, System.IntPtr.Zero</returns>
@@ -28,10 +27,7 @@
 			if (niAVObject == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("niAVObject"); }
 			if (bsFixedString == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("bsFixedString"); }
 
-			var functionAddress = NetScriptFramework.Main.GameInfo.GetAddressOf(74481);
-			if (functionAddress == System.IntPtr.Zero) { throw new Eggceptions.NullException("functionAddress"); }
-
-			return NetScriptFramework.Memory.InvokeCdecl(functionAddress, niAVObject, bsFixedString, 1);
+			return NetScriptFramework.Memory.InvokeCdecl(VIDS.NiAVObject.GetBoneNodeByName, niAVObject, bsFixedString, 1);
 		}
 
 		/// <param name = "niAVObject">NiAVObject</param>

@@ -14,17 +14,13 @@
 			return process;
 		}
 
-		/// <summary>&lt;SkyrimSE.exe&gt; + 0x650DF0 (VID38404)</summary>
 		/// <param name = "actor">Actor</param>
 		/// <returns>MiddleHighProcessData</returns>
 		static public System.IntPtr Update3DModel(System.IntPtr actor)
 		{
 			if (actor == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("actor"); }
 
-			var functionAddress = NetScriptFramework.Main.GameInfo.GetAddressOf(38404);
-			if (functionAddress == System.IntPtr.Zero) { throw new Eggceptions.NullException("functionAddress"); }
-
-			var middleHighProcessData = NetScriptFramework.Memory.InvokeThisCall(Actor.GetProcess(actor), functionAddress, actor);
+			var middleHighProcessData = NetScriptFramework.Memory.InvokeThisCall(Actor.GetProcess(actor), VIDS.Actor.Update3DModel, actor);
 			if (middleHighProcessData == System.IntPtr.Zero) { throw new Eggceptions.NullException("middleHighProcessData"); }
 
 			return middleHighProcessData;

@@ -2,16 +2,12 @@
 {
 	static public class NiBoneNames
 	{
-		/// <summary>&lt;SkyrimSE.exe&gt; + 0x104AD0 (VID11308)</summary>
 		/// <returns>NiBoneNames</returns>
 		static public System.IntPtr Instance
 		{
 			get
 			{
-				var instancePointer = NetScriptFramework.Main.GameInfo.GetAddressOf(11308);
-				if (instancePointer == System.IntPtr.Zero) { throw new Eggceptions.NullException("instancePointer"); }
-
-				var instance = NetScriptFramework.Memory.InvokeCdecl(instancePointer);
+				var instance = NetScriptFramework.Memory.InvokeCdecl(VIDS.NiBoneNames.Instance);
 				if (instance == System.IntPtr.Zero) { throw new Eggceptions.NullException("instance"); }
 
 				return instance;

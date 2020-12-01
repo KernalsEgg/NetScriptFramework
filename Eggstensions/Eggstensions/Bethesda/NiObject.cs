@@ -10,14 +10,14 @@
 			if (niObject == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("niObject"); }
 			if (niRTTI == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("niRTTI"); }
 
-			var address = VirtualObject.InvokeVTableThisCall(niObject, 0x10);
-			if (address == System.IntPtr.Zero) { throw new Eggceptions.NullException("address"); }
+			var currentNiRTTI = VirtualObject.InvokeVTableThisCall(niObject, 0x10);
+			if (currentNiRTTI == System.IntPtr.Zero) { throw new Eggceptions.NullException("address"); }
 
-			while (address != niRTTI)
+			while (currentNiRTTI != niRTTI)
 			{
-				address = NetScriptFramework.Memory.ReadPointer(address + 0x8);
+				currentNiRTTI = NetScriptFramework.Memory.ReadPointer(currentNiRTTI + 0x8);
 
-				if (address == System.IntPtr.Zero)
+				if (currentNiRTTI == System.IntPtr.Zero)
 				{
 					return false;
 				}

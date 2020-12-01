@@ -75,17 +75,13 @@
 			return (CollisionLayers)(NetScriptFramework.Memory.ReadUInt32(havokObject + 0x2C) & 0x7F);
 		}
 
-		/// <summary>&lt;SkyrimSE.exe&gt; + 0xDAD060 (VID76160)</summary>
 		/// <param name="havokObject">HavokObject</param>
 		/// <returns>NiObject, System.IntPtr.Zero</returns>
 		static public System.IntPtr GetNiObjectFromHavokObject(System.IntPtr havokObject)
 		{
 			if (havokObject == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("havokObject"); }
 
-			var functionAddress = NetScriptFramework.Main.GameInfo.GetAddressOf(76160);
-			if (functionAddress == System.IntPtr.Zero) { throw new Eggceptions.NullException("functionAddress"); }
-
-			return NetScriptFramework.Memory.InvokeCdecl(functionAddress, havokObject);
+			return NetScriptFramework.Memory.InvokeCdecl(VIDS.Havok.GetNiObjectFromHavokObject, havokObject);
 		}
 	}
 }
