@@ -65,13 +65,13 @@ namespace ShelterFramework
 
 
 
-		static private System.String _messageBox =
+		readonly static private System.String _messageBox =
 			"Shelter Framework has thrown an exception." +
 			"\nDetails are logged to Data\\NetScriptFramework\\NetScriptFramework.log.txt.";
 
 
 
-		static internal CollisionLayers[] _collisionLayers = new CollisionLayers[]
+		readonly static internal CollisionLayers[] _collisionLayers = new CollisionLayers[]
 		{
 			CollisionLayers.AnimStatic,
 			CollisionLayers.Ground,
@@ -79,6 +79,12 @@ namespace ShelterFramework
 			CollisionLayers.Terrain,
 			CollisionLayers.Trees
 		};
+
+
+
+		readonly static private System.Single _rayCastLength = 2048.0f;
+
+
 
 		static internal Settings _settings;
 
@@ -89,7 +95,7 @@ namespace ShelterFramework
 		{
 			if (arguments == null) { throw new Eggceptions.ArgumentNullException("arguments"); }
 
-			NetScriptFramework.Main.Log.AppendLine("OnGetIsCreatureType, name = " + NetScriptFramework.Memory.ReadString(TESForm.GetName(TESObjectREFR.GetBaseForm(arguments.Subject)), false) + ", subject = " + arguments.Subject.ToString("X8") + ", distance = " + TESObjectREFR.GetDistanceBetween(PlayerCharacter.Instance, arguments.Subject).ToString("0") + ", argument1 = " + arguments.Argument1);
+			NetScriptFramework.Main.Log.AppendLine("name = " + NetScriptFramework.Memory.ReadString(TESForm.GetName(TESObjectREFR.GetBaseForm(arguments.Subject)), false) + ", address = " + arguments.Subject.ToString("X8") + ", distance = " + TESObjectREFR.GetDistanceBetween(PlayerCharacter.Instance, arguments.Subject).ToString("0") + ", argument1 = " + arguments.Argument1);
 
 			try
 			{
@@ -111,7 +117,39 @@ namespace ShelterFramework
 		{
 			if (reference == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("reference"); }
 
-			return TESObjectREFR.IsHit(reference, TESObjectREFR.GetLookAtPosition(reference), (0.0f, 0.0f, 2048.0f), _collisionLayers);
+			var velocity = GetPrecipitationVelocity();
+
+			if (velocity == (0.0f, 0.0f, 0.0f))
+			{
+				velocity = (0.0f, 0.0f, _rayCastLength);
+			}
+			else
+			{
+				var multiplier = (float)System.Math.Sqrt((_rayCastLength * _rayCastLength) / ((velocity.x * velocity.x) + (velocity.y * velocity.y) + (velocity.z * velocity.z)));
+				velocity = (-velocity.x * multiplier, -velocity.y * multiplier, -velocity.z * multiplier);
+			}
+
+			NetScriptFramework.Main.Log.AppendLine("velocty = " + velocity);
+
+			return TESObjectREFR.IsHit(reference, TESObjectREFR.GetLookAtPosition(reference), velocity, _collisionLayers);
+		}
+
+		static private (System.Single x, System.Single y, System.Single z) GetPrecipitationVelocity()
+		{
+			var currentPrecipitation = Precipitation.GetCurrentPrecipitation(Sky.GetPrecipitation(Sky.Instance));
+			if (currentPrecipitation == System.IntPtr.Zero) { return (0.0f, 0.0f, 0.0f); }
+			if (NiAVObject.HasNiAVFlags(currentPrecipitation, NiAVFlags.Hidden)) { return (0.0f, 0.0f, 0.0f); }
+			if (!NiObject.HasNiRTTI(currentPrecipitation, NiRTTI.BSGeometry)) { throw new Eggceptions.Bethesda.RunTimeTypeInformationException("currentPrecipitation"); }
+
+			var properties = BSGeometry.GetProperties(currentPrecipitation);
+			if (properties == System.IntPtr.Zero) { return (0.0f, 0.0f, 0.0f); }
+			if (!NiObject.HasNiRTTI(properties, NiRTTI.BSParticleShaderProperty)) { throw new Eggceptions.Bethesda.RunTimeTypeInformationException("properties"); }
+
+			var emitter = BSParticleShaderProperty.GetParticleShaderEmitter(properties);
+			if (emitter == System.IntPtr.Zero) { return (0.0f, 0.0f, 0.0f); }
+			// RTTI
+
+			return BSParticleShaderCubeEmitter.GetVelocity(emitter);
 		}
 	}
 }

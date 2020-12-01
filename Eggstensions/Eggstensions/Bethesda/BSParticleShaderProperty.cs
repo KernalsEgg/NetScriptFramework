@@ -8,7 +8,7 @@
 		{
 			if (bsParticleShaderProperty == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("bsParticleShaderProperty"); }
 
-			return NetScriptFramework.Memory.ReadPointer(bsParticleShaderProperty);
+			return NetScriptFramework.Memory.ReadPointer(bsParticleShaderProperty + 0x190);
 		}
 	}
 }

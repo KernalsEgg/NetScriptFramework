@@ -16,12 +16,10 @@
     <Compile Include="$(MSBuildThisFileDirectory)Bethesda\BSDismemberSkinInstance.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bethesda\BSFixedString.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bethesda\BSGeometry.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Bethesda\BSParticleShaderEmitter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Bethesda\BSParticleShaderCubeEmitter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bethesda\BSParticleShaderProperty.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bethesda\BSSpinLock.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Bethesda\BSTArray\BSTArray.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Bethesda\BSTArray\IntPtr.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Bethesda\BSTArray\UInt32.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Bethesda\BSTArray.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bethesda\BSTSet.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bethesda\BSTSetEntry.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bethesda\Character.cs" />

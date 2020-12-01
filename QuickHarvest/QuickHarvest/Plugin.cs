@@ -61,11 +61,13 @@ namespace QuickHarvest
 
 
 
-		static private System.Int32 _harvesting = 0;
-
-		static private System.String _messageBox =
+		readonly static private System.String _messageBox =
 			"Quick Harvest has thrown an exception." +
 			"\nDetails are logged to Data\\NetScriptFramework\\NetScriptFramework.log.txt.";
+
+
+
+		static private System.Int32 _harvesting = 0;
 
 
 

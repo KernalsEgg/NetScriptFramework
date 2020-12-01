@@ -35,7 +35,7 @@
 
 			var armorAddonAdditionalRaces = TESObjectARMA.GetAdditionalRaces(armorAddon); // BSTArray<TESRace*, BSTArrayHeapAllocator>
 
-			foreach (var armorAddonAdditionalRace in new BSTArray.IntPtr(armorAddonAdditionalRaces))
+			foreach (var armorAddonAdditionalRace in BSTArray.IntPtr(armorAddonAdditionalRaces))
 			{
 				if (!TESForm.HasFormType(armorAddonAdditionalRace, FormTypes.TESRace)) { throw new Eggceptions.Bethesda.FormTypeException("armorAddonAdditionalRace"); }
 

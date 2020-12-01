@@ -38,7 +38,7 @@
 		}
 
 		/// <param name = "bipedObject">BipedObject</param>
-		/// <returns>NiPointer&lt;NiAVObject&gt;, System.IntPtr.Zero</returns>
+		/// <returns>NiAVObject, System.IntPtr.Zero</returns>
 		static public System.IntPtr GetObject(System.IntPtr bipedObject)
 		{
 			if (bipedObject == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("bipedObject"); }

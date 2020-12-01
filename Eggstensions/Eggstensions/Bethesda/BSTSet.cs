@@ -17,95 +17,27 @@
 
 		public System.Collections.Generic.IEnumerator<(System.IntPtr value, System.IntPtr next)> GetEnumerator()
 		{
-			return new Enumerator(BSTSet.GetBegin(Address), BSTSet.GetCapacity(Address));
+			var bstSet = Address;
+			var begin = BSTSet.GetBegin(bstSet);
+			var capacity = BSTSet.GetCapacity(bstSet);
+
+			for (var i = 0; i < capacity; i++)
+			{
+				var bstSetEntry = begin + 0x10 * i;
+				
+				var next = BSTSetEntry.GetNext(bstSetEntry);
+				if (next == System.IntPtr.Zero) { continue; }
+
+				var value = BSTSetEntry.GetValue(bstSetEntry);
+				if (value == System.IntPtr.Zero) { continue; }
+
+				yield return (value, next);
+			}
 		}
 
 		System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
 		{
 			return GetEnumerator();
-		}
-
-
-
-		private class Enumerator : System.Collections.Generic.IEnumerator<(System.IntPtr value, System.IntPtr next)>
-		{
-			readonly private System.Int32 _capacity;
-
-			readonly private System.IntPtr _begin;
-
-
-
-			private System.Int32 _index;
-
-			private System.IntPtr _next;
-
-			private System.IntPtr _value;
-
-
-
-			public Enumerator(System.IntPtr begin, System.Int32 capacity)
-			{
-				if (begin == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("begin"); }
-				if (capacity < 0) { throw new Eggceptions.ArgumentOutOfRangeException("capacity"); }
-
-				_begin = begin;
-				_capacity = capacity;
-
-				Reset();
-			}
-
-
-
-			public (System.IntPtr value, System.IntPtr next) Current
-			{
-				get
-				{
-					return (_value, _next);
-				}
-			}
-
-			object System.Collections.IEnumerator.Current
-			{
-				get
-				{
-					return Current;
-				}
-			}
-
-
-
-			public void Dispose()
-			{
-			}
-
-			public System.Boolean MoveNext()
-			{
-				while (++_index < _capacity)
-				{
-					var address = _begin + 0x10 * _index;
-
-					var next = BSTSetEntry.GetNext(address);
-					if (next == System.IntPtr.Zero) { continue; }
-
-					var value = BSTSetEntry.GetValue(address);
-					if (value == System.IntPtr.Zero) { continue; }
-
-					_next = next;
-					_value = value;
-
-					return true;
-				}
-
-				return false;
-			}
-
-			public void Reset()
-			{
-				_index = -1;
-
-//				_next = System.IntPtr.Zero;
-//				_value = System.IntPtr.Zero;
-			}
 		}
 
 

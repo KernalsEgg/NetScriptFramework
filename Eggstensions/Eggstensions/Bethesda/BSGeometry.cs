@@ -3,7 +3,7 @@
 	static public class BSGeometry
 	{
 		/// <param name="bsGeometry">BSGeometry</param>
-		/// <returns>NiPointer&lt;NiProperty&gt;, System.IntPtr.Zero</returns>
+		/// <returns>NiProperty, System.IntPtr.Zero</returns>
 		static public System.IntPtr GetProperties(System.IntPtr bsGeometry)
 		{
 			if (bsGeometry == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("bsGeometry"); }
@@ -12,7 +12,7 @@
 		}
 		
 		/// <param name = "bsGeometry">BSGeometry</param>
-		/// <returns>NiPointer&lt;NiSkinInstance&gt;, System.IntPtr.Zero</returns>
+		/// <returns>NiSkinInstance, System.IntPtr.Zero</returns>
 		static public System.IntPtr GetSkin(System.IntPtr bsGeometry)
 		{
 			if (bsGeometry == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("bsGeometry"); }

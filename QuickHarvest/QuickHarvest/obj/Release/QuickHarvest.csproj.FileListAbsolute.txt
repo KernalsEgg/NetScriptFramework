@@ -1,0 +1,12 @@
+C:\Users\Daniel\source\repos\QuickHarvest\QuickHarvest\obj\Release\QuickHarvest.csproj.CoreCompileInputs.cache
+C:\Users\Daniel\source\repos\QuickHarvest\QuickHarvest\bin\Release\QuickHarvest.dll
+C:\Users\Daniel\source\repos\QuickHarvest\QuickHarvest\bin\Release\QuickHarvest.pdb
+C:\Users\Daniel\source\repos\QuickHarvest\QuickHarvest\bin\Release\NetScriptFramework.dll
+C:\Users\Daniel\source\repos\QuickHarvest\QuickHarvest\bin\Release\NetScriptFramework.SkyrimSE.dll
+C:\Users\Daniel\source\repos\QuickHarvest\QuickHarvest\bin\Release\NetScriptFramework.pdb
+C:\Users\Daniel\source\repos\QuickHarvest\QuickHarvest\bin\Release\NetScriptFramework.xml
+C:\Users\Daniel\source\repos\QuickHarvest\QuickHarvest\bin\Release\NetScriptFramework.SkyrimSE.pdb
+C:\Users\Daniel\source\repos\QuickHarvest\QuickHarvest\bin\Release\NetScriptFramework.SkyrimSE.xml
+C:\Users\Daniel\source\repos\QuickHarvest\QuickHarvest\obj\Release\QuickHarvest.csproj.CopyComplete
+C:\Users\Daniel\source\repos\QuickHarvest\QuickHarvest\obj\Release\QuickHarvest.dll
+C:\Users\Daniel\source\repos\QuickHarvest\QuickHarvest\obj\Release\QuickHarvest.pdb

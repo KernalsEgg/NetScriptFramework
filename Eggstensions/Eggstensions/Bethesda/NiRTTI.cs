@@ -1,8 +1,36 @@
 ﻿namespace Eggstensions.Bethesda
 {
 	/// <summary>Offsets_NiRTTI.h</summary>
-	static public class NiRTTI
+	public class NiRTTI : System.Collections.Generic.IEnumerable<System.IntPtr>
 	{
+		public System.IntPtr Address { get; }
+
+
+
+		public NiRTTI(System.IntPtr niRTTI)
+		{
+			if (niRTTI == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("niRTTI"); }
+
+			Address = niRTTI;
+		}
+
+
+
+		public System.Collections.Generic.IEnumerator<System.IntPtr> GetEnumerator()
+		{
+			for (var niRTTI = Address; niRTTI != System.IntPtr.Zero; niRTTI = NetScriptFramework.Memory.ReadPointer(niRTTI + 0x8))
+			{
+				yield return niRTTI;
+			}
+		}
+
+		System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+		{
+			return GetEnumerator();
+		}
+
+
+
 		static NiRTTI()
 		{
 			_bsDismemberSkinInstance =	NetScriptFramework.Main.GameInfo.GetAddressOf(523941);
