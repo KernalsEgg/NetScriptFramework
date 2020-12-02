@@ -22,38 +22,6 @@
 			}
 		}
 
-		/// <returns>System.Collections.Generic.HashSet&lt;TESObjectCELL&gt;</returns>
-		static public System.Collections.Generic.HashSet<System.IntPtr> LoadedCells
-		{
-			get
-			{
-				var loadedCells = new System.Collections.Generic.HashSet<System.IntPtr>();
-
-				var tes = TES.Instance;
-				var currentInteriorCell = TES.GetCurrentInteriorCell(tes);
-
-				if (currentInteriorCell != System.IntPtr.Zero)
-				{
-					if (TESObjectCELL.IsAttached(currentInteriorCell))
-					{
-						loadedCells.Add(currentInteriorCell);
-					}
-				}
-				else
-				{
-					foreach (var loadedCell in new GridCellArray(TES.GetGridCellArray(tes)))
-					{
-						if (TESObjectCELL.IsAttached(loadedCell))
-						{
-							loadedCells.Add(loadedCell);
-						}
-					}
-				}
-
-				return loadedCells;
-			}
-		}
-
 
 
 		/// <param name="tes">TES</param>
@@ -62,7 +30,11 @@
 		{
 			if (tes == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("tes"); }
 
-			return NetScriptFramework.Memory.ReadPointer(tes + 0xC0);
+			var currentInteriorCell = NetScriptFramework.Memory.ReadPointer(tes + 0xC0);
+			if (currentInteriorCell == System.IntPtr.Zero) { return System.IntPtr.Zero; }
+			if (!TESObjectCELL.IsAttached(currentInteriorCell)) { throw new Eggceptions.Bethesda.DetachedCellException("currentInteriorCell"); }
+
+			return currentInteriorCell;
 		}
 
 		/// <param name="tes">TES</param>
@@ -75,6 +47,30 @@
 			if (gridCellArray == System.IntPtr.Zero) { throw new Eggceptions.NullException("gridCellArray"); }
 
 			return gridCellArray;
+		}
+
+		/// <returns>System.Collections.Generic.IEnumerable&lt;TESObjectCELL&gt;</returns>
+		static public System.Collections.Generic.IEnumerable<System.IntPtr> GetLoadedCells(System.IntPtr tes)
+		{
+			if (tes == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("tes"); }
+
+			var currentInteriorCell = TES.GetCurrentInteriorCell(tes);
+
+			if (currentInteriorCell != System.IntPtr.Zero)
+			{
+				return _getCurrentInteriorCell();
+			}
+			else
+			{
+				return new GridCellArray(TES.GetGridCellArray(tes));
+			}
+
+
+
+			System.Collections.Generic.IEnumerable<System.IntPtr> _getCurrentInteriorCell()
+			{
+				yield return currentInteriorCell;
+			}
 		}
 	}
 }

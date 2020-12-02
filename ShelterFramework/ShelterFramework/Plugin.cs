@@ -50,7 +50,7 @@ namespace ShelterFramework
 
 		// Exceptions
 		//	GetParentCell: The Subject is not in a loaded cell
-		//	GetHavokWorld: The Subject is not in the loaded world
+		//	GetHavokWorld: The Subject is not in the loaded world space
 		override protected System.Boolean Initialize(System.Boolean loadedAny)
 		{
 			// loadedAny
@@ -65,13 +65,7 @@ namespace ShelterFramework
 
 
 
-		readonly static private System.String _messageBox =
-			"Shelter Framework has thrown an exception." +
-			"\nDetails are logged to Data\\NetScriptFramework\\NetScriptFramework.log.txt.";
-
-
-
-		readonly static internal CollisionLayers[] _collisionLayers = new CollisionLayers[]
+		readonly static private CollisionLayers[] _collisionLayers = new CollisionLayers[]
 		{
 			CollisionLayers.AnimStatic,
 			CollisionLayers.Ground,
@@ -80,14 +74,16 @@ namespace ShelterFramework
 			CollisionLayers.Trees
 		};
 
+		readonly static private System.String _messageBox =
+			"Shelter Framework has thrown an exception." +
+			"\nDetails are logged to Data\\NetScriptFramework\\NetScriptFramework.log.txt.";
 
 
-		readonly static private System.Single _rayCastLength = 2048.0f;
 
+		static private Settings _settings;
 
-
-		static internal Settings _settings;
-
+		static private System.Collections.Generic.Dictionary<System.IntPtr, (System.Single lastUpdate, System.Boolean isSheltered)> _isShelteredCache =
+			new System.Collections.Generic.Dictionary<System.IntPtr, (System.Single, System.Boolean)>();
 
 
 
@@ -95,12 +91,10 @@ namespace ShelterFramework
 		{
 			if (arguments == null) { throw new Eggceptions.ArgumentNullException("arguments"); }
 
-			NetScriptFramework.Main.Log.AppendLine("name = " + NetScriptFramework.Memory.ReadString(TESForm.GetName(TESObjectREFR.GetBaseForm(arguments.Subject)), false) + ", address = " + arguments.Subject.ToString("X8") + ", distance = " + TESObjectREFR.GetDistanceBetween(PlayerCharacter.Instance, arguments.Subject).ToString("0") + ", argument1 = " + arguments.Argument1);
-
 			try
 			{
 				var detectShelter = System.Convert.ToBoolean(arguments.Argument1);
-				var isSheltered = Plugin.IsSheltered(arguments.Subject);
+				var isSheltered = Plugin.IsShelteredCache(arguments.Subject);
 
 				arguments.Text = detectShelter ? "Is Sheltered >> %0.2f" : "Is Exposed >> %0.2f";
 				arguments.Result = (isSheltered == detectShelter) ? 1.0d : 0.0d;
@@ -113,25 +107,47 @@ namespace ShelterFramework
 		}
 
 		/// <param name="reference">TESObjectREFR</param>
+		static private System.Boolean IsShelteredCache(System.IntPtr reference)
+		{
+			if (reference == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("reference"); }
+
+			var lastUpdate = Actor.GetLastUpdate(reference);
+
+			if (!_isShelteredCache.TryGetValue(reference, out var isShelteredCachedValue) || lastUpdate != isShelteredCachedValue.lastUpdate)
+			{
+				_isShelteredCache[reference] = (lastUpdate, Plugin.IsSheltered(reference));
+			}
+
+			return _isShelteredCache[reference].isSheltered;
+		}
+
+		/// <param name="reference">TESObjectREFR</param>
 		static private System.Boolean IsSheltered(System.IntPtr reference)
 		{
 			if (reference == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("reference"); }
 
-			var velocity = GetPrecipitationVelocity();
+			var ray = GetPrecipitationVelocity();
 
-			if (velocity == (0.0f, 0.0f, 0.0f))
+			if (ray == (0.0f, 0.0f, 0.0f))
 			{
-				velocity = (0.0f, 0.0f, _rayCastLength);
+				ray = (0.0f, 0.0f, _settings.RayCastLength);
 			}
 			else
 			{
-				var multiplier = (float)System.Math.Sqrt((_rayCastLength * _rayCastLength) / ((velocity.x * velocity.x) + (velocity.y * velocity.y) + (velocity.z * velocity.z)));
-				velocity = (-velocity.x * multiplier, -velocity.y * multiplier, -velocity.z * multiplier);
+				var multiplier = (float)System.Math.Sqrt((_settings.RayCastLength * _settings.RayCastLength) / ((ray.x * ray.x) + (ray.y * ray.y) + (ray.z * ray.z)));
+				ray = (-ray.x * multiplier, -ray.y * multiplier, -ray.z * multiplier);
 			}
 
-			NetScriptFramework.Main.Log.AppendLine("velocty = " + velocity);
+			NetScriptFramework.Main.Log.AppendLine
+			(
+				"name = " + TESForm.GetName(TESObjectREFR.GetBaseForm(reference)) +
+				", address = " + reference.ToString("X8") +
+				", distance = " + TESObjectREFR.GetDistanceBetween(PlayerCharacter.Instance, reference).ToString("0") +
+				", lastUpdate = " + Actor.GetLastUpdate(reference).ToString("0.00") +
+				", ray = (" + ray.x.ToString("0") + ", " + ray.y.ToString("0") + ", " + ray.z.ToString("0") + ")"
+			);
 
-			return TESObjectREFR.IsHit(reference, TESObjectREFR.GetLookAtPosition(reference), velocity, _collisionLayers);
+			return TESObjectREFR.IsHit(reference, TESObjectREFR.GetLookAtPosition(reference), ray, _collisionLayers);
 		}
 
 		static private (System.Single x, System.Single y, System.Single z) GetPrecipitationVelocity()

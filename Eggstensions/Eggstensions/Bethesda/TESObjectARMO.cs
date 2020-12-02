@@ -42,21 +42,20 @@
 			if (armor == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("armor"); }
 			if (race == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("race"); }
 
-			var usableArmorAddons = new System.Collections.Generic.List<System.IntPtr>();
+			var armorAddons = new System.Collections.Generic.List<System.IntPtr>();
 
-			var armorAddons = TESObjectARMO.GetArmorAddons(armor); // BSTArray<TESObjectARMA*, BSTArrayHeapAllocator>
-
-			foreach (var armorAddon in BSTArray.IntPtr(armorAddons))
+			// BSTArray<TESObjectARMA*, BSTArrayHeapAllocator>
+			foreach (var armorAddon in BSTArray.IntPtr(TESObjectARMO.GetArmorAddons(armor)))
 			{
 				if (!TESForm.HasFormType(armorAddon, FormTypes.TESObjectARMA)) { throw new Eggceptions.Bethesda.FormTypeException("armorAddon"); }
 
 				if (TESRace.CanUseArmorAddon(race, armorAddon))
 				{
-					usableArmorAddons.Add(armorAddon);
+					armorAddons.Add(armorAddon);
 				}
 			}
 
-			return usableArmorAddons;
+			return armorAddons;
 		}
 
 		/// <param name = "armor">TESObjectARMO</param>

@@ -286,7 +286,7 @@ namespace Eggstensions.Bethesda
 			return TESForm.HasFormFlags(reference, (System.UInt32)TESObjectREFR.RecordFlags.Harvested);
 		}
 
-		/// <param name="cell">TESObjectCELL</param>
+		/// <param name="reference">TESObjectREFR</param>
 		static public System.Boolean IsHit(System.IntPtr reference, (System.Single x, System.Single y, System.Single z) origin, (System.Single x, System.Single y, System.Single z) ray, params CollisionLayers[] collisionLayers)
 		{
 			if (reference == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("reference"); }
@@ -295,9 +295,8 @@ namespace Eggstensions.Bethesda
 			if (collisionLayers == null) { throw new Eggceptions.ArgumentNullException("collisionLayers"); }
 
 			var cell = TESObjectREFR.GetParentCell(reference);
-			var hits = TESObjectCELL.Raycast(cell, origin, ray);
 
-			foreach (var hit in hits)
+			foreach (var hit in TESObjectCELL.Raycast(cell, origin, ray))
 			{
 				var havokObject = hit.HavokObject;
 				var niObject = Havok.GetNiObjectFromHavokObject(havokObject);
@@ -309,6 +308,50 @@ namespace Eggstensions.Bethesda
 					if (owner != System.IntPtr.Zero)
 					{
 						if (owner == reference)
+						{
+							continue;
+						}
+					}
+				}
+
+				var collisionLayer = Havok.GetCollisionLayer(havokObject);
+
+				for (var i = 0; i < collisionLayers.Length; i++)
+				{
+					if (collisionLayer == collisionLayers[i])
+					{
+						return true;
+					}
+				}
+			}
+
+			return false;
+		}
+
+		/// <param name="reference">TESObjectREFR</param>
+		/// <param name="target">TESObjectREFR</param>
+		static public System.Boolean IsHit(System.IntPtr reference, System.IntPtr target, (System.Single x, System.Single y, System.Single z) from, (System.Single x, System.Single y, System.Single z) to, params CollisionLayers[] collisionLayers)
+		{
+			if (reference == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("reference"); }
+			if (target == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("target"); }
+			// from
+			// to
+			if (collisionLayers == null) { throw new Eggceptions.ArgumentNullException("collisionLayers"); }
+
+			var cell = TESObjectREFR.GetParentCell(reference);
+
+			foreach (var hit in TESObjectCELL.Raycast(cell, from, (to.x - from.x, to.y - from.y, to.z - from.z)))
+			{
+				var havokObject = hit.HavokObject;
+				var niObject = Havok.GetNiObjectFromHavokObject(havokObject);
+
+				if (niObject != System.IntPtr.Zero)
+				{
+					var owner = NiAVObject.GetOwnerRecursive(niObject);
+
+					if (owner != System.IntPtr.Zero)
+					{
+						if (owner == reference || owner == target)
 						{
 							continue;
 						}

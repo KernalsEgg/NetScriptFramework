@@ -51,6 +51,7 @@
 			{
 				var references = new System.Collections.Generic.HashSet<System.IntPtr>();
 
+				// BSTSet<NiPointer<TESObjectREFR>>
 				foreach (var reference in new BSTSet(cell + 0x80))
 				{
 					references.Add(reference.value);
@@ -78,7 +79,6 @@
 			{
 				var references = new System.Collections.Generic.HashSet<System.IntPtr>();
 
-				// BSTSet<NiPointer<TESObjectREFR>>
 				foreach (var reference in new BSTSet(cell + 0x80))
 				{
 					if (TESForm.GetFormType(TESObjectREFR.GetBaseForm(reference.value)) == formType)
@@ -161,9 +161,7 @@
 			// ray
 			if (collisionLayers == null) { throw new Eggceptions.ArgumentNullException("collisionLayers"); }
 
-			var hits = TESObjectCELL.Raycast(cell, origin, ray);
-
-			foreach (var hit in hits)
+			foreach (var hit in TESObjectCELL.Raycast(cell, origin, ray))
 			{
 				var collisionLayer = Havok.GetCollisionLayer(hit.HavokObject);
 
@@ -179,6 +177,7 @@
 			return false;
 		}
 
+		/// <summary>hkpWorldRayCastInput</summary>
 		/// <param name="cell">TESObjectCELL</param>
 		static public System.Collections.Generic.List<RaycastHit> Raycast(System.IntPtr cell, (System.Single x, System.Single y, System.Single z) origin, (System.Single x, System.Single y, System.Single z) ray)
 		{
@@ -192,7 +191,6 @@
 
 				var havokWorldScale = Havok.HavokWorldScale;
 
-				// hkpWorldRayCastInput
 				NetScriptFramework.Memory.WriteFloat(allocation.Address, havokWorldScale * origin.x);
 				NetScriptFramework.Memory.WriteFloat(allocation.Address + 0x4, havokWorldScale * origin.y);
 				NetScriptFramework.Memory.WriteFloat(allocation.Address + 0x8, havokWorldScale * origin.z);

@@ -18,17 +18,18 @@
 		public System.Collections.Generic.IEnumerator<System.IntPtr> GetEnumerator()
 		{
 			var gridCellArray = Address;
-			var begin = GridCellArray.GetBegin(gridCellArray);
 			var length = GridArray.GetLength(gridCellArray);
+			var begin = GridCellArray.GetBegin(gridCellArray);
 
 			for (var row = 0; row < length; row++)
 			{
 				for (var column = 0; column < length; column++)
 				{
-					var cell = NetScriptFramework.Memory.ReadPointer(begin + 0x8 * (length * row + column));
-					if (cell == System.IntPtr.Zero) { throw new Eggceptions.NullException("cell"); }
+					var loadedCell = NetScriptFramework.Memory.ReadPointer(begin + 0x8 * (length * row + column));
+					if (loadedCell == System.IntPtr.Zero) { throw new Eggceptions.NullException("cell"); }
+					if (!TESObjectCELL.IsAttached(loadedCell)) { throw new Eggceptions.Bethesda.DetachedCellException("loadedCell"); }
 
-					yield return cell;
+					yield return loadedCell;
 				}
 			}
 		}

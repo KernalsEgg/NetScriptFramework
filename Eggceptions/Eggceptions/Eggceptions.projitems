@@ -15,10 +15,12 @@
     <Compile Include="$(MSBuildThisFileDirectory)ArgumentNullOrSparseException.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ArgumentNullOrWhiteSpaceException.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ArgumentOutOfRangeException.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Bethesda\ArgumentDetachedCellException.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bethesda\ArgumentFormNotFoundException.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bethesda\ArgumentFormTypeException.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bethesda\ArgumentRunTimeTypeInformationException.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bethesda\BethesdaException.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Bethesda\DetachedCellException.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bethesda\FormNotFoundException.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bethesda\FormTypeException.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bethesda\RunTimeTypeInformationException.cs" />

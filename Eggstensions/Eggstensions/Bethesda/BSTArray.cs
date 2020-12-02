@@ -33,8 +33,8 @@
 		{
 			if (bstArray == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("bstArray"); }
 
-			var begin = BSTArray.GetBegin(bstArray);
 			var count = BSTArray.GetCount(bstArray);
+			var begin = BSTArray.GetBegin(bstArray);
 
 			for (var i = 0; i < count; i++)
 			{
@@ -46,8 +46,8 @@
 		{
 			if (bstArray == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("bstArray"); }
 
-			var begin = BSTArray.GetBegin(bstArray);
 			var count = BSTArray.GetCount(bstArray);
+			var begin = BSTArray.GetBegin(bstArray);
 
 			for (var i = 0; i < count; i++)
 			{

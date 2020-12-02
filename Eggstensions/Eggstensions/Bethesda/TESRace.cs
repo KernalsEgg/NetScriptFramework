@@ -33,9 +33,8 @@
 				return true;
 			}
 
-			var armorAddonAdditionalRaces = TESObjectARMA.GetAdditionalRaces(armorAddon); // BSTArray<TESRace*, BSTArrayHeapAllocator>
-
-			foreach (var armorAddonAdditionalRace in BSTArray.IntPtr(armorAddonAdditionalRaces))
+			// BSTArray<TESRace*, BSTArrayHeapAllocator>
+			foreach (var armorAddonAdditionalRace in BSTArray.IntPtr(TESObjectARMA.GetAdditionalRaces(armorAddon)))
 			{
 				if (!TESForm.HasFormType(armorAddonAdditionalRace, FormTypes.TESRace)) { throw new Eggceptions.Bethesda.FormTypeException("armorAddonAdditionalRace"); }
 

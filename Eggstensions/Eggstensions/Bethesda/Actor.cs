@@ -2,6 +2,14 @@
 {
 	static public class Actor
 	{
+		
+		static public System.Single GetLastUpdate(System.IntPtr actor)
+		{
+			if (actor == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("actor"); }
+
+			return NetScriptFramework.Memory.ReadFloat(actor + 0x258);
+		}
+
 		/// <param name = "actor">Actor</param>
 		/// <returns>AIProcess</returns>
 		static public System.IntPtr GetProcess(System.IntPtr actor)

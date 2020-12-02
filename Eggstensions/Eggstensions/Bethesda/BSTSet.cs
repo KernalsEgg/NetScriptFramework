@@ -18,8 +18,8 @@
 		public System.Collections.Generic.IEnumerator<(System.IntPtr value, System.IntPtr next)> GetEnumerator()
 		{
 			var bstSet = Address;
-			var begin = BSTSet.GetBegin(bstSet);
 			var capacity = BSTSet.GetCapacity(bstSet);
+			var begin = BSTSet.GetBegin(bstSet);
 
 			for (var i = 0; i < capacity; i++)
 			{

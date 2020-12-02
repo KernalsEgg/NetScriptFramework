@@ -95,7 +95,7 @@
 		}
 		
 		/// <param name = "form">TESForm</param>
-		static public System.IntPtr GetName(System.IntPtr form)
+		static public System.String GetName(System.IntPtr form)
 		{
 			if (form == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("form"); }
 
@@ -106,7 +106,7 @@
 				var name = VirtualObject.InvokeVTableThisCall(form, 0x170, allocation.Address);
 				if (name == System.IntPtr.Zero) { throw new Eggceptions.NullException("name"); }
 
-				return name;
+				return NetScriptFramework.Memory.ReadString(name, false);
 			}
 		}
 

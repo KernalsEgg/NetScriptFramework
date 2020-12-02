@@ -10,4 +10,3 @@ C:\Users\Daniel\source\repos\ShelterFramework\ShelterFramework\obj\Release\Shelt
 C:\Users\Daniel\source\repos\ShelterFramework\ShelterFramework\obj\Release\ShelterFramework.csproj.CopyComplete
 C:\Users\Daniel\source\repos\ShelterFramework\ShelterFramework\obj\Release\ShelterFramework.dll
 C:\Users\Daniel\source\repos\ShelterFramework\ShelterFramework\obj\Release\ShelterFramework.pdb
-C:\Users\Daniel\source\repos\ShelterFramework\ShelterFramework\obj\Release\ShelterFramework.csprojAssemblyReference.cache

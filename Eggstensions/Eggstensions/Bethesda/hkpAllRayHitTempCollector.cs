@@ -72,6 +72,17 @@
 		}
 
 		/// <param name="collector">hkpAllRayHitTempCollector</param>
+		static public System.IntPtr GetBegin(System.IntPtr collector)
+		{
+			if (collector == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("collector"); }
+
+			var begin = NetScriptFramework.Memory.ReadPointer(collector + 0x10);
+			if (begin == System.IntPtr.Zero) { throw new Eggceptions.NullException("begin"); }
+
+			return begin;
+		}
+
+		/// <param name="collector">hkpAllRayHitTempCollector</param>
 		static public System.UInt32 GetCount(System.IntPtr collector)
 		{
 			if (collector == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("collector"); }
@@ -79,25 +90,24 @@
 			return NetScriptFramework.Memory.ReadUInt32(collector + 0x18);
 		}
 
+		/// <summary>hkpShapeRayCastCollectorOutput</summary>
 		/// <param name="collector">hkpAllRayHitTempCollector</param>
 		static public System.Collections.Generic.List<RaycastHit> GetHits(System.IntPtr collector)
 		{
 			if (collector == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("collector"); }
 
-			var result = new System.Collections.Generic.List<RaycastHit>();
+			var hits = new System.Collections.Generic.List<RaycastHit>();
 
 			var count = hkpAllRayHitTempCollector.GetCount(collector);
 
 			if (count > 0)
 			{
-				var hits = NetScriptFramework.Memory.ReadPointer(collector + 0x10);
-				if (hits == System.IntPtr.Zero) { throw new Eggceptions.NullException("hits"); }
+				var begin = hkpAllRayHitTempCollector.GetBegin(collector);
 
 				for (var i = 0; i < count; i++)
 				{
-					var hit = hits + (0x60 * i);
+					var hit = begin + 0x60 * i;
 
-					// hkpShapeRayCastCollectorOutput
 					var havokObject = NetScriptFramework.Memory.ReadPointer(hit + 0x50);
 					if (havokObject == System.IntPtr.Zero) { throw new Eggceptions.NullException("havokObject"); }
 
@@ -109,11 +119,11 @@
 							NetScriptFramework.Memory.ReadFloat(hit + 0x8)
 						);
 
-					result.Add(new RaycastHit(havokObject, fraction, normal));
+					hits.Add(new RaycastHit(havokObject, fraction, normal));
 				}
 			}
 
-			return result;
+			return hits;
 		}
 	}
 }

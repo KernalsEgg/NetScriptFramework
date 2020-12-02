@@ -130,7 +130,7 @@ namespace QuickHarvest
 			var stealing = TESObjectREFR.IsCrimeToActivate(target);
 			if (!_settings.Steal && stealing) { return; }
 
-			foreach (var loadedCell in TES.LoadedCells)
+			foreach (var loadedCell in TES.GetLoadedCells(TES.Instance))
 			{
 				(var loadedFloras, var loadedTrees) = TESObjectCELL.GetReferences(loadedCell, FormTypes.TESFlora, FormTypes.TESObjectTREE);
 

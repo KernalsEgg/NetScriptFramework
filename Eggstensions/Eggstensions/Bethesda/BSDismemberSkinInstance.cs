@@ -2,44 +2,44 @@
 {
 	static public class BSDismemberSkinInstance
 	{
-		/// <param name = "bsDismemberSkinInstance">BSDismemberSkinInstance</param>
-		static public BipedObjectSlots GetBipedObjectSlot(System.IntPtr bsDismemberSkinInstance, System.UInt32 partitionIndex)
-		{
-			if (bsDismemberSkinInstance == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("bsDismemberSkinInstance"); }
-			if (partitionIndex >= BSDismemberSkinInstance.GetPartitionsCount(bsDismemberSkinInstance)) { throw new Eggceptions.ArgumentOutOfRangeException("partitionIndex"); }
-
-			var partitions = NetScriptFramework.Memory.ReadPointer(bsDismemberSkinInstance + 0x90);
-			if (partitions == System.IntPtr.Zero) { throw new Eggceptions.NullException("partitions"); }
-
-			var bipedObjectSlot = NetScriptFramework.Memory.ReadUInt16(partitions + 0x2 + 0x4 * (System.Int32)partitionIndex);
-
-			if ((System.UInt16)(bipedObjectSlot - 130) < 0x20)
-			{
-				bipedObjectSlot -= 100;
-			}
-			else if ((System.UInt16)(bipedObjectSlot - 230) < 0x20)
-			{
-				bipedObjectSlot -= 200;
-			}
-
-			return (BipedObjectSlots)bipedObjectSlot;
-		}
-
 		/// <summary>&lt;SkyrimSE.exe&gt; + 0x1CBD10 (VID15540)</summary>
 		/// <param name = "bsDismemberSkinInstance">BSDismemberSkinInstance</param>
 		static public System.Collections.Generic.List<BipedObjectSlots> GetBipedObjectSlots(System.IntPtr bsDismemberSkinInstance)
 		{
 			if (bsDismemberSkinInstance == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("bsDismemberSkinInstance"); }
 
-			var partitionsCount = BSDismemberSkinInstance.GetPartitionsCount(bsDismemberSkinInstance);
 			var bipedObjectSlots = new System.Collections.Generic.List<BipedObjectSlots>();
 
-			for (var i = 0u; i < partitionsCount; i++)
+			var partitionsCount = BSDismemberSkinInstance.GetPartitionsCount(bsDismemberSkinInstance);
+			var partitions = BSDismemberSkinInstance.GetPartitions(bsDismemberSkinInstance);
+
+			for (var i = 0; i < partitionsCount; i++)
 			{
-				bipedObjectSlots.Add(BSDismemberSkinInstance.GetBipedObjectSlot(bsDismemberSkinInstance, i));
+				var bipedObjectSlot = NetScriptFramework.Memory.ReadUInt16(partitions + 0x2 + 0x4 * i);
+
+				if ((System.UInt16)(bipedObjectSlot - 130) < 0x20)
+				{
+					bipedObjectSlot -= 100;
+				}
+				else if ((System.UInt16)(bipedObjectSlot - 230) < 0x20)
+				{
+					bipedObjectSlot -= 200;
+				}
+
+				bipedObjectSlots.Add((BipedObjectSlots)bipedObjectSlot);
 			}
 
 			return bipedObjectSlots;
+		}
+
+		static public System.IntPtr GetPartitions(System.IntPtr bsDismemberSkinInstance)
+		{
+			if (bsDismemberSkinInstance == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("bsDismemberSkinInstance"); }
+
+			var partitions = NetScriptFramework.Memory.ReadPointer(bsDismemberSkinInstance + 0x90);
+			if (partitions == System.IntPtr.Zero) { throw new Eggceptions.NullException("partitions"); }
+
+			return partitions;
 		}
 
 		/// <param name = "bsDismemberSkinInstance">BSDismemberSkinInstance</param>

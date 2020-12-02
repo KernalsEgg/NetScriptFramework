@@ -74,18 +74,10 @@
 			if (niAVObject == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("niAVObject"); }
 
 			var owner = NiAVObject.GetOwner(niAVObject);
-
-			if (owner != System.IntPtr.Zero)
-			{
-				return owner;
-			}
+			if (owner != System.IntPtr.Zero) { return owner; }
 
 			var parent = NiAVObject.GetParent(niAVObject);
-
-			if (parent != System.IntPtr.Zero)
-			{
-				return NiAVObject.GetOwnerRecursive(parent);
-			}
+			if (parent != System.IntPtr.Zero) { return NiAVObject.GetOwnerRecursive(parent); }
 
 			return System.IntPtr.Zero;
 		}
