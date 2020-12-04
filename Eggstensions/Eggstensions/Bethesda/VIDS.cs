@@ -103,9 +103,12 @@
 		{
 			static Events()
 			{
-				_activateFlora =		NetScriptFramework.Main.GameInfo.GetAddressOf(16986);
-				_activateTree =			NetScriptFramework.Main.GameInfo.GetAddressOf(17636);
-				_getIsCreatureType =	NetScriptFramework.Main.GameInfo.GetAddressOf(21029);
+				_activateFlora =				NetScriptFramework.Main.GameInfo.GetAddressOf(16986);
+				_activateTree =					NetScriptFramework.Main.GameInfo.GetAddressOf(17636);
+				_attachPrecipitationObject =	NetScriptFramework.Main.GameInfo.GetAddressOf(25640);
+				_detachPrecipitationObject1 =	NetScriptFramework.Main.GameInfo.GetAddressOf(25638);
+				_detachPrecipitationObject2 =	NetScriptFramework.Main.GameInfo.GetAddressOf(25639);
+				_getIsCreatureType =			NetScriptFramework.Main.GameInfo.GetAddressOf(21029);
 			}
 
 
@@ -113,6 +116,12 @@
 			readonly static private System.IntPtr _activateFlora;
 
 			readonly static private System.IntPtr _activateTree;
+
+			readonly static private System.IntPtr _attachPrecipitationObject;
+
+			readonly static private System.IntPtr _detachPrecipitationObject1;
+
+			readonly static private System.IntPtr _detachPrecipitationObject2;
 
 			readonly static private System.IntPtr _getIsCreatureType;
 
@@ -123,6 +132,15 @@
 
 			/// <summary>&lt;SkyrimSE.exe&gt; + 0x231580 (VID17636)</summary>
 			static public System.IntPtr ActivateTree		{ get { return _activateTree; } }
+
+			/// <summary>&lt;SkyrimSE.exe&gt; + 0x3AF100 (VID25640)</summary>
+			static public System.IntPtr AttachPrecipitationObject { get { return _attachPrecipitationObject; } }
+
+			/// <summary>&lt;SkyrimSE.exe&gt; + 0x3AEBD0 (VID25638)</summary>
+			static public System.IntPtr DetachPrecipitationObject1 { get { return _detachPrecipitationObject1; } }
+
+			/// <summary>&lt;SkyrimSE.exe&gt; + 0x3AF050 (VID25639)</summary>
+			static public System.IntPtr DetachPrecipitationObject2 { get { return _detachPrecipitationObject2; } }
 
 			/// <summary>&lt;SkyrimSE.exe&gt; + 0x2D7750 (VID21029)</summary>
 			static public System.IntPtr GetIsCreatureType	{ get { return _getIsCreatureType; } }

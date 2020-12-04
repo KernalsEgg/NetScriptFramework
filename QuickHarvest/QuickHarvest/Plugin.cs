@@ -52,7 +52,17 @@ namespace QuickHarvest
 		{
 			// loadedAny
 
-			NetScriptFramework.SkyrimSE.Events.OnMainMenu.Register(arguments => { _settings = new Settings(); _settings.Load(); });
+			NetScriptFramework.SkyrimSE.Events.OnMainMenu.Register
+			(arguments =>
+			{
+				if (arguments == null) { throw new Eggceptions.ArgumentNullException("arguments"); }
+
+				if (arguments.Entering)
+				{
+					_settings = new Settings();
+					_settings.Load();
+				}
+			});
 			Events.ActivateFloraEvent.Register(OnActivateFlora);
 			Events.ActivateTreeEvent.Register(OnActivateTree);
 
@@ -67,11 +77,9 @@ namespace QuickHarvest
 
 
 
+		static private Settings _settings;
+
 		static private System.Int32 _harvesting = 0;
-
-
-
-		static internal Settings _settings;
 
 
 

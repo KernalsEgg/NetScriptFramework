@@ -30,11 +30,7 @@
 		{
 			if (tes == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("tes"); }
 
-			var currentInteriorCell = NetScriptFramework.Memory.ReadPointer(tes + 0xC0);
-			if (currentInteriorCell == System.IntPtr.Zero) { return System.IntPtr.Zero; }
-			if (!TESObjectCELL.IsAttached(currentInteriorCell)) { throw new Eggceptions.Bethesda.DetachedCellException("currentInteriorCell"); }
-
-			return currentInteriorCell;
+			return NetScriptFramework.Memory.ReadPointer(tes + 0xC0);
 		}
 
 		/// <param name="tes">TES</param>
@@ -49,28 +45,32 @@
 			return gridCellArray;
 		}
 
-		/// <returns>System.Collections.Generic.IEnumerable&lt;TESObjectCELL&gt;</returns>
-		static public System.Collections.Generic.IEnumerable<System.IntPtr> GetLoadedCells(System.IntPtr tes)
+		/// <returns>System.Collections.Generic.HashSet&lt;TESObjectCELL&gt;</returns>
+		static public System.Collections.Generic.HashSet<System.IntPtr> GetLoadedCells(System.IntPtr tes)
 		{
 			if (tes == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("tes"); }
+
+			var loadedCells = new System.Collections.Generic.HashSet<System.IntPtr>();
 
 			var currentInteriorCell = TES.GetCurrentInteriorCell(tes);
 
 			if (currentInteriorCell != System.IntPtr.Zero)
 			{
-				return _getCurrentInteriorCell();
+				if (!TESObjectCELL.IsAttached(currentInteriorCell)) { throw new Eggceptions.Bethesda.DetachedCellException("currentInteriorCell"); }
+
+				loadedCells.Add(currentInteriorCell);
 			}
 			else
 			{
-				return new GridCellArray(TES.GetGridCellArray(tes));
+				foreach (var loadedCell in new GridCellArray(TES.GetGridCellArray(tes)))
+				{
+					if (!TESObjectCELL.IsAttached(loadedCell)) { throw new Eggceptions.Bethesda.DetachedCellException("loadedCell"); }
+
+					loadedCells.Add(loadedCell);
+				}
 			}
 
-
-
-			System.Collections.Generic.IEnumerable<System.IntPtr> _getCurrentInteriorCell()
-			{
-				yield return currentInteriorCell;
-			}
+			return loadedCells;
 		}
 	}
 }

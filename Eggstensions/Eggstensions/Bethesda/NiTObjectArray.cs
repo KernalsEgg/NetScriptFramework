@@ -3,11 +3,14 @@
 	static public class NiTObjectArray
 	{
 		/// <param name = "niTObjectArray">NiTObjectArray&lt;T&gt;</param>
-		static public System.UInt16 GetActualCount(System.IntPtr niTObjectArray)
+		static public System.IntPtr GetBegin(System.IntPtr niTObjectArray)
 		{
 			if (niTObjectArray == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("niTObjectArray"); }
 
-			return NetScriptFramework.Memory.ReadUInt16(niTObjectArray + 0x14);
+			var begin = NetScriptFramework.Memory.ReadPointer(niTObjectArray + 0x8);
+			if (begin == System.IntPtr.Zero) { throw new Eggceptions.NullException("begin"); }
+
+			return begin;
 		}
 
 		/// <param name = "niTObjectArray">NiTObjectArray&lt;T&gt;</param>
@@ -19,14 +22,19 @@
 		}
 
 		/// <param name = "niTObjectArray">NiTObjectArray&lt;T&gt;</param>
-		static public System.IntPtr GetElements(System.IntPtr niTObjectArray)
+		static public System.UInt16 GetCount(System.IntPtr niTObjectArray)
 		{
 			if (niTObjectArray == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("niTObjectArray"); }
 
-			var elements = NetScriptFramework.Memory.ReadPointer(niTObjectArray + 0x8);
-			if (elements == System.IntPtr.Zero) { throw new Eggceptions.NullException("elements"); }
+			return NetScriptFramework.Memory.ReadUInt16(niTObjectArray + 0x14);
+		}
 
-			return elements;
+		/// <param name = "niTObjectArray">NiTObjectArray&lt;T&gt;</param>
+		static public System.UInt16 GetFreeIndex(System.IntPtr niTObjectArray)
+		{
+			if (niTObjectArray == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("niTObjectArray"); }
+
+			return NetScriptFramework.Memory.ReadUInt16(niTObjectArray + 0x12);
 		}
 
 		/// <param name = "niTObjectArray">NiTObjectArray&lt;T&gt;</param>
@@ -35,14 +43,6 @@
 			if (niTObjectArray == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("niTObjectArray"); }
 
 			return NetScriptFramework.Memory.ReadUInt16(niTObjectArray + 0x16);
-		}
-
-		/// <param name = "niTObjectArray">NiTObjectArray&lt;T&gt;</param>
-		static public System.UInt16 GetSparseCount(System.IntPtr niTObjectArray)
-		{
-			if (niTObjectArray == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("niTObjectArray"); }
-
-			return NetScriptFramework.Memory.ReadUInt16(niTObjectArray + 0x12);
 		}
 	}
 }

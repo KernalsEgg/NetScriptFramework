@@ -16,6 +16,20 @@
 
 
 
+		static public System.Single GetCurrentGameHour(System.IntPtr sky)
+		{
+			if (sky == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("sky"); }
+
+			return NetScriptFramework.Memory.ReadFloat(sky + 0x1B0);
+		}
+		
+		static public System.Single GetLastWeatherUpdate(System.IntPtr sky)
+		{
+			if (sky == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("sky"); }
+
+			return NetScriptFramework.Memory.ReadFloat(sky + 0x1B4);
+		}
+		
 		/// <param name="sky">Sky</param>
 		/// <returns>Precipitation</returns>
 		static public System.IntPtr GetPrecipitation(System.IntPtr sky)

@@ -4,7 +4,7 @@
 	{
 		/// <param name="precipitation">Precipitation</param>
 		/// <returns>BSGeometry, System.IntPtr.Zero</returns>
-		static public System.IntPtr GetCurrentPrecipitation(System.IntPtr precipitation)
+		static public System.IntPtr GetCurrentPrecipitationObject(System.IntPtr precipitation)
 		{
 			if (precipitation == System.IntPtr.Zero) { throw new Eggceptions.ArgumentFormatException("precipitation"); }
 

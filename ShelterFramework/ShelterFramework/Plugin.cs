@@ -81,7 +81,7 @@ namespace ShelterFramework
 
 
 		static private Settings _settings;
-
+		
 		static private System.Collections.Generic.Dictionary<System.IntPtr, (System.Single lastUpdate, System.Boolean isSheltered)> _isShelteredCache =
 			new System.Collections.Generic.Dictionary<System.IntPtr, (System.Single, System.Boolean)>();
 
@@ -94,7 +94,7 @@ namespace ShelterFramework
 			try
 			{
 				var detectShelter = System.Convert.ToBoolean(arguments.Argument1);
-				var isSheltered = Plugin.IsShelteredCache(arguments.Subject);
+				var isSheltered = Plugin.IsSheltered(arguments.Subject);
 
 				arguments.Text = detectShelter ? "Is Sheltered >> %0.2f" : "Is Exposed >> %0.2f";
 				arguments.Result = (isSheltered == detectShelter) ? 1.0d : 0.0d;
@@ -106,66 +106,87 @@ namespace ShelterFramework
 			}
 		}
 
-		/// <param name="reference">TESObjectREFR</param>
-		static private System.Boolean IsShelteredCache(System.IntPtr reference)
-		{
-			if (reference == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("reference"); }
 
-			var lastUpdate = Actor.GetLastUpdate(reference);
 
-			if (!_isShelteredCache.TryGetValue(reference, out var isShelteredCachedValue) || lastUpdate != isShelteredCachedValue.lastUpdate)
-			{
-				_isShelteredCache[reference] = (lastUpdate, Plugin.IsSheltered(reference));
-			}
-
-			return _isShelteredCache[reference].isSheltered;
-		}
-
-		/// <param name="reference">TESObjectREFR</param>
 		static private System.Boolean IsSheltered(System.IntPtr reference)
 		{
 			if (reference == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("reference"); }
-
-			var ray = GetPrecipitationVelocity();
-
-			if (ray == (0.0f, 0.0f, 0.0f))
-			{
-				ray = (0.0f, 0.0f, _settings.RayCastLength);
-			}
-			else
-			{
-				var multiplier = (float)System.Math.Sqrt((_settings.RayCastLength * _settings.RayCastLength) / ((ray.x * ray.x) + (ray.y * ray.y) + (ray.z * ray.z)));
-				ray = (-ray.x * multiplier, -ray.y * multiplier, -ray.z * multiplier);
-			}
 
 			NetScriptFramework.Main.Log.AppendLine
 			(
 				"name = " + TESForm.GetName(TESObjectREFR.GetBaseForm(reference)) +
 				", address = " + reference.ToString("X8") +
 				", distance = " + TESObjectREFR.GetDistanceBetween(PlayerCharacter.Instance, reference).ToString("0") +
-				", lastUpdate = " + Actor.GetLastUpdate(reference).ToString("0.00") +
-				", ray = (" + ray.x.ToString("0") + ", " + ray.y.ToString("0") + ", " + ray.z.ToString("0") + ")"
+				", lastUpdate = " + Actor.GetLastUpdate(reference).ToString("0.00")
 			);
 
-			return TESObjectREFR.IsHit(reference, TESObjectREFR.GetLookAtPosition(reference), ray, _collisionLayers);
+			return TESForm.HasFormType(reference, FormTypes.Character) ? IsShelteredActor(reference) : IsShelteredReference(reference);
+		}
+		
+		/// <param name="reference">TESObjectREFR</param>
+		static private System.Boolean IsShelteredActor(System.IntPtr reference)
+		{
+			if (reference == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("reference"); }
+
+			var lastUpdate = Actor.GetLastUpdate(reference);
+
+			if (!_isShelteredCache.TryGetValue(reference, out var isShelteredCache) || lastUpdate != isShelteredCache.lastUpdate)
+			{
+				_isShelteredCache[reference] = (lastUpdate, TESObjectREFR.IsHit(reference, TESObjectREFR.GetLookAtPosition(reference), Plugin.GetRay(), _collisionLayers));
+			}
+
+			return _isShelteredCache[reference].isSheltered;
 		}
 
-		static private (System.Single x, System.Single y, System.Single z) GetPrecipitationVelocity()
+		static private System.Boolean IsShelteredReference(System.IntPtr reference)
 		{
-			var currentPrecipitation = Precipitation.GetCurrentPrecipitation(Sky.GetPrecipitation(Sky.Instance));
-			if (currentPrecipitation == System.IntPtr.Zero) { return (0.0f, 0.0f, 0.0f); }
-			if (NiAVObject.HasNiAVFlags(currentPrecipitation, NiAVFlags.Hidden)) { return (0.0f, 0.0f, 0.0f); }
-			if (!NiObject.HasNiRTTI(currentPrecipitation, NiRTTI.BSGeometry)) { throw new Eggceptions.Bethesda.RunTimeTypeInformationException("currentPrecipitation"); }
+			if (reference == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("reference"); }
 
-			var properties = BSGeometry.GetProperties(currentPrecipitation);
-			if (properties == System.IntPtr.Zero) { return (0.0f, 0.0f, 0.0f); }
-			if (!NiObject.HasNiRTTI(properties, NiRTTI.BSParticleShaderProperty)) { throw new Eggceptions.Bethesda.RunTimeTypeInformationException("properties"); }
+			return TESObjectREFR.IsHit(reference, TESObjectREFR.GetLookAtPosition(reference), Plugin.GetRay(), _collisionLayers);
+		}
 
-			var emitter = BSParticleShaderProperty.GetParticleShaderEmitter(properties);
-			if (emitter == System.IntPtr.Zero) { return (0.0f, 0.0f, 0.0f); }
-			// RTTI
+		static private (System.Single x, System.Single y, System.Single z) GetRay()
+		{
+			var currentPrecipitationObject = Precipitation.GetCurrentPrecipitationObject(Sky.GetPrecipitation(Sky.Instance));
 
-			return BSParticleShaderCubeEmitter.GetVelocity(emitter);
+			if (currentPrecipitationObject != System.IntPtr.Zero && !NiAVObject.IsHidden(currentPrecipitationObject))
+			{
+				var bsParticleShaderProperty = BSGeometry.GetProperties(currentPrecipitationObject, BSGeometry.States.Effect);
+
+				if (bsParticleShaderProperty != System.IntPtr.Zero)
+				{
+					var bsParticleShaderCubeEmitter = BSParticleShaderProperty.GetParticleShaderEmitter(bsParticleShaderProperty);
+
+					if (bsParticleShaderCubeEmitter != System.IntPtr.Zero)
+					{
+						var precipitationVelocity = BSParticleShaderCubeEmitter.GetVelocity(bsParticleShaderCubeEmitter);
+
+						if (precipitationVelocity != (0.0f, 0.0f, 0.0f))
+						{
+							return Plugin.Negate(Plugin.SetLength(precipitationVelocity, _settings.RayCastLength));
+						}
+					}
+				}
+			}
+
+			return (0.0f, 0.0f, _settings.RayCastLength);
+		}
+
+		static private (System.Single x, System.Single y, System.Single z) SetLength((System.Single x, System.Single y, System.Single z) vector, System.Single length)
+		{
+			// vector
+			// length
+
+			var multiplier = (float)System.Math.Sqrt((length * length) / ((vector.x * vector.x) + (vector.y * vector.y) + (vector.z * vector.z)));
+
+			return (vector.x * multiplier, vector.y * multiplier, vector.z * multiplier);
+		}
+
+		static private (System.Single x, System.Single y, System.Single z) Negate((System.Single x, System.Single y, System.Single z) vector)
+		{
+			// vector
+
+			return (-vector.x, -vector.y, -vector.z);
 		}
 	}
 }

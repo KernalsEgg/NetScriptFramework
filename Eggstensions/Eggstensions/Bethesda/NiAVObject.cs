@@ -1,6 +1,6 @@
 ﻿namespace Eggstensions.Bethesda
 {
-	public enum NiAVFlags : System.UInt32
+	public enum NiAVObjectFlags : System.UInt32
 	{
 		None =		0u,
 		Hidden =	1u << 0x0
@@ -11,12 +11,12 @@
 	static public class NiAVObject
 	{
 		/// <param name = "niAVObject">NiAVObject</param>
-		static public void AddNiAVFlags(System.IntPtr niAVObject, NiAVFlags niAVFlags)
+		static public void AddNiAVObjectFlags(System.IntPtr niAVObject, NiAVObjectFlags niAVObjectFlags)
 		{
 			if (niAVObject == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("niAVObject"); }
-			// niAVFlags
+			// niAVObjectFlags
 
-			NiAVObject.SetNiAVFlags(niAVObject, niAVFlags | NiAVObject.GetNiAVFlags(niAVObject));
+			NiAVObject.SetNiAVObjectFlags(niAVObject, niAVObjectFlags | NiAVObject.GetNiAVObjectFlags(niAVObject));
 		}
 
 		/// <param name = "niAVObject">NiAVObject</param>
@@ -31,11 +31,11 @@
 		}
 
 		/// <param name = "niAVObject">NiAVObject</param>
-		static public NiAVFlags GetNiAVFlags(System.IntPtr niAVObject)
+		static public NiAVObjectFlags GetNiAVObjectFlags(System.IntPtr niAVObject)
 		{
 			if (niAVObject == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("niAVObject"); }
 
-			return (NiAVFlags)NetScriptFramework.Memory.ReadUInt32(niAVObject + 0xF4);
+			return (NiAVObjectFlags)NetScriptFramework.Memory.ReadUInt32(niAVObject + 0xF4);
 		}
 
 		/// <param name = "niAVObject">NiAVObject</param>
@@ -83,30 +83,37 @@
 		}
 
 		/// <param name = "niAVObject">NiAVObject</param>
-		static public System.Boolean HasNiAVFlags(System.IntPtr niAVObject, NiAVFlags niAVFlags)
+		static public System.Boolean HasNiAVObjectFlags(System.IntPtr niAVObject, NiAVObjectFlags niAVObjectFlags)
 		{
 			if (niAVObject == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("niAVObject"); }
-			// niAVFlags
+			// niAVObjectFlags
 
-			return (NiAVObject.GetNiAVFlags(niAVObject) & niAVFlags) == niAVFlags;
+			return (NiAVObject.GetNiAVObjectFlags(niAVObject) & niAVObjectFlags) == niAVObjectFlags;
+		}
+
+		static public System.Boolean IsHidden(System.IntPtr niAVObject)
+		{
+			if (niAVObject == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("niAVObject"); }
+
+			return NiAVObject.HasNiAVObjectFlags(niAVObject, NiAVObjectFlags.Hidden);
 		}
 
 		/// <param name="niAVObject">NiAVObject</param>
-		static public void RemoveNiAVFlags(System.IntPtr niAVObject, NiAVFlags niAVFlags)
+		static public void RemoveNiAVObjectFlags(System.IntPtr niAVObject, NiAVObjectFlags niAVObjectFlags)
 		{
 			if (niAVObject == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("niAVObject"); }
-			// niAVFlags
+			// niAVObjectFlags
 
-			NiAVObject.SetNiAVFlags(niAVObject, niAVFlags & ~NiAVObject.GetNiAVFlags(niAVObject));
+			NiAVObject.SetNiAVObjectFlags(niAVObject, niAVObjectFlags & ~NiAVObject.GetNiAVObjectFlags(niAVObject));
 		}
 
 		/// <param name = "niAVObject">NiAVObject</param>
-		static public void SetNiAVFlags(System.IntPtr niAVObject, NiAVFlags niAVFlags)
+		static public void SetNiAVObjectFlags(System.IntPtr niAVObject, NiAVObjectFlags niAVObjectFlags)
 		{
 			if (niAVObject == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("niAVObject"); }
-			// niAVFlags
+			// niAVObjectFlags
 
-			NetScriptFramework.Memory.WriteUInt32(niAVObject + 0xF4, (System.UInt32)niAVFlags);
+			NetScriptFramework.Memory.WriteUInt32(niAVObject + 0xF4, (System.UInt32)niAVObjectFlags);
 		}
 	}
 }

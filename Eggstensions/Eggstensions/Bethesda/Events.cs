@@ -8,14 +8,6 @@ namespace Eggstensions.Bethesda
 	{
 		sealed public class ActivateFloraEventArguments : NetScriptFramework.HookedEventArgs
 		{
-			public System.IntPtr Activator { get; }
-
-			public System.IntPtr BaseForm { get; }
-
-			public System.IntPtr Target { get; }
-
-
-
 			/// <param name="baseForm">TESForm</param>
 			/// <param name="flora">TESObjectREFR</param>
 			/// <param name="activator">TESObjectREFR</param>
@@ -25,18 +17,18 @@ namespace Eggstensions.Bethesda
 				Target = target; // RDX
 				Activator = activator; // R8
 			}
-		}
 
-		sealed public class ActivateTreeEventArguments : NetScriptFramework.HookedEventArgs
-		{
+
+
 			public System.IntPtr Activator { get; }
 
 			public System.IntPtr BaseForm { get; }
 
 			public System.IntPtr Target { get; }
+		}
 
-
-
+		sealed public class ActivateTreeEventArguments : NetScriptFramework.HookedEventArgs
+		{
 			/// <param name="baseForm">TESForm</param>
 			/// <param name="tree">TESObjectREFR</param>
 			/// <param name="activator">TESObjectREFR</param>
@@ -46,36 +38,70 @@ namespace Eggstensions.Bethesda
 				Target = target; // RDX
 				Activator = activator; // R8
 			}
+
+
+
+			public System.IntPtr Activator { get; }
+
+			public System.IntPtr BaseForm { get; }
+
+			public System.IntPtr Target { get; }
+		}
+
+		sealed public class AttachPrecipitationObjectEventArguments : NetScriptFramework.HookedEventArgs
+		{
+			public AttachPrecipitationObjectEventArguments(System.IntPtr weatherNode, System.IntPtr precipitationObject)
+			{
+				PrecipitationObject = precipitationObject;
+				WeatherNode = weatherNode;
+			}
+
+
+
+			public System.IntPtr PrecipitationObject { get; }
+
+			public System.IntPtr WeatherNode { get; }
+		}
+
+		sealed public class DetachPrecipitationObjectEventArguments : NetScriptFramework.HookedEventArgs
+		{
+			public DetachPrecipitationObjectEventArguments(System.IntPtr weatherNode, System.IntPtr precipitationObject)
+			{
+				PrecipitationObject = precipitationObject;
+				WeatherNode = weatherNode;
+			}
+
+
+
+			public System.IntPtr PrecipitationObject { get; }
+
+			public System.IntPtr WeatherNode { get; }
 		}
 
 		sealed public class GetIsCreatureTypeEventArguments : NetScriptFramework.HookedEventArgs
 		{
-			public System.Double Result { get; set; }
-			
-			public System.Int32 Argument1 { get; }
-
-			public System.IntPtr Subject { get; }
-
-			public System.String Text { get; set; }
-
-
-
 			/// <param name="subject">TESObjectREFR</param>
 			public GetIsCreatureTypeEventArguments(System.IntPtr subject, System.Int32 argument1)
 			{
 				Subject = subject;
 				Argument1 = argument1;
 			}
+
+
+
+			public System.Double Result { get; set; } = -1.0d;
+
+			public System.Int32 Argument1 { get; }
+
+			public System.IntPtr Subject { get; }
+
+			public System.String Text { get; set; } = "Handled Exception >> %0.2f";
 		}
 
 
 
 		static public class ActivateFloraEvent
 		{
-			static private NetScriptFramework.Event<Events.ActivateFloraEventArguments> _activateFloraEvent;
-
-
-
 			static ActivateFloraEvent()
 			{
 				_activateFloraEvent =
@@ -97,6 +123,10 @@ namespace Eggstensions.Bethesda
 
 
 
+			static private NetScriptFramework.Event<Events.ActivateFloraEventArguments> _activateFloraEvent;
+
+
+
 			static public void Register(NetScriptFramework.Event<Events.ActivateFloraEventArguments>.EventHandler eventHandler, System.Int32 priority = 0, System.Int32 count = 0, NetScriptFramework.EventRegistrationFlags eventRegistrationFlags = NetScriptFramework.EventRegistrationFlags.Distinct)
 			{
 				_activateFloraEvent.Register(eventHandler, priority, count, eventRegistrationFlags);
@@ -105,10 +135,6 @@ namespace Eggstensions.Bethesda
 
 		static public class ActivateTreeEvent
 		{
-			static private NetScriptFramework.Event<Events.ActivateTreeEventArguments> _activateTreeEvent;
-
-
-
 			static ActivateTreeEvent()
 			{
 				_activateTreeEvent =
@@ -130,18 +156,111 @@ namespace Eggstensions.Bethesda
 
 
 
+			static private NetScriptFramework.Event<Events.ActivateTreeEventArguments> _activateTreeEvent;
+
+
+
 			static public void Register(NetScriptFramework.Event<Events.ActivateTreeEventArguments>.EventHandler eventHandler, System.Int32 priority = 0, System.Int32 count = 0, NetScriptFramework.EventRegistrationFlags eventRegistrationFlags = NetScriptFramework.EventRegistrationFlags.Distinct)
 			{
 				_activateTreeEvent.Register(eventHandler, priority, count, eventRegistrationFlags);
 			}
 		}
 
+		static public class AttachPrecipitationObjectEvent
+		{
+			static AttachPrecipitationObjectEvent()
+			{
+				_attachPrecipitationObject =
+					new NetScriptFramework.EventHook<Events.AttachPrecipitationObjectEventArguments>
+					(
+						NetScriptFramework.EventHookFlags.None,
+						"AttachPrecipitationObject",
+						new NetScriptFramework.EventHookParameters<Events.AttachPrecipitationObjectEventArguments>
+						(
+							address: VIDS.Events.AttachPrecipitationObject + 0x91,
+							replaceLength: 6,
+							includeLength: 6,
+							pattern: "FF 90 A8010000",
+							argFunc: ctx => new Events.AttachPrecipitationObjectEventArguments(ctx.CX, ctx.DX),
+							afterFunc: null
+						)
+					);
+			}
+
+
+
+			static private NetScriptFramework.Event<Events.AttachPrecipitationObjectEventArguments> _attachPrecipitationObject;
+
+
+
+			static public void Register(NetScriptFramework.Event<Events.AttachPrecipitationObjectEventArguments>.EventHandler eventHandler, System.Int32 priority = 0, System.Int32 count = 0, NetScriptFramework.EventRegistrationFlags eventRegistrationFlags = NetScriptFramework.EventRegistrationFlags.Distinct)
+			{
+				_attachPrecipitationObject.Register(eventHandler, priority, count, eventRegistrationFlags);
+			}
+		}
+
+		static public class DetachPrecipitationObjectEvent
+		{
+			static DetachPrecipitationObjectEvent()
+			{
+				_detachPrecipitationObject =
+					new NetScriptFramework.EventHook<Events.DetachPrecipitationObjectEventArguments>
+					(
+						NetScriptFramework.EventHookFlags.None,
+						"DetachPrecipitationObject",
+						new NetScriptFramework.EventHookParameters<Events.DetachPrecipitationObjectEventArguments>
+						(
+							address: VIDS.Events.DetachPrecipitationObject1 + 0x25D,
+							replaceLength: 6,
+							includeLength: 6,
+							pattern: "FF 90 C0010000",
+							argFunc: ctx => new Events.DetachPrecipitationObjectEventArguments(ctx.CX, ctx.DX),
+							afterFunc: null
+						),
+						new NetScriptFramework.EventHookParameters<Events.DetachPrecipitationObjectEventArguments>
+						(
+							address: VIDS.Events.DetachPrecipitationObject1 + 0x32A,
+							replaceLength: 6,
+							includeLength: 6,
+							pattern: "FF 90 C0010000",
+							argFunc: ctx => new Events.DetachPrecipitationObjectEventArguments(ctx.CX, ctx.DX),
+							afterFunc: null
+						),
+						new NetScriptFramework.EventHookParameters<Events.DetachPrecipitationObjectEventArguments>
+						(
+							address: VIDS.Events.DetachPrecipitationObject2 + 0x28,
+							replaceLength: 6,
+							includeLength: 6,
+							pattern: "FF 90 C0010000",
+							argFunc: ctx => new Events.DetachPrecipitationObjectEventArguments(ctx.CX, ctx.DX),
+							afterFunc: null
+						),
+						new NetScriptFramework.EventHookParameters<Events.DetachPrecipitationObjectEventArguments>
+						(
+							address: VIDS.Events.DetachPrecipitationObject2 + 0x73,
+							replaceLength: 6,
+							includeLength: 6,
+							pattern: "FF 90 C0010000",
+							argFunc: ctx => new Events.DetachPrecipitationObjectEventArguments(ctx.CX, ctx.DX),
+							afterFunc: null
+						)
+					);
+			}
+
+
+
+			static private NetScriptFramework.Event<Events.DetachPrecipitationObjectEventArguments> _detachPrecipitationObject;
+
+
+
+			static public void Register(NetScriptFramework.Event<Events.DetachPrecipitationObjectEventArguments>.EventHandler eventHandler, System.Int32 priority = 0, System.Int32 count = 0, NetScriptFramework.EventRegistrationFlags eventRegistrationFlags = NetScriptFramework.EventRegistrationFlags.Distinct)
+			{
+				_detachPrecipitationObject.Register(eventHandler, priority, count, eventRegistrationFlags);
+			}
+		}
+
 		static public class GetIsCreatureTypeEvent
 		{
-			static private NetScriptFramework.Event<Events.GetIsCreatureTypeEventArguments> _getIsCreatureTypeEvent;
-
-			
-			
 			static GetIsCreatureTypeEvent()
 			{
 				var address = VIDS.Events.GetIsCreatureType;
@@ -204,6 +323,10 @@ namespace Eggstensions.Bethesda
 						)
 					);
 			}
+
+
+
+			static private NetScriptFramework.Event<Events.GetIsCreatureTypeEventArguments> _getIsCreatureTypeEvent;
 
 
 

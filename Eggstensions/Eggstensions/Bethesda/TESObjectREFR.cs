@@ -104,6 +104,7 @@ namespace Eggstensions.Bethesda
 			}
 		}
 
+		/// <summary>&lt;SkyrimSE.exe&gt; + 0x28E8D0 (VID19283)</summary>
 		/// <param name = "reference">TESObjectREFR</param>
 		static public (System.Single x, System.Single y, System.Single z) GetLookAtPosition(System.IntPtr reference)
 		{
@@ -112,12 +113,42 @@ namespace Eggstensions.Bethesda
 			using (var lookAtPosition = new NiPoint3())
 			{
 				VirtualObject.InvokeVTableThisCall(reference, 0x2D8, lookAtPosition.Address);
-				if (lookAtPosition.IsZero) { throw new Eggceptions.NullException("location"); }
+				if (lookAtPosition.IsZero) { throw new Eggceptions.NullException("lookAtPosition"); }
 
 				return (lookAtPosition.X, lookAtPosition.Y, lookAtPosition.Z);
 			}
 		}
-		
+
+		/// <summary>&lt;SkyrimSE.exe&gt; + 0x2948D0 (VID19328)</summary>
+		/// <param name = "reference">TESObjectREFR</param>
+		static public (System.Single x, System.Single y, System.Single z) GetMaximumBounds(System.IntPtr reference)
+		{
+			if (reference == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("reference"); }
+
+			using (var maximumBounds = new NiPoint3())
+			{
+				VirtualObject.InvokeVTableThisCall(reference, 0x3A0, maximumBounds.Address);
+				if (maximumBounds.IsZero) { throw new Eggceptions.NullException("maximumBounds"); }
+
+				return (maximumBounds.X, maximumBounds.Y, maximumBounds.Z);
+			}
+		}
+
+		/// <summary>&lt;SkyrimSE.exe&gt; + 0x2947D0 (VID19327)</summary>
+		/// <param name = "reference">TESObjectREFR</param>
+		static public (System.Single x, System.Single y, System.Single z) GetMinimumBounds(System.IntPtr reference)
+		{
+			if (reference == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("reference"); }
+
+			using (var minimumBounds = new NiPoint3())
+			{
+				VirtualObject.InvokeVTableThisCall(reference, 0x398, minimumBounds.Address);
+				if (minimumBounds.IsZero) { throw new Eggceptions.NullException("minimumBounds"); }
+
+				return (minimumBounds.X, minimumBounds.Y, minimumBounds.Z);
+			}
+		}
+
 		/// <param name = "reference">TESObjectREFR</param>
 		/// <returns>NiNode</returns>
 		static public System.IntPtr GetNiNode(System.IntPtr reference)

@@ -40,6 +40,7 @@
 			_niAVObject =				NetScriptFramework.Main.GameInfo.GetAddressOf(523895);
 			_niNode =					NetScriptFramework.Main.GameInfo.GetAddressOf(523900);
 			_niObject =					NetScriptFramework.Main.GameInfo.GetAddressOf(523891);
+			_niProperty =				NetScriptFramework.Main.GameInfo.GetAddressOf(523929);
 			_niSkinInstance =			NetScriptFramework.Main.GameInfo.GetAddressOf(523976);
 		}
 
@@ -58,6 +59,8 @@
 		readonly static private System.IntPtr _niNode;
 
 		readonly static private System.IntPtr _niObject;
+
+		readonly static private System.IntPtr _niProperty;
 
 		readonly static private System.IntPtr _niSkinInstance;
 
@@ -83,6 +86,9 @@
 
 		/// <summary>&lt;SkyrimSE.exe&gt; + 0x3012388 (VID523891)</summary>
 		static public System.IntPtr NiObject					{ get { return _niObject; } }
+
+		/// <summary>&lt;SkyrimSE.exe&gt; + 0x30125C0 (VID523929)</summary>
+		static public System.IntPtr NiProperty					{ get { return _niProperty; } }
 
 		/// <summary>&lt;SkyrimSE.exe&gt; + 0x30138D0 (VID523976)</summary>
 		static public System.IntPtr NiSkinInstance				{ get { return _niSkinInstance; } }

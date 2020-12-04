@@ -27,7 +27,6 @@
 				{
 					var loadedCell = NetScriptFramework.Memory.ReadPointer(begin + 0x8 * (length * row + column));
 					if (loadedCell == System.IntPtr.Zero) { throw new Eggceptions.NullException("cell"); }
-					if (!TESObjectCELL.IsAttached(loadedCell)) { throw new Eggceptions.Bethesda.DetachedCellException("loadedCell"); }
 
 					yield return loadedCell;
 				}

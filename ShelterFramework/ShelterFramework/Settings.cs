@@ -1,6 +1,6 @@
 ﻿namespace ShelterFramework
 {
-	class Settings
+	public class Settings
 	{
 		[NetScriptFramework.Tools.ConfigValue("LogHandledExceptions", "Log Handled Exceptions", "Log handled exceptions to Data\\NetScriptFramework\\NetScriptFramework.log.txt.", NetScriptFramework.Tools.ConfigEntryFlags.VeryShortComment)]
 		public System.Boolean LogHandledExceptions { get; private set; } = false;
