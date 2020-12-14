@@ -14,7 +14,7 @@ namespace Eggstensions.Math.Library
 			if (right == null) { throw new Eggceptions.ArgumentNullException("right"); }
 			if (!Matrix.IsVector(left)) { throw new Eggceptions.Math.Matrix.ArgumentMatrixDimensionsException("left"); }
 			if (!Matrix.IsVector(right)) { throw new Eggceptions.Math.Matrix.ArgumentMatrixDimensionsException("right"); }
-			if (!Matrix.Dimensions(left, right)) { throw new Eggceptions.Math.Matrix.ArgumentMatrixDimensionsException("left, right"); }
+			if (!Matrix.SameDimensions(left, right)) { throw new Eggceptions.Math.Matrix.ArgumentMatrixDimensionsException("left, right"); }
 			if (Matrix.IsZero(left)) { throw new Eggceptions.Math.Matrix.ZeroMatrixException("left"); }
 			if (Matrix.IsZero(right)) { throw new Eggceptions.Math.Matrix.ZeroMatrixException("right"); }
 
@@ -32,7 +32,7 @@ namespace Eggstensions.Math.Library
 					vectors.All(vector => Matrix.IsVector7(vector)) // Valid in 7D
 				)
 				&&
-				vectors.All(vector => Matrix.Dimensions(vector, 1, vectors.Length + 1));
+				vectors.All(vector => Matrix.HasDimensions(vector, 1, vectors.Length + 1));
 		}
 
 		static public System.Boolean CanDotProduct(System.Single[,] left, System.Single[,] right)
@@ -45,7 +45,7 @@ namespace Eggstensions.Math.Library
 				&&
 				Matrix.IsVector(right)
 				&&
-				Matrix.Dimensions(left, right);
+				Matrix.SameDimensions(left, right);
 		}
 
 		static public System.Single[,] CrossProduct(params System.Single[][,] vectors)
@@ -92,7 +92,7 @@ namespace Eggstensions.Math.Library
 			if (right == null) { throw new Eggceptions.ArgumentNullException("right"); }
 			if (!Matrix.IsVector(left)) { throw new Eggceptions.Math.Matrix.ArgumentMatrixDimensionsException("left"); }
 			if (!Matrix.IsVector(right)) { throw new Eggceptions.Math.Matrix.ArgumentMatrixDimensionsException("right"); }
-			if (!Matrix.Dimensions(left, right)) { throw new Eggceptions.Math.Matrix.ArgumentMatrixDimensionsException("left, right"); }
+			if (!Matrix.SameDimensions(left, right)) { throw new Eggceptions.Math.Matrix.ArgumentMatrixDimensionsException("left, right"); }
 
 			var rows = left.Rows(); // left.Rows == right.Rows
 			var columns = left.Columns(); // left.Columns == right.Columns

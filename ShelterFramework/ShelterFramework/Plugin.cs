@@ -112,15 +112,7 @@ namespace ShelterFramework
 		{
 			if (reference == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("reference"); }
 
-			NetScriptFramework.Main.Log.AppendLine
-			(
-				"name = " + TESForm.GetName(TESObjectREFR.GetBaseForm(reference)) +
-				", address = " + reference.ToString("X8") +
-				", distance = " + TESObjectREFR.GetDistanceBetween(PlayerCharacter.Instance, reference).ToString("0") +
-				", lastUpdate = " + Actor.GetLastUpdate(reference).ToString("0.00")
-			);
-
-			return TESForm.HasFormType(reference, FormTypes.Character) ? IsShelteredActor(reference) : IsShelteredReference(reference);
+			return TESForm.HasFormType(reference, FormTypes.Character) ? Plugin.IsShelteredActor(reference) : Plugin.IsShelteredReference(reference);
 		}
 		
 		/// <param name="reference">TESObjectREFR</param>

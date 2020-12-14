@@ -5,7 +5,7 @@ using Unmanaged = Eggstensions.Math.Unmanaged;
 
 namespace Eggstensions.Bethesda
 {
-	public class NiMatrix33 : Eggstensions.Math.Unmanaged.Matrix33
+	public class NiMatrix33 : Unmanaged.Matrix33
 	{
 		override public System.Int32? Padding { get; } = 0x40;
 
@@ -20,9 +20,7 @@ namespace Eggstensions.Bethesda
 
 		public NiMatrix33() : base() { }
 
-		public NiMatrix33(Managed.Matrix matrix) : base(matrix) { }
-
-		public NiMatrix33(System.Single[,] elements) : base(elements) { }
+		public NiMatrix33(Managed.Matrix33 matrix33) : base(matrix33) { }
 
 		public NiMatrix33(System.IntPtr address) : base(address) { }
 	}

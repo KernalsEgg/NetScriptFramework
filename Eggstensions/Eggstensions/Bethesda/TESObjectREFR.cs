@@ -80,6 +80,24 @@ namespace Eggstensions.Bethesda
 			return (System.Single)System.Math.Sqrt(((x2 - x1) * (x2 - x1)) + ((y2 - y1) * (y2 - y1)) + ((z2 - z1) * (z2 - z1)));
 		}
 
+		/// <param name = "reference">TESObjectREFR</param>
+		/// <returns>BSExtraData, System.IntPtr.Zero</returns>
+		static public System.IntPtr GetExtraData(System.IntPtr reference, ExtraDataTypes extraDataType)
+		{
+			if (reference == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("reference"); }
+
+			return NetScriptFramework.Memory.InvokeCdecl(VIDS.ExtraDataList.GetExtraData, reference, (System.Byte)extraDataType);
+		}
+
+		/// <param name="reference">TESObjectREFR</param>
+		/// <returns>ExtraDataList</returns>
+		static public System.IntPtr GetExtraDataList(System.IntPtr reference)
+		{
+			if (reference == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("reference"); }
+
+			return reference + 0x70;
+		}
+
 		/// <param name="reference">TESObjectREFR</param>
 		/// <returns>FormTypes</returns>
 		static public FormTypes GetFormType(System.IntPtr reference)
@@ -113,7 +131,7 @@ namespace Eggstensions.Bethesda
 			using (var lookAtPosition = new NiPoint3())
 			{
 				VirtualObject.InvokeVTableThisCall(reference, 0x2D8, lookAtPosition.Address);
-				if (lookAtPosition.IsZero) { throw new Eggceptions.NullException("lookAtPosition"); }
+				if (lookAtPosition.Elements.IsZero) { throw new Eggceptions.NullException("lookAtPosition"); }
 
 				return (lookAtPosition.X, lookAtPosition.Y, lookAtPosition.Z);
 			}
@@ -128,7 +146,6 @@ namespace Eggstensions.Bethesda
 			using (var maximumBounds = new NiPoint3())
 			{
 				VirtualObject.InvokeVTableThisCall(reference, 0x3A0, maximumBounds.Address);
-				if (maximumBounds.IsZero) { throw new Eggceptions.NullException("maximumBounds"); }
 
 				return (maximumBounds.X, maximumBounds.Y, maximumBounds.Z);
 			}
@@ -143,7 +160,6 @@ namespace Eggstensions.Bethesda
 			using (var minimumBounds = new NiPoint3())
 			{
 				VirtualObject.InvokeVTableThisCall(reference, 0x398, minimumBounds.Address);
-				if (minimumBounds.IsZero) { throw new Eggceptions.NullException("minimumBounds"); }
 
 				return (minimumBounds.X, minimumBounds.Y, minimumBounds.Z);
 			}
@@ -292,6 +308,17 @@ namespace Eggstensions.Bethesda
 			return false;
 		}
 
+		/// <summary>&lt;SkyrimSE.exe&gt; + 0x994540 (VID55660)</summary>
+		/// <param name = "reference">TESObjectREFR</param>
+		static public System.Boolean IsActivationBlocked(System.IntPtr reference)
+		{
+			if (reference == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("reference"); }
+
+			var extraData = TESObjectREFR.GetExtraData(reference, ExtraDataTypes.Flags);
+			
+			return extraData != System.IntPtr.Zero && ExtraFlags.IsActivationBlocked(extraData);
+		}
+		
 		/// <param name = "reference">TESObjectREFR</param>
 		static public System.Boolean IsCrimeToActivate(System.IntPtr reference)
 		{
@@ -312,7 +339,6 @@ namespace Eggstensions.Bethesda
 		static public System.Boolean IsHarvested(System.IntPtr reference)
 		{
 			if (reference == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("reference"); }
-			if (!TESForm.HasFormType(TESObjectREFR.GetBaseForm(reference), FormTypes.TESObjectTREE, FormTypes.TESFlora)) { throw new Eggceptions.Bethesda.ArgumentFormTypeException("reference"); }
 
 			return TESForm.HasFormFlags(reference, (System.UInt32)TESObjectREFR.RecordFlags.Harvested);
 		}
@@ -401,6 +427,36 @@ namespace Eggstensions.Bethesda
 			}
 
 			return false;
+		}
+
+		static public System.Boolean IsOccluded(System.IntPtr viewer, System.IntPtr target, params CollisionLayers[] collisionLayers)
+		{
+			if (viewer == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("viewer"); }
+			if (target == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("target"); }
+
+			var targetPosition = TESObjectREFR.GetPosition(target);
+			var targetMinimumBounds = TESObjectREFR.GetMinimumBounds(target);
+			var targetMaximumBounds = TESObjectREFR.GetMaximumBounds(target);
+			var targetHeight = targetMaximumBounds.z - targetMinimumBounds.z;
+
+			foreach (var fraction in GetFractions())
+			{
+				if (!TESObjectREFR.IsHit(viewer, target, TESObjectREFR.GetLookAtPosition(viewer), (targetPosition.x, targetPosition.y, targetPosition.z + targetMinimumBounds.z + (fraction * targetHeight)), collisionLayers))
+				{
+					return false;
+				}
+			}
+
+			return true;
+
+
+
+			System.Collections.Generic.IEnumerable<System.Single> GetFractions()
+			{
+				yield return NetScriptFramework.Memory.ReadFloat(VIDS.TESObjectREFR.IsOccludedFraction1);
+				yield return NetScriptFramework.Memory.ReadFloat(VIDS.TESObjectREFR.IsOccludedFraction2);
+				yield return NetScriptFramework.Memory.ReadFloat(VIDS.TESObjectREFR.IsOccludedFraction3);
+			}
 		}
 
 		/*

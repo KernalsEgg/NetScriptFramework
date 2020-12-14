@@ -1,5 +1,25 @@
 ﻿namespace Eggstensions.Bethesda
 {
+	public class BSSpinLockGuard : TemporaryObject
+	{
+		public System.IntPtr Address { get; }
+
+
+
+		public BSSpinLockGuard(System.IntPtr spinLock)
+		{
+			Address = spinLock;
+			BSSpinLock.Lock(Address);
+		}
+
+		override protected void Free()
+		{
+			BSSpinLock.Unlock(Address);
+		}
+	}
+
+
+	
 	/// <summary>NetScriptFramework.SkyrimSE.Mutex, BSAtomic</summary>
 	static public class BSSpinLock
 	{

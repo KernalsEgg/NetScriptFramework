@@ -31,7 +31,7 @@ namespace Eggstensions.Math.Library
 		{
 			if (left == null) { throw new Eggceptions.ArgumentNullException("left"); }
 			if (right == null) { throw new Eggceptions.ArgumentNullException("right"); }
-			if (!Matrix.Dimensions(left, right)) { throw new Eggceptions.Math.Matrix.ArgumentMatrixDimensionsException("left, right"); }
+			if (!Matrix.SameDimensions(left, right)) { throw new Eggceptions.Math.Matrix.ArgumentMatrixDimensionsException("left, right"); }
 
 			var rows = left.Rows(); // left.Rows == right.Rows
 			var columns = left.Columns(); // left.Columns == right.Columns
@@ -91,17 +91,17 @@ namespace Eggstensions.Math.Library
 			return Matrix.Transpose(result);
 		}
 
-		static public (System.Boolean condition, System.Int32? rows, System.Int32? columns) CanMultiply(System.Single[,] left, System.Single[,] right)
+		static public (System.Boolean condition, (System.Int32 rows, System.Int32 columns)? dimensions) CanMultiply(System.Single[,] left, System.Single[,] right)
 		{
 			if (left == null) { throw new Eggceptions.ArgumentNullException("left"); }
 			if (right == null) { throw new Eggceptions.ArgumentNullException("right"); }
 
 			if (left.Columns() != right.Rows())
 			{
-				return (false, null, null); // Incompatible
+				return (false, null); // Incompatible
 			}
 
-			return (true, left.Rows(), right.Columns()); // Compatible
+			return (true, (left.Rows(), right.Columns())); // Compatible
 		}
 
 		static public System.Single Determinant(System.Single[,] matrix)
@@ -109,7 +109,7 @@ namespace Eggstensions.Math.Library
 			if (matrix == null) { throw new Eggceptions.ArgumentNullException("matrix"); }
 			if (!Matrix.IsSquare(matrix)) { throw new Eggceptions.Math.Matrix.ArgumentRectangularMatrixException("matrix"); }
 
-			if (Matrix.Dimensions(matrix, 2, 2))
+			if (Matrix.HasDimensions(matrix, 2, 2))
 			{
 				return (matrix[0, 0] * matrix[1, 1]) - (matrix[0, 1] * matrix[1, 0]);
 			}
@@ -149,29 +149,21 @@ namespace Eggstensions.Math.Library
 			}
 		}
 
-		static public System.Boolean Dimensions(System.Single[,] matrix, System.Int32? rows, System.Int32? columns)
-		{
-			if (matrix == null) { throw new Eggceptions.ArgumentNullException("matrix"); }
-			// rows
-			// columns
-
-			return matrix.AllDimensions((input, output) => output == input, rows, columns);
-		}
-
-		static public System.Boolean Dimensions(System.Single[,] left, System.Single[,] right)
-		{
-			if (left == null) { throw new Eggceptions.ArgumentNullException("left"); }
-			if (right == null) { throw new Eggceptions.ArgumentNullException("right"); }
-
-			return left.Dimensions(right);
-		}
-
 		static public System.Boolean Equals(System.Single[,] left, System.Single[,] right)
 		{
 			if (left == null) { throw new Eggceptions.ArgumentNullException("left"); }
 			if (right == null) { throw new Eggceptions.ArgumentNullException("right"); }
 
 			return (new System.Single[][,] { left, right }).EqualsJagged();
+		}
+
+		static public System.Boolean HasDimensions(System.Single[,] matrix, System.Int32? rows, System.Int32? columns)
+		{
+			if (matrix == null) { throw new Eggceptions.ArgumentNullException("matrix"); }
+			// rows
+			// columns
+
+			return matrix.AllDimensions((input, output) => output == input, rows, columns);
 		}
 
 		static public System.Single[,] Identity(System.Int32 dimensions)
@@ -206,24 +198,28 @@ namespace Eggstensions.Math.Library
 			return
 				Matrix.IsSquare(matrix)
 				&&
-				((System.Func<System.Boolean>)(() =>
-				{
-					var rows = matrix.Rows();
-					var columns = matrix.Columns();
+				IsIdentity();
 
-					for (var row = 0; row < rows; row++)
+
+
+			System.Boolean IsIdentity()
+			{
+				var rows = matrix.Rows();
+				var columns = matrix.Columns();
+
+				for (var row = 0; row < rows; row++)
+				{
+					for (var column = 0; column < columns; column++)
 					{
-						for (var column = 0; column < columns; column++)
+						if (matrix[row, column] != ((row == column) ? 1.0f : 0.0f))
 						{
-							if (matrix[row, column] != ((row == column) ? 1 : 0))
-							{
-								return false;
-							}
+							return false;
 						}
 					}
+				}
 
-					return true;
-				}))();
+				return true;
+			}
 		}
 
 		static public System.Boolean IsInvertible(System.Single[,] matrix)
@@ -240,7 +236,7 @@ namespace Eggstensions.Math.Library
 		{
 			if (matrix == null) { throw new Eggceptions.ArgumentNullException("matrix"); }
 
-			return Matrix.Dimensions(matrix, 3, 3);
+			return Matrix.HasDimensions(matrix, 3, 3);
 		}
 
 		static public System.Boolean IsRotationMatrix(System.Single[,] matrix)
@@ -271,45 +267,49 @@ namespace Eggstensions.Math.Library
 			return
 				Matrix.IsSquare(matrix)
 				&&
-				((System.Func<System.Boolean>)(() =>
-				{
-					var rows = matrix.Rows();
-					var columns = matrix.Columns();
+				IsSymmetric();
 
-					for (var row = 0; row < rows; row++)
+
+
+			System.Boolean IsSymmetric()
+			{
+				var rows = matrix.Rows();
+				var columns = matrix.Columns();
+
+				for (var row = 0; row < rows; row++)
+				{
+					for (var column = (row + 1); column < columns; column++) // Compare elements above the leading diagonal with elements below the leading diagonal
 					{
-						for (var column = (row + 1); column < columns; column++) // Compare elements above the leading diagonal with elements below the leading diagonal
+						if (matrix[row, column] != (skewSymmetric ? -matrix[column, row] : matrix[column, row]))
 						{
-							if (matrix[row, column] != (skewSymmetric ? -matrix[column, row] : matrix[column, row]))
-							{
-								return false;
-							}
+							return false;
 						}
 					}
+				}
 
-					return true;
-				}))();
+				return true;
+			}
 		}
 
 		static public System.Boolean IsVector(System.Single[,] matrix)
 		{
 			if (matrix == null) { throw new Eggceptions.ArgumentNullException("matrix"); }
 
-			return Matrix.Dimensions(matrix, 1, null);
+			return Matrix.HasDimensions(matrix, 1, null);
 		}
 
 		static public System.Boolean IsVector3(System.Single[,] matrix)
 		{
 			if (matrix == null) { throw new Eggceptions.ArgumentNullException("matrix"); }
 
-			return Matrix.Dimensions(matrix, 1, 3);
+			return Matrix.HasDimensions(matrix, 1, 3);
 		}
 
 		static public System.Boolean IsVector7(System.Single[,] matrix)
 		{
 			if (matrix == null) { throw new Eggceptions.ArgumentNullException("matrix"); }
 
-			return Matrix.Dimensions(matrix, 1, 7);
+			return Matrix.HasDimensions(matrix, 1, 7);
 		}
 
 		static public System.Boolean IsZero(System.Single[,] matrix)
@@ -400,6 +400,14 @@ namespace Eggstensions.Math.Library
 			return result;
 		}
 
+		static public System.Boolean SameDimensions(System.Single[,] left, System.Single[,] right)
+		{
+			if (left == null) { throw new Eggceptions.ArgumentNullException("left"); }
+			if (right == null) { throw new Eggceptions.ArgumentNullException("right"); }
+
+			return left.SameDimensions(right);
+		}
+
 		static public System.Single[,] Subtract(System.Single scalar, System.Single[,] matrix)
 		{
 			// scalar
@@ -446,7 +454,7 @@ namespace Eggstensions.Math.Library
 		{
 			if (left == null) { throw new Eggceptions.ArgumentNullException("left"); }
 			if (right == null) { throw new Eggceptions.ArgumentNullException("right"); }
-			if (!Matrix.Dimensions(left, right)) { throw new Eggceptions.Math.Matrix.ArgumentMatrixDimensionsException("left, right"); }
+			if (!Matrix.SameDimensions(left, right)) { throw new Eggceptions.Math.Matrix.ArgumentMatrixDimensionsException("left, right"); }
 
 			var rows = left.Rows(); // left.Rows == right.Rows
 			var columns = left.Columns(); // left.Columns == right.Columns
@@ -478,6 +486,24 @@ namespace Eggstensions.Math.Library
 				for (var column = 0; column < columns; column++)
 				{
 					result[column, row] = matrix[row, column];
+				}
+			}
+
+			return result;
+		}
+
+		static public System.Single[,] Zero(System.Int32 rows, System.Int32 columns)
+		{
+			// rows
+			// columns
+
+			var result = new System.Single[rows, columns];
+
+			for (var row = 0; row < rows; row++)
+			{
+				for (var column = 0; column < columns; column++)
+				{
+					result[row, column] = (row == column) ? 1 : 0;
 				}
 			}
 

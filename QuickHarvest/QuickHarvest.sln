@@ -5,9 +5,9 @@ VisualStudioVersion = 16.0.30717.126
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuickHarvest", "QuickHarvest\QuickHarvest.csproj", "{D28B7114-FB4F-4048-A903-54A890170A58}"
 EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Eggstensions", "..\Eggstensions\Eggstensions\Eggstensions.shproj", "{06C05C2E-74EE-4478-AEBC-C42BD57E993D}"
-EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Eggceptions", "..\Eggceptions\Eggceptions\Eggceptions.shproj", "{08B7CA21-64AA-4785-BCE8-2E3DD047784E}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Eggstensions", "..\Eggstensions\Eggstensions\Eggstensions.shproj", "{06C05C2E-74EE-4478-AEBC-C42BD57E993D}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution

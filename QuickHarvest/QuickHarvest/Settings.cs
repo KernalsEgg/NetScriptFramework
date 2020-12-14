@@ -4,6 +4,18 @@
 
 namespace QuickHarvest
 {
+	static public class Flags
+	{
+		public enum Visibility : System.Int32
+		{
+			All = 0,
+			Unoccluded = 1,
+			LineOfSight = 2
+		}
+	}
+
+
+
 	sealed public class Settings
 	{
 		private NetScriptFramework.Tools.ConfigFile _configFile;
@@ -11,8 +23,6 @@ namespace QuickHarvest
 
 
 		public System.Boolean HarvestEverything { get; private set; }
-
-		public System.Boolean LineOfSight { get; private set; }
 
 		public System.Boolean LogHandledExceptions { get; private set; }
 
@@ -23,6 +33,8 @@ namespace QuickHarvest
 		public System.Collections.Generic.HashSet<System.IntPtr> ExcludedIngredients { get; private set; }
 
 		public System.Collections.Generic.List<FormTypes> IncludedIngredientFormTypes { get; private set; }
+
+		public Flags.Visibility Visibility { get; private set; }
 
 		public System.Single MaximumDistance { get; private set; }
 
@@ -44,21 +56,22 @@ namespace QuickHarvest
 
 			_configFile.AddSetting
 			(
-				"LineOfSight",
-				new NetScriptFramework.Tools.Value(true),
-				"Line of Sight",
-				"If enabled only the ingredients within your line of sight will be quick harvested." +
-				"\nIf disabled all ingredients will be quick harvested.",
+				"Steal",
+				new NetScriptFramework.Tools.Value(false),
+				"Steal",
+				"If enabled ingredients will only be stolen when you steal." +
+				"\nIf disabled ingredients will never be stolen.",
 				NetScriptFramework.Tools.ConfigEntryFlags.VeryShortComment
 			);
 
 			_configFile.AddSetting
 			(
-				"Steal",
-				new NetScriptFramework.Tools.Value(false),
-				"Steal",
-				"If enabled ingredients will be stolen when you steal, and will not be stolen when you do not steal." +
-				"\nIf disabled ingredients will never be stolen.",
+				"Visibility",
+				new NetScriptFramework.Tools.Value(1),
+				"Visibility",
+				"If set to 0 then all ingredients will be quick harvested" +
+				"\nIf set to 1 then only ingredients not hidden behind walls or surfaces will be quick harvested." +
+				"\nIf set to 2 then only ingredients within your line of sight will be quick harvested.",
 				NetScriptFramework.Tools.ConfigEntryFlags.VeryShortComment
 			);
 
@@ -138,13 +151,13 @@ namespace QuickHarvest
 			if (harvestEverythingValue == null) { throw new Eggceptions.NullException("harvestEverythingValue"); }
 			HarvestEverything = harvestEverythingValue.ToBoolean();
 
-			var lineOfSightValue = _configFile.GetValue("LineOfSight");
-			if (lineOfSightValue == null) { throw new Eggceptions.NullException("lineOfSightValue"); }
-			LineOfSight = lineOfSightValue.ToBoolean();
-
 			var stealValue = _configFile.GetValue("Steal");
 			if (stealValue == null) { throw new Eggceptions.NullException("stealValue"); }
 			Steal = stealValue.ToBoolean();
+
+			var visibilityValue = _configFile.GetValue("Visibility");
+			if (visibilityValue == null) { throw new Eggceptions.NullException("visibilityValue"); }
+			Visibility = (Flags.Visibility)visibilityValue.ToInt32();
 
 			var maximumDistanceValue = _configFile.GetValue("MaximumDistance");
 			if (maximumDistanceValue == null) { throw new Eggceptions.NullException("maximumDistanceValue"); }

@@ -74,18 +74,22 @@ namespace Eggstensions.ExtensionMethods
 			if (condition == null) { throw new Eggceptions.ArgumentNullException("condition"); }
 
 			return
-				((System.Func<System.Boolean>)(() =>
+				Length();
+
+
+
+			System.Boolean Length()
+			{
+				if (length.HasValue)
 				{
-					if (length.HasValue)
-					{
-						if (length.Value < 0) { throw new Eggceptions.ArgumentOutOfRangeException("length"); }
-						if (condition(length.Value, array.Length)) { return true; }
+					if (length.Value < 0) { throw new Eggceptions.ArgumentOutOfRangeException("length"); }
+					if (condition(length.Value, array.Length)) { return true; }
 
-						return false;
-					}
+					return false;
+				}
 
-					return true;
-				}))();
+				return true;
+			}
 		}
 
 		/// <summary>If all dimensions of this array meet the specified condition.</summary>
@@ -95,31 +99,37 @@ namespace Eggstensions.ExtensionMethods
 			if (condition == null) { throw new Eggceptions.ArgumentNullException("condition"); }
 
 			return
-				((System.Func<System.Boolean>)(() =>
-				{
-					if (rows.HasValue)
-					{
-						if (rows.Value < 0) { throw new Eggceptions.ArgumentOutOfRangeException("rows"); }
-						if (condition(rows.Value, array.Rows())) { return true; }
-
-						return false;
-					}
-
-					return true;
-				}))()
+				Rows()
 				&&
-				((System.Func<System.Boolean>)(() =>
+				Columns();
+
+
+
+			System.Boolean Rows()
+			{
+				if (rows.HasValue)
 				{
-					if (columns.HasValue)
-					{
-						if (columns.Value < 0) { throw new Eggceptions.ArgumentOutOfRangeException("columns"); }
-						if (condition(columns.Value, array.Columns())) { return true; }
+					if (rows.Value < 0) { throw new Eggceptions.ArgumentOutOfRangeException("rows"); }
+					if (condition(rows.Value, array.Rows())) { return true; }
 
-						return false;
-					}
+					return false;
+				}
 
-					return true;
-				}))();
+				return true;
+			}
+
+			System.Boolean Columns()
+			{
+				if (columns.HasValue)
+				{
+					if (columns.Value < 0) { throw new Eggceptions.ArgumentOutOfRangeException("columns"); }
+					if (condition(columns.Value, array.Columns())) { return true; }
+
+					return false;
+				}
+
+				return true;
+			}
 		}
 
 		/// <summary>If all dimensions of this array meet the specified condition.</summary>
@@ -129,44 +139,50 @@ namespace Eggstensions.ExtensionMethods
 			if (condition == null) { throw new Eggceptions.ArgumentNullException("condition"); }
 
 			return
-				((System.Func<System.Boolean>)(() =>
-				{
-					if (length.HasValue)
-					{
-						if (length.Value < 0) { throw new Eggceptions.ArgumentOutOfRangeException("length"); }
-						if (condition(length.Value, arrays.Length)) { return true; }
-
-						return false;
-					}
-
-					return true;
-				}))()
+				Length()
 				&&
-				((System.Func<System.Boolean>)(() =>
-				{
-					if (rows.HasValue)
-					{
-						if (rows.Value < 0) { throw new Eggceptions.ArgumentOutOfRangeException("rows"); }
-						if (arrays.All(elements => { if (elements == null) { return false; } else { return condition(rows.Value, elements.Rows()); } })) { return true; }
-
-						return false;
-					}
-
-					return true;
-				}))()
+				Rows()
 				&&
-				((System.Func<System.Boolean>)(() =>
+				Columns();
+
+
+
+			System.Boolean Length()
+			{
+				if (length.HasValue)
 				{
-					if (columns.HasValue)
-					{
-						if (columns.Value < 0) { throw new Eggceptions.ArgumentOutOfRangeException("columns"); }
-						if (arrays.All(elements => { if (elements == null) { return false; } else { return condition(columns.Value, elements.Columns()); } })) { return true; }
+					if (length.Value < 0) { throw new Eggceptions.ArgumentOutOfRangeException("length"); }
+					if (condition(length.Value, arrays.Length)) { return true; }
 
-						return false;
-					}
+					return false;
+				}
 
-					return true;
-				}))();
+				return true;
+			}
+
+			System.Boolean Rows()
+			{
+				if (rows.HasValue)
+				{
+					if (rows.Value < 0) { throw new Eggceptions.ArgumentOutOfRangeException("rows"); }
+
+					return arrays.All(elements => elements != null ? condition(rows.Value, elements.Rows()) : false);
+				}
+
+				return true;
+			}
+
+			System.Boolean Columns()
+			{
+				if (columns.HasValue)
+				{
+					if (columns.Value < 0) { throw new Eggceptions.ArgumentOutOfRangeException("columns"); }
+
+					return arrays.All(elements => elements != null ? condition(columns.Value, elements.Columns()) : false);
+				}
+
+				return true;
+			}
 		}
 		#endregion
 
@@ -240,16 +256,20 @@ namespace Eggstensions.ExtensionMethods
 			if (condition == null) { throw new Eggceptions.ArgumentNullException("condition"); }
 
 			return
-				((System.Func<System.Boolean>)(() =>
-				{
-					if (length.HasValue)
-					{
-						if (length.Value < 0) { throw new Eggceptions.ArgumentOutOfRangeException("length"); }
-						if (condition(length.Value, array.Length)) { return true; }
-					}
+				Length();
 
-					return false;
-				}))();
+
+
+			System.Boolean Length()
+			{
+				if (length.HasValue)
+				{
+					if (length.Value < 0) { throw new Eggceptions.ArgumentOutOfRangeException("length"); }
+					if (condition(length.Value, array.Length)) { return true; }
+				}
+
+				return false;
+			}
 		}
 
 		/// <summary>If any dimensions of this array meet the specified condition.</summary>
@@ -259,27 +279,33 @@ namespace Eggstensions.ExtensionMethods
 			if (condition == null) { throw new Eggceptions.ArgumentNullException("condition"); }
 
 			return
-				((System.Func<System.Boolean>)(() =>
-				{
-					if (rows.HasValue)
-					{
-						if (rows.Value < 0) { throw new Eggceptions.ArgumentOutOfRangeException("rows"); }
-						if (condition(rows.Value, array.Rows())) { return true; }
-					}
-
-					return false;
-				}))()
+				Rows()
 				||
-				((System.Func<System.Boolean>)(() =>
-				{
-					if (columns.HasValue)
-					{
-						if (columns.Value < 0) { throw new Eggceptions.ArgumentOutOfRangeException("columns"); }
-						if (condition(columns.Value, array.Columns())) { return true; }
-					}
+				Columns();
 
-					return false;
-				}))();
+
+
+			System.Boolean Rows()
+			{
+				if (rows.HasValue)
+				{
+					if (rows.Value < 0) { throw new Eggceptions.ArgumentOutOfRangeException("rows"); }
+					if (condition(rows.Value, array.Rows())) { return true; }
+				}
+
+				return false;
+			}
+
+			System.Boolean Columns()
+			{
+				if (columns.HasValue)
+				{
+					if (columns.Value < 0) { throw new Eggceptions.ArgumentOutOfRangeException("columns"); }
+					if (condition(columns.Value, array.Columns())) { return true; }
+				}
+
+				return false;
+			}
 		}
 
 		/// <summary>If any dimensions of this array meet the specified condition.</summary>
@@ -289,38 +315,48 @@ namespace Eggstensions.ExtensionMethods
 			if (condition == null) { throw new Eggceptions.ArgumentNullException("condition"); }
 
 			return
-				((System.Func<System.Boolean>)(() =>
-				{
-					if (length.HasValue)
-					{
-						if (length.Value < 0) { throw new Eggceptions.ArgumentOutOfRangeException("length"); }
-						if (condition(length.Value, arrays.Length)) { return true; }
-					}
-
-					return false;
-				}))()
+				Length()
 				||
-				((System.Func<System.Boolean>)(() =>
-				{
-					if (rows.HasValue)
-					{
-						if (rows.Value < 0) { throw new Eggceptions.ArgumentOutOfRangeException("rows"); }
-						if (arrays.Any(elements => { if (elements == null) { return false; } else { return condition(rows.Value, elements.Rows()); } })) { return true; }
-					}
-
-					return false;
-				}))()
+				Rows()
 				||
-				((System.Func<System.Boolean>)(() =>
-				{
-					if (columns.HasValue)
-					{
-						if (columns.Value < 0) { throw new Eggceptions.ArgumentOutOfRangeException("columns"); }
-						if (arrays.Any(elements => { if (elements == null) { return false; } else { return condition(columns.Value, elements.Columns()); } })) { return true; }
-					}
+				Columns();
 
-					return false;
-				}))();
+
+
+			System.Boolean Length()
+			{
+				if (length.HasValue)
+				{
+					if (length.Value < 0) { throw new Eggceptions.ArgumentOutOfRangeException("length"); }
+					if (condition(length.Value, arrays.Length)) { return true; }
+				}
+
+				return false;
+			}
+
+			System.Boolean Rows()
+			{
+				if (rows.HasValue)
+				{
+					if (rows.Value < 0) { throw new Eggceptions.ArgumentOutOfRangeException("rows"); }
+
+					return arrays.Any(elements => elements != null ? condition(rows.Value, elements.Rows()) : false);
+				}
+
+				return false;
+			}
+
+			System.Boolean Columns()
+			{
+				if (columns.HasValue)
+				{
+					if (columns.Value < 0) { throw new Eggceptions.ArgumentOutOfRangeException("columns"); }
+
+					return arrays.Any(elements => elements != null ? condition(columns.Value, elements.Columns()) : false);
+				}
+
+				return false;
+			}
 		}
 		#endregion
 
@@ -358,7 +394,7 @@ namespace Eggstensions.ExtensionMethods
 			if (arrays == null) { throw new Eggceptions.ArgumentNullException("arrays"); }
 			// lowerBoundRows
 			// lowerBoundColumns
-			if (!arrays.DimensionsJagged()) { throw new Eggceptions.ArgumentOutOfRangeException("arrays"); }
+			if (!arrays.SameDimensionsJagged()) { throw new Eggceptions.ArgumentOutOfRangeException("arrays"); }
 
 			var arraysLowerBound = arrays.LowerBound();
 
@@ -556,102 +592,6 @@ namespace Eggstensions.ExtensionMethods
 
 
 
-		#region Dimensions
-		/// <summary>If the dimensions of this array are equal to the dimensions of other arrays.</summary>
-		static public System.Boolean Dimensions<T>(this T[] array, params T[][] arrays)
-		{
-			// array
-			if (arrays == null) { throw new Eggceptions.ArgumentNullException("arrays"); }
-
-			return arrays.Unshift(array).DimensionsJagged();
-		}
-
-		/// <summary>If the dimensions of this array are equal to the dimensions of other arrays.</summary>
-		static public System.Boolean Dimensions<T>(this T[,] array, params T[][,] arrays)
-		{
-			// array
-			if (arrays == null) { throw new Eggceptions.ArgumentNullException("arrays"); }
-
-			return arrays.Unshift(array).DimensionsJagged();
-		}
-
-		/// <summary>If the dimensions of each element in this jagged array are equal.</summary>
-		static public System.Boolean DimensionsJagged<T>(this T[][] arrays)
-		{
-			if (arrays == null) { throw new Eggceptions.ArgumentNullException("arrays"); }
-			if (arrays.Length < 2) { throw new Eggceptions.ArgumentOutOfRangeException("arrays"); }
-
-			if (arrays.Any(elements => elements == null))
-			{
-				return arrays.All(elements => elements == null);
-			}
-
-			var lowerBound = arrays.LowerBound();
-			var upperBound = arrays.UpperBound();
-
-			var firstArray = arrays[lowerBound];
-			var firstArrayLowerBound = firstArray.LowerBound();
-			var firstArrayUpperBound = firstArray.UpperBound();
-
-			for (var i = lowerBound + 1; i <= upperBound; i++) // Skip firstArray
-			{
-				if
-				(
-					(arrays[i].LowerBound() != firstArrayLowerBound)
-					||
-					(arrays[i].UpperBound() != firstArrayUpperBound)
-				)
-				{
-					return false;
-				}
-			}
-
-			return true;
-		}
-
-		/// <summary>If the dimensions of each element in this jagged array are equal.</summary>
-		static public System.Boolean DimensionsJagged<T>(this T[][,] arrays)
-		{
-			if (arrays == null) { throw new Eggceptions.ArgumentNullException("arrays"); }
-			if (arrays.Length < 2) { throw new Eggceptions.ArgumentOutOfRangeException("arrays"); }
-
-			if (arrays.Any(elements => elements == null))
-			{
-				return arrays.All(elements => elements == null);
-			}
-
-			var lowerBound = arrays.LowerBound();
-			var upperBound = arrays.UpperBound();
-
-			var firstArray = arrays[lowerBound];
-			var lowerBoundRows = firstArray.LowerBoundRows();
-			var upperBoundRows = firstArray.UpperBoundRows();
-			var lowerBoundColumns = firstArray.LowerBoundColumns();
-			var upperBoundColumns = firstArray.UpperBoundColumns();
-
-			for (var i = lowerBound + 1; i <= upperBound; i++) // Skip firstArray
-			{
-				if
-				(
-					(arrays[i].LowerBoundRows() != lowerBoundRows)
-					||
-					(arrays[i].UpperBoundRows() != upperBoundRows)
-					||
-					(arrays[i].LowerBoundColumns() != lowerBoundColumns)
-					||
-					(arrays[i].UpperBoundColumns() != upperBoundColumns)
-				)
-				{
-					return false;
-				}
-			}
-
-			return true;
-		}
-		#endregion
-
-
-
 		#region Equals
 		// Cannot override Object.Equals
 		/// <summary>If this array is equal to other arrays.</summary>
@@ -674,7 +614,7 @@ namespace Eggstensions.ExtensionMethods
 				return arrays.All(elements => elements == null);
 			}
 
-			if (!arrays.DimensionsJagged())
+			if (!arrays.SameDimensionsJagged())
 			{
 				return false;
 			}
@@ -971,18 +911,22 @@ namespace Eggstensions.ExtensionMethods
 			// index
 
 			return
-				((System.Func<System.Boolean>)(() =>
-				{
-					if (index.HasValue)
-					{
-						return
-							(index.Value < array.LowerBound())
-							||
-							(index.Value > array.UpperBound());
-					}
+				Length();
 
-					return false;
-				}))();
+
+
+			System.Boolean Length()
+			{
+				if (index.HasValue)
+				{
+					return
+						(index.Value < array.LowerBound())
+						||
+						(index.Value > array.UpperBound());
+				}
+
+				return false;
+			}
 		}
 
 		/// <summary>If the specified row or column is out of bounds.</summary>
@@ -993,31 +937,37 @@ namespace Eggstensions.ExtensionMethods
 			// column
 
 			return
-				((System.Func<System.Boolean>)(() =>
-				{
-					if (row.HasValue)
-					{
-						return
-							(row.Value < array.LowerBoundRows())
-							||
-							(row.Value > array.UpperBoundRows());
-					}
-
-					return false;
-				}))()
+				Rows()
 				||
-				((System.Func<System.Boolean>)(() =>
-				{
-					if (column.HasValue)
-					{
-						return
-							(column.Value < array.LowerBoundColumns())
-							||
-							(column.Value > array.UpperBoundColumns());
-					}
+				Columns();
 
-					return false;
-				}))();
+
+
+			System.Boolean Rows()
+			{
+				if (row.HasValue)
+				{
+					return
+						(row.Value < array.LowerBoundRows())
+						||
+						(row.Value > array.UpperBoundRows());
+				}
+
+				return false;
+			}
+
+			System.Boolean Columns()
+			{
+				if (column.HasValue)
+				{
+					return
+						(column.Value < array.LowerBoundColumns())
+						||
+						(column.Value > array.UpperBoundColumns());
+				}
+
+				return false;
+			}
 		}
 		#endregion
 
@@ -1115,7 +1065,7 @@ namespace Eggstensions.ExtensionMethods
 			if (arrays == null) { throw new Eggceptions.ArgumentNullException("arrays"); }
 			// lowerBoundRows
 			// lowerBoundColumns
-			if (!arrays.DimensionsJagged()) { throw new Eggceptions.ArgumentOutOfRangeException("arrays"); }
+			if (!arrays.SameDimensionsJagged()) { throw new Eggceptions.ArgumentOutOfRangeException("arrays"); }
 
 			var arraysLowerBound = arrays.LowerBound();
 
@@ -1151,6 +1101,102 @@ namespace Eggstensions.ExtensionMethods
 			if (array == null) { throw new Eggceptions.ArgumentNullException("array"); }
 
 			return array.GetLength(0);
+		}
+		#endregion
+
+
+
+		#region SameDimensions
+		/// <summary>If the dimensions of this array are equal to the dimensions of other arrays.</summary>
+		static public System.Boolean SameDimensions<T>(this T[] array, params T[][] arrays)
+		{
+			// array
+			if (arrays == null) { throw new Eggceptions.ArgumentNullException("arrays"); }
+
+			return arrays.Unshift(array).SameDimensionsJagged();
+		}
+
+		/// <summary>If the dimensions of this array are equal to the dimensions of other arrays.</summary>
+		static public System.Boolean SameDimensions<T>(this T[,] array, params T[][,] arrays)
+		{
+			// array
+			if (arrays == null) { throw new Eggceptions.ArgumentNullException("arrays"); }
+
+			return arrays.Unshift(array).SameDimensionsJagged();
+		}
+
+		/// <summary>If the dimensions of each element in this jagged array are equal.</summary>
+		static public System.Boolean SameDimensionsJagged<T>(this T[][] arrays)
+		{
+			if (arrays == null) { throw new Eggceptions.ArgumentNullException("arrays"); }
+			if (arrays.Length < 2) { throw new Eggceptions.ArgumentOutOfRangeException("arrays"); }
+
+			if (arrays.Any(elements => elements == null))
+			{
+				return arrays.All(elements => elements == null);
+			}
+
+			var lowerBound = arrays.LowerBound();
+			var upperBound = arrays.UpperBound();
+
+			var firstArray = arrays[lowerBound];
+			var firstArrayLowerBound = firstArray.LowerBound();
+			var firstArrayUpperBound = firstArray.UpperBound();
+
+			for (var i = lowerBound + 1; i <= upperBound; i++) // Skip firstArray
+			{
+				if
+				(
+					(arrays[i].LowerBound() != firstArrayLowerBound)
+					||
+					(arrays[i].UpperBound() != firstArrayUpperBound)
+				)
+				{
+					return false;
+				}
+			}
+
+			return true;
+		}
+
+		/// <summary>If the dimensions of each element in this jagged array are equal.</summary>
+		static public System.Boolean SameDimensionsJagged<T>(this T[][,] arrays)
+		{
+			if (arrays == null) { throw new Eggceptions.ArgumentNullException("arrays"); }
+			if (arrays.Length < 2) { throw new Eggceptions.ArgumentOutOfRangeException("arrays"); }
+
+			if (arrays.Any(elements => elements == null))
+			{
+				return arrays.All(elements => elements == null);
+			}
+
+			var lowerBound = arrays.LowerBound();
+			var upperBound = arrays.UpperBound();
+
+			var firstArray = arrays[lowerBound];
+			var lowerBoundRows = firstArray.LowerBoundRows();
+			var upperBoundRows = firstArray.UpperBoundRows();
+			var lowerBoundColumns = firstArray.LowerBoundColumns();
+			var upperBoundColumns = firstArray.UpperBoundColumns();
+
+			for (var i = lowerBound + 1; i <= upperBound; i++) // Skip firstArray
+			{
+				if
+				(
+					(arrays[i].LowerBoundRows() != lowerBoundRows)
+					||
+					(arrays[i].UpperBoundRows() != upperBoundRows)
+					||
+					(arrays[i].LowerBoundColumns() != lowerBoundColumns)
+					||
+					(arrays[i].UpperBoundColumns() != upperBoundColumns)
+				)
+				{
+					return false;
+				}
+			}
+
+			return true;
 		}
 		#endregion
 

@@ -16,13 +16,24 @@
 
 
 
+		/// <param name="sky">Sky</param>
 		static public System.Single GetCurrentGameHour(System.IntPtr sky)
 		{
 			if (sky == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("sky"); }
 
 			return NetScriptFramework.Memory.ReadFloat(sky + 0x1B0);
 		}
-		
+
+		/// <param name="sky">Sky</param>
+		/// <returns>TESWeather, System.IntPtr.Zero</returns>
+		static public System.IntPtr GetCurrentWeather(System.IntPtr sky)
+		{
+			if (sky == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("sky"); }
+
+			return NetScriptFramework.Memory.ReadPointer(sky + 0x48);
+		}
+
+		/// <param name="sky">Sky</param>
 		static public System.Single GetLastWeatherUpdate(System.IntPtr sky)
 		{
 			if (sky == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("sky"); }

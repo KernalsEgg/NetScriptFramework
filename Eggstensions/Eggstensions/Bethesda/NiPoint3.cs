@@ -20,9 +20,7 @@ namespace Eggstensions.Bethesda
 
 		public NiPoint3() : base() { }
 
-		public NiPoint3(Managed.Matrix matrix) : base(matrix) { }
-
-		public NiPoint3(System.Single[,] elements) : base(elements) { }
+		public NiPoint3(Managed.Vector3 vector3) : base(vector3) { }
 
 		public NiPoint3(System.IntPtr address) : base(address) { }
 	}

@@ -8,11 +8,7 @@
 		{
 			if (bipedObject == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("bipedObject"); }
 
-			var armor = NetScriptFramework.Memory.ReadPointer(bipedObject);
-			if (armor == System.IntPtr.Zero) { return System.IntPtr.Zero; }
-			if (!TESForm.HasFormType(armor, FormTypes.TESObjectARMO, FormTypes.TESObjectARMA)) { throw new Eggceptions.Bethesda.FormTypeException("armor"); }
-
-			return armor;
+			return NetScriptFramework.Memory.ReadPointer(bipedObject);
 		}
 
 		/// <param name = "bipedObject">BipedObject</param>
@@ -21,11 +17,7 @@
 		{
 			if (bipedObject == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("bipedObject"); }
 
-			var armorAddon = NetScriptFramework.Memory.ReadPointer(bipedObject + 0x8);
-			if (armorAddon == System.IntPtr.Zero) { return System.IntPtr.Zero; }
-			if (!TESForm.HasFormType(armorAddon, FormTypes.TESObjectARMA)) { throw new Eggceptions.Bethesda.FormTypeException("armorAddon"); }
-			
-			return armorAddon;
+			return NetScriptFramework.Memory.ReadPointer(bipedObject + 0x8);
 		}
 
 		/// <param name = "bipedObject">BipedObject</param>

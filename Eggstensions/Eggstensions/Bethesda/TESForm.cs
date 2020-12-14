@@ -2,13 +2,14 @@
 {
 	public enum FormTypes : System.Byte
 	{
-		TESRace =		0xE,
-		TESObjectARMO =	0x1A,
-		TESObjectTREE =	0x26,
-		TESFlora =		0x27,
-		TESNPC =		0x2B,
-		Character =		0x3E,
-		TESObjectARMA =	0x66
+		TESRace =			0xE,
+		TESObjectARMO =		0x1A,
+		TESObjectTREE =		0x26,
+		TESFlora =			0x27,
+		TESNPC =			0x2B,
+		Character =			0x3E,
+		TESObjectARMA =		0x66,
+		BGSCollisionLayer =	0x84
 	}
 
 

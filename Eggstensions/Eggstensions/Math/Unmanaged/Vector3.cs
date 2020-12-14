@@ -2,11 +2,44 @@
 {
 	public class Vector3 : Vector
 	{
+		new public Managed.Vector3 Elements
+		{
+			get
+			{
+				var elements = new System.Single[Rows, Columns];
+
+				for (var row = 0; row < Rows; row++)
+				{
+					for (var column = 0; column < Columns; column++)
+					{
+						elements[row, column] = this[row, column];
+					}
+				}
+
+				return new Managed.Vector3(elements);
+			}
+			set
+			{
+				if (value == null) { throw new Eggceptions.NullException("value"); }
+				if (!value.HasDimensions(Rows, Columns)) { throw new Eggceptions.Math.Matrix.MatrixDimensionsException("this, value"); }
+
+				var elements = value.Elements;
+
+				for (var row = 0; row < Rows; row++)
+				{
+					for (var column = 0; column < Columns; column++)
+					{
+						this[row, column] = elements[row, column];
+					}
+				}
+			}
+		}
+
+
+
 		public Vector3() : base(3) { }
 
-		public Vector3(System.Single[,] elements) : base(elements, 3) { }
-
-		public Vector3(Managed.Matrix matrix) : base(matrix, 3) { }
+		public Vector3(Managed.Vector3 vector3) : base(vector3, 3) { }
 
 		public Vector3(System.IntPtr address) : base(address, 3) { }
 
@@ -49,64 +82,6 @@
 			{
 				this[0, 2] = value;
 			}
-		}
-
-
-
-		/// <summary>Convert this Vector3 from axis-angle representation to a rotation matrix.</summary>
-		/// <param name="angle">Radians</param>
-		/// <returns>Matrix33</returns>
-		public Managed.Matrix AxisAngleToRotationMatrix(System.Single angle)
-		{
-			// angle
-
-			return new Managed.Matrix(Library.Vector3.AxisAngleToRotationMatrix(Elements, angle));
-		}
-
-		/// <summary>Convert this Vector3 from Euler angle representation to a rotation matrix.</summary>
-		/// <returns>Matrix33</returns>
-		public Managed.Matrix EulerAnglesToRotationMatrix()
-		{
-			return new Managed.Matrix(Library.Vector3.EulerAnglesToRotationMatrix(Elements));
-		}
-
-		/// <summary>Rotate this Vector3 about the x-axis.</summary>
-		/// <param name="angle">Radians</param>
-		/// <returns>Vector3</returns>
-		public Managed.Matrix RotateX(System.Single angle)
-		{
-			// angle
-
-			return new Managed.Matrix(Library.Matrix33.RotateX(Elements, angle));
-		}
-
-		/// <summary>Rotate this Vector3 about the y-axis.</summary>
-		/// <param name="angle">Radians</param>
-		/// <returns>Vector3</returns>
-		public Managed.Matrix RotateY(System.Single angle)
-		{
-			// angle
-
-			return new Managed.Matrix(Library.Matrix33.RotateY(Elements, angle));
-		}
-
-		/// <summary>Rotate this Vector3 about the z-axis.</summary>
-		/// <param name="angle">Radians</param>
-		/// <returns>Vector3</returns>
-		public Managed.Matrix RotateZ(System.Single angle)
-		{
-			// angle
-
-			return new Managed.Matrix(Library.Matrix33.RotateZ(Elements, angle));
-		}
-
-		/// <summary>The rotation matrix necessary to rotate this Vector3 onto another Vector3.</summary>
-		/// <returns>Matrix33</returns>
-		public Managed.Matrix RotationMatrixBetween(Vector3 other)
-		{
-			if (other == null) { throw new Eggceptions.ArgumentNullException("other"); }
-
-			return new Managed.Matrix(Library.Vector3.RotationMatrixBetween(Elements, other.Elements));
 		}
 	}
 }

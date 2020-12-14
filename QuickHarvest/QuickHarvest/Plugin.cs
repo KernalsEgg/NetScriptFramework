@@ -1,4 +1,6 @@
-﻿using Eggstensions.Bethesda;
+﻿using System.Linq;
+
+using Eggstensions.Bethesda;
 
 
 
@@ -59,6 +61,8 @@ namespace QuickHarvest
 
 				if (arguments.Entering)
 				{
+					_collisionLayers = Plugin.GetCollisionLayers();
+					
 					_settings = new Settings();
 					_settings.Load();
 				}
@@ -77,13 +81,29 @@ namespace QuickHarvest
 
 
 
+		static private CollisionLayers[] _collisionLayers;
+
 		static private Settings _settings;
 
 		static private System.Int32 _harvesting = 0;
 
 
 
-		public void OnActivateFlora(Events.ActivateFloraEventArguments arguments)
+		static private CollisionLayers[] GetCollisionLayers()
+		{
+			var los = TESForm.GetFormFromFile(0x8878A, "Skyrim.esm");
+			if (los == System.IntPtr.Zero) { throw new Eggceptions.NullException("los"); }
+			if (!TESForm.HasFormType(los, FormTypes.BGSCollisionLayer)) { throw new Eggceptions.Bethesda.FormTypeException("los"); }
+
+			var collidesWith = BSTArray.IntPtr(BGSCollisionLayer.GetCollidesWith(los));
+			var collisionLayers =
+				from collisionLayer in collidesWith
+				select BGSCollisionLayer.GetCollisionLayer(collisionLayer);
+
+			return collisionLayers.ToArray<CollisionLayers>();
+		}
+
+		static public void OnActivateFlora(Events.ActivateFloraEventArguments arguments)
 		{
 			if (arguments == null) { throw new Eggceptions.ArgumentNullException("arguments"); }
 
@@ -91,7 +111,7 @@ namespace QuickHarvest
 			{
 				try
 				{
-					QuickHarvest(TESFlora.GetIngredient(arguments.BaseForm), arguments.Target, arguments.Activator);
+					Plugin.QuickHarvest(TESFlora.GetIngredient(arguments.BaseForm), arguments.Target, arguments.Activator);
 				}
 				catch (Eggceptions.Eggception eggception)
 				{
@@ -103,7 +123,7 @@ namespace QuickHarvest
 			}
 		}
 
-		public void OnActivateTree(Events.ActivateTreeEventArguments arguments)
+		static public void OnActivateTree(Events.ActivateTreeEventArguments arguments)
 		{
 			if (arguments == null) { throw new Eggceptions.ArgumentNullException("arguments"); }
 
@@ -111,7 +131,7 @@ namespace QuickHarvest
 			{
 				try
 				{
-					QuickHarvest(TESObjectTREE.GetIngredient(arguments.BaseForm), arguments.Target, arguments.Activator);
+					Plugin.QuickHarvest(TESObjectTREE.GetIngredient(arguments.BaseForm), arguments.Target, arguments.Activator);
 				}
 				catch (Eggceptions.Eggception eggception)
 				{
@@ -123,7 +143,7 @@ namespace QuickHarvest
 			}
 		}
 
-		public void QuickHarvest(System.IntPtr ingredient, System.IntPtr target, System.IntPtr activator)
+		static public void QuickHarvest(System.IntPtr ingredient, System.IntPtr target, System.IntPtr activator)
 		{
 			// ingredient
 			if (target == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("target"); }
@@ -162,7 +182,7 @@ namespace QuickHarvest
 					if (TESObjectREFR.IsHarvested(loadedFlora)) { continue; }
 					if (TESObjectREFR.GetDistanceBetween(loadedFlora, activator) > _settings.MaximumDistance) { continue; }
 					if (TESObjectREFR.IsCrimeToActivate(loadedFlora) != stealing) { continue; }
-					if (_settings.LineOfSight && !PlayerCharacter.HasLineOfSight(activator, loadedFlora)) { continue; }
+					if (!Plugin.Visibility(activator, loadedFlora)) { continue; }
 
 					TESObjectREFR.Activate(loadedFlora, activator);
 				}
@@ -187,10 +207,26 @@ namespace QuickHarvest
 					if (TESObjectREFR.IsHarvested(loadedTree)) { continue; }
 					if (TESObjectREFR.GetDistanceBetween(loadedTree, activator) > _settings.MaximumDistance) { continue; }
 					if (TESObjectREFR.IsCrimeToActivate(loadedTree) != stealing) { continue; }
-					if (_settings.LineOfSight && !PlayerCharacter.HasLineOfSight(activator, loadedTree)) { continue; }
+					if (!Plugin.Visibility(activator, loadedTree)) { continue; }
 
 					TESObjectREFR.Activate(loadedTree, activator);
 				}
+			}
+		}
+
+		static private System.Boolean Visibility(System.IntPtr viewer, System.IntPtr target)
+		{
+			if (viewer == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("viewer"); }
+			if (target == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("target"); }
+
+			switch (_settings.Visibility)
+			{
+				case Flags.Visibility.Unoccluded:
+					return !TESObjectREFR.IsOccluded(viewer, target, _collisionLayers);
+				case Flags.Visibility.LineOfSight:
+					return PlayerCharacter.HasLineOfSight(viewer, target);
+				default:
+					return true;
 			}
 		}
 	}

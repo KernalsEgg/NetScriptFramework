@@ -42,6 +42,41 @@
 			static public System.IntPtr Release		{ get { return _release; } }
 		}
 
+		static public class BSReadWriteLock
+		{
+			static BSReadWriteLock()
+			{
+				_lockForRead =		NetScriptFramework.Main.GameInfo.GetAddressOf(66976);
+				_lockForWrite =		NetScriptFramework.Main.GameInfo.GetAddressOf(66977);
+				_unlockForRead =	NetScriptFramework.Main.GameInfo.GetAddressOf(66982);
+				_unlockForWrite =	NetScriptFramework.Main.GameInfo.GetAddressOf(66983);
+			}
+
+
+
+			readonly static private System.IntPtr _lockForRead;
+
+			readonly static private System.IntPtr _lockForWrite;
+
+			readonly static private System.IntPtr _unlockForRead;
+
+			readonly static private System.IntPtr _unlockForWrite;
+
+
+
+			/// <summary>&lt;SkyrimSE.exe&gt; + 0xC072D0 (VID66976)</summary>
+			static public System.IntPtr LockForRead		{ get { return _lockForRead; } }
+
+			/// <summary>&lt;SkyrimSE.exe&gt; + 0xC07350 (VID66977)</summary>
+			static public System.IntPtr LockForWrite	{ get { return _lockForWrite; } }
+
+			/// <summary>&lt;SkyrimSE.exe&gt; + 0xC07590 (VID66982)</summary>
+			static public System.IntPtr UnlockForRead	{ get { return _unlockForRead; } }
+
+			/// <summary>&lt;SkyrimSE.exe&gt; + 0xC075A0 (VID66983)</summary>
+			static public System.IntPtr UnlockForWrite	{ get { return _unlockForWrite; } }
+		}
+
 		static public class BSSpinLock
 		{
 			static BSSpinLock()
@@ -146,21 +181,44 @@
 			static public System.IntPtr GetIsCreatureType	{ get { return _getIsCreatureType; } }
 		}
 
+		static public class ExtraDataList
+		{
+			static ExtraDataList()
+			{
+				_getExtraData = NetScriptFramework.Main.GameInfo.GetAddressOf(12200);
+			}
+
+
+
+			readonly static private System.IntPtr _getExtraData;
+
+
+
+			/// <summary>&lt;SkyrimSE.exe&gt; + 0x1323C0 (VID12200)</summary>
+			static public System.IntPtr GetExtraData { get { return _getExtraData; } }
+		}
+
 		static public class Havok
 		{
 			static Havok()
 			{
-				_getNiObjectFromHavokObject = NetScriptFramework.Main.GameInfo.GetAddressOf(76160);
+				_getNiObjectFromHavokObject =	NetScriptFramework.Main.GameInfo.GetAddressOf(76160);
+				_havokWorldScale =				NetScriptFramework.Main.GameInfo.GetAddressOf(231896);
 			}
 
 
 
 			readonly static private System.IntPtr _getNiObjectFromHavokObject;
 
+			readonly static private System.IntPtr _havokWorldScale;
+
 
 
 			/// <summary>&lt;SkyrimSE.exe&gt; + 0xDAD060 (VID76160)</summary>
-			static public System.IntPtr GetNiObjectFromHavokObject { get { return _getNiObjectFromHavokObject; } }
+			static public System.IntPtr GetNiObjectFromHavokObject	{ get { return _getNiObjectFromHavokObject; } }
+
+			/// <summary>&lt;SkyrimSE.exe&gt; + 0x154064C (VID231896)</summary>
+			static public System.IntPtr HavokWorldScale				{ get { return _havokWorldScale; } }
 		}
 
 		static public class hkpAllRayHitTempCollector
@@ -375,6 +433,23 @@
 			static public System.IntPtr IsLoaded		{ get { return _isLoaded; } }
 		}
 
+		static public class TESFlora
+		{
+			static TESFlora()
+			{
+				_vTable = NetScriptFramework.Main.GameInfo.GetAddressOf(233756);
+			}
+
+
+
+			readonly static private System.IntPtr _vTable;
+
+
+
+			/// <summary>&lt;SkyrimSE.exe&gt; + 0x1553738 (VID233756)</summary>
+			static public System.IntPtr VTable { get { return _vTable; } }
+		}
+
 		static public class TESForm
 		{
 			static TESForm()
@@ -416,6 +491,9 @@
 				_getHandleFromReference =	NetScriptFramework.Main.GameInfo.GetAddressOf(12192);
 				_getReferenceFromHandle =	NetScriptFramework.Main.GameInfo.GetAddressOf(16828);
 				_isCrimeToActivate =		NetScriptFramework.Main.GameInfo.GetAddressOf(19400);
+				_isOccludedFraction1 =		NetScriptFramework.Main.GameInfo.GetAddressOf(232866);
+				_isOccludedFraction2 =		NetScriptFramework.Main.GameInfo.GetAddressOf(230690);
+				_isOccludedFraction3 =		NetScriptFramework.Main.GameInfo.GetAddressOf(235914);
 			}
 
 
@@ -425,6 +503,12 @@
 			readonly static private System.IntPtr _getReferenceFromHandle;
 
 			readonly static private System.IntPtr _isCrimeToActivate;
+
+			readonly static private System.IntPtr _isOccludedFraction1;
+
+			readonly static private System.IntPtr _isOccludedFraction2;
+
+			readonly static private System.IntPtr _isOccludedFraction3;
 
 
 
@@ -436,6 +520,32 @@
 
 			/// <summary>&lt;SkyrimSE.exe&gt; + 0x29A330 (VID19400)</summary>
 			static public System.IntPtr IsCrimeToActivate		{ get { return _isCrimeToActivate; } }
+
+			/// <summary>&lt;SkyrimSE.exe&gt; + 0x1548E48 (VID232866)</summary>
+			static public System.IntPtr IsOccludedFraction1 { get { return _isOccludedFraction1; } }
+
+			/// <summary>&lt;SkyrimSE.exe&gt; + 0x1536B98 (VID230690)</summary>
+			static public System.IntPtr IsOccludedFraction2 { get { return _isOccludedFraction2; } }
+
+			/// <summary>&lt;SkyrimSE.exe&gt; + 0x156F92C (VID235914)</summary>
+			static public System.IntPtr IsOccludedFraction3 { get { return _isOccludedFraction3; } }
+		}
+
+		static public class TESObjectTREE
+		{
+			static TESObjectTREE()
+			{
+				_vTable = NetScriptFramework.Main.GameInfo.GetAddressOf(234296);
+			}
+
+
+
+			readonly static private System.IntPtr _vTable;
+
+
+
+			/// <summary>&lt;SkyrimSE.exe&gt; + 0x155B7F8 (VID234296)</summary>
+			static public System.IntPtr VTable { get { return _vTable; } }
 		}
 
 		static public class UI

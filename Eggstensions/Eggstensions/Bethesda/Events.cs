@@ -111,7 +111,7 @@ namespace Eggstensions.Bethesda
 						"ActivateFlora",
 						new NetScriptFramework.EventHookParameters<Events.ActivateFloraEventArguments>
 						(
-							address: VIDS.Events.ActivateFlora,
+							address: NetScriptFramework.Memory.ReadPointer(VIDS.TESFlora.VTable + 0x1B8),
 							replaceLength: 7,
 							includeLength: 7,
 							pattern: "48 81 C1 C8 00 00 00",
@@ -144,7 +144,7 @@ namespace Eggstensions.Bethesda
 						"ActivateTree",
 						new NetScriptFramework.EventHookParameters<Events.ActivateTreeEventArguments>
 						(
-							address: VIDS.Events.ActivateTree,
+							address: NetScriptFramework.Memory.ReadPointer(VIDS.TESObjectTREE.VTable + 0x1B8),
 							replaceLength: 5,
 							includeLength: 5,
 							pattern: "48 89 5C 24 08",

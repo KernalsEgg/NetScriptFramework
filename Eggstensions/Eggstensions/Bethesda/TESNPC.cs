@@ -26,7 +26,6 @@
 
 			var race = NetScriptFramework.Memory.ReadPointer(npc + 0x158);
 			if (race == System.IntPtr.Zero) { throw new Eggceptions.NullException("race"); }
-			if (!TESForm.HasFormType(race, FormTypes.TESRace)) { throw new Eggceptions.Bethesda.FormTypeException("race"); }
 
 			return race;
 		}
@@ -39,17 +38,10 @@
 			if (npc == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("npc"); }
 
 			var npcSkin = NetScriptFramework.Memory.ReadPointer(npc + 0x108);
-
-			if (npcSkin != System.IntPtr.Zero)
-			{
-				if (!TESForm.HasFormType(npcSkin, FormTypes.TESObjectARMO)) { throw new Eggceptions.Bethesda.FormTypeException("npcSkin"); }
-
-				return npcSkin;
-			}
+			if (npcSkin != System.IntPtr.Zero) { return npcSkin; }
 
 			var raceSkin = NetScriptFramework.Memory.ReadPointer(TESNPC.GetRace(npc) + 0x58);
 			if (raceSkin == System.IntPtr.Zero) { throw new Eggceptions.NullException("raceSkin"); }
-			if (!TESForm.HasFormType(raceSkin, FormTypes.TESObjectARMO)) { throw new Eggceptions.Bethesda.FormTypeException("raceSkin"); }
 
 			return raceSkin;
 		}

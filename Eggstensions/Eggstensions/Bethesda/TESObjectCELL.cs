@@ -44,10 +44,7 @@
 		{
 			if (cell == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("cell"); }
 
-			var cellLock = TESObjectCELL.GetCellLock(cell);
-			BSSpinLock.Lock(cellLock);
-
-			try
+			using (new BSSpinLockGuard(TESObjectCELL.GetCellLock(cell)))
 			{
 				var references = new System.Collections.Generic.HashSet<System.IntPtr>();
 
@@ -59,10 +56,6 @@
 
 				return references;
 			}
-			finally
-			{
-				BSSpinLock.Unlock(cellLock);
-			}
 		}
 
 		/// <param name = "cell">TESObjectCELL</param>
@@ -72,10 +65,7 @@
 			if (cell == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("cell"); }
 			// formType
 
-			var cellLock = TESObjectCELL.GetCellLock(cell);
-			BSSpinLock.Lock(cellLock);
-
-			try
+			using (new BSSpinLockGuard(TESObjectCELL.GetCellLock(cell)))
 			{
 				var references = new System.Collections.Generic.HashSet<System.IntPtr>();
 
@@ -89,10 +79,6 @@
 
 				return references;
 			}
-			finally
-			{
-				BSSpinLock.Unlock(cellLock);
-			}
 		}
 
 		/// <param name = "cell">TESObjectCELL</param>
@@ -103,10 +89,7 @@
 			// formType1
 			// formType2
 
-			var cellLock = TESObjectCELL.GetCellLock(cell);
-			BSSpinLock.Lock(cellLock);
-
-			try
+			using (new BSSpinLockGuard(TESObjectCELL.GetCellLock(cell)))
 			{
 				var references1 = new System.Collections.Generic.HashSet<System.IntPtr>();
 				var references2 = new System.Collections.Generic.HashSet<System.IntPtr>();
@@ -126,10 +109,6 @@
 				}
 
 				return (references1, references2);
-			}
-			finally
-			{
-				BSSpinLock.Unlock(cellLock);
 			}
 		}
 

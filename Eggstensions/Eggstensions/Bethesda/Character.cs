@@ -12,8 +12,6 @@ namespace Eggstensions.Bethesda
 		{
 			if (character == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("character"); }
 			if (target == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("target"); }
-			if (!TESForm.HasFormType(character, FormTypes.Character)) { throw new Eggceptions.Bethesda.ArgumentFormTypeException("character"); }
-			if (!TESForm.HasFormType(target, FormTypes.Character)) { throw new Eggceptions.Bethesda.ArgumentFormTypeException("target"); }
 
 			// Character, Character, 3u
 			return NetScriptFramework.Memory.InvokeCdecl(VIDS.Character.HasLineOfSight, character, target, 3u).ToBool();

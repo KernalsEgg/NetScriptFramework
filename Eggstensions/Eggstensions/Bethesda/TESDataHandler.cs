@@ -28,5 +28,52 @@
 				return NetScriptFramework.Memory.InvokeCdecl(VIDS.TESDataHandler.GetFile, dataHandler, allocation.Address);
 			}
 		}
+
+		/// <param name="dataHandler">TESDataHandler</param>
+		/// <returns>TESFileCollection</returns>
+		static public System.IntPtr GetFileCollection(System.IntPtr dataHandler)
+		{
+			if (dataHandler == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("dataHandler"); }
+
+			return dataHandler + 0xD70;
+		}
+
+		/// <param name="dataHandler">TESDataHandler</param>
+		/// <returns>TESFile, System.IntPtr.Zero</returns>
+		static public System.IntPtr GetFileFromIndex(System.IntPtr dataHandler, System.Byte index)
+		{
+			if (dataHandler == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("dataHandler"); }
+
+			var files = BSTArray.IntPtr(TESFileCollection.GetFiles(TESDataHandler.GetFileCollection(dataHandler)));
+
+			foreach (var file in files)
+			{
+				if (TESFile.GetIndex(file) == index)
+				{
+					return file;
+				}
+			}
+
+			return System.IntPtr.Zero;
+		}
+
+		/// <param name="dataHandler">TESDataHandler</param>
+		/// <returns>TESFile, System.IntPtr.Zero</returns>
+		static public System.IntPtr GetLightFileFromIndex(System.IntPtr dataHandler, System.UInt16 index)
+		{
+			if (dataHandler == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("dataHandler"); }
+
+			var lightFiles = BSTArray.IntPtr(TESFileCollection.GetLightFiles(TESDataHandler.GetFileCollection(dataHandler)));
+
+			foreach (var lightFile in lightFiles)
+			{
+				if (TESFile.GetLightIndex(lightFile) == index)
+				{
+					return lightFile;
+				}
+			}
+
+			return System.IntPtr.Zero;
+		}
 	}
 }

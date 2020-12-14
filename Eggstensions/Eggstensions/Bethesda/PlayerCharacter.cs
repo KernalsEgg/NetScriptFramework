@@ -13,7 +13,6 @@ namespace Eggstensions.Bethesda
 			{
 				var instance = NetScriptFramework.Memory.ReadPointer(VIDS.PlayerCharacter.Instance);
 				if (instance == System.IntPtr.Zero) { throw new Eggceptions.NullException("instance"); }
-				if (!TESForm.HasFormType(instance, FormTypes.Character)) { throw new Eggceptions.Bethesda.FormTypeException("instance"); }
 
 				return instance;
 			}

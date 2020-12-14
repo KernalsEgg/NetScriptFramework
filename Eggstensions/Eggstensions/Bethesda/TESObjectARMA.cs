@@ -30,7 +30,6 @@
 
 			var race = NetScriptFramework.Memory.ReadPointer(armorAddon + 0x28);
 			if (race == System.IntPtr.Zero) { throw new Eggceptions.NullException("race"); }
-			if (!TESForm.HasFormType(race, FormTypes.TESRace)) { throw new Eggceptions.Bethesda.FormTypeException("race"); }
 
 			return race;
 		}

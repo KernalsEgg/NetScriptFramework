@@ -10,7 +10,6 @@
 
 			var armorRace = NetScriptFramework.Memory.ReadPointer(race + 0x440); // General Data, Copied Data, Armor Race
 			if (armorRace == System.IntPtr.Zero) { return System.IntPtr.Zero; }
-			if (!TESForm.HasFormType(armorRace, FormTypes.TESRace)) { throw new Eggceptions.Bethesda.FormTypeException("armorRace"); }
 
 			return armorRace;
 		}
@@ -24,14 +23,16 @@
 			if (armorAddon == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("armorAddon"); }
 
 			var armorRace = TESRace.GetArmorRace(race);
-			race = armorRace == System.IntPtr.Zero ? race : armorRace;
+
+			if (armorRace != System.IntPtr.Zero)
+			{
+				if (!TESForm.HasFormType(armorRace, FormTypes.TESRace)) { throw new Eggceptions.Bethesda.FormTypeException("armorRace"); }
+
+				race = armorRace;
+			}
 
 			var armorAddonRace = TESObjectARMA.GetRace(armorAddon);
-
-			if (armorAddonRace == race)
-			{
-				return true;
-			}
+			if (armorAddonRace == race) { return true; }
 
 			// BSTArray<TESRace*, BSTArrayHeapAllocator>
 			foreach (var armorAddonAdditionalRace in BSTArray.IntPtr(TESObjectARMA.GetAdditionalRaces(armorAddon)))
