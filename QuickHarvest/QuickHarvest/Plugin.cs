@@ -7,46 +7,16 @@ using Eggstensions.Bethesda;
 namespace QuickHarvest
 {
     public class Plugin : NetScriptFramework.Plugin
-    {
-		override public System.String Author
-		{
-			get
-			{
-				return "meh321 and KernalsEgg";
-			}
-		}
+	{
+		override public System.Int32 RequiredLibraryVersion	{ get { return 10; } }
 
-		override public System.String Key
-		{
-			get
-			{
-				return "QuickHarvest";
-			}
-		}
+		override public System.Int32 Version				{ get { return 1; } }
 
-		override public System.String Name
-		{
-			get
-			{
-				return "Quick Harvest";
-			}
-		}
+		override public System.String Author				{ get { return "meh321 and KernalsEgg"; } }
 
-		override public System.Int32 RequiredLibraryVersion
-		{
-			get
-			{
-				return 10;
-			}
-		}
+		override public System.String Key					{ get { return "QuickHarvest"; } }
 
-		override public System.Int32 Version
-		{
-			get
-			{
-				return 1;
-			}
-		}
+		override public System.String Name					{ get { return "Quick Harvest"; } }
 
 
 
@@ -62,13 +32,12 @@ namespace QuickHarvest
 				if (arguments.Entering)
 				{
 					_collisionLayers = Plugin.GetCollisionLayers();
-					
-					_settings = new Settings();
-					_settings.Load();
 				}
 			});
 			Events.ActivateFloraEvent.Register(OnActivateFlora);
 			Events.ActivateTreeEvent.Register(OnActivateTree);
+			Events.PlayHarvestSoundEvent.Register(OnPlayHarvestSound);
+			Events.ShowHarvestNotificationEvent.Register(OnShowHarvestNotification);
 
 			return true;
 		}
@@ -82,8 +51,6 @@ namespace QuickHarvest
 
 
 		static private CollisionLayers[] _collisionLayers;
-
-		static private Settings _settings;
 
 		static private System.Int32 _harvesting = 0;
 
@@ -115,8 +82,8 @@ namespace QuickHarvest
 				}
 				catch (Eggceptions.Eggception eggception)
 				{
-					if (_settings.LogHandledExceptions) { NetScriptFramework.Main.Log.Append(eggception); }
-					if (_settings.ShowHandledExceptions) { UI.ShowMessageBox(_messageBox); }
+					if (Settings.LogHandledExceptions) { NetScriptFramework.Main.Log.Append(eggception); }
+					if (Settings.ShowHandledExceptions) { UI.ShowMessageBox(_messageBox); }
 				}
 
 				System.Threading.Interlocked.Exchange(ref _harvesting, 0);
@@ -135,8 +102,8 @@ namespace QuickHarvest
 				}
 				catch (Eggceptions.Eggception eggception)
 				{
-					if (_settings.LogHandledExceptions) { NetScriptFramework.Main.Log.Append(eggception); }
-					if (_settings.ShowHandledExceptions) { UI.ShowMessageBox(_messageBox); }
+					if (Settings.LogHandledExceptions) { NetScriptFramework.Main.Log.Append(eggception); }
+					if (Settings.ShowHandledExceptions) { UI.ShowMessageBox(_messageBox); }
 				}
 
 				System.Threading.Interlocked.Exchange(ref _harvesting, 0);
@@ -151,12 +118,12 @@ namespace QuickHarvest
 
 			if (activator != PlayerCharacter.Instance) { return; }
 			if (ingredient == System.IntPtr.Zero) { return; }
-			if (!_settings.IncludedIngredientFormTypes.Contains(TESForm.GetFormType(ingredient))) { return; }
-			if (_settings.ExcludedIngredients.Contains(ingredient)) { return; }
+			if (!Settings.IncludedIngredientFormTypes.Contains(TESForm.GetFormType(ingredient)) && !Settings.IncludedIngredients.Contains(ingredient)) { return; }
+			if (Settings.ExcludedIngredients.Contains(ingredient)) { return; }
 			if (TESObjectREFR.IsHarvested(target)) { return; }
 
 			var stealing = TESObjectREFR.IsCrimeToActivate(target);
-			if (!_settings.Steal && stealing) { return; }
+			if (!Settings.Steal && stealing) { return; }
 
 			foreach (var loadedCell in TES.GetLoadedCells(TES.Instance))
 			{
@@ -169,10 +136,10 @@ namespace QuickHarvest
 					var loadedIngredient = TESFlora.GetIngredient(TESObjectREFR.GetBaseForm(loadedFlora));
 					if (loadedIngredient == System.IntPtr.Zero) { continue; }
 
-					if (_settings.HarvestEverything)
+					if (Settings.HarvestEverything)
 					{
-						if (!_settings.IncludedIngredientFormTypes.Contains(TESForm.GetFormType(loadedIngredient))) { continue; }
-						if (_settings.ExcludedIngredients.Contains(loadedIngredient)) { continue; }
+						if (!Settings.IncludedIngredientFormTypes.Contains(TESForm.GetFormType(loadedIngredient)) && !Settings.IncludedIngredients.Contains(loadedIngredient)) { continue; }
+						if (Settings.ExcludedIngredients.Contains(loadedIngredient)) { continue; }
 					}
 					else
 					{
@@ -180,7 +147,7 @@ namespace QuickHarvest
 					}
 
 					if (TESObjectREFR.IsHarvested(loadedFlora)) { continue; }
-					if (TESObjectREFR.GetDistanceBetween(loadedFlora, activator) > _settings.MaximumDistance) { continue; }
+					if (TESObjectREFR.GetDistanceBetween(loadedFlora, activator) > Settings.MaximumDistance) { continue; }
 					if (TESObjectREFR.IsCrimeToActivate(loadedFlora) != stealing) { continue; }
 					if (!Plugin.Visibility(activator, loadedFlora)) { continue; }
 
@@ -194,10 +161,10 @@ namespace QuickHarvest
 					var loadedIngredient = TESObjectTREE.GetIngredient(TESObjectREFR.GetBaseForm(loadedTree));
 					if (loadedIngredient == System.IntPtr.Zero) { continue; }
 
-					if (_settings.HarvestEverything)
+					if (Settings.HarvestEverything)
 					{
-						if (!_settings.IncludedIngredientFormTypes.Contains(TESForm.GetFormType(loadedIngredient))) { continue; }
-						if (_settings.ExcludedIngredients.Contains(loadedIngredient)) { continue; }
+						if (!Settings.IncludedIngredientFormTypes.Contains(TESForm.GetFormType(loadedIngredient)) && !Settings.IncludedIngredients.Contains(loadedIngredient)) { continue; }
+						if (Settings.ExcludedIngredients.Contains(loadedIngredient)) { continue; }
 					}
 					else
 					{
@@ -205,7 +172,7 @@ namespace QuickHarvest
 					}
 
 					if (TESObjectREFR.IsHarvested(loadedTree)) { continue; }
-					if (TESObjectREFR.GetDistanceBetween(loadedTree, activator) > _settings.MaximumDistance) { continue; }
+					if (TESObjectREFR.GetDistanceBetween(loadedTree, activator) > Settings.MaximumDistance) { continue; }
 					if (TESObjectREFR.IsCrimeToActivate(loadedTree) != stealing) { continue; }
 					if (!Plugin.Visibility(activator, loadedTree)) { continue; }
 
@@ -219,15 +186,31 @@ namespace QuickHarvest
 			if (viewer == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("viewer"); }
 			if (target == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("target"); }
 
-			switch (_settings.Visibility)
+			switch (Settings.Visibility)
 			{
-				case Flags.Visibility.Unoccluded:
+				case Flags.Visibility.PanoramicView:
 					return !TESObjectREFR.IsOccluded(viewer, target, _collisionLayers);
-				case Flags.Visibility.LineOfSight:
+				case Flags.Visibility.FieldOfView:
 					return PlayerCharacter.HasLineOfSight(viewer, target);
 				default:
 					return true;
 			}
+		}
+
+		static public void OnPlayHarvestSound(Events.PlayHarvestSoundEventArguments arguments)
+		{
+			arguments.Skip =
+				(_harvesting != 0)
+				&&
+				!Settings.PlaySounds;
+		}
+
+		static public void OnShowHarvestNotification(Events.ShowHarvestNotificationEventArguments arguments)
+		{
+			arguments.Skip =
+				(_harvesting != 0)
+				&&
+				!Settings.ShowNotifications;
 		}
 	}
 }

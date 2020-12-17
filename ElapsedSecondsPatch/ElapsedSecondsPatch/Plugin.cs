@@ -2,45 +2,15 @@
 {
 	public class Plugin : NetScriptFramework.Plugin
 	{
-		override public System.String Author
-		{
-			get
-			{
-				return "meh321 and KernalsEgg";
-			}
-		}
+		override public System.Int32 RequiredLibraryVersion	{ get { return 10; } }
 
-		override public System.String Key
-		{
-			get
-			{
-				return "ElapsedSecondsPatch";
-			}
-		}
+		override public System.Int32 Version				{ get { return 1; } }
 
-		override public System.String Name
-		{
-			get
-			{
-				return "Elapsed Seconds Patch";
-			}
-		}
+		override public System.String Author				{ get { return "meh321 and KernalsEgg"; } }
 
-		override public System.Int32 RequiredLibraryVersion
-		{
-			get
-			{
-				return 10;
-			}
-		}
+		override public System.String Key					{ get { return "ElapsedSecondsPatch"; } }
 
-		override public System.Int32 Version
-		{
-			get
-			{
-				return 1;
-			}
-		}
+		override public System.String Name					{ get { return "Elapsed Seconds Patch"; } }
 
 
 
@@ -84,7 +54,7 @@
 				Address = Plugin._hookAddress,
 				ReplaceLength = 0x79,
 				IncludeLength = 0,
-				Before = ctx =>
+				Before = cpuRegisters =>
 				{
 					/*
 					Constant Effect =	0
@@ -92,23 +62,23 @@
 					Concentration =		2
 					Scroll =			3
 					*/
-					if (Plugin._settings.AlwaysIncreaseAccuracy && GetCastingType(ctx) == 0)
+					if (Plugin._settings.AlwaysIncreaseAccuracy && GetCastingType(cpuRegisters) == 0)
 					{
-						Plugin.SkipUpdateAccurate(ctx);
+						Plugin.SkipUpdateAccurate(cpuRegisters);
 					}
 					else
 					{
-						Plugin.SkipUpdate(ctx);
+						Plugin.SkipUpdate(cpuRegisters);
 					}
 				}
 			});
 		}
 
-		static private System.Int32 GetCastingType(NetScriptFramework.CPURegisters ctx)
+		static private System.Int32 GetCastingType(NetScriptFramework.CPURegisters cpuRegisters)
 		{
-			if (ctx == null) { throw new System.ArgumentNullException("ctx"); }
+			if (cpuRegisters == null) { throw new System.ArgumentNullException("cpuRegisters"); }
 
-			var activeEffect = ctx.DI;
+			var activeEffect = cpuRegisters.DI;
 			if (activeEffect == System.IntPtr.Zero) { throw new System.NullReferenceException("activeEffect"); }
 
 			var magicItem = NetScriptFramework.Memory.ReadPointer(activeEffect + 0x40);
@@ -123,20 +93,20 @@
 			return NetScriptFramework.Memory.InvokeThisCall(magicItem, getCastingTypeAddress).ToInt32();
 		}
 
-		static private void SkipUpdate(NetScriptFramework.CPURegisters ctx)
+		static private void SkipUpdate(NetScriptFramework.CPURegisters cpuRegisters)
 		{
-			if (ctx == null) { throw new System.ArgumentNullException("ctx"); }
+			if (cpuRegisters == null) { throw new System.ArgumentNullException("cpuRegisters"); }
 
-			var elapsedSeconds = (System.Double)NetScriptFramework.Memory.ReadFloat(ctx.DI + 0x70); // ActiveEffect + 0x70
+			var elapsedSeconds = (System.Double)NetScriptFramework.Memory.ReadFloat(cpuRegisters.DI + 0x70); // ActiveEffect + 0x70
 
 			// No floating-point inaccuracy is expected in this range
 			if (elapsedSeconds <= 86400.0f) // 1 day = 86,400 seconds
 			{
-				var frameTime = ctx.XMM6f;
+				var frameTime = cpuRegisters.XMM6f;
 
 				if (frameTime <= 0.0f)
 				{
-					ctx.IP = Plugin._skipUpdateAddress;
+					cpuRegisters.IP = Plugin._skipUpdateAddress;
 					return;
 				}
 
@@ -150,24 +120,24 @@
 				*/
 				if (currentSecond == previousSecond)
 				{
-					ctx.IP = Plugin._skipUpdateAddress;
+					cpuRegisters.IP = Plugin._skipUpdateAddress;
 					return;
 				}
 			}
 			else
 			{
-				Plugin.SkipUpdateAccurate(ctx);
+				Plugin.SkipUpdateAccurate(cpuRegisters);
 				return;
 			}
 		}
 
-		static private void SkipUpdateAccurate(NetScriptFramework.CPURegisters ctx)
+		static private void SkipUpdateAccurate(NetScriptFramework.CPURegisters cpuRegisters)
 		{
-			if (ctx == null) { throw new System.ArgumentNullException("ctx"); }
+			if (cpuRegisters == null) { throw new System.ArgumentNullException("cpuRegisters"); }
 
 			lock (Plugin._lock)
 			{
-				var activeEffect = ctx.DI;
+				var activeEffect = cpuRegisters.DI;
 
 				if (Plugin._activeEffects.ContainsKey(activeEffect))
 				{
@@ -177,7 +147,7 @@
 
 					if (frameTime <= 0)
 					{
-						ctx.IP = Plugin._skipUpdateAddress;
+						cpuRegisters.IP = Plugin._skipUpdateAddress;
 						return;
 					}
 
@@ -193,7 +163,7 @@
 					*/
 					if (currentSecond == previousSecond)
 					{
-						ctx.IP = Plugin._skipUpdateAddress;
+						cpuRegisters.IP = Plugin._skipUpdateAddress;
 						return;
 					}
 				}
@@ -201,7 +171,7 @@
 				{
 					Plugin._activeEffects[activeEffect] = (System.Environment.TickCount, 0);
 
-					ctx.IP = Plugin._skipUpdateAddress;
+					cpuRegisters.IP = Plugin._skipUpdateAddress;
 					return;
 				}
 			}

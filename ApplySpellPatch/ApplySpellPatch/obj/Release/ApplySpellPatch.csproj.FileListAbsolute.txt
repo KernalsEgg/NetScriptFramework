@@ -1,0 +1,13 @@
+C:\Users\Daniel\source\repos\ApplySpellPatch\ApplySpellPatch\bin\Release\ApplySpellPatch.dll
+C:\Users\Daniel\source\repos\ApplySpellPatch\ApplySpellPatch\bin\Release\ApplySpellPatch.pdb
+C:\Users\Daniel\source\repos\ApplySpellPatch\ApplySpellPatch\bin\Release\NetScriptFramework.dll
+C:\Users\Daniel\source\repos\ApplySpellPatch\ApplySpellPatch\bin\Release\NetScriptFramework.SkyrimSE.dll
+C:\Users\Daniel\source\repos\ApplySpellPatch\ApplySpellPatch\bin\Release\NetScriptFramework.pdb
+C:\Users\Daniel\source\repos\ApplySpellPatch\ApplySpellPatch\bin\Release\NetScriptFramework.xml
+C:\Users\Daniel\source\repos\ApplySpellPatch\ApplySpellPatch\bin\Release\NetScriptFramework.SkyrimSE.pdb
+C:\Users\Daniel\source\repos\ApplySpellPatch\ApplySpellPatch\bin\Release\NetScriptFramework.SkyrimSE.xml
+C:\Users\Daniel\source\repos\ApplySpellPatch\ApplySpellPatch\obj\Release\ApplySpellPatch.csprojAssemblyReference.cache
+C:\Users\Daniel\source\repos\ApplySpellPatch\ApplySpellPatch\obj\Release\ApplySpellPatch.csproj.CoreCompileInputs.cache
+C:\Users\Daniel\source\repos\ApplySpellPatch\ApplySpellPatch\obj\Release\ApplySpellPatch.csproj.CopyComplete
+C:\Users\Daniel\source\repos\ApplySpellPatch\ApplySpellPatch\obj\Release\ApplySpellPatch.dll
+C:\Users\Daniel\source\repos\ApplySpellPatch\ApplySpellPatch\obj\Release\ApplySpellPatch.pdb

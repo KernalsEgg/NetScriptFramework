@@ -8,43 +8,43 @@ namespace Eggstensions.Bethesda
 	{
 		sealed public class ActivateFloraEventArguments : NetScriptFramework.HookedEventArgs
 		{
-			/// <param name="baseForm">TESForm</param>
-			/// <param name="flora">TESObjectREFR</param>
-			/// <param name="activator">TESObjectREFR</param>
 			public ActivateFloraEventArguments(System.IntPtr baseForm, System.IntPtr target, System.IntPtr activator)
 			{
-				BaseForm = baseForm; // RCX
-				Target = target; // RDX
-				Activator = activator; // R8
+				BaseForm = baseForm;
+				Target = target;
+				Activator = activator;
 			}
 
 
 
+			/// <summary>TESObjectREFR</summary>
 			public System.IntPtr Activator { get; }
 
+			/// <summary>TESForm</summary>
 			public System.IntPtr BaseForm { get; }
 
+			/// <summary>TESObjectREFR</summary>
 			public System.IntPtr Target { get; }
 		}
 
 		sealed public class ActivateTreeEventArguments : NetScriptFramework.HookedEventArgs
 		{
-			/// <param name="baseForm">TESForm</param>
-			/// <param name="tree">TESObjectREFR</param>
-			/// <param name="activator">TESObjectREFR</param>
 			public ActivateTreeEventArguments(System.IntPtr baseForm, System.IntPtr target, System.IntPtr activator)
 			{
-				BaseForm = baseForm; // RCX
-				Target = target; // RDX
-				Activator = activator; // R8
+				BaseForm = baseForm;
+				Target = target;
+				Activator = activator;
 			}
 
 
 
+			/// <summary>TESObjectREFR</summary>
 			public System.IntPtr Activator { get; }
 
+			/// <summary>TESForm</summary>
 			public System.IntPtr BaseForm { get; }
 
+			/// <summary>TESObjectREFR</summary>
 			public System.IntPtr Target { get; }
 		}
 
@@ -63,6 +63,25 @@ namespace Eggstensions.Bethesda
 			public System.IntPtr WeatherNode { get; }
 		}
 
+		sealed public class CastSpellPerkEntryPointEventArguments : NetScriptFramework.HookedEventArgs
+		{
+			public CastSpellPerkEntryPointEventArguments(System.IntPtr target, System.IntPtr spellItem)
+			{
+				Target = target;
+				SpellItem = spellItem;
+			}
+
+
+
+			public System.Boolean Skip { get; set; } = false;
+
+			/// <summary>SpellItem</summary>
+			public System.IntPtr SpellItem { get; }
+
+			/// <summary>Actor</summary>
+			public System.IntPtr Target { get; }
+		}
+
 		sealed public class DetachPrecipitationObjectEventArguments : NetScriptFramework.HookedEventArgs
 		{
 			public DetachPrecipitationObjectEventArguments(System.IntPtr weatherNode, System.IntPtr precipitationObject)
@@ -78,9 +97,56 @@ namespace Eggstensions.Bethesda
 			public System.IntPtr WeatherNode { get; }
 		}
 
+		sealed public class PlayHarvestSoundEventArguments : NetScriptFramework.HookedEventArgs
+		{
+			public PlayHarvestSoundEventArguments(System.IntPtr sound)
+			{
+				Sound = sound;
+			}
+
+
+
+			/// <summary>BGSSoundDescriptorForm</summary>
+			public System.IntPtr Sound { get; }
+
+			public System.Boolean Skip { get; set; } = false;
+		}
+
+		sealed public class SetSpellPerkEntryPointEventArguments : NetScriptFramework.HookedEventArgs
+		{
+			public SetSpellPerkEntryPointEventArguments(System.IntPtr result, System.IntPtr perkEntryPoint)
+			{
+				Result = result;
+				PerkEntryPoint = perkEntryPoint;
+			}
+
+
+
+			public System.Boolean Skip { get; set; } = false;
+
+			public System.IntPtr Result { get; }
+
+			/// <summary>BGSEntryPointFunctionDataSpellItem</summary>
+			public System.IntPtr PerkEntryPoint { get; }
+		}
+
+		sealed public class ShowHarvestNotificationEventArguments : NetScriptFramework.HookedEventArgs
+		{
+			public ShowHarvestNotificationEventArguments(System.IntPtr ingredient)
+			{
+				Ingredient = ingredient;
+			}
+
+
+
+			/// <summary>TESBoundObject</summary>
+			public System.IntPtr Ingredient { get; }
+
+			public System.Boolean Skip { get; set; } = false;
+		}
+
 		sealed public class GetIsCreatureTypeEventArguments : NetScriptFramework.HookedEventArgs
 		{
-			/// <param name="subject">TESObjectREFR</param>
 			public GetIsCreatureTypeEventArguments(System.IntPtr subject, System.Int32 argument1)
 			{
 				Subject = subject;
@@ -93,6 +159,7 @@ namespace Eggstensions.Bethesda
 
 			public System.Int32 Argument1 { get; }
 
+			/// <summary>TESObjectREFR</summary>
 			public System.IntPtr Subject { get; }
 
 			public System.String Text { get; set; } = "Handled Exception >> %0.2f";
@@ -115,7 +182,7 @@ namespace Eggstensions.Bethesda
 							replaceLength: 7,
 							includeLength: 7,
 							pattern: "48 81 C1 C8 00 00 00",
-							argFunc: ctx => new Events.ActivateFloraEventArguments(ctx.CX, ctx.DX, ctx.R8),
+							argFunc: cpuRegisters => new Events.ActivateFloraEventArguments(cpuRegisters.CX, cpuRegisters.DX, cpuRegisters.R8),
 							afterFunc: null
 						)
 					);
@@ -148,7 +215,7 @@ namespace Eggstensions.Bethesda
 							replaceLength: 5,
 							includeLength: 5,
 							pattern: "48 89 5C 24 08",
-							argFunc: ctx => new Events.ActivateTreeEventArguments(ctx.CX, ctx.DX, ctx.R8),
+							argFunc: cpuRegisters => new Events.ActivateTreeEventArguments(cpuRegisters.CX, cpuRegisters.DX, cpuRegisters.R8),
 							afterFunc: null
 						)
 					);
@@ -181,7 +248,7 @@ namespace Eggstensions.Bethesda
 							replaceLength: 6,
 							includeLength: 6,
 							pattern: "FF 90 A8010000",
-							argFunc: ctx => new Events.AttachPrecipitationObjectEventArguments(ctx.CX, ctx.DX),
+							argFunc: cpuRegisters => new Events.AttachPrecipitationObjectEventArguments(cpuRegisters.CX, cpuRegisters.DX),
 							afterFunc: null
 						)
 					);
@@ -196,6 +263,84 @@ namespace Eggstensions.Bethesda
 			static public void Register(NetScriptFramework.Event<Events.AttachPrecipitationObjectEventArguments>.EventHandler eventHandler, System.Int32 priority = 0, System.Int32 count = 0, NetScriptFramework.EventRegistrationFlags eventRegistrationFlags = NetScriptFramework.EventRegistrationFlags.Distinct)
 			{
 				_attachPrecipitationObject.Register(eventHandler, priority, count, eventRegistrationFlags);
+			}
+		}
+
+		static public class CastSpellPerkEntryPointEvent
+		{
+			static CastSpellPerkEntryPointEvent()
+			{
+				_castSpellPerkEntryPoint =
+					new NetScriptFramework.EventHook<Events.CastSpellPerkEntryPointEventArguments>
+					(
+						NetScriptFramework.EventHookFlags.None,
+						"CastSpellPerkEntryPoint",
+						new NetScriptFramework.EventHookParameters<Events.CastSpellPerkEntryPointEventArguments>
+						(
+							address: VIDS.Events.ApplyBashingSpell + 0x429,
+							replaceLength: 5,
+							includeLength: 5,
+							pattern: "E8",
+							argFunc: cpuRegisters => new Events.CastSpellPerkEntryPointEventArguments(cpuRegisters.CX, cpuRegisters.DX),
+							afterFunc: (cpuRegisters, arguments) => { if (arguments.Skip) { cpuRegisters.Skip(); } }
+						),
+						new NetScriptFramework.EventHookParameters<Events.CastSpellPerkEntryPointEventArguments>
+						(
+							address: VIDS.Events.ApplyCombatHitSpellMelee + 0x79,
+							replaceLength: 5,
+							includeLength: 5,
+							pattern: "E8",
+							argFunc: cpuRegisters => new Events.CastSpellPerkEntryPointEventArguments(cpuRegisters.CX, cpuRegisters.DX),
+							afterFunc: (cpuRegisters, arguments) => { if (arguments.Skip) { cpuRegisters.Skip(); } }
+						),
+						new NetScriptFramework.EventHookParameters<Events.CastSpellPerkEntryPointEventArguments>
+						(
+							address: VIDS.Events.ApplyCombatHitSpellProjectile + 0x2A7,
+							replaceLength: 5,
+							includeLength: 5,
+							pattern: "E8",
+							argFunc: cpuRegisters => new Events.CastSpellPerkEntryPointEventArguments(cpuRegisters.CX, cpuRegisters.DX),
+							afterFunc: (cpuRegisters, arguments) => { if (arguments.Skip) { cpuRegisters.Skip(); } }
+						),
+						new NetScriptFramework.EventHookParameters<Events.CastSpellPerkEntryPointEventArguments>
+						(
+							address: VIDS.Events.ApplyReanimateSpell + 0xD2,
+							replaceLength: 5,
+							includeLength: 5,
+							pattern: "E8",
+							argFunc: cpuRegisters => new Events.CastSpellPerkEntryPointEventArguments(cpuRegisters.CX, cpuRegisters.DX),
+							afterFunc: (cpuRegisters, arguments) => { if (arguments.Skip) { cpuRegisters.Skip(); } }
+						),
+						new NetScriptFramework.EventHookParameters<Events.CastSpellPerkEntryPointEventArguments>
+						(
+							address: VIDS.Events.ApplySneakingSpell + 0xCE,
+							replaceLength: 5,
+							includeLength: 5,
+							pattern: "E8",
+							argFunc: cpuRegisters => new Events.CastSpellPerkEntryPointEventArguments(cpuRegisters.CX, cpuRegisters.DX),
+							afterFunc: (cpuRegisters, arguments) => { if (arguments.Skip) { cpuRegisters.Skip(); } }
+						),
+						new NetScriptFramework.EventHookParameters<Events.CastSpellPerkEntryPointEventArguments>
+						(
+							address: VIDS.Events.ApplyWeaponSwingSpell + 0xC3,
+							replaceLength: 5,
+							includeLength: 5,
+							pattern: "E8",
+							argFunc: cpuRegisters => new Events.CastSpellPerkEntryPointEventArguments(cpuRegisters.CX, cpuRegisters.DX),
+							afterFunc: (cpuRegisters, arguments) => { if (arguments.Skip) { cpuRegisters.Skip(); } }
+						)
+					);
+			}
+
+
+
+			static private NetScriptFramework.Event<Events.CastSpellPerkEntryPointEventArguments> _castSpellPerkEntryPoint;
+
+
+
+			static public void Register(NetScriptFramework.Event<Events.CastSpellPerkEntryPointEventArguments>.EventHandler eventHandler, System.Int32 priority = 0, System.Int32 count = 0, NetScriptFramework.EventRegistrationFlags eventRegistrationFlags = NetScriptFramework.EventRegistrationFlags.Distinct)
+			{
+				_castSpellPerkEntryPoint.Register(eventHandler, priority, count, eventRegistrationFlags);
 			}
 		}
 
@@ -214,7 +359,7 @@ namespace Eggstensions.Bethesda
 							replaceLength: 6,
 							includeLength: 6,
 							pattern: "FF 90 C0010000",
-							argFunc: ctx => new Events.DetachPrecipitationObjectEventArguments(ctx.CX, ctx.DX),
+							argFunc: cpuRegisters => new Events.DetachPrecipitationObjectEventArguments(cpuRegisters.CX, cpuRegisters.DX),
 							afterFunc: null
 						),
 						new NetScriptFramework.EventHookParameters<Events.DetachPrecipitationObjectEventArguments>
@@ -223,7 +368,7 @@ namespace Eggstensions.Bethesda
 							replaceLength: 6,
 							includeLength: 6,
 							pattern: "FF 90 C0010000",
-							argFunc: ctx => new Events.DetachPrecipitationObjectEventArguments(ctx.CX, ctx.DX),
+							argFunc: cpuRegisters => new Events.DetachPrecipitationObjectEventArguments(cpuRegisters.CX, cpuRegisters.DX),
 							afterFunc: null
 						),
 						new NetScriptFramework.EventHookParameters<Events.DetachPrecipitationObjectEventArguments>
@@ -232,7 +377,7 @@ namespace Eggstensions.Bethesda
 							replaceLength: 6,
 							includeLength: 6,
 							pattern: "FF 90 C0010000",
-							argFunc: ctx => new Events.DetachPrecipitationObjectEventArguments(ctx.CX, ctx.DX),
+							argFunc: cpuRegisters => new Events.DetachPrecipitationObjectEventArguments(cpuRegisters.CX, cpuRegisters.DX),
 							afterFunc: null
 						),
 						new NetScriptFramework.EventHookParameters<Events.DetachPrecipitationObjectEventArguments>
@@ -241,7 +386,7 @@ namespace Eggstensions.Bethesda
 							replaceLength: 6,
 							includeLength: 6,
 							pattern: "FF 90 C0010000",
-							argFunc: ctx => new Events.DetachPrecipitationObjectEventArguments(ctx.CX, ctx.DX),
+							argFunc: cpuRegisters => new Events.DetachPrecipitationObjectEventArguments(cpuRegisters.CX, cpuRegisters.DX),
 							afterFunc: null
 						)
 					);
@@ -270,7 +415,7 @@ namespace Eggstensions.Bethesda
 				NetScriptFramework.Memory.WriteBytes(address + offset, new System.Byte[] { 0x8B, 0x05 }, true);                                     // mov eax, DWORD PTR [rip+0x0]
 				offset += 0x6;
 
-				if (!NetScriptFramework.Memory.VerifyBytes(address + offset, "65 48 8B 04 25", false)) { throw new Eggceptions.FormatException("65 48 8B 04 25"); }	// mov rax, QWORD PTR gs:0x0
+				if (!NetScriptFramework.Memory.VerifyBytes(address + offset, "65 48 8B 04 25", false)) { throw new Eggceptions.FormatException("65 48 8B 04 25"); } // mov rax, QWORD PTR gs:0x0
 				NetScriptFramework.Memory.WriteBytes(address + offset, new System.Byte[] { 0x65, 0x4C, 0x8B, 0x04, 0x25 }, true);                                   // mov r8, QWORD PTR gs:0x0
 				offset += 0x9;
 
@@ -301,21 +446,21 @@ namespace Eggstensions.Bethesda
 							pattern:
 								"00" +
 								"48 8B 04 C8",
-							argFunc: ctx =>
+							argFunc: cpuRegisters =>
 							{
 								// RCX: Subject			(argument 1)
 								// RDX: Argument1		(argument 2)
 								// R8B: PrintToConsole
 								// R9: Result			(argument 4)
-								return new Events.GetIsCreatureTypeEventArguments(ctx.CX, ctx.DX.ToInt32());
+								return new Events.GetIsCreatureTypeEventArguments(cpuRegisters.CX, cpuRegisters.DX.ToInt32());
 							},
-							afterFunc: (ctx, arguments) =>
+							afterFunc: (cpuRegisters, arguments) =>
 							{
 								// Set result
-								NetScriptFramework.Memory.WriteDouble(ctx.R9, arguments.Result);
+								NetScriptFramework.Memory.WriteDouble(cpuRegisters.R9, arguments.Result);
 
 								// Print to console
-								if (ctx.R8.ToBool())
+								if (cpuRegisters.R8.ToBool())
 								{
 									ConsoleLog.Print(ConsoleLog.Instance, arguments.Text, System.BitConverter.ToInt64(System.BitConverter.GetBytes(arguments.Result), 0));
 								}
@@ -333,6 +478,125 @@ namespace Eggstensions.Bethesda
 			static public void Register(NetScriptFramework.Event<Events.GetIsCreatureTypeEventArguments>.EventHandler eventHandler, System.Int32 priority = 0, System.Int32 count = 0, NetScriptFramework.EventRegistrationFlags eventRegistrationFlags = NetScriptFramework.EventRegistrationFlags.Distinct)
 			{
 				_getIsCreatureTypeEvent.Register(eventHandler, priority, count, eventRegistrationFlags);
+			}
+		}
+
+		static public class PlayHarvestSoundEvent
+		{
+			static PlayHarvestSoundEvent()
+			{
+				_playHarvestSound =
+					new NetScriptFramework.EventHook<Events.PlayHarvestSoundEventArguments>
+					(
+						NetScriptFramework.EventHookFlags.None,
+						"PlayHarvestSound",
+						new NetScriptFramework.EventHookParameters<Events.PlayHarvestSoundEventArguments>
+						(
+							address: VIDS.Events.Harvest + 0x258,
+							replaceLength: 5,
+							includeLength: 5,
+							pattern: "E8",
+							argFunc: cpuRegisters => new Events.PlayHarvestSoundEventArguments(cpuRegisters.CX),
+							afterFunc: (cpuRegisters, arguments) => { if (arguments.Skip) { cpuRegisters.Skip(); } }
+						),
+						new NetScriptFramework.EventHookParameters<Events.PlayHarvestSoundEventArguments>
+						(
+							address: VIDS.Events.Harvest + 0x3C9,
+							replaceLength: 5,
+							includeLength: 5,
+							pattern: "E8",
+							argFunc: cpuRegisters => new Events.PlayHarvestSoundEventArguments(cpuRegisters.CX),
+							afterFunc: (cpuRegisters, arguments) => { if (arguments.Skip) { cpuRegisters.Skip(); } }
+						)
+					);
+			}
+
+
+
+			static private NetScriptFramework.Event<Events.PlayHarvestSoundEventArguments> _playHarvestSound;
+
+
+
+			static public void Register(NetScriptFramework.Event<Events.PlayHarvestSoundEventArguments>.EventHandler eventHandler, System.Int32 priority = 0, System.Int32 count = 0, NetScriptFramework.EventRegistrationFlags eventRegistrationFlags = NetScriptFramework.EventRegistrationFlags.Distinct)
+			{
+				_playHarvestSound.Register(eventHandler, priority, count, eventRegistrationFlags);
+			}
+		}
+
+		static public class SetSpellPerkEntryPointEvent
+		{
+			static SetSpellPerkEntryPointEvent()
+			{
+				_setSpellPerkEntryPoint =
+					new NetScriptFramework.EventHook<Events.SetSpellPerkEntryPointEventArguments>
+					(
+						NetScriptFramework.EventHookFlags.None,
+						"SetSpellPerkEntryPoint",
+						new NetScriptFramework.EventHookParameters<Events.SetSpellPerkEntryPointEventArguments>
+						(
+							address: VIDS.Events.SetSpellPerkEntryPoint + 0x53,
+							replaceLength: 7,
+							includeLength: 7,
+							pattern:
+								"48 8B 43 08" +
+								"48 89 01",
+							argFunc: cpuRegisters => new Events.SetSpellPerkEntryPointEventArguments(cpuRegisters.CX, cpuRegisters.BX),
+							afterFunc: (cpuRegisters, arguments) => { if (arguments.Skip) { cpuRegisters.Skip(); } }
+						)
+					);
+			}
+
+
+
+			static private NetScriptFramework.Event<Events.SetSpellPerkEntryPointEventArguments> _setSpellPerkEntryPoint;
+
+
+
+			static public void Register(NetScriptFramework.Event<Events.SetSpellPerkEntryPointEventArguments>.EventHandler eventHandler, System.Int32 priority = 0, System.Int32 count = 0, NetScriptFramework.EventRegistrationFlags eventRegistrationFlags = NetScriptFramework.EventRegistrationFlags.Distinct)
+			{
+				_setSpellPerkEntryPoint.Register(eventHandler, priority, count, eventRegistrationFlags);
+			}
+		}
+
+		static public class ShowHarvestNotificationEvent
+		{
+			static ShowHarvestNotificationEvent()
+			{
+				_showHarvestNotification =
+					new NetScriptFramework.EventHook<Events.ShowHarvestNotificationEventArguments>
+					(
+						NetScriptFramework.EventHookFlags.None,
+						"ShowHarvestNotification",
+						new NetScriptFramework.EventHookParameters<Events.ShowHarvestNotificationEventArguments>
+						(
+							address: VIDS.Events.Harvest + 0x250,
+							replaceLength: 5,
+							includeLength: 5,
+							pattern: "E8",
+							argFunc: cpuRegisters => new Events.ShowHarvestNotificationEventArguments(cpuRegisters.CX),
+							afterFunc: (cpuRegisters, arguments) => { if (arguments.Skip) { cpuRegisters.Skip(); } }
+						),
+						new NetScriptFramework.EventHookParameters<Events.ShowHarvestNotificationEventArguments>
+						(
+							address: VIDS.Events.Harvest + 0x3C1,
+							replaceLength: 5,
+							includeLength: 5,
+							pattern: "E8",
+							argFunc: cpuRegisters => new Events.ShowHarvestNotificationEventArguments(cpuRegisters.CX),
+							afterFunc: (cpuRegisters, arguments) => { if (arguments.Skip) { cpuRegisters.Skip(); } }
+						)
+					);
+			}
+
+
+
+			static private NetScriptFramework.Event<Events.ShowHarvestNotificationEventArguments> _showHarvestNotification;
+
+
+
+			static public void Register(NetScriptFramework.Event<Events.ShowHarvestNotificationEventArguments>.EventHandler eventHandler, System.Int32 priority = 0, System.Int32 count = 0, NetScriptFramework.EventRegistrationFlags eventRegistrationFlags = NetScriptFramework.EventRegistrationFlags.Distinct)
+			{
+				_showHarvestNotification.Register(eventHandler, priority, count, eventRegistrationFlags);
 			}
 		}
 	}

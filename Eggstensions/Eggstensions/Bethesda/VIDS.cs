@@ -6,17 +6,23 @@
 		{
 			static Actor()
 			{
-				_update3DModel = NetScriptFramework.Main.GameInfo.GetAddressOf(38404);
+				_castSpellPerkEntryPoint =	NetScriptFramework.Main.GameInfo.GetAddressOf(37817);
+				_update3DModel =			NetScriptFramework.Main.GameInfo.GetAddressOf(38404);
 			}
 
 
+
+			readonly static private System.IntPtr _castSpellPerkEntryPoint;
 
 			readonly static private System.IntPtr _update3DModel;
 
 
 
+			/// <summary>&lt;SkyrimSE.exe&gt; + 0x632180 (VID37817)</summary>
+			static public System.IntPtr CastSpellPerkEntryPoint { get { return _castSpellPerkEntryPoint; } }
+
 			/// <summary>&lt;SkyrimSE.exe&gt; + 0x650DF0 (VID38404)</summary>
-			static public System.IntPtr Update3DModel { get { return _update3DModel; } }
+			static public System.IntPtr Update3DModel		{ get { return _update3DModel; } }
 		}
 
 		static public class BSFixedString
@@ -138,12 +144,20 @@
 		{
 			static Events()
 			{
-				_activateFlora =				NetScriptFramework.Main.GameInfo.GetAddressOf(16986);
-				_activateTree =					NetScriptFramework.Main.GameInfo.GetAddressOf(17636);
-				_attachPrecipitationObject =	NetScriptFramework.Main.GameInfo.GetAddressOf(25640);
-				_detachPrecipitationObject1 =	NetScriptFramework.Main.GameInfo.GetAddressOf(25638);
-				_detachPrecipitationObject2 =	NetScriptFramework.Main.GameInfo.GetAddressOf(25639);
-				_getIsCreatureType =			NetScriptFramework.Main.GameInfo.GetAddressOf(21029);
+				_activateFlora =					NetScriptFramework.Main.GameInfo.GetAddressOf(16986);
+				_activateTree =						NetScriptFramework.Main.GameInfo.GetAddressOf(17636);
+				_applyBashingSpell =				NetScriptFramework.Main.GameInfo.GetAddressOf(37673);
+				_applyCombatHitSpellMelee =			NetScriptFramework.Main.GameInfo.GetAddressOf(37799);
+				_applyCombatHitSpellProjectile =	NetScriptFramework.Main.GameInfo.GetAddressOf(42547);
+				_applyReanimateSpell =				NetScriptFramework.Main.GameInfo.GetAddressOf(37865);
+				_applySneakingSpell =				NetScriptFramework.Main.GameInfo.GetAddressOf(36926);
+				_applyWeaponSwingSpell =			NetScriptFramework.Main.GameInfo.GetAddressOf(37628);
+				_attachPrecipitationObject =		NetScriptFramework.Main.GameInfo.GetAddressOf(25640);
+				_detachPrecipitationObject1 =		NetScriptFramework.Main.GameInfo.GetAddressOf(25638);
+				_detachPrecipitationObject2 =		NetScriptFramework.Main.GameInfo.GetAddressOf(25639);
+				_getIsCreatureType =				NetScriptFramework.Main.GameInfo.GetAddressOf(21029);
+				_harvest =							NetScriptFramework.Main.GameInfo.GetAddressOf(14692);
+				_setSpellPerkEntryPoint =			NetScriptFramework.Main.GameInfo.GetAddressOf(23089);
 			}
 
 
@@ -151,6 +165,18 @@
 			readonly static private System.IntPtr _activateFlora;
 
 			readonly static private System.IntPtr _activateTree;
+
+			readonly static private System.IntPtr _applyBashingSpell;
+
+			readonly static private System.IntPtr _applyCombatHitSpellMelee;
+
+			readonly static private System.IntPtr _applyCombatHitSpellProjectile;
+
+			readonly static private System.IntPtr _applyReanimateSpell;
+
+			readonly static private System.IntPtr _applySneakingSpell;
+
+			readonly static private System.IntPtr _applyWeaponSwingSpell;
 
 			readonly static private System.IntPtr _attachPrecipitationObject;
 
@@ -160,25 +186,53 @@
 
 			readonly static private System.IntPtr _getIsCreatureType;
 
+			readonly static private System.IntPtr _harvest;
+
+			readonly static private System.IntPtr _setSpellPerkEntryPoint;
+
 
 
 			/// <summary>&lt;SkyrimSE.exe&gt; + 0x218CE0 (VID16986)</summary>
-			static public System.IntPtr ActivateFlora		{ get { return _activateFlora; } }
+			static public System.IntPtr ActivateFlora					{ get { return _activateFlora; } }
 
 			/// <summary>&lt;SkyrimSE.exe&gt; + 0x231580 (VID17636)</summary>
-			static public System.IntPtr ActivateTree		{ get { return _activateTree; } }
+			static public System.IntPtr ActivateTree					{ get { return _activateTree; } }
+
+			/// <summary>&lt;SkyrimSE.exe&gt; + 0x628C20 (VID37673)</summary>
+			static public System.IntPtr ApplyBashingSpell				{ get { return _applyBashingSpell; } }
+
+			/// <summary>&lt;SkyrimSE.exe&gt; + 0x6310A0 (VID37799)</summary>
+			static public System.IntPtr ApplyCombatHitSpellMelee		{ get { return _applyCombatHitSpellMelee; } }
+
+			/// <summary>&lt;SkyrimSE.exe&gt; + 0x732400 (VID42547)</summary>
+			static public System.IntPtr ApplyCombatHitSpellProjectile	{ get { return _applyCombatHitSpellProjectile; } }
+
+			/// <summary>&lt;SkyrimSE.exe&gt; + 0x634BF0 (VID37865)</summary>
+			static public System.IntPtr ApplyReanimateSpell				{ get { return _applyReanimateSpell; } }
+
+			/// <summary>&lt;SkyrimSE.exe&gt; + 0x6089E0 (VID36926)</summary>
+			static public System.IntPtr ApplySneakingSpell				{ get { return _applySneakingSpell; } }
+
+			/// <summary>&lt;SkyrimSE.exe&gt; + 0x6260F0 (VID37628)</summary>
+			static public System.IntPtr ApplyWeaponSwingSpell			{ get { return _applyWeaponSwingSpell; } }
 
 			/// <summary>&lt;SkyrimSE.exe&gt; + 0x3AF100 (VID25640)</summary>
-			static public System.IntPtr AttachPrecipitationObject { get { return _attachPrecipitationObject; } }
+			static public System.IntPtr AttachPrecipitationObject		{ get { return _attachPrecipitationObject; } }
 
 			/// <summary>&lt;SkyrimSE.exe&gt; + 0x3AEBD0 (VID25638)</summary>
-			static public System.IntPtr DetachPrecipitationObject1 { get { return _detachPrecipitationObject1; } }
+			static public System.IntPtr DetachPrecipitationObject1		{ get { return _detachPrecipitationObject1; } }
 
 			/// <summary>&lt;SkyrimSE.exe&gt; + 0x3AF050 (VID25639)</summary>
-			static public System.IntPtr DetachPrecipitationObject2 { get { return _detachPrecipitationObject2; } }
+			static public System.IntPtr DetachPrecipitationObject2		{ get { return _detachPrecipitationObject2; } }
 
 			/// <summary>&lt;SkyrimSE.exe&gt; + 0x2D7750 (VID21029)</summary>
-			static public System.IntPtr GetIsCreatureType	{ get { return _getIsCreatureType; } }
+			static public System.IntPtr GetIsCreatureType				{ get { return _getIsCreatureType; } }
+
+			/// <summary>&lt;SkyrimSE.exe&gt; + 0x19CA00 (VID14692)</summary>
+			static public System.IntPtr Harvest							{ get { return _harvest; } }
+
+			/// <summary>&lt;SkyrimSE.exe&gt; + 0x32FA00 (VID23089)</summary>
+			static public System.IntPtr SetSpellPerkEntryPoint			{ get { return _setSpellPerkEntryPoint; } }
 		}
 
 		static public class ExtraDataList
@@ -522,13 +576,13 @@
 			static public System.IntPtr IsCrimeToActivate		{ get { return _isCrimeToActivate; } }
 
 			/// <summary>&lt;SkyrimSE.exe&gt; + 0x1548E48 (VID232866)</summary>
-			static public System.IntPtr IsOccludedFraction1 { get { return _isOccludedFraction1; } }
+			static public System.IntPtr IsOccludedFraction1		{ get { return _isOccludedFraction1; } }
 
 			/// <summary>&lt;SkyrimSE.exe&gt; + 0x1536B98 (VID230690)</summary>
-			static public System.IntPtr IsOccludedFraction2 { get { return _isOccludedFraction2; } }
+			static public System.IntPtr IsOccludedFraction2		{ get { return _isOccludedFraction2; } }
 
 			/// <summary>&lt;SkyrimSE.exe&gt; + 0x156F92C (VID235914)</summary>
-			static public System.IntPtr IsOccludedFraction3 { get { return _isOccludedFraction3; } }
+			static public System.IntPtr IsOccludedFraction3		{ get { return _isOccludedFraction3; } }
 		}
 
 		static public class TESObjectTREE

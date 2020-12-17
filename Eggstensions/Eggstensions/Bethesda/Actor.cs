@@ -22,6 +22,14 @@
 			return process;
 		}
 
+		static public void CastSpellPerkEntryPoint(System.IntPtr actor, System.IntPtr spellItem)
+		{
+			if (actor == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("actor"); }
+			if (spellItem == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("spellItem"); }
+
+			NetScriptFramework.Memory.InvokeCdecl(VIDS.Actor.CastSpellPerkEntryPoint, actor, spellItem);
+		}
+
 		/// <param name = "actor">Actor</param>
 		/// <returns>MiddleHighProcessData</returns>
 		static public System.IntPtr Update3DModel(System.IntPtr actor)

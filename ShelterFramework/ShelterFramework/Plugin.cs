@@ -5,46 +5,16 @@
 namespace ShelterFramework
 {
     public class Plugin : NetScriptFramework.Plugin
-    {
-		override public System.String Author
-		{
-			get
-			{
-				return "meh321 and KernalsEgg";
-			}
-		}
+	{
+		override public System.Int32 RequiredLibraryVersion	{ get { return 10; } }
 
-		override public System.String Key
-		{
-			get
-			{
-				return "ShelterFramework";
-			}
-		}
+		override public System.Int32 Version				{ get { return 1; } }
 
-		override public System.String Name
-		{
-			get
-			{
-				return "Shelter Framework";
-			}
-		}
+		override public System.String Author				{ get { return "meh321 and KernalsEgg"; } }
 
-		override public System.Int32 RequiredLibraryVersion
-		{
-			get
-			{
-				return 10;
-			}
-		}
+		override public System.String Key					{ get { return "ShelterFramework"; } }
 
-		override public System.Int32 Version
-		{
-			get
-			{
-				return 1;
-			}
-		}
+		override public System.String Name					{ get { return "Shelter Framework"; } }
 
 
 

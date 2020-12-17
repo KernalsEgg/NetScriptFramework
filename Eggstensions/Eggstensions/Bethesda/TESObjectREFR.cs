@@ -429,19 +429,19 @@ namespace Eggstensions.Bethesda
 			return false;
 		}
 
-		static public System.Boolean IsOccluded(System.IntPtr viewer, System.IntPtr target, params CollisionLayers[] collisionLayers)
+		static public System.Boolean IsOccluded(System.IntPtr reference, System.IntPtr target, params CollisionLayers[] collisionLayers)
 		{
-			if (viewer == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("viewer"); }
+			if (reference == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("reference"); }
 			if (target == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("target"); }
 
+			var referenceLookAtPosition = TESObjectREFR.GetLookAtPosition(reference);
 			var targetPosition = TESObjectREFR.GetPosition(target);
 			var targetMinimumBounds = TESObjectREFR.GetMinimumBounds(target);
 			var targetMaximumBounds = TESObjectREFR.GetMaximumBounds(target);
-			var targetHeight = targetMaximumBounds.z - targetMinimumBounds.z;
 
 			foreach (var fraction in GetFractions())
 			{
-				if (!TESObjectREFR.IsHit(viewer, target, TESObjectREFR.GetLookAtPosition(viewer), (targetPosition.x, targetPosition.y, targetPosition.z + targetMinimumBounds.z + (fraction * targetHeight)), collisionLayers))
+				if (!TESObjectREFR.IsHit(reference, target, referenceLookAtPosition, (targetPosition.x, targetPosition.y, targetPosition.z + fraction * (targetMinimumBounds.z + targetMaximumBounds.z)), collisionLayers))
 				{
 					return false;
 				}
