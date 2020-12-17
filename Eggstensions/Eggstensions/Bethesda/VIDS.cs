@@ -384,6 +384,23 @@
 			static public System.IntPtr HasLineOfSight	{ get { return _hasLineOfSight; } }
 		}
 
+		static public class PlayerCamera
+		{
+			static PlayerCamera()
+			{
+				_instance = NetScriptFramework.Main.GameInfo.GetAddressOf(514642);
+			}
+
+
+
+			readonly static private System.IntPtr _instance;
+
+
+
+			/// <summary>&lt;SkyrimSE.exe&gt; + 0x2EC59B8 (VID514642)</summary>
+			static public System.IntPtr Instance { get { return _instance; } }
+		}
+
 		static public class ProcessLists
 		{
 			static ProcessLists()

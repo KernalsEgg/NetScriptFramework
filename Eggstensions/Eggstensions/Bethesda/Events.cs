@@ -97,6 +97,26 @@ namespace Eggstensions.Bethesda
 			public System.IntPtr WeatherNode { get; }
 		}
 
+		sealed public class GetIsCreatureTypeEventArguments : NetScriptFramework.HookedEventArgs
+		{
+			public GetIsCreatureTypeEventArguments(System.IntPtr subject, System.Int32 argument1)
+			{
+				Subject = subject;
+				Argument1 = argument1;
+			}
+
+
+
+			public System.Double Result { get; set; } = -1.0d;
+
+			public System.Int32 Argument1 { get; }
+
+			/// <summary>TESObjectREFR</summary>
+			public System.IntPtr Subject { get; }
+
+			public System.String Text { get; set; } = "Handled Exception >> %0.2f";
+		}
+
 		sealed public class PlayHarvestSoundEventArguments : NetScriptFramework.HookedEventArgs
 		{
 			public PlayHarvestSoundEventArguments(System.IntPtr sound)
@@ -143,26 +163,6 @@ namespace Eggstensions.Bethesda
 			public System.IntPtr Ingredient { get; }
 
 			public System.Boolean Skip { get; set; } = false;
-		}
-
-		sealed public class GetIsCreatureTypeEventArguments : NetScriptFramework.HookedEventArgs
-		{
-			public GetIsCreatureTypeEventArguments(System.IntPtr subject, System.Int32 argument1)
-			{
-				Subject = subject;
-				Argument1 = argument1;
-			}
-
-
-
-			public System.Double Result { get; set; } = -1.0d;
-
-			public System.Int32 Argument1 { get; }
-
-			/// <summary>TESObjectREFR</summary>
-			public System.IntPtr Subject { get; }
-
-			public System.String Text { get; set; } = "Handled Exception >> %0.2f";
 		}
 
 
@@ -409,30 +409,76 @@ namespace Eggstensions.Bethesda
 			static GetIsCreatureTypeEvent()
 			{
 				var address = VIDS.Events.GetIsCreatureType;
-				var offset = 0x4;
+				var hookLength = 0xD;
+				var hookOffset1 = 0x4;
 
-				if (!NetScriptFramework.Memory.VerifyBytes(address + offset, "8B 0D", false)) { throw new Eggceptions.FormatException("8B 0D"); }   // mov ecx, DWORD PTR [rip+0x0]
-				NetScriptFramework.Memory.WriteBytes(address + offset, new System.Byte[] { 0x8B, 0x05 }, true);                                     // mov eax, DWORD PTR [rip+0x0]
-				offset += 0x6;
+				/*
+					mov ecx, [rip + ????????]
+					mov rax, gs:[00000058]
+					mov edx, 00000600
+					mov qword ptr [r9], 00000000
+					mov rax, [rax + rcx * 8]
+					cmp byte ptr [rdx + rax], 00
+					je 0x40
+					mov rcx, [rip + ????????]
+					lea rdx, [rip + ????????]
+					xorps xmm2, xmm2
+					movq r8, xmm2
+					call ????????
+					mov al, 01
+				*/
+				if (!NetScriptFramework.Memory.VerifyBytes
+					(
+						address + hookOffset1,
+						"8B 0D ????????" +
+						"65 48 8B 04 25 58000000" +
+						"BA 00060000" +
+						"49 C7 01 00000000" +
+						"48 8B 04 C8" +
+						"80 3C 02 00" +
+						"74 1B" +
+						"48 8B 0D ????????" +
+						"48 8D 15 ????????" +
+						"0F57 D2" +
+						"66 49 0F7E D0" +
+						"E8 ????????" +
+						"B0 01",
+						false
+					))
+				{
+					throw new Eggceptions.FormatException("GetIsCreatureType");
+				}
 
-				if (!NetScriptFramework.Memory.VerifyBytes(address + offset, "65 48 8B 04 25", false)) { throw new Eggceptions.FormatException("65 48 8B 04 25"); } // mov rax, QWORD PTR gs:0x0
-				NetScriptFramework.Memory.WriteBytes(address + offset, new System.Byte[] { 0x65, 0x4C, 0x8B, 0x04, 0x25 }, true);                                   // mov r8, QWORD PTR gs:0x0
-				offset += 0x9;
+				NetScriptFramework.Memory.WriteBytes(address + hookOffset1, new System.Byte[] { 0x8B, 0x05 }, true); // mov eax, [rip + ????????]
+				hookOffset1 += 0x6;
+
+				NetScriptFramework.Memory.WriteBytes(address + hookOffset1, new System.Byte[] { 0x65, 0x4C, 0x8B, 0x04, 0x25 }, true); // mov r8, gs:[????????]
+				hookOffset1 += 0x9;
 
 				/*
 					mov r8, [r8 + 0x8 * rax]
-					mov r8b, [r8 + 0x600]
+					cmp byte ptr [r8+0x600], 0
+					je 0xF
 				*/
-				var bytes = new System.Byte[]
+				var bytes1 = new System.Byte[]
 				{
 					0x4D, 0x8B, 0x04, 0xC0,
-					0x45, 0x8A, 0x80, 0x00, 0x06, 0x00, 0x00
+					0x41, 0x80, 0xB8, 0x00, 0x06, 0x00, 0x00, 0x00,
+					0x74, 0x0F
 				};
 
-				if (!NetScriptFramework.Memory.VerifyBytes(address + offset, "BA 00060000", false)) { throw new Eggceptions.FormatException("BA 00060000"); } // mov edx, 0x600
-				NetScriptFramework.Memory.WriteBytes(address + offset, bytes, true);
-				offset += bytes.Length;
+				NetScriptFramework.Memory.WriteBytes(address + hookOffset1, bytes1, true);
+				hookOffset1 += bytes1.Length;
 
+				var hookOffset2 = hookOffset1 + hookLength;
+				var bytes2 = new System.Byte[] { 0xEB, 0x0D }; // jmp 0xD
+
+				NetScriptFramework.Memory.WriteBytes(address + hookOffset2, bytes2, true);
+				hookOffset2 += bytes2.Length;
+
+				// RCX: Subject		(argument 1)
+				// RDX: Argument1	(argument 2)
+				// R9: Result		(argument 4)
 				_getIsCreatureTypeEvent =
 					new NetScriptFramework.EventHook<Events.GetIsCreatureTypeEventArguments>
 					(
@@ -440,18 +486,12 @@ namespace Eggstensions.Bethesda
 						"GetIsCreatureType",
 						new NetScriptFramework.EventHookParameters<Events.GetIsCreatureTypeEventArguments>
 						(
-							address: address + offset,
-							replaceLength: 0x44 - offset,
-							includeLength: 0x0,
-							pattern:
-								"00" +
-								"48 8B 04 C8",
+							address: address + hookOffset1,
+							replaceLength: hookLength,
+							includeLength: 0,
+							pattern: "",
 							argFunc: cpuRegisters =>
 							{
-								// RCX: Subject			(argument 1)
-								// RDX: Argument1		(argument 2)
-								// R8B: PrintToConsole
-								// R9: Result			(argument 4)
 								return new Events.GetIsCreatureTypeEventArguments(cpuRegisters.CX, cpuRegisters.DX.ToInt32());
 							},
 							afterFunc: (cpuRegisters, arguments) =>
@@ -460,10 +500,23 @@ namespace Eggstensions.Bethesda
 								NetScriptFramework.Memory.WriteDouble(cpuRegisters.R9, arguments.Result);
 
 								// Print to console
-								if (cpuRegisters.R8.ToBool())
-								{
-									ConsoleLog.Print(ConsoleLog.Instance, arguments.Text, System.BitConverter.ToInt64(System.BitConverter.GetBytes(arguments.Result), 0));
-								}
+								ConsoleLog.Print(ConsoleLog.Instance, arguments.Text, System.BitConverter.ToInt64(System.BitConverter.GetBytes(arguments.Result), 0));
+							}
+						),
+						new NetScriptFramework.EventHookParameters<Events.GetIsCreatureTypeEventArguments>
+						(
+							address: address + hookOffset2,
+							replaceLength: 0x44 - hookOffset2,
+							includeLength: 0,
+							pattern: "",
+							argFunc: cpuRegisters =>
+							{
+								return new Events.GetIsCreatureTypeEventArguments(cpuRegisters.CX, cpuRegisters.DX.ToInt32());
+							},
+							afterFunc: (cpuRegisters, arguments) =>
+							{
+								// Set result
+								NetScriptFramework.Memory.WriteDouble(cpuRegisters.R9, arguments.Result);
 							}
 						)
 					);

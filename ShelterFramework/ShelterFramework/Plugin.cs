@@ -66,8 +66,8 @@ namespace ShelterFramework
 				var detectShelter = System.Convert.ToBoolean(arguments.Argument1);
 				var isSheltered = Plugin.IsSheltered(arguments.Subject);
 
-				arguments.Text = detectShelter ? "Is Sheltered >> %0.2f" : "Is Exposed >> %0.2f";
 				arguments.Result = (isSheltered == detectShelter) ? 1.0d : 0.0d;
+				arguments.Text = detectShelter ? "Is Sheltered >> %0.2f" : "Is Exposed >> %0.2f";
 			}
 			catch (Eggceptions.Eggception eggception)
 			{
@@ -82,7 +82,15 @@ namespace ShelterFramework
 		{
 			if (reference == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("reference"); }
 
-			return TESForm.HasFormType(reference, FormTypes.Character) ? Plugin.IsShelteredActor(reference) : Plugin.IsShelteredReference(reference);
+			switch (TESForm.GetFormType(reference))
+			{
+				case FormTypes.Character:
+					return Plugin.IsShelteredActor(reference);
+				case FormTypes.TESObjectREFR:
+					return Plugin.IsShelteredReference(reference);
+				default:
+					throw new Eggceptions.Bethesda.FormTypeException("reference");
+			}
 		}
 		
 		/// <param name="reference">TESObjectREFR</param>

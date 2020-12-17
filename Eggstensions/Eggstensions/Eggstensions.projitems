@@ -30,6 +30,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Bethesda\ConsoleLog.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bethesda\ExtraDataList.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bethesda\NiPointer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Bethesda\PlayerCamera.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bethesda\TESFileCollection.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bethesda\VIDS.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bethesda\Precipitation.cs" />

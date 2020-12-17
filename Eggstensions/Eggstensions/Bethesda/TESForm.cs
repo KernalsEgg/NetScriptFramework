@@ -7,6 +7,7 @@
 		TESObjectTREE =		0x26,
 		TESFlora =			0x27,
 		TESNPC =			0x2B,
+		TESObjectREFR =		0x3D,
 		Character =			0x3E,
 		TESObjectARMA =		0x66,
 		BGSCollisionLayer =	0x84

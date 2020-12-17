@@ -9,7 +9,7 @@
 		public System.Boolean ShowHandledExceptions { get; private set; } = false;
 
 		[NetScriptFramework.Tools.ConfigValue("RayCastLength", "Ray Cast Length", "The length of the raycast vector used to detect shelter.", NetScriptFramework.Tools.ConfigEntryFlags.VeryShortComment)]
-		public System.Single RayCastLength { get; private set; } = 2048.0f;
+		public System.Single RayCastLength { get; private set; } = 3072.0f;
 
 
 
