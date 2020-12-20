@@ -30,6 +30,15 @@
 			return NetScriptFramework.Memory.InvokeCdecl(VIDS.NiAVObject.GetBoneNodeByName, niAVObject, bsFixedString, 1);
 		}
 
+		/// <param name="niAVObject">NiAVObject</param>
+		/// <returns>NiTransform</returns>
+		static public System.IntPtr GetLocalTransform(System.IntPtr niAVObject)
+		{
+			if (niAVObject == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("niAVObject"); }
+
+			return niAVObject + 0x48;
+		}
+
 		/// <param name = "niAVObject">NiAVObject</param>
 		static public NiAVObjectFlags GetNiAVObjectFlags(System.IntPtr niAVObject)
 		{
@@ -80,6 +89,24 @@
 			if (parent != System.IntPtr.Zero) { return NiAVObject.GetOwnerRecursive(parent); }
 
 			return System.IntPtr.Zero;
+		}
+
+		/// <param name="niAVObject">NiAVObject</param>
+		/// <returns>NiBound</returns>
+		static public System.IntPtr GetWorldBound(System.IntPtr niAVObject)
+		{
+			if (niAVObject == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("niAVObject"); }
+
+			return niAVObject + 0xE4;
+		}
+
+		/// <param name="niAVObject">NiAVObject</param>
+		/// <returns>NiTransform</returns>
+		static public System.IntPtr GetWorldTransform(System.IntPtr niAVObject)
+		{
+			if (niAVObject == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("niAVObject"); }
+
+			return niAVObject + 0x7C;
 		}
 
 		/// <param name = "niAVObject">NiAVObject</param>

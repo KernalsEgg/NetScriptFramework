@@ -24,11 +24,19 @@ namespace QuickHarvest
 
 			_configFile.AddSetting
 			(
-				"HarvestEverything",
+				"LogHandledExceptions",
 				new NetScriptFramework.Tools.Value(true),
-				"Harvest Everything",
-				"If enabled all ingredients will be quick harvested." +
-				"\nIf disabled only the targeted ingredient will be quick harvested.",
+				"Log Handled Exceptions",
+				"Log handled exceptions to Data\\NetScriptFramework\\NetScriptFramework.log.txt.",
+				NetScriptFramework.Tools.ConfigEntryFlags.VeryShortComment
+			);
+
+			_configFile.AddSetting
+			(
+				"ShowHandledExceptions",
+				new NetScriptFramework.Tools.Value(false),
+				"Show Handled Exceptions",
+				"Show an in-game message box each time an exception is handled.",
 				NetScriptFramework.Tools.ConfigEntryFlags.VeryShortComment
 			);
 
@@ -52,22 +60,11 @@ namespace QuickHarvest
 
 			_configFile.AddSetting
 			(
-				"Steal",
-				new NetScriptFramework.Tools.Value(false),
-				"Steal",
-				"If enabled ingredients will only be stolen when you steal." +
-				"\nIf disabled ingredients will never be stolen.",
-				NetScriptFramework.Tools.ConfigEntryFlags.VeryShortComment
-			);
-
-			_configFile.AddSetting
-			(
-				"Visibility",
-				new NetScriptFramework.Tools.Value(1),
-				"Visibility",
-				"If set to 0 then all ingredients will be quick harvested" +
-				"\nIf set to 1 then only ingredients in your panoramic (360 degree) view will be quick harvested." +
-				"\nIf set to 2 then only ingredients in your field of view will be quick harvested.",
+				"HarvestEverything",
+				new NetScriptFramework.Tools.Value(true),
+				"Harvest Everything",
+				"If enabled all ingredients will be quick harvested." +
+				"\nIf disabled only the targeted ingredient will be quick harvested.",
 				NetScriptFramework.Tools.ConfigEntryFlags.VeryShortComment
 			);
 
@@ -83,19 +80,22 @@ namespace QuickHarvest
 
 			_configFile.AddSetting
 			(
-				"LogHandledExceptions",
-				new NetScriptFramework.Tools.Value(true),
-				"Log Handled Exceptions",
-				"Log handled exceptions to Data\\NetScriptFramework\\NetScriptFramework.log.txt.",
+				"Steal",
+				new NetScriptFramework.Tools.Value(false),
+				"Steal",
+				"If enabled ingredients will only be stolen when you steal." +
+				"\nIf disabled ingredients will never be stolen.",
 				NetScriptFramework.Tools.ConfigEntryFlags.VeryShortComment
 			);
 
 			_configFile.AddSetting
 			(
-				"ShowHandledExceptions",
-				new NetScriptFramework.Tools.Value(false),
-				"Show Handled Exceptions",
-				"Show an in-game message box each time an exception is handled.",
+				"Visibility",
+				new NetScriptFramework.Tools.Value(1),
+				"Visibility",
+				"If set to 0 then all ingredients will be quick harvested" +
+				"\nIf set to 1 then only ingredients in your panoramic view will be quick harvested." +
+				"\nIf set to 2 then only ingredients in your field of view will be quick harvested.",
 				NetScriptFramework.Tools.ConfigEntryFlags.VeryShortComment
 			);
 
@@ -143,7 +143,7 @@ namespace QuickHarvest
 				"IncludedFormID0",
 				new NetScriptFramework.Tools.Value(default(System.UInt32)),
 				"Included Form ID 0",
-				"The form ID of an ingredient to exclude. Must be in hexadecimal notation and without its load order index." +
+				"The form ID of an ingredient to include. Must be in hexadecimal notation and without its load order index." +
 				"\nThis is unnecessary if the ingredient has an included form type.",
 				NetScriptFramework.Tools.ConfigEntryFlags.VeryShortComment | NetScriptFramework.Tools.ConfigEntryFlags.PreferHex
 			);
@@ -162,9 +162,13 @@ namespace QuickHarvest
 				_configFile.Save();
 			}
 
-			var harvestEverythingValue = _configFile.GetValue("HarvestEverything");
-			if (harvestEverythingValue == null) { throw new Eggceptions.NullException("harvestEverythingValue"); }
-			HarvestEverything = harvestEverythingValue.ToBoolean();
+			var logHandledExceptionsValue = _configFile.GetValue("LogHandledExceptions");
+			if (logHandledExceptionsValue == null) { throw new Eggceptions.NullException("logHandledExceptionsValue"); }
+			LogHandledExceptions = logHandledExceptionsValue.ToBoolean();
+
+			var showHandledExceptionsValue = _configFile.GetValue("ShowHandledExceptions");
+			if (showHandledExceptionsValue == null) { throw new Eggceptions.NullException("showHandledExceptionsValue"); }
+			ShowHandledExceptions = showHandledExceptionsValue.ToBoolean();
 
 			var playSoundsValue = _configFile.GetValue("PlaySounds");
 			if (playSoundsValue == null) { throw new Eggceptions.NullException("playSoundsValue"); }
@@ -174,6 +178,14 @@ namespace QuickHarvest
 			if (showNotificationsValue == null) { throw new Eggceptions.NullException("showNotificationsValue"); }
 			ShowNotifications = showNotificationsValue.ToBoolean();
 
+			var harvestEverythingValue = _configFile.GetValue("HarvestEverything");
+			if (harvestEverythingValue == null) { throw new Eggceptions.NullException("harvestEverythingValue"); }
+			HarvestEverything = harvestEverythingValue.ToBoolean();
+
+			var maximumDistanceValue = _configFile.GetValue("MaximumDistance");
+			if (maximumDistanceValue == null) { throw new Eggceptions.NullException("maximumDistanceValue"); }
+			MaximumDistance = maximumDistanceValue.ToSingle();
+
 			var stealValue = _configFile.GetValue("Steal");
 			if (stealValue == null) { throw new Eggceptions.NullException("stealValue"); }
 			Steal = stealValue.ToBoolean();
@@ -181,18 +193,6 @@ namespace QuickHarvest
 			var visibilityValue = _configFile.GetValue("Visibility");
 			if (visibilityValue == null) { throw new Eggceptions.NullException("visibilityValue"); }
 			Visibility = (Flags.Visibility)visibilityValue.ToInt32();
-
-			var maximumDistanceValue = _configFile.GetValue("MaximumDistance");
-			if (maximumDistanceValue == null) { throw new Eggceptions.NullException("maximumDistanceValue"); }
-			MaximumDistance = maximumDistanceValue.ToSingle();
-
-			var logHandledExceptionsValue = _configFile.GetValue("LogHandledExceptions");
-			if (logHandledExceptionsValue == null) { throw new Eggceptions.NullException("logHandledExceptionsValue"); }
-			LogHandledExceptions = logHandledExceptionsValue.ToBoolean();
-
-			var showHandledExceptionsValue = _configFile.GetValue("ShowHandledExceptions");
-			if (showHandledExceptionsValue == null) { throw new Eggceptions.NullException("showHandledExceptionsValue"); }
-			ShowHandledExceptions = showHandledExceptionsValue.ToBoolean();
 
 			IncludedIngredientFormTypes = new System.Collections.Generic.List<FormTypes>();
 
@@ -250,26 +250,26 @@ namespace QuickHarvest
 
 
 
-		static public System.Boolean HarvestEverything { get; private set; }
+		static public Flags.Visibility Visibility { get; }
 
-		static public System.Boolean LogHandledExceptions { get; private set; }
+		static public System.Boolean HarvestEverything { get; }
 
-		static public System.Boolean ShowHandledExceptions { get; private set; }
+		static public System.Boolean LogHandledExceptions { get; }
 
-		static public System.Boolean PlaySounds { get; private set; }
+		static public System.Boolean PlaySounds { get; }
 
-		static public System.Boolean ShowNotifications { get; private set; }
+		static public System.Boolean ShowHandledExceptions { get; }
 
-		static public System.Boolean Steal { get; private set; }
+		static public System.Boolean ShowNotifications { get; }
 
-		static public System.Collections.Generic.HashSet<System.IntPtr> ExcludedIngredients { get; private set; }
+		static public System.Boolean Steal { get; }
 
-		static public System.Collections.Generic.HashSet<System.IntPtr> IncludedIngredients { get; private set; }
+		static public System.Collections.Generic.HashSet<System.IntPtr> ExcludedIngredients { get; }
 
-		static public System.Collections.Generic.List<FormTypes> IncludedIngredientFormTypes { get; private set; }
+		static public System.Collections.Generic.HashSet<System.IntPtr> IncludedIngredients { get; }
 
-		static public Flags.Visibility Visibility { get; private set; }
+		static public System.Collections.Generic.List<FormTypes> IncludedIngredientFormTypes { get; }
 
-		static public System.Single MaximumDistance { get; private set; }
+		static public System.Single MaximumDistance { get; }
 	}
 }

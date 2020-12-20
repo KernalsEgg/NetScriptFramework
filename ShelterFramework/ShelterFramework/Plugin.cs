@@ -35,14 +35,7 @@ namespace ShelterFramework
 
 
 
-		readonly static private CollisionLayers[] _collisionLayers = new CollisionLayers[]
-		{
-			CollisionLayers.AnimStatic,
-			CollisionLayers.Ground,
-			CollisionLayers.Static,
-			CollisionLayers.Terrain,
-			CollisionLayers.Trees
-		};
+		readonly static private CollisionLayers _collisionLayer = CollisionLayers.LOS;
 
 		readonly static private System.String _messageBox =
 			"Shelter Framework has thrown an exception." +
@@ -102,7 +95,7 @@ namespace ShelterFramework
 
 			if (!_isShelteredCache.TryGetValue(reference, out var isShelteredCache) || lastUpdate != isShelteredCache.lastUpdate)
 			{
-				_isShelteredCache[reference] = (lastUpdate, TESObjectREFR.IsHit(reference, TESObjectREFR.GetLookAtPosition(reference), Plugin.GetRay(), _collisionLayers));
+				_isShelteredCache[reference] = (lastUpdate, TESObjectREFR.IsHit(reference, TESObjectREFR.GetLookAtPosition(reference), Plugin.GetRay(), _collisionLayer));
 			}
 
 			return _isShelteredCache[reference].isSheltered;
@@ -112,7 +105,7 @@ namespace ShelterFramework
 		{
 			if (reference == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("reference"); }
 
-			return TESObjectREFR.IsHit(reference, TESObjectREFR.GetLookAtPosition(reference), Plugin.GetRay(), _collisionLayers);
+			return TESObjectREFR.IsHit(reference, TESObjectREFR.GetLookAtPosition(reference), Plugin.GetRay(), _collisionLayer);
 		}
 
 		static private (System.Single x, System.Single y, System.Single z) GetRay()

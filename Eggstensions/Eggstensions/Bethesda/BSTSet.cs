@@ -2,16 +2,16 @@
 {
 	public class BSTSet : System.Collections.Generic.IEnumerable<(System.IntPtr value, System.IntPtr next)>
 	{
-		public System.IntPtr Address { get; }
-
-
-		
 		public BSTSet(System.IntPtr bstSet)
 		{
 			if (bstSet == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("bstSet"); }
 
 			Address = bstSet;
 		}
+
+
+
+		public System.IntPtr Address { get; }
 
 
 

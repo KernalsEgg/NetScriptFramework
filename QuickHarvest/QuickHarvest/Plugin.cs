@@ -1,6 +1,4 @@
-﻿using System.Linq;
-
-using Eggstensions.Bethesda;
+﻿using Eggstensions.Bethesda;
 
 
 
@@ -24,16 +22,6 @@ namespace QuickHarvest
 		{
 			// loadedAny
 
-			NetScriptFramework.SkyrimSE.Events.OnMainMenu.Register
-			(arguments =>
-			{
-				if (arguments == null) { throw new Eggceptions.ArgumentNullException("arguments"); }
-
-				if (arguments.Entering)
-				{
-					_collisionLayers = Plugin.GetCollisionLayers();
-				}
-			});
 			Events.ActivateFloraEvent.Register(OnActivateFlora);
 			Events.ActivateTreeEvent.Register(OnActivateTree);
 			Events.PlayHarvestSoundEvent.Register(OnPlayHarvestSound);
@@ -44,31 +32,17 @@ namespace QuickHarvest
 
 
 
+		readonly static private CollisionLayers _collisionLayer = CollisionLayers.LOS;
+
 		readonly static private System.String _messageBox =
 			"Quick Harvest has thrown an exception." +
 			"\nDetails are logged to Data\\NetScriptFramework\\NetScriptFramework.log.txt.";
 
 
 
-		static private CollisionLayers[] _collisionLayers;
-
 		static private System.Int32 _harvesting = 0;
 
 
-
-		static private CollisionLayers[] GetCollisionLayers()
-		{
-			var los = TESForm.GetFormFromFile(0x8878A, "Skyrim.esm");
-			if (los == System.IntPtr.Zero) { throw new Eggceptions.NullException("los"); }
-			if (!TESForm.HasFormType(los, FormTypes.BGSCollisionLayer)) { throw new Eggceptions.Bethesda.FormTypeException("los"); }
-
-			var collidesWith = BSTArray.IntPtr(BGSCollisionLayer.GetCollidesWith(los));
-			var collisionLayers =
-				from collisionLayer in collidesWith
-				select BGSCollisionLayer.GetCollisionLayer(collisionLayer);
-
-			return collisionLayers.ToArray<CollisionLayers>();
-		}
 
 		static public void OnActivateFlora(Events.ActivateFloraEventArguments arguments)
 		{
@@ -143,7 +117,7 @@ namespace QuickHarvest
 					}
 					else
 					{
-						if (loadedIngredient != ingredient) { continue; } // The loaded ingredient has an included form type and has not been excluded
+						if (loadedIngredient != ingredient) { continue; } // The loaded ingredient must be included
 					}
 
 					if (TESObjectREFR.IsHarvested(loadedFlora)) { continue; }
@@ -168,7 +142,7 @@ namespace QuickHarvest
 					}
 					else
 					{
-						if (loadedIngredient != ingredient) { continue; } // The loaded ingredient has an included form type and has not been excluded
+						if (loadedIngredient != ingredient) { continue; } // The loaded ingredient must be included
 					}
 
 					if (TESObjectREFR.IsHarvested(loadedTree)) { continue; }
@@ -189,7 +163,7 @@ namespace QuickHarvest
 			switch (Settings.Visibility)
 			{
 				case Flags.Visibility.PanoramicView:
-					return !TESObjectREFR.IsOccluded(viewer, target, _collisionLayers);
+					return !TESObjectREFR.IsOccluded(viewer, target, PlayerCamera.GetPosition(PlayerCamera.Instance), _collisionLayer);
 				case Flags.Visibility.FieldOfView:
 					return PlayerCharacter.HasLineOfSight(viewer, target);
 				default:

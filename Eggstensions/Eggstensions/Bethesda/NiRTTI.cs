@@ -3,16 +3,16 @@
 	/// <summary>Offsets_NiRTTI.h</summary>
 	public class NiRTTI : System.Collections.Generic.IEnumerable<System.IntPtr>
 	{
-		public System.IntPtr Address { get; }
-
-
-
 		public NiRTTI(System.IntPtr niRTTI)
 		{
 			if (niRTTI == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("niRTTI"); }
 
 			Address = niRTTI;
 		}
+
+
+
+		public System.IntPtr Address { get; }
 
 
 

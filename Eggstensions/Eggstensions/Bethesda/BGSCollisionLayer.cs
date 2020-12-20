@@ -63,6 +63,20 @@
 
 	static public class BGSCollisionLayer
 	{
+		/// <returns>bhkCollisionFilter</returns>
+		static public System.IntPtr CollisionFilter
+		{
+			get
+			{
+				var collisionFilter = NetScriptFramework.Memory.ReadPointer(VIDS.BGSCollisionLayer.CollisionFilter);
+				if (collisionFilter == System.IntPtr.Zero) { throw new Eggceptions.NullException("collisionFilter"); }
+
+				return collisionFilter;
+			}
+		}
+
+
+
 		/// <param name="collisionLayer">BGSCollisionLayer</param>
 		/// <returns>BSTArray&lt;BGSCollisionLayer&gt;</returns>
 		static public System.IntPtr GetCollidesWith(System.IntPtr collisionLayer)
@@ -77,7 +91,7 @@
 		{
 			if (collisionLayer == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("collisionLayer"); }
 
-			return (CollisionLayers)NetScriptFramework.Memory.ReadUInt32(collisionLayer + 0x30);
+			return (CollisionLayers)(NetScriptFramework.Memory.ReadUInt32(collisionLayer + 0x30) & 0x7F);
 		}
 
 		/// <param name="collisionLayer">BGSCollisionLayer</param>

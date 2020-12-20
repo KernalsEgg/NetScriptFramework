@@ -7,6 +7,7 @@
 			static Actor()
 			{
 				_castSpellPerkEntryPoint =	NetScriptFramework.Main.GameInfo.GetAddressOf(37817);
+				_getCollisionFilter =		NetScriptFramework.Main.GameInfo.GetAddressOf(36559);
 				_update3DModel =			NetScriptFramework.Main.GameInfo.GetAddressOf(38404);
 			}
 
@@ -14,15 +15,37 @@
 
 			readonly static private System.IntPtr _castSpellPerkEntryPoint;
 
+			readonly static private System.IntPtr _getCollisionFilter;
+
 			readonly static private System.IntPtr _update3DModel;
 
 
 
 			/// <summary>&lt;SkyrimSE.exe&gt; + 0x632180 (VID37817)</summary>
-			static public System.IntPtr CastSpellPerkEntryPoint { get { return _castSpellPerkEntryPoint; } }
+			static public System.IntPtr CastSpellPerkEntryPoint	{ get { return _castSpellPerkEntryPoint; } }
+
+			/// <summary>&lt;SkyrimSE.exe&gt; + 0x5EBD90 (VID36559)</summary>
+			static public System.IntPtr GetCollisionFilter		{ get { return _getCollisionFilter; } }
 
 			/// <summary>&lt;SkyrimSE.exe&gt; + 0x650DF0 (VID38404)</summary>
-			static public System.IntPtr Update3DModel		{ get { return _update3DModel; } }
+			static public System.IntPtr Update3DModel			{ get { return _update3DModel; } }
+		}
+
+		static public class BGSCollisionLayer
+		{
+			static BGSCollisionLayer()
+			{
+				_collisionFilter = NetScriptFramework.Main.GameInfo.GetAddressOf(514415);
+			}
+
+
+
+			readonly static private System.IntPtr _collisionFilter;
+
+
+
+			/// <summary>&lt;SkyrimSE.exe&gt; + 0x1EC4328 (VID514415)</summary>
+			static public System.IntPtr CollisionFilter { get { return _collisionFilter; } }
 		}
 
 		static public class BSFixedString
@@ -258,6 +281,7 @@
 			{
 				_getNiObjectFromHavokObject =	NetScriptFramework.Main.GameInfo.GetAddressOf(76160);
 				_havokWorldScale =				NetScriptFramework.Main.GameInfo.GetAddressOf(231896);
+				_havokWorldScaleInverse =		NetScriptFramework.Main.GameInfo.GetAddressOf(230692);
 			}
 
 
@@ -266,6 +290,8 @@
 
 			readonly static private System.IntPtr _havokWorldScale;
 
+			readonly static private System.IntPtr _havokWorldScaleInverse;
+
 
 
 			/// <summary>&lt;SkyrimSE.exe&gt; + 0xDAD060 (VID76160)</summary>
@@ -273,6 +299,9 @@
 
 			/// <summary>&lt;SkyrimSE.exe&gt; + 0x154064C (VID231896)</summary>
 			static public System.IntPtr HavokWorldScale				{ get { return _havokWorldScale; } }
+
+			/// <summary>&lt;SkyrimSE.exe&gt; + 0x1536BA0 (VID230692)</summary>
+			static public System.IntPtr HavokWorldScaleInverse		{ get { return _havokWorldScaleInverse; } }
 		}
 
 		static public class hkpAllRayHitTempCollector
@@ -361,6 +390,40 @@
 			static public System.IntPtr Instance { get { return _instance; } }
 		}
 
+		static public class NiBound
+		{
+			static NiBound()
+			{
+				_isInFieldOfView = NetScriptFramework.Main.GameInfo.GetAddressOf(15671);
+			}
+
+
+
+			readonly static private System.IntPtr _isInFieldOfView;
+
+
+
+			/// <summary>&lt;SkyrimSE.exe&gt; + 0x1D24C0 (VID15671)</summary>
+			static public System.IntPtr IsInFieldOfView { get { return _isInFieldOfView; } }
+		}
+
+		static public class PlayerCamera
+		{
+			static PlayerCamera()
+			{
+				_instance = NetScriptFramework.Main.GameInfo.GetAddressOf(514642);
+			}
+
+
+
+			readonly static private System.IntPtr _instance;
+
+
+
+			/// <summary>&lt;SkyrimSE.exe&gt; + 0x2EC59B8 (VID514642)</summary>
+			static public System.IntPtr Instance { get { return _instance; } }
+		}
+
 		static public class PlayerCharacter
 		{
 			static PlayerCharacter()
@@ -384,23 +447,6 @@
 			static public System.IntPtr HasLineOfSight	{ get { return _hasLineOfSight; } }
 		}
 
-		static public class PlayerCamera
-		{
-			static PlayerCamera()
-			{
-				_instance = NetScriptFramework.Main.GameInfo.GetAddressOf(514642);
-			}
-
-
-
-			readonly static private System.IntPtr _instance;
-
-
-
-			/// <summary>&lt;SkyrimSE.exe&gt; + 0x2EC59B8 (VID514642)</summary>
-			static public System.IntPtr Instance { get { return _instance; } }
-		}
-
 		static public class ProcessLists
 		{
 			static ProcessLists()
@@ -416,6 +462,35 @@
 
 			/// <summary>&lt;SkyrimSE.exe&gt; + 0x1EBEAD0 (VID514167)</summary>
 			static public System.IntPtr Instance { get { return _instance; } }
+		}
+
+		static public class SceneGraph
+		{
+			static SceneGraph()
+			{
+				_menu3DRootNode = NetScriptFramework.Main.GameInfo.GetAddressOf(517008);
+				_menuRootNode = NetScriptFramework.Main.GameInfo.GetAddressOf(517007);
+				_worldRootNode = NetScriptFramework.Main.GameInfo.GetAddressOf(517006);
+			}
+
+
+
+			readonly static private System.IntPtr _menu3DRootNode;
+
+			readonly static private System.IntPtr _menuRootNode;
+
+			readonly static private System.IntPtr _worldRootNode;
+
+
+
+			/// <summary>&lt;SkyrimSE.exe&gt; + 0x2F26ED0 (VID517008)</summary>
+			static public System.IntPtr Menu3DRootNode { get { return _menu3DRootNode; } }
+
+			/// <summary>&lt;SkyrimSE.exe&gt; + 0x2F26EC8 (VID517007)</summary>
+			static public System.IntPtr MenuRootNode { get { return _menuRootNode; } }
+
+			/// <summary>&lt;SkyrimSE.exe&gt; + 0x2F26EC0 (VID517006)</summary>
+			static public System.IntPtr WorldRootNode { get { return _worldRootNode; } }
 		}
 
 		static public class Sky
@@ -560,11 +635,11 @@
 			static TESObjectREFR()
 			{
 				_getHandleFromReference =	NetScriptFramework.Main.GameInfo.GetAddressOf(12192);
+				_getLineOfSightFraction1 =	NetScriptFramework.Main.GameInfo.GetAddressOf(232866);
+				_getLineOfSightFraction2 =	NetScriptFramework.Main.GameInfo.GetAddressOf(230690);
+				_getLineOfSightFraction3 =	NetScriptFramework.Main.GameInfo.GetAddressOf(235914);
 				_getReferenceFromHandle =	NetScriptFramework.Main.GameInfo.GetAddressOf(16828);
 				_isCrimeToActivate =		NetScriptFramework.Main.GameInfo.GetAddressOf(19400);
-				_isOccludedFraction1 =		NetScriptFramework.Main.GameInfo.GetAddressOf(232866);
-				_isOccludedFraction2 =		NetScriptFramework.Main.GameInfo.GetAddressOf(230690);
-				_isOccludedFraction3 =		NetScriptFramework.Main.GameInfo.GetAddressOf(235914);
 			}
 
 
@@ -575,31 +650,31 @@
 
 			readonly static private System.IntPtr _isCrimeToActivate;
 
-			readonly static private System.IntPtr _isOccludedFraction1;
+			readonly static private System.IntPtr _getLineOfSightFraction1;
 
-			readonly static private System.IntPtr _isOccludedFraction2;
+			readonly static private System.IntPtr _getLineOfSightFraction2;
 
-			readonly static private System.IntPtr _isOccludedFraction3;
+			readonly static private System.IntPtr _getLineOfSightFraction3;
 
 
 
 			/// <summary>&lt;SkyrimSE.exe&gt; + 0x131F60 (VID12192)</summary>
 			static public System.IntPtr GetHandleFromReference	{ get { return _getHandleFromReference; } }
 
+			/// <summary>&lt;SkyrimSE.exe&gt; + 0x1548E48 (VID232866)</summary>
+			static public System.IntPtr GetLineOfSightFraction1	{ get { return _getLineOfSightFraction1; } }
+
+			/// <summary>&lt;SkyrimSE.exe&gt; + 0x1536B98 (VID230690)</summary>
+			static public System.IntPtr GetLineOfSightFraction2	{ get { return _getLineOfSightFraction2; } }
+
+			/// <summary>&lt;SkyrimSE.exe&gt; + 0x156F92C (VID235914)</summary>
+			static public System.IntPtr GetLineOfSightFraction3	{ get { return _getLineOfSightFraction3; } }
+
 			/// <summary>&lt;SkyrimSE.exe&gt; + 0x2130F0 (VID16828)</summary>
 			static public System.IntPtr GetReferenceFromHandle	{ get { return _getReferenceFromHandle; } }
 
 			/// <summary>&lt;SkyrimSE.exe&gt; + 0x29A330 (VID19400)</summary>
 			static public System.IntPtr IsCrimeToActivate		{ get { return _isCrimeToActivate; } }
-
-			/// <summary>&lt;SkyrimSE.exe&gt; + 0x1548E48 (VID232866)</summary>
-			static public System.IntPtr IsOccludedFraction1		{ get { return _isOccludedFraction1; } }
-
-			/// <summary>&lt;SkyrimSE.exe&gt; + 0x1536B98 (VID230690)</summary>
-			static public System.IntPtr IsOccludedFraction2		{ get { return _isOccludedFraction2; } }
-
-			/// <summary>&lt;SkyrimSE.exe&gt; + 0x156F92C (VID235914)</summary>
-			static public System.IntPtr IsOccludedFraction3		{ get { return _isOccludedFraction3; } }
 		}
 
 		static public class TESObjectTREE

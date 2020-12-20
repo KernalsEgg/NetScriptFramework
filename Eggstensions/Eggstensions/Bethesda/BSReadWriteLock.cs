@@ -2,38 +2,38 @@
 {
 	public class BSReadLockGuard : TemporaryObject
 	{
-		public System.IntPtr Address { get; }
-
-
-
-		public BSReadLockGuard(System.IntPtr spinLock)
+		public BSReadLockGuard(System.IntPtr readWriteLock)
 		{
-			Address = spinLock;
-			BSReadWriteLock.LockForRead(Address);
+			Address = readWriteLock;
+			BSReadWriteLock.LockForRead(readWriteLock);
 		}
 
 		override protected void Free()
 		{
 			BSReadWriteLock.UnlockForRead(Address);
 		}
+
+
+
+		public System.IntPtr Address { get; }
 	}
 
 	public class BSWriteLockGuard : TemporaryObject
 	{
-		public System.IntPtr Address { get; }
-
-
-
-		public BSWriteLockGuard(System.IntPtr spinLock)
+		public BSWriteLockGuard(System.IntPtr readWriteLock)
 		{
-			Address = spinLock;
-			BSReadWriteLock.LockForWrite(Address);
+			Address = readWriteLock;
+			BSReadWriteLock.LockForWrite(readWriteLock);
 		}
 
 		override protected void Free()
 		{
 			BSReadWriteLock.UnlockForWrite(Address);
 		}
+
+
+
+		public System.IntPtr Address { get; }
 	}
 
 

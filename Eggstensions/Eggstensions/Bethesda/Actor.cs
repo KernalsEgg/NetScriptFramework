@@ -2,7 +2,21 @@
 {
 	static public class Actor
 	{
+		static public System.UInt32 GetCollisionFilter(System.IntPtr actor)
+		{
+			if (actor == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("actor"); }
+
+			using (var allocation = NetScriptFramework.Memory.Allocate(0x10))
+			{
+				allocation.Zero();
+
+				NetScriptFramework.Memory.InvokeCdecl(VIDS.Actor.GetCollisionFilter, actor, allocation.Address);
+
+				return NetScriptFramework.Memory.ReadUInt32(allocation.Address);
+			}
+		}
 		
+		/// <param name="actor">Actor</param>
 		static public System.Single GetLastUpdate(System.IntPtr actor)
 		{
 			if (actor == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("actor"); }

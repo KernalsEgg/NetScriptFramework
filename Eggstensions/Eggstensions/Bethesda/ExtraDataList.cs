@@ -50,16 +50,16 @@
 
 	public class ExtraDataList : System.Collections.Generic.IEnumerable<System.IntPtr>
 	{
-		public System.IntPtr Address { get; }
-
-
-
 		public ExtraDataList(System.IntPtr extraDataList)
 		{
 			if (extraDataList == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("extraDataList"); }
 
 			Address = extraDataList;
 		}
+
+
+
+		public System.IntPtr Address { get; }
 
 
 

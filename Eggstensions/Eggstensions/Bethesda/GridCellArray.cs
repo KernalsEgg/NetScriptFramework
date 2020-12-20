@@ -2,16 +2,16 @@
 {
 	public class GridCellArray : System.Collections.Generic.IEnumerable<System.IntPtr>
 	{
-		public System.IntPtr Address { get; }
-
-
-
 		public GridCellArray(System.IntPtr gridCellArray)
 		{
 			if (gridCellArray == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("gridCellArray"); }
 
 			Address = gridCellArray;
 		}
+
+
+
+		public System.IntPtr Address { get; }
 
 
 

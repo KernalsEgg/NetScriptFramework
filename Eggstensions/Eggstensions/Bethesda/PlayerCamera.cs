@@ -16,6 +16,8 @@
 
 
 
+		/// <param name="playerCamera">PlayerCamera</param>
+		/// <returns>(Units, Units, Units)</returns>
 		static public (System.Single x, System.Single y, System.Single z) GetPosition(System.IntPtr playerCamera)
 		{
 			if (playerCamera == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("playerCamera"); }
@@ -28,6 +30,8 @@
 				);
 		}
 
+		/// <param name="playerCamera">PlayerCamera</param>
+		/// <returns>Units</returns>
 		static public System.Single GetPositionX(System.IntPtr playerCamera)
 		{
 			if (playerCamera == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("playerCamera"); }
@@ -35,6 +39,8 @@
 			return NetScriptFramework.Memory.ReadFloat(playerCamera + 0x144);
 		}
 
+		/// <param name="playerCamera">PlayerCamera</param>
+		/// <returns>Units</returns>
 		static public System.Single GetPositionY(System.IntPtr playerCamera)
 		{
 			if (playerCamera == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("playerCamera"); }
@@ -42,6 +48,8 @@
 			return NetScriptFramework.Memory.ReadFloat(playerCamera + 0x148);
 		}
 
+		/// <param name="playerCamera">PlayerCamera</param>
+		/// <returns>Units</returns>
 		static public System.Single GetPositionZ(System.IntPtr playerCamera)
 		{
 			if (playerCamera == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("playerCamera"); }

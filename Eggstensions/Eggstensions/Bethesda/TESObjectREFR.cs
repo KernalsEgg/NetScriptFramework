@@ -131,7 +131,6 @@ namespace Eggstensions.Bethesda
 			using (var lookAtPosition = new NiPoint3())
 			{
 				VirtualObject.InvokeVTableThisCall(reference, 0x2D8, lookAtPosition.Address);
-				if (lookAtPosition.Elements.IsZero) { throw new Eggceptions.NullException("lookAtPosition"); }
 
 				return (lookAtPosition.X, lookAtPosition.Y, lookAtPosition.Z);
 			}
@@ -344,19 +343,18 @@ namespace Eggstensions.Bethesda
 		}
 
 		/// <param name="reference">TESObjectREFR</param>
-		static public System.Boolean IsHit(System.IntPtr reference, (System.Single x, System.Single y, System.Single z) origin, (System.Single x, System.Single y, System.Single z) ray, params CollisionLayers[] collisionLayers)
+		static public System.Boolean IsHit(System.IntPtr reference, (System.Single x, System.Single y, System.Single z) origin, (System.Single x, System.Single y, System.Single z) ray, CollisionLayers collisionLayer)
 		{
 			if (reference == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("reference"); }
 			// origin
 			// ray
-			if (collisionLayers == null) { throw new Eggceptions.ArgumentNullException("collisionLayers"); }
+			// collisionLayer
 
 			var cell = TESObjectREFR.GetParentCell(reference);
 
-			foreach (var hit in TESObjectCELL.Raycast(cell, origin, ray))
+			foreach (var hit in TESObjectCELL.RaycastAlong(cell, origin, ray, collisionLayer))
 			{
-				var havokObject = hit.HavokObject;
-				var niObject = Havok.GetNiObjectFromHavokObject(havokObject);
+				var niObject = Havok.GetNiObjectFromHavokObject(hit.HavokObject);
 
 				if (niObject != System.IntPtr.Zero)
 				{
@@ -371,15 +369,7 @@ namespace Eggstensions.Bethesda
 					}
 				}
 
-				var collisionLayer = Havok.GetCollisionLayer(havokObject);
-
-				for (var i = 0; i < collisionLayers.Length; i++)
-				{
-					if (collisionLayer == collisionLayers[i])
-					{
-						return true;
-					}
-				}
+				return true;
 			}
 
 			return false;
@@ -387,20 +377,19 @@ namespace Eggstensions.Bethesda
 
 		/// <param name="reference">TESObjectREFR</param>
 		/// <param name="target">TESObjectREFR</param>
-		static public System.Boolean IsHit(System.IntPtr reference, System.IntPtr target, (System.Single x, System.Single y, System.Single z) from, (System.Single x, System.Single y, System.Single z) to, params CollisionLayers[] collisionLayers)
+		static public System.Boolean IsHit(System.IntPtr reference, System.IntPtr target, (System.Single x, System.Single y, System.Single z) from, (System.Single x, System.Single y, System.Single z) to, CollisionLayers collisionLayer)
 		{
 			if (reference == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("reference"); }
 			if (target == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("target"); }
 			// from
 			// to
-			if (collisionLayers == null) { throw new Eggceptions.ArgumentNullException("collisionLayers"); }
+			// collisionLayer
 
 			var cell = TESObjectREFR.GetParentCell(reference);
 
-			foreach (var hit in TESObjectCELL.Raycast(cell, from, (to.x - from.x, to.y - from.y, to.z - from.z)))
+			foreach (var hit in TESObjectCELL.RaycastBetween(cell, from, to, collisionLayer))
 			{
-				var havokObject = hit.HavokObject;
-				var niObject = Havok.GetNiObjectFromHavokObject(havokObject);
+				var niObject = Havok.GetNiObjectFromHavokObject(hit.HavokObject);
 
 				if (niObject != System.IntPtr.Zero)
 				{
@@ -415,33 +404,26 @@ namespace Eggstensions.Bethesda
 					}
 				}
 
-				var collisionLayer = Havok.GetCollisionLayer(havokObject);
-
-				for (var i = 0; i < collisionLayers.Length; i++)
-				{
-					if (collisionLayer == collisionLayers[i])
-					{
-						return true;
-					}
-				}
+				return true;
 			}
 
 			return false;
 		}
 
-		static public System.Boolean IsOccluded(System.IntPtr reference, System.IntPtr target, params CollisionLayers[] collisionLayers)
+		static public System.Boolean IsOccluded(System.IntPtr reference, System.IntPtr target, (System.Single x, System.Single y, System.Single z) origin, CollisionLayers collisionLayer)
 		{
 			if (reference == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("reference"); }
 			if (target == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("target"); }
+			// origin
+			// collisionLayer
 
-			var referenceLookAtPosition = TESObjectREFR.GetLookAtPosition(reference);
 			var targetPosition = TESObjectREFR.GetPosition(target);
 			var targetMinimumBounds = TESObjectREFR.GetMinimumBounds(target);
 			var targetMaximumBounds = TESObjectREFR.GetMaximumBounds(target);
 
 			foreach (var fraction in GetFractions())
 			{
-				if (!TESObjectREFR.IsHit(reference, target, referenceLookAtPosition, (targetPosition.x, targetPosition.y, targetPosition.z + fraction * (targetMinimumBounds.z + targetMaximumBounds.z)), collisionLayers))
+				if (!TESObjectREFR.IsHit(reference, target, origin, (targetPosition.x, targetPosition.y, targetPosition.z + fraction * (targetMinimumBounds.z + targetMaximumBounds.z)), collisionLayer))
 				{
 					return false;
 				}
@@ -453,9 +435,9 @@ namespace Eggstensions.Bethesda
 
 			System.Collections.Generic.IEnumerable<System.Single> GetFractions()
 			{
-				yield return NetScriptFramework.Memory.ReadFloat(VIDS.TESObjectREFR.IsOccludedFraction1);
-				yield return NetScriptFramework.Memory.ReadFloat(VIDS.TESObjectREFR.IsOccludedFraction2);
-				yield return NetScriptFramework.Memory.ReadFloat(VIDS.TESObjectREFR.IsOccludedFraction3);
+				yield return NetScriptFramework.Memory.ReadFloat(VIDS.TESObjectREFR.GetLineOfSightFraction1);
+				yield return NetScriptFramework.Memory.ReadFloat(VIDS.TESObjectREFR.GetLineOfSightFraction2);
+				yield return NetScriptFramework.Memory.ReadFloat(VIDS.TESObjectREFR.GetLineOfSightFraction3);
 			}
 		}
 

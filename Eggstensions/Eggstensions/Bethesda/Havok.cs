@@ -10,6 +10,14 @@
 			}
 		}
 
+		static public System.Single HavokWorldScaleInverse
+		{
+			get
+			{
+				return NetScriptFramework.Memory.ReadFloat(VIDS.Havok.HavokWorldScaleInverse);
+			}
+		}
+
 
 
 		/// <param name="havokObject">HavokObject</param>

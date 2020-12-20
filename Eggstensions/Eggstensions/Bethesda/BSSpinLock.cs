@@ -2,20 +2,20 @@
 {
 	public class BSSpinLockGuard : TemporaryObject
 	{
-		public System.IntPtr Address { get; }
-
-
-
 		public BSSpinLockGuard(System.IntPtr spinLock)
 		{
 			Address = spinLock;
-			BSSpinLock.Lock(Address);
+			BSSpinLock.Lock(spinLock);
 		}
 
 		override protected void Free()
 		{
 			BSSpinLock.Unlock(Address);
 		}
+
+
+
+		public System.IntPtr Address { get; }
 	}
 
 
