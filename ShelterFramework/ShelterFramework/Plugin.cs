@@ -19,14 +19,14 @@ namespace ShelterFramework
 
 
 		// Exceptions
-		//	GetParentCell: The Subject is not in a loaded cell
-		//	GetHavokWorld: The Subject is not in the loaded world space
+		//	GetParentCell: The subject is not in a loaded cell
+		//	GetHavokWorld: The subject is not in the loaded world space
 		override protected System.Boolean Initialize(System.Boolean loadedAny)
 		{
 			// loadedAny
 
-			_settings = new Settings();
-			_settings.Load();
+			Plugin._settings = new Settings();
+			Plugin._settings.Load();
 
 			Events.GetIsCreatureTypeEvent.Register(OnGetIsCreatureType);
 
@@ -64,13 +64,14 @@ namespace ShelterFramework
 			}
 			catch (Eggceptions.Eggception eggception)
 			{
-				if (_settings.LogHandledExceptions) { NetScriptFramework.Main.Log.Append(eggception); }
-				if (_settings.ShowHandledExceptions) { UI.ShowMessageBox(_messageBox); }
+				if (Plugin._settings.LogHandledExceptions) { NetScriptFramework.Main.Log.Append(eggception); }
+				if (Plugin._settings.ShowHandledExceptions) { UI.ShowMessageBox(Plugin._messageBox); }
 			}
 		}
 
 
 
+		/// <param name="reference">TESObjectREFR</param>
 		static private System.Boolean IsSheltered(System.IntPtr reference)
 		{
 			if (reference == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("reference"); }
@@ -93,19 +94,25 @@ namespace ShelterFramework
 
 			var lastUpdate = Actor.GetLastUpdate(reference);
 
-			if (!_isShelteredCache.TryGetValue(reference, out var isShelteredCache) || lastUpdate != isShelteredCache.lastUpdate)
+			if (!Plugin._isShelteredCache.TryGetValue(reference, out var isShelteredCache) || lastUpdate != isShelteredCache.lastUpdate)
 			{
-				_isShelteredCache[reference] = (lastUpdate, TESObjectREFR.IsHit(reference, TESObjectREFR.GetLookAtPosition(reference), Plugin.GetRay(), _collisionLayer));
-			}
+				isShelteredCache = (lastUpdate, TESObjectREFR.IsHit(reference, TESObjectREFR.GetLookAtPosition(reference), Plugin.GetRay(), Plugin._collisionLayer));
+				Plugin._isShelteredCache[reference] = isShelteredCache;
 
-			return _isShelteredCache[reference].isSheltered;
+				return isShelteredCache.isSheltered;
+			}
+			else
+			{
+				return isShelteredCache.isSheltered;
+			}
 		}
 
+		/// <param name="reference">TESObjectREFR</param>
 		static private System.Boolean IsShelteredReference(System.IntPtr reference)
 		{
 			if (reference == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("reference"); }
 
-			return TESObjectREFR.IsHit(reference, TESObjectREFR.GetLookAtPosition(reference), Plugin.GetRay(), _collisionLayer);
+			return TESObjectREFR.IsHit(reference, TESObjectREFR.GetLookAtPosition(reference), Plugin.GetRay(), Plugin._collisionLayer);
 		}
 
 		static private (System.Single x, System.Single y, System.Single z) GetRay()
@@ -126,13 +133,13 @@ namespace ShelterFramework
 
 						if (precipitationVelocity != (0.0f, 0.0f, 0.0f))
 						{
-							return Plugin.Negate(Plugin.SetLength(precipitationVelocity, _settings.RayCastLength));
+							return Plugin.Negate(Plugin.SetLength(precipitationVelocity, Plugin._settings.RayCastLength));
 						}
 					}
 				}
 			}
 
-			return (0.0f, 0.0f, _settings.RayCastLength);
+			return (0.0f, 0.0f, Plugin._settings.RayCastLength);
 		}
 
 		static private (System.Single x, System.Single y, System.Single z) SetLength((System.Single x, System.Single y, System.Single z) vector, System.Single length)

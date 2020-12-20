@@ -48,7 +48,7 @@ namespace QuickHarvest
 		{
 			if (arguments == null) { throw new Eggceptions.ArgumentNullException("arguments"); }
 
-			if (System.Threading.Interlocked.Exchange(ref _harvesting, 1) == 0)
+			if (System.Threading.Interlocked.Exchange(ref Plugin._harvesting, 1) == 0)
 			{
 				try
 				{
@@ -57,10 +57,10 @@ namespace QuickHarvest
 				catch (Eggceptions.Eggception eggception)
 				{
 					if (Settings.LogHandledExceptions) { NetScriptFramework.Main.Log.Append(eggception); }
-					if (Settings.ShowHandledExceptions) { UI.ShowMessageBox(_messageBox); }
+					if (Settings.ShowHandledExceptions) { UI.ShowMessageBox(Plugin._messageBox); }
 				}
 
-				System.Threading.Interlocked.Exchange(ref _harvesting, 0);
+				System.Threading.Interlocked.Exchange(ref Plugin._harvesting, 0);
 			}
 		}
 
@@ -68,7 +68,7 @@ namespace QuickHarvest
 		{
 			if (arguments == null) { throw new Eggceptions.ArgumentNullException("arguments"); }
 
-			if (System.Threading.Interlocked.Exchange(ref _harvesting, 1) == 0)
+			if (System.Threading.Interlocked.Exchange(ref Plugin._harvesting, 1) == 0)
 			{
 				try
 				{
@@ -77,10 +77,10 @@ namespace QuickHarvest
 				catch (Eggceptions.Eggception eggception)
 				{
 					if (Settings.LogHandledExceptions) { NetScriptFramework.Main.Log.Append(eggception); }
-					if (Settings.ShowHandledExceptions) { UI.ShowMessageBox(_messageBox); }
+					if (Settings.ShowHandledExceptions) { UI.ShowMessageBox(Plugin._messageBox); }
 				}
 
-				System.Threading.Interlocked.Exchange(ref _harvesting, 0);
+				System.Threading.Interlocked.Exchange(ref Plugin._harvesting, 0);
 			}
 		}
 
@@ -155,6 +155,8 @@ namespace QuickHarvest
 			}
 		}
 
+		/// <param name="viewer">PlayerCharacter</param>
+		/// <param name="target">TESObjectREFR</param>
 		static private System.Boolean Visibility(System.IntPtr viewer, System.IntPtr target)
 		{
 			if (viewer == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("viewer"); }
@@ -163,7 +165,7 @@ namespace QuickHarvest
 			switch (Settings.Visibility)
 			{
 				case Flags.Visibility.PanoramicView:
-					return !TESObjectREFR.IsOccluded(viewer, target, PlayerCamera.GetPosition(PlayerCamera.Instance), _collisionLayer);
+					return !TESObjectREFR.IsOccluded(viewer, target, PlayerCamera.GetPosition(PlayerCamera.Instance), Plugin._collisionLayer);
 				case Flags.Visibility.FieldOfView:
 					return PlayerCharacter.HasLineOfSight(viewer, target);
 				default:
@@ -174,7 +176,7 @@ namespace QuickHarvest
 		static public void OnPlayHarvestSound(Events.PlayHarvestSoundEventArguments arguments)
 		{
 			arguments.Skip =
-				(_harvesting != 0)
+				(Plugin._harvesting != 0)
 				&&
 				!Settings.PlaySounds;
 		}
@@ -182,7 +184,7 @@ namespace QuickHarvest
 		static public void OnShowHarvestNotification(Events.ShowHarvestNotificationEventArguments arguments)
 		{
 			arguments.Skip =
-				(_harvesting != 0)
+				(Plugin._harvesting != 0)
 				&&
 				!Settings.ShowNotifications;
 		}

@@ -410,6 +410,7 @@ namespace Eggstensions.Bethesda
 			return false;
 		}
 
+		/// <param name="reference">TESObjectREFR</param>
 		static public System.Boolean IsOccluded(System.IntPtr reference, System.IntPtr target, (System.Single x, System.Single y, System.Single z) origin, CollisionLayers collisionLayer)
 		{
 			if (reference == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("reference"); }

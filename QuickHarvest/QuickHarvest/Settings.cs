@@ -74,7 +74,7 @@ namespace QuickHarvest
 				new NetScriptFramework.Tools.Value(1024.0f),
 				"Maximum Distance",
 				"The maximum distance at which ingredients will be quick harvested (Units)." +
-				"\nFor reference, a cell is 4096 Units by 4096 Units.",
+				"\nFor reference, playable races are approximately 128 Units tall and a cell is 4096 Units wide.",
 				NetScriptFramework.Tools.ConfigEntryFlags.VeryShortComment
 			);
 
