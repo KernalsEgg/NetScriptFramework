@@ -9,8 +9,8 @@ namespace QuickHarvest
 		public enum Visibility : System.Int32
 		{
 			All = 0,
-			PanoramicView = 1,
-			FieldOfView = 2
+			Viewshed = 1,
+			LineOfSight = 2
 		}
 	}
 
@@ -94,8 +94,8 @@ namespace QuickHarvest
 				new NetScriptFramework.Tools.Value(1),
 				"Visibility",
 				"If set to 0 then all ingredients will be quick harvested" +
-				"\nIf set to 1 then only ingredients in your panoramic view will be quick harvested." +
-				"\nIf set to 2 then only ingredients in your field of view will be quick harvested.",
+				"\nIf set to 1 then only ingredients in your viewshed (360 degree line of sight) will be quick harvested." +
+				"\nIf set to 2 then only ingredients in your line of sight will be quick harvested.",
 				NetScriptFramework.Tools.ConfigEntryFlags.VeryShortComment
 			);
 

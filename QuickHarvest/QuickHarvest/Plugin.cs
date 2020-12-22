@@ -164,10 +164,10 @@ namespace QuickHarvest
 
 			switch (Settings.Visibility)
 			{
-				case Flags.Visibility.PanoramicView:
-					return !TESObjectREFR.IsOccluded(viewer, target, PlayerCamera.GetPosition(PlayerCamera.Instance), Plugin._collisionLayer);
-				case Flags.Visibility.FieldOfView:
-					return PlayerCharacter.HasLineOfSight(viewer, target);
+				case Flags.Visibility.Viewshed:
+					return !TESObjectREFR.IsInViewshed(viewer, target, PlayerCamera.GetPosition(PlayerCamera.Instance), Plugin._collisionLayer);
+				case Flags.Visibility.LineOfSight:
+					return PlayerCharacter.HasLineOfSight(viewer, target).lineOfSight;
 				default:
 					return true;
 			}

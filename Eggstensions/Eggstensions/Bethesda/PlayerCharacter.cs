@@ -22,7 +22,7 @@ namespace Eggstensions.Bethesda
 
 		/// <param name="playerCharacter">PlayerCharacter</param>
 		/// <param name="target">TESObjectREFR</param>
-		static public System.Boolean HasLineOfSight(System.IntPtr playerCharacter, System.IntPtr target)
+		static public (System.Boolean fieldOfView, System.Boolean lineOfSight) HasLineOfSight(System.IntPtr playerCharacter, System.IntPtr target)
 		{
 			if (playerCharacter == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("playerCharacter"); }
 			if (target == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("target"); }
@@ -32,7 +32,10 @@ namespace Eggstensions.Bethesda
 				allocation.Zero();
 
 				// PlayerCharacter, TESObjectREFR, System.Byte*
-				return NetScriptFramework.Memory.InvokeCdecl(VIDS.PlayerCharacter.HasLineOfSight, playerCharacter, target, allocation.Address).ToBool();
+				var lineOfSight = NetScriptFramework.Memory.InvokeCdecl(VIDS.PlayerCharacter.HasLineOfSight, playerCharacter, target, allocation.Address).ToBool();
+				var fieldOfView = NetScriptFramework.Memory.ReadUInt8(allocation.Address) != 0;
+
+				return (fieldOfView, lineOfSight);
 			}
 		}
 	}

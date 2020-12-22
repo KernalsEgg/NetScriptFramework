@@ -411,7 +411,7 @@ namespace Eggstensions.Bethesda
 		}
 
 		/// <param name="reference">TESObjectREFR</param>
-		static public System.Boolean IsOccluded(System.IntPtr reference, System.IntPtr target, (System.Single x, System.Single y, System.Single z) origin, CollisionLayers collisionLayer)
+		static public System.Boolean IsInViewshed(System.IntPtr reference, System.IntPtr target, (System.Single x, System.Single y, System.Single z) origin, CollisionLayers collisionLayer)
 		{
 			if (reference == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("reference"); }
 			if (target == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("target"); }
@@ -424,7 +424,7 @@ namespace Eggstensions.Bethesda
 
 			foreach (var fraction in GetFractions())
 			{
-				if (!TESObjectREFR.IsHit(reference, target, origin, (targetPosition.x, targetPosition.y, targetPosition.z + fraction * (targetMinimumBounds.z + targetMaximumBounds.z)), collisionLayer))
+				if (!TESObjectREFR.IsHit(reference, target, origin, (targetPosition.x, targetPosition.y, targetPosition.z + fraction * (targetMaximumBounds.z - targetMinimumBounds.z) + targetMinimumBounds.z), collisionLayer))
 				{
 					return false;
 				}
