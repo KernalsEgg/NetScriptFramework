@@ -1,0 +1,13 @@
+C:\Users\Daniel\source\repos\MountedInteractions\MountedInteractions\bin\Release\MountedInteractions.dll
+C:\Users\Daniel\source\repos\MountedInteractions\MountedInteractions\bin\Release\MountedInteractions.pdb
+C:\Users\Daniel\source\repos\MountedInteractions\MountedInteractions\bin\Release\NetScriptFramework.dll
+C:\Users\Daniel\source\repos\MountedInteractions\MountedInteractions\bin\Release\NetScriptFramework.SkyrimSE.dll
+C:\Users\Daniel\source\repos\MountedInteractions\MountedInteractions\bin\Release\NetScriptFramework.pdb
+C:\Users\Daniel\source\repos\MountedInteractions\MountedInteractions\bin\Release\NetScriptFramework.xml
+C:\Users\Daniel\source\repos\MountedInteractions\MountedInteractions\bin\Release\NetScriptFramework.SkyrimSE.pdb
+C:\Users\Daniel\source\repos\MountedInteractions\MountedInteractions\bin\Release\NetScriptFramework.SkyrimSE.xml
+C:\Users\Daniel\source\repos\MountedInteractions\MountedInteractions\obj\Release\MountedInteractions.csproj.CoreCompileInputs.cache
+C:\Users\Daniel\source\repos\MountedInteractions\MountedInteractions\obj\Release\MountedInteractions.csproj.CopyComplete
+C:\Users\Daniel\source\repos\MountedInteractions\MountedInteractions\obj\Release\MountedInteractions.dll
+C:\Users\Daniel\source\repos\MountedInteractions\MountedInteractions\obj\Release\MountedInteractions.pdb
+C:\Users\Daniel\source\repos\MountedInteractions\MountedInteractions\obj\Release\MountedInteractions.csprojAssemblyReference.cache

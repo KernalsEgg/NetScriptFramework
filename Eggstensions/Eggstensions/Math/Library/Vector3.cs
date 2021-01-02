@@ -2,7 +2,7 @@
 {
 	static public class Vector3
 	{
-		// www.euclideanspace.com/maths/geometry/rotations/conversions/angleToMatrix/index.htm
+		// www.euclideanspace.com/maths/geometry/rotations/conversions/angleToMatrix
 		// radians
 		static public System.Single[,] AxisAngleToRotationMatrix(System.Single[,] axis, System.Single angle) // Matrix33
 		{

@@ -1,4 +1,8 @@
-﻿namespace Eggstensions.Bethesda
+﻿using static NetScriptFramework._IntPtrExtensions;
+
+
+
+namespace Eggstensions.Bethesda
 {
 	static public class Actor
 	{
@@ -14,6 +18,13 @@
 
 				return NetScriptFramework.Memory.ReadUInt32(allocation.Address);
 			}
+		}
+
+		static public System.Single GetEyeLevel(System.IntPtr actor)
+		{
+			if (actor == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("actor"); }
+
+			return NetScriptFramework.Memory.InvokeCdeclF(VIDS.Actor.GetEyeLevel, actor);
 		}
 		
 		/// <param name="actor">Actor</param>
@@ -36,12 +47,30 @@
 			return process;
 		}
 
+		/// <param name="actor">Actor</param>
+		/// <param name="spellItem">SpellItem</param>
 		static public void CastSpellPerkEntryPoint(System.IntPtr actor, System.IntPtr spellItem)
 		{
 			if (actor == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("actor"); }
 			if (spellItem == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("spellItem"); }
 
 			NetScriptFramework.Memory.InvokeCdecl(VIDS.Actor.CastSpellPerkEntryPoint, actor, spellItem);
+		}
+
+		/// <param name="actor">Actor</param>
+		static public System.Boolean IsOnFlyingMount(System.IntPtr actor)
+		{
+			if (actor == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("actor"); }
+
+			return NetScriptFramework.Memory.InvokeCdecl(VIDS.Actor.IsOnFlyingMount, actor).ToBool();
+		}
+
+		/// <param name="actor">Actor</param>
+		static public System.Boolean IsOnMount(System.IntPtr actor)
+		{
+			if (actor == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("actor"); }
+
+			return NetScriptFramework.Memory.InvokeCdecl(VIDS.Actor.IsOnMount, actor).ToBool();
 		}
 
 		/// <param name = "actor">Actor</param>

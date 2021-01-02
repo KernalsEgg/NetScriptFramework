@@ -75,7 +75,7 @@
 			return Matrix.Multiply(matrix, rotationZ);
 		}
 
-		// www.euclideanspace.com/maths/geometry/rotations/conversions/matrixToAngle/index.htm
+		// www.euclideanspace.com/maths/geometry/rotations/conversions/matrixToAngle
 		// radians
 		static public (System.Single[,] axis, System.Single angle) RotationMatrixToAxisAngle(System.Single[,] rotationMatrix) // Vector3
 		{

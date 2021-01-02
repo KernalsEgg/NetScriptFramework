@@ -8,6 +8,9 @@
 			{
 				_castSpellPerkEntryPoint =	NetScriptFramework.Main.GameInfo.GetAddressOf(37817);
 				_getCollisionFilter =		NetScriptFramework.Main.GameInfo.GetAddressOf(36559);
+				_getEyeLevel =				NetScriptFramework.Main.GameInfo.GetAddressOf(36478);
+				_isOnFlyingMount =			NetScriptFramework.Main.GameInfo.GetAddressOf(36877);
+				_isOnMount =				NetScriptFramework.Main.GameInfo.GetAddressOf(17570);
 				_update3DModel =			NetScriptFramework.Main.GameInfo.GetAddressOf(38404);
 			}
 
@@ -16,6 +19,12 @@
 			readonly static private System.IntPtr _castSpellPerkEntryPoint;
 
 			readonly static private System.IntPtr _getCollisionFilter;
+
+			readonly static private System.IntPtr _getEyeLevel;
+
+			readonly static private System.IntPtr _isOnFlyingMount;
+
+			readonly static private System.IntPtr _isOnMount;
 
 			readonly static private System.IntPtr _update3DModel;
 
@@ -26,6 +35,15 @@
 
 			/// <summary>&lt;SkyrimSE.exe&gt; + 0x5EBD90 (VID36559)</summary>
 			static public System.IntPtr GetCollisionFilter		{ get { return _getCollisionFilter; } }
+
+			/// <summary>&lt;SkyrimSE.exe&gt; + 0x5E2BB0 (VID36478)</summary>
+			static public System.IntPtr GetEyeLevel				{ get { return _getEyeLevel; } }
+
+			/// <summary>&lt;SkyrimSE.exe&gt; + 0x6057C0 (VID36877)</summary>
+			static public System.IntPtr IsOnFlyingMount			{ get { return _isOnFlyingMount; } }
+
+			/// <summary>&lt;SkyrimSE.exe&gt; + 0x22F320 (VID17570)</summary>
+			static public System.IntPtr IsOnMount				{ get { return _isOnMount; } }
 
 			/// <summary>&lt;SkyrimSE.exe&gt; + 0x650DF0 (VID38404)</summary>
 			static public System.IntPtr Update3DModel			{ get { return _update3DModel; } }
@@ -161,6 +179,29 @@
 
 			/// <summary>&lt;SkyrimSE.exe&gt; + 0x85C290 (VID50179)</summary>
 			static public System.IntPtr Print		{ get { return _print; } }
+		}
+
+		static public class CrosshairPickData
+		{
+			static CrosshairPickData()
+			{
+				_instance =	NetScriptFramework.Main.GameInfo.GetAddressOf(515446);
+				_pick =		NetScriptFramework.Main.GameInfo.GetAddressOf(25591);
+			}
+
+
+
+			readonly static private System.IntPtr _instance;
+
+			readonly static private System.IntPtr _pick;
+
+
+
+			/// <summary>&lt;SkyrimSE.exe&gt; + 0x2F011D0 (VID515446)</summary>
+			static public System.IntPtr Instance	{ get { return _instance; } }
+
+			/// <summary>&lt;SkyrimSE.exe&gt; + 0x3AA4B0 (VID25591)</summary>
+			static public System.IntPtr Pick		{ get { return _pick; } }
 		}
 
 		static public class Events
@@ -327,6 +368,53 @@
 			static public System.IntPtr Destructor	{ get { return _destructor; } }
 		}
 
+		static public class HorseCameraState
+		{
+			static HorseCameraState()
+			{
+				_weaponDrawnTargetOffsetX =		NetScriptFramework.Main.GameInfo.GetAddressOf(509838);
+				_weaponDrawnTargetOffsetY =		NetScriptFramework.Main.GameInfo.GetAddressOf(509842);
+				_weaponDrawnTargetOffsetZ =		NetScriptFramework.Main.GameInfo.GetAddressOf(509840);
+				_weaponSheathedTargetOffsetX =	NetScriptFramework.Main.GameInfo.GetAddressOf(509832);
+				_weaponSheathedTargetOffsetY =	NetScriptFramework.Main.GameInfo.GetAddressOf(509836);
+				_weaponSheathedTargetOffsetZ =	NetScriptFramework.Main.GameInfo.GetAddressOf(509834);
+			}
+
+
+
+			readonly static private System.IntPtr _weaponDrawnTargetOffsetX;
+
+			readonly static private System.IntPtr _weaponDrawnTargetOffsetY;
+
+			readonly static private System.IntPtr _weaponDrawnTargetOffsetZ;
+
+			readonly static private System.IntPtr _weaponSheathedTargetOffsetX;
+
+			readonly static private System.IntPtr _weaponSheathedTargetOffsetY;
+
+			readonly static private System.IntPtr _weaponSheathedTargetOffsetZ;
+
+
+
+			/// <summary>&lt;SkyrimSE.exe&gt; + 0x1DF35F8 (VID509838)</summary>
+			static public System.IntPtr WeaponDrawnTargetOffsetX	{ get { return _weaponDrawnTargetOffsetX; } }
+
+			/// <summary>&lt;SkyrimSE.exe&gt; + 0x1DF3628 (VID509842)</summary>
+			static public System.IntPtr WeaponDrawnTargetOffsetY	{ get { return _weaponDrawnTargetOffsetY; } }
+
+			/// <summary>&lt;SkyrimSE.exe&gt; + 0x1DF3610 (VID509840)</summary>
+			static public System.IntPtr WeaponDrawnTargetOffsetZ	{ get { return _weaponDrawnTargetOffsetZ; } }
+
+			/// <summary>&lt;SkyrimSE.exe&gt; + 0x1DF35B0 (VID509832)</summary>
+			static public System.IntPtr WeaponSheathedTargetOffsetX	{ get { return _weaponSheathedTargetOffsetX; } }
+
+			/// <summary>&lt;SkyrimSE.exe&gt; + 0x1DF35E0 (VID509836)</summary>
+			static public System.IntPtr WeaponSheathedTargetOffsetY	{ get { return _weaponSheathedTargetOffsetY; } }
+
+			/// <summary>&lt;SkyrimSE.exe&gt; + 0x1DF35C8 (VID509834)</summary>
+			static public System.IntPtr WeaponSheathedTargetOffsetZ	{ get { return _weaponSheathedTargetOffsetZ; } }
+		}
+
 		static public class Main
 		{
 			static Main()
@@ -411,40 +499,64 @@
 		{
 			static PlayerCamera()
 			{
-				_instance = NetScriptFramework.Main.GameInfo.GetAddressOf(514642);
+				_getCameraTarget =	NetScriptFramework.Main.GameInfo.GetAddressOf(49904);
+				_instance =			NetScriptFramework.Main.GameInfo.GetAddressOf(514642);
 			}
 
 
+
+			readonly static private System.IntPtr _getCameraTarget;
 
 			readonly static private System.IntPtr _instance;
 
 
 
+			/// <summary>&lt;SkyrimSE.exe&gt; + 0x84D320 (VID49904)</summary>
+			static public System.IntPtr GetCameraTarget	{ get { return _getCameraTarget; } }
+
 			/// <summary>&lt;SkyrimSE.exe&gt; + 0x2EC59B8 (VID514642)</summary>
-			static public System.IntPtr Instance { get { return _instance; } }
+			static public System.IntPtr Instance		{ get { return _instance; } }
 		}
 
 		static public class PlayerCharacter
 		{
 			static PlayerCharacter()
 			{
-				_instance =			NetScriptFramework.Main.GameInfo.GetAddressOf(517014);
-				_hasLineOfSight =	NetScriptFramework.Main.GameInfo.GetAddressOf(39444);
+				_activateDistance =		NetScriptFramework.Main.GameInfo.GetAddressOf(502527);
+				_commandDistance =		NetScriptFramework.Main.GameInfo.GetAddressOf(502841);
+				_hasLineOfSight =		NetScriptFramework.Main.GameInfo.GetAddressOf(39444);
+				_instance =				NetScriptFramework.Main.GameInfo.GetAddressOf(517014);
+				_isCommandingActor =	NetScriptFramework.Main.GameInfo.GetAddressOf(39579);
 			}
 
 
 
-			readonly static private System.IntPtr _instance;
+			readonly static private System.IntPtr _activateDistance;
+
+			readonly static private System.IntPtr _commandDistance;
 
 			readonly static private System.IntPtr _hasLineOfSight;
 
+			readonly static private System.IntPtr _instance;
+
+			readonly static private System.IntPtr _isCommandingActor;
 
 
-			/// <summary>&lt;SkyrimSE.exe&gt; + 0x2F26EF8 (VID517014)</summary>
-			static public System.IntPtr Instance		{ get { return _instance; } }
+
+			/// <summary>&lt;SkyrimSE.exe&gt; + 0x1DD7E88 (VID502527)</summary>
+			static public System.IntPtr ActivateDistance	{ get { return _activateDistance; } }
+
+			/// <summary>&lt;SkyrimSE.exe&gt; + 0x1DD8FB0 (VID502841)</summary>
+			static public System.IntPtr CommandDistance		{ get { return _commandDistance; } }
 
 			/// <summary>&lt;SkyrimSE.exe&gt; + 0x6A4A00 (VID39444)</summary>
-			static public System.IntPtr HasLineOfSight	{ get { return _hasLineOfSight; } }
+			static public System.IntPtr HasLineOfSight		{ get { return _hasLineOfSight; } }
+
+			/// <summary>&lt;SkyrimSE.exe&gt; + 0x2F26EF8 (VID517014)</summary>
+			static public System.IntPtr Instance			{ get { return _instance; } }
+
+			/// <summary>&lt;SkyrimSE.exe&gt; + 0x6B3670 (VID39579)</summary>
+			static public System.IntPtr IsCommandingActor	{ get { return _isCommandingActor; } }
 		}
 
 		static public class ProcessLists

@@ -6,6 +6,22 @@ namespace Eggstensions.Bethesda
 {
 	static public class PlayerCharacter
 	{
+		static public System.Single ActivateDistance
+		{
+			get
+			{
+				return NetScriptFramework.Memory.ReadFloat(VIDS.PlayerCharacter.ActivateDistance);
+			}
+		}
+
+		static public System.Single CommandDistance
+		{
+			get
+			{
+				return NetScriptFramework.Memory.ReadFloat(VIDS.PlayerCharacter.CommandDistance);
+			}
+		}
+		
 		/// <returns>PlayerCharacter</returns>
 		static public System.IntPtr Instance
 		{
@@ -27,7 +43,7 @@ namespace Eggstensions.Bethesda
 			if (playerCharacter == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("playerCharacter"); }
 			if (target == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("target"); }
 
-			using (var allocation = NetScriptFramework.Memory.Allocate(0x1))
+			using (var allocation = NetScriptFramework.Memory.Allocate(0x8))
 			{
 				allocation.Zero();
 
@@ -37,6 +53,14 @@ namespace Eggstensions.Bethesda
 
 				return (fieldOfView, lineOfSight);
 			}
+		}
+
+		/// <param name="playerCharacter">PlayerCharacter</param>
+		static public System.Boolean IsCommandingActor(System.IntPtr playerCharacter)
+		{
+			if (playerCharacter == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("playerCharacter"); }
+
+			return NetScriptFramework.Memory.InvokeCdecl(VIDS.PlayerCharacter.IsCommandingActor, playerCharacter).ToBool();
 		}
 	}
 }

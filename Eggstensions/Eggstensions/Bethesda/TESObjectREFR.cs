@@ -14,6 +14,56 @@ namespace Eggstensions.Bethesda
 
 
 
+		public class ReferenceFromHandle : TemporaryObject
+		{
+			public ReferenceFromHandle(System.IntPtr handle)
+			{
+				Reference = TESObjectREFR.GetReferenceFromHandle(handle);
+			}
+
+			public ReferenceFromHandle(System.UInt32 handle)
+			{
+				Reference = TESObjectREFR.GetReferenceFromHandle(handle);
+			}
+
+			override protected void Free()
+			{
+				if (Reference != System.IntPtr.Zero)
+				{
+					NiRefObject.DecrementReferenceCount(Reference + 0x20);
+				}
+			}
+
+
+
+			public System.IntPtr Reference { get; }
+		}
+
+		public class HandleFromReference : TemporaryObject
+		{
+			public HandleFromReference(System.IntPtr instance)
+			{
+				Reference = instance;
+				Handle = TESObjectREFR.GetHandleFromReference(Reference);
+			}
+
+			override protected void Free()
+			{
+				if (Reference != System.IntPtr.Zero)
+				{
+					NiRefObject.DecrementReferenceCount(Reference + 0x20);
+				}
+			}
+
+
+
+			public System.IntPtr Reference { get; }
+
+			public System.UInt32 Handle { get; }
+		}
+
+
+
 		/// <param name = "reference">TESObjectREFR</param>
 		/// <param name = "activator">TESObjectREFR</param>
 		static public System.Boolean Activate(System.IntPtr reference, System.IntPtr activator)
@@ -108,7 +158,6 @@ namespace Eggstensions.Bethesda
 		}
 
 		/// <param name = "reference">TESObjectREFR</param>
-		/// <returns>ObjectRefHandle</returns>
 		static public System.UInt32 GetHandleFromReference(System.IntPtr reference)
 		{
 			if (reference == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("reference"); }
@@ -164,18 +213,6 @@ namespace Eggstensions.Bethesda
 			}
 		}
 
-		/// <param name = "reference">TESObjectREFR</param>
-		/// <returns>NiNode</returns>
-		static public System.IntPtr GetNiNode(System.IntPtr reference)
-		{
-			if (reference == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("reference"); }
-
-			var niNode = VirtualObject.InvokeVTableThisCall(reference, 0x380);
-			if (niNode == System.IntPtr.Zero) { throw new Eggceptions.NullException("niNode"); }
-
-			return niNode;
-		}
-
 		/// <param name="reference">TESObjectREFR</param>
 		static public System.IntPtr GetParentCell(System.IntPtr reference)
 		{
@@ -229,7 +266,23 @@ namespace Eggstensions.Bethesda
 		}
 
 		/// <param name = "handle">ObjectRefHandle</param>
-		/// <returns>TESObjectREFR</returns>
+		/// <returns>TESObjectREFR, System.IntPtr.Zero</returns>
+		static public System.IntPtr GetReferenceFromHandle(System.IntPtr handle)
+		{
+			// handle
+
+			using (var allocation = NetScriptFramework.Memory.Allocate(0x10))
+			{
+				allocation.Zero();
+
+				NetScriptFramework.Memory.InvokeCdecl(VIDS.TESObjectREFR.GetReferenceFromHandle, handle, allocation.Address);
+
+				return NetScriptFramework.Memory.ReadPointer(allocation.Address);
+			}
+		}
+
+		/// <param name = "handle">ObjectRefHandle</param>
+		/// <returns>TESObjectREFR, System.IntPtr.Zero</returns>
 		static public System.IntPtr GetReferenceFromHandle(System.UInt32 handle)
 		{
 			// handle
@@ -240,11 +293,27 @@ namespace Eggstensions.Bethesda
 				NetScriptFramework.Memory.WriteUInt32(allocation.Address, handle);
 
 				NetScriptFramework.Memory.InvokeCdecl(VIDS.TESObjectREFR.GetReferenceFromHandle, allocation.Address, allocation.Address + 0x10);
-				var reference = NetScriptFramework.Memory.ReadPointer(allocation.Address + 0x10);
-				if (reference == System.IntPtr.Zero) { throw new Eggceptions.NullException("reference"); }
 
-				return reference;
+				return NetScriptFramework.Memory.ReadPointer(allocation.Address + 0x10);
 			}
+		}
+
+		/// <param name = "reference">TESObjectREFR</param>
+		/// <returns>NiNode, System.IntPtr.Zero</returns>
+		static public System.IntPtr GetRootNode(System.IntPtr reference)
+		{
+			if (reference == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("reference"); }
+
+			return VirtualObject.InvokeVTableThisCall(reference, 0x380);
+		}
+
+		/// <param name = "reference">TESObjectREFR</param>
+		/// <returns>NiNode, System.IntPtr.Zero</returns>
+		static public System.IntPtr GetRootNode(System.IntPtr reference, System.Boolean firstPerson)
+		{
+			if (reference == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("reference"); }
+
+			return VirtualObject.InvokeVTableThisCall(reference, 0x378, firstPerson);
 		}
 
 		/// <param name="reference">TESObjectREFR</param>

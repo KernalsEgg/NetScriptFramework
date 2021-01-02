@@ -3,20 +3,6 @@
 	/// <summary>NetScriptFramework.SkyrimSE.StringRefHolder</summary>
 	public class BSFixedString : TemporaryObject
 	{
-		private NetScriptFramework.MemoryAllocation _allocation;
-
-
-
-		public System.IntPtr Address
-		{
-			get
-			{
-				return _allocation.Address;
-			}
-		}
-
-
-
 		public BSFixedString(System.String text)
 		{
 			if (System.String.IsNullOrWhiteSpace(text)) { throw new Eggceptions.ArgumentNullOrWhiteSpaceException("text"); }
@@ -30,6 +16,20 @@
 			BSFixedString.Release(Address);
 			_allocation.Unpin();
 			_allocation.Dispose();
+		}
+
+
+
+		private NetScriptFramework.MemoryAllocation _allocation;
+
+
+
+		public System.IntPtr Address
+		{
+			get
+			{
+				return _allocation.Address;
+			}
 		}
 
 
