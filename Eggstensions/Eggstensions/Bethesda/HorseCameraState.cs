@@ -73,5 +73,14 @@
 				NetScriptFramework.Memory.WriteFloat(VIDS.HorseCameraState.WeaponSheathedTargetOffsetZ, value);
 			}
 		}
+
+
+
+		static public System.IntPtr GetHorse(System.IntPtr horseCameraState)
+		{
+			if (horseCameraState == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("horseCameraState"); }
+
+			return horseCameraState + 0xE8;
+		}
 	}
 }

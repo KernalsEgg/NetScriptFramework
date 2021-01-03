@@ -1,5 +1,24 @@
 ﻿namespace Eggstensions.Bethesda
 {
+	static public class TESRaceData
+	{
+		public enum Flags : System.UInt32
+		{
+			Flying = 1u << 7
+		}
+
+
+
+		static public System.Boolean IsFlying(System.IntPtr raceData)
+		{
+			if (raceData == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("raceData"); }
+
+			return (NetScriptFramework.Memory.ReadUInt32(raceData + 0x20) & (System.UInt32)TESRaceData.Flags.Flying) != 0;
+		}
+	}
+	
+	
+	
 	static public class TESRace
 	{
 		/// <param name = "race">TESRace</param>
@@ -14,6 +33,13 @@
 			return armorRace;
 		}
 
+		static public System.IntPtr GetData(System.IntPtr race)
+		{
+			if (race == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("race"); }
+
+			return race + 0xE8;
+		}
+
 		/// <summary>&lt;SkyrimSE.exe&gt; + 0x226D70 (VID17359)</summary>
 		/// <param name = "race">TESRace</param>
 		/// <param name = "armorAddon">TESObjectARMA</param>
@@ -26,7 +52,7 @@
 
 			if (armorRace != System.IntPtr.Zero)
 			{
-				if (!TESForm.HasFormType(armorRace, FormTypes.TESRace)) { throw new Eggceptions.Bethesda.FormTypeException("armorRace"); }
+				if (!TESForm.IsRace(armorRace)) { throw new Eggceptions.Bethesda.FormTypeException("armorRace"); }
 
 				race = armorRace;
 			}
@@ -37,7 +63,7 @@
 			// BSTArray<TESRace*, BSTArrayHeapAllocator>
 			foreach (var armorAddonAdditionalRace in BSTArray.IntPtr(TESObjectARMA.GetAdditionalRaces(armorAddon)))
 			{
-				if (!TESForm.HasFormType(armorAddonAdditionalRace, FormTypes.TESRace)) { throw new Eggceptions.Bethesda.FormTypeException("armorAddonAdditionalRace"); }
+				if (!TESForm.IsRace(armorAddonAdditionalRace)) { throw new Eggceptions.Bethesda.FormTypeException("armorAddonAdditionalRace"); }
 
 				if (armorAddonAdditionalRace == race)
 				{

@@ -185,18 +185,27 @@
 				if (rotationMatrix[0, 2] > -1) // r02 < 1 && r02 > -1
 				{
 					// { { Atan2(-r12, r22), Asin(r02), Atan2(-r01, r00) } }
-					return new System.Single[,] { { (System.Single)System.Math.Atan2(-rotationMatrix[1, 2], rotationMatrix[2, 2]), (System.Single)System.Math.Asin(rotationMatrix[0, 2]), (System.Single)System.Math.Atan2(-rotationMatrix[0, 1], rotationMatrix[0, 0]) } };
+					return new System.Single[,]
+					{
+						{ (System.Single)System.Math.Atan2(-rotationMatrix[1, 2], rotationMatrix[2, 2]), (System.Single)System.Math.Asin(rotationMatrix[0, 2]), (System.Single)System.Math.Atan2(-rotationMatrix[0, 1], rotationMatrix[0, 0]) }
+					};
 				}
 				else // r02 == -1
 				{
 					// { { -Atan2(r10, r11), -PI/2, 0 } }
-					return new System.Single[,] { { -(System.Single)System.Math.Atan2(rotationMatrix[1, 0], rotationMatrix[1, 1]), -((System.Single)System.Math.PI / 2), 0 } };
+					return new System.Single[,]
+					{
+						{ -(System.Single)System.Math.Atan2(rotationMatrix[1, 0], rotationMatrix[1, 1]), -((System.Single)System.Math.PI / 2), 0 }
+					};
 				}
 			}
 			else // r02 == 1
 			{
 				// { { Atan2(r10, r11), PI/2, 0 } }
-				return new System.Single[,] { { (System.Single)System.Math.Atan2(rotationMatrix[1, 0], rotationMatrix[1, 1]), (System.Single)System.Math.PI / 2, 0 } };
+				return new System.Single[,]
+				{
+					{ (System.Single)System.Math.Atan2(rotationMatrix[1, 0], rotationMatrix[1, 1]), (System.Single)System.Math.PI / 2, 0 }
+				};
 			}
 		}
 	}

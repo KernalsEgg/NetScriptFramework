@@ -35,7 +35,20 @@
 		}
 
 		/// <param name="tesCameraState">TESCameraState</param>
-		static public (System.Single w, System.Single x, System.Single y, System.Single z) GetRotation(System.IntPtr tesCameraState)
+		static public System.Single[,] GetRotationAsMatrix33(System.IntPtr tesCameraState)
+		{
+			if (tesCameraState == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("tesCameraState"); }
+
+			using (var rotation = new NiQuaternion())
+			{
+				VirtualObject.InvokeVTableThisCall(tesCameraState, 0x20, rotation.Address);
+
+				return rotation.Elements.QuaternionToMatrix33().Elements;
+			}
+		}
+
+		/// <param name="tesCameraState">TESCameraState</param>
+		static public (System.Single w, System.Single x, System.Single y, System.Single z) GetRotationAsQuaternion(System.IntPtr tesCameraState)
 		{
 			if (tesCameraState == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("tesCameraState"); }
 
@@ -47,11 +60,20 @@
 			}
 		}
 
+		/// <param name="tesCameraState">TESCameraState</param>
 		static public TESCameraStates GetState(System.IntPtr tesCameraState)
 		{
 			if (tesCameraState == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("tesCameraState"); }
 
 			return (TESCameraStates)NetScriptFramework.Memory.ReadUInt32(tesCameraState + 0x18);
+		}
+
+		/// <param name="tesCameraState">TESCameraState</param>
+		static public System.Boolean IsHorse(System.IntPtr tesCameraState)
+		{
+			if (tesCameraState == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("tesCameraState"); }
+
+			return TESCameraState.GetState(tesCameraState) == TESCameraStates.HorseCameraState;
 		}
 	}
 }

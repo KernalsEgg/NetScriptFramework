@@ -10,12 +10,11 @@
 	static public class TESObjectCELL
 	{
 		/// <param name = "cell">TESObjectCELL</param>
-		/// <returns>mutable BSSpinLock</returns>
-		static public System.IntPtr GetCellLock(System.IntPtr cell)
+		static public BSSpinLockGuard GetCellLock(System.IntPtr cell)
 		{
 			if (cell == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("cell"); }
 
-			return cell + 0x118;
+			return new BSSpinLockGuard(cell + 0x118);
 		}
 
 		/// <param name = "cell">TESObjectCELL</param>
@@ -44,7 +43,7 @@
 		{
 			if (cell == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("cell"); }
 
-			using (new BSSpinLockGuard(TESObjectCELL.GetCellLock(cell)))
+			using (TESObjectCELL.GetCellLock(cell))
 			{
 				var references = new System.Collections.Generic.HashSet<System.IntPtr>();
 
@@ -65,7 +64,7 @@
 			if (cell == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("cell"); }
 			// formType
 
-			using (new BSSpinLockGuard(TESObjectCELL.GetCellLock(cell)))
+			using (TESObjectCELL.GetCellLock(cell))
 			{
 				var references = new System.Collections.Generic.HashSet<System.IntPtr>();
 
@@ -89,7 +88,7 @@
 			// formType1
 			// formType2
 
-			using (new BSSpinLockGuard(TESObjectCELL.GetCellLock(cell)))
+			using (TESObjectCELL.GetCellLock(cell))
 			{
 				var references1 = new System.Collections.Generic.HashSet<System.IntPtr>();
 				var references2 = new System.Collections.Generic.HashSet<System.IntPtr>();

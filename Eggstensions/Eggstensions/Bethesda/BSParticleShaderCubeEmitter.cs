@@ -9,11 +9,11 @@
 			if (bsParticleShaderCubeEmitter == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("bsParticleShaderCubeEmitter"); }
 
 			return
-				(
-					BSParticleShaderCubeEmitter.GetVelocityX(bsParticleShaderCubeEmitter),
-					BSParticleShaderCubeEmitter.GetVelocityY(bsParticleShaderCubeEmitter),
-					BSParticleShaderCubeEmitter.GetVelocityZ(bsParticleShaderCubeEmitter)
-				);
+			(
+				BSParticleShaderCubeEmitter.GetVelocityX(bsParticleShaderCubeEmitter),
+				BSParticleShaderCubeEmitter.GetVelocityY(bsParticleShaderCubeEmitter),
+				BSParticleShaderCubeEmitter.GetVelocityZ(bsParticleShaderCubeEmitter)
+			);
 		}
 
 		/// <param name="bsParticleShaderCubeEmitter">BSParticleShaderCubeEmitter</param>

@@ -113,11 +113,11 @@
 
 					var fraction = NetScriptFramework.Memory.ReadFloat(hit + 0x10);
 					var normal =
-						(
-							NetScriptFramework.Memory.ReadFloat(hit),
-							NetScriptFramework.Memory.ReadFloat(hit + 0x4),
-							NetScriptFramework.Memory.ReadFloat(hit + 0x8)
-						);
+					(
+						NetScriptFramework.Memory.ReadFloat(hit),
+						NetScriptFramework.Memory.ReadFloat(hit + 0x4),
+						NetScriptFramework.Memory.ReadFloat(hit + 0x8)
+					);
 
 					hits.Add(new RaycastHit(havokObject, fraction, normal));
 				}

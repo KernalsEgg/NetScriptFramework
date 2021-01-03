@@ -36,12 +36,12 @@
 			if (produce == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("produce"); }
 
 			return
-				(
-					NetScriptFramework.Memory.ReadInt8(produce + 0x18),
-					NetScriptFramework.Memory.ReadInt8(produce + 0x18 + 0x1),
-					NetScriptFramework.Memory.ReadInt8(produce + 0x18 + 0x2),
-					NetScriptFramework.Memory.ReadInt8(produce + 0x18 + 0x3)
-				);
+			(
+				NetScriptFramework.Memory.ReadInt8(produce + 0x18),
+				NetScriptFramework.Memory.ReadInt8(produce + 0x18 + 0x1),
+				NetScriptFramework.Memory.ReadInt8(produce + 0x18 + 0x2),
+				NetScriptFramework.Memory.ReadInt8(produce + 0x18 + 0x3)
+			);
 		}
 
 		/// <param name="produce">TESProduceForm</param>

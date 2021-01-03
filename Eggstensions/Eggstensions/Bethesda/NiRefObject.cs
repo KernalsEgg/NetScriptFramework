@@ -8,15 +8,14 @@
 			if (niRefObject == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("niRefObject"); }
 
 			var referenceCount = NetScriptFramework.Memory.InterlockedDecrement32(niRefObject + 0x8) & 0x3FF;
+			var delete = (referenceCount == 0);
 
-			if (referenceCount == 0)
+			if (delete)
 			{
 				NiRefObject.Delete(niRefObject);
-
-				return true;
 			}
 
-			return false;
+			return delete;
 		}
 
 		static public void Delete(System.IntPtr niRefObject)

@@ -9,11 +9,11 @@
 			if (niTransform == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("niTransform"); }
 
 			return
-				(
-					NiTransform.GetPositionX(niTransform),
-					NiTransform.GetPositionY(niTransform),
-					NiTransform.GetPositionZ(niTransform)
-				);
+			(
+				NiTransform.GetPositionX(niTransform),
+				NiTransform.GetPositionY(niTransform),
+				NiTransform.GetPositionZ(niTransform)
+			);
 		}
 		
 		/// <param name="niTransform"></param>

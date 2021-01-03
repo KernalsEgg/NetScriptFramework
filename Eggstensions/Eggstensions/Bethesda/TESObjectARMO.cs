@@ -47,7 +47,7 @@
 			// BSTArray<TESObjectARMA*, BSTArrayHeapAllocator>
 			foreach (var armorAddon in BSTArray.IntPtr(TESObjectARMO.GetArmorAddons(armor)))
 			{
-				if (!TESForm.HasFormType(armorAddon, FormTypes.TESObjectARMA)) { throw new Eggceptions.Bethesda.FormTypeException("armorAddon"); }
+				if (!TESForm.IsArmorAddon(armorAddon)) { throw new Eggceptions.Bethesda.FormTypeException("armorAddon"); }
 
 				if (TESRace.CanUseArmorAddon(race, armorAddon))
 				{

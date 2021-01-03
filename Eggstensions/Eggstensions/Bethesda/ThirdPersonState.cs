@@ -18,8 +18,7 @@
 			// zoom
 
 			ThirdPersonState.UpdateRotation(thirdPersonState);
-			var quaternion = TESCameraState.GetRotation(thirdPersonState);
-			var matrix = Eggstensions.Math.Library.Quaternion.QuaternionToMatrix33(new System.Single[,] { { quaternion.w, quaternion.x, quaternion.y, quaternion.z } });
+			var rotation = TESCameraState.GetRotationAsMatrix33(thirdPersonState);
 
 			var targetOffsetX = ThirdPersonState.GetTargetOffsetX(thirdPersonState);
 			var targetOffsetZ = ThirdPersonState.GetTargetOffsetZ(thirdPersonState);
@@ -29,20 +28,20 @@
 				var targetOffsetY = ThirdPersonState.GetTargetOffsetY(thirdPersonState);
 
 				return
-					(
-						matrix[0, 0] * targetOffsetX + matrix[1, 0] * targetOffsetY + matrix[2, 0] * targetOffsetZ,
-						matrix[0, 1] * targetOffsetX + matrix[1, 1] * targetOffsetY + matrix[2, 1] * targetOffsetZ,
-						matrix[0, 2] * targetOffsetX + matrix[1, 2] * targetOffsetY + matrix[2, 2] * targetOffsetZ
-					);
+				(
+					rotation[0, 0] * targetOffsetX + rotation[1, 0] * targetOffsetY + rotation[2, 0] * targetOffsetZ,
+					rotation[0, 1] * targetOffsetX + rotation[1, 1] * targetOffsetY + rotation[2, 1] * targetOffsetZ,
+					rotation[0, 2] * targetOffsetX + rotation[1, 2] * targetOffsetY + rotation[2, 2] * targetOffsetZ
+				);
 			}
 			else
 			{
 				return
-					(
-						matrix[0, 0] * targetOffsetX + matrix[2, 0] * targetOffsetZ,
-						matrix[0, 1] * targetOffsetX + matrix[2, 1] * targetOffsetZ,
-						matrix[0, 2] * targetOffsetX + matrix[2, 2] * targetOffsetZ
-					);
+				(
+					rotation[0, 0] * targetOffsetX + rotation[2, 0] * targetOffsetZ,
+					rotation[0, 1] * targetOffsetX + rotation[2, 1] * targetOffsetZ,
+					rotation[0, 2] * targetOffsetX + rotation[2, 2] * targetOffsetZ
+				);
 			}
 		}
 		
@@ -52,11 +51,11 @@
 			if (thirdPersonState == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("thirdPersonState"); }
 
 			return
-				(
-					ThirdPersonState.GetTargetOffsetX(thirdPersonState),
-					ThirdPersonState.GetTargetOffsetY(thirdPersonState),
-					ThirdPersonState.GetTargetOffsetZ(thirdPersonState)
-				);
+			(
+				ThirdPersonState.GetTargetOffsetX(thirdPersonState),
+				ThirdPersonState.GetTargetOffsetY(thirdPersonState),
+				ThirdPersonState.GetTargetOffsetZ(thirdPersonState)
+			);
 		}
 		
 		/// <param name="thirdPersonState">ThirdPersonState</param>

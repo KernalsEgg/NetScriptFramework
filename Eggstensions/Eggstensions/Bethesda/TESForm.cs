@@ -122,22 +122,19 @@
 		}
 
 		/// <param name = "form">TESForm</param>
-		static public System.Boolean HasFormType(System.IntPtr form, params FormTypes[] formTypes)
+		static public System.Boolean IsArmorAddon(System.IntPtr form)
 		{
 			if (form == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("form"); }
-			if (formTypes == null) { throw new Eggceptions.ArgumentNullException("formTypes"); }
 
-			var formType = TESForm.GetFormType(form);
+			return TESForm.GetFormType(form) == FormTypes.TESObjectARMA;
+		}
 
-			for (var i = 0; i < formTypes.Length; i++)
-			{
-				if (formTypes[i] == formType)
-				{
-					return true;
-				}
-			}
+		/// <param name = "form">TESForm</param>
+		static public System.Boolean IsRace(System.IntPtr form)
+		{
+			if (form == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("form"); }
 
-			return false;
+			return TESForm.GetFormType(form) == FormTypes.TESRace;
 		}
 
 		/// <param name="form">TESForm</param>

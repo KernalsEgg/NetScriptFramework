@@ -63,25 +63,6 @@ namespace Eggstensions.Bethesda
 			public System.IntPtr WeatherNode { get; }
 		}
 
-		sealed public class CastSpellPerkEntryPointEventArguments : NetScriptFramework.HookedEventArgs
-		{
-			public CastSpellPerkEntryPointEventArguments(System.IntPtr target, System.IntPtr spellItem)
-			{
-				Target = target;
-				SpellItem = spellItem;
-			}
-
-
-
-			public System.Boolean Skip { get; set; } = false;
-
-			/// <summary>SpellItem</summary>
-			public System.IntPtr SpellItem { get; }
-
-			/// <summary>Actor</summary>
-			public System.IntPtr Target { get; }
-		}
-
 		sealed public class DetachPrecipitationObjectEventArguments : NetScriptFramework.HookedEventArgs
 		{
 			public DetachPrecipitationObjectEventArguments(System.IntPtr weatherNode, System.IntPtr precipitationObject)
@@ -132,24 +113,6 @@ namespace Eggstensions.Bethesda
 			public System.Boolean Skip { get; set; } = false;
 		}
 
-		sealed public class SetSpellPerkEntryPointEventArguments : NetScriptFramework.HookedEventArgs
-		{
-			public SetSpellPerkEntryPointEventArguments(System.IntPtr result, System.IntPtr perkEntryPoint)
-			{
-				Result = result;
-				PerkEntryPoint = perkEntryPoint;
-			}
-
-
-
-			public System.Boolean Skip { get; set; } = false;
-
-			public System.IntPtr Result { get; }
-
-			/// <summary>BGSEntryPointFunctionDataSpellItem</summary>
-			public System.IntPtr PerkEntryPoint { get; }
-		}
-
 		sealed public class ShowHarvestNotificationEventArguments : NetScriptFramework.HookedEventArgs
 		{
 			public ShowHarvestNotificationEventArguments(System.IntPtr ingredient)
@@ -179,9 +142,9 @@ namespace Eggstensions.Bethesda
 						new NetScriptFramework.EventHookParameters<Events.ActivateFloraEventArguments>
 						(
 							address: NetScriptFramework.Memory.ReadPointer(VIDS.TESFlora.VTable + 0x1B8),
+							pattern: "48 81 C1 C8 00 00 00",
 							replaceLength: 7,
 							includeLength: 7,
-							pattern: "48 81 C1 C8 00 00 00",
 							argFunc: cpuRegisters => new Events.ActivateFloraEventArguments(cpuRegisters.CX, cpuRegisters.DX, cpuRegisters.R8),
 							afterFunc: null
 						)
@@ -212,9 +175,9 @@ namespace Eggstensions.Bethesda
 						new NetScriptFramework.EventHookParameters<Events.ActivateTreeEventArguments>
 						(
 							address: NetScriptFramework.Memory.ReadPointer(VIDS.TESObjectTREE.VTable + 0x1B8),
+							pattern: "48 89 5C 24 08",
 							replaceLength: 5,
 							includeLength: 5,
-							pattern: "48 89 5C 24 08",
 							argFunc: cpuRegisters => new Events.ActivateTreeEventArguments(cpuRegisters.CX, cpuRegisters.DX, cpuRegisters.R8),
 							afterFunc: null
 						)
@@ -245,9 +208,9 @@ namespace Eggstensions.Bethesda
 						new NetScriptFramework.EventHookParameters<Events.AttachPrecipitationObjectEventArguments>
 						(
 							address: VIDS.Events.AttachPrecipitationObject + 0x91,
+							pattern: "FF 90 A8010000",
 							replaceLength: 6,
 							includeLength: 6,
-							pattern: "FF 90 A8010000",
 							argFunc: cpuRegisters => new Events.AttachPrecipitationObjectEventArguments(cpuRegisters.CX, cpuRegisters.DX),
 							afterFunc: null
 						)
@@ -266,84 +229,6 @@ namespace Eggstensions.Bethesda
 			}
 		}
 
-		static public class CastSpellPerkEntryPointEvent
-		{
-			static CastSpellPerkEntryPointEvent()
-			{
-				_castSpellPerkEntryPoint =
-					new NetScriptFramework.EventHook<Events.CastSpellPerkEntryPointEventArguments>
-					(
-						NetScriptFramework.EventHookFlags.None,
-						"CastSpellPerkEntryPoint",
-						new NetScriptFramework.EventHookParameters<Events.CastSpellPerkEntryPointEventArguments>
-						(
-							address: VIDS.Events.ApplyBashingSpell + 0x429,
-							replaceLength: 5,
-							includeLength: 5,
-							pattern: "E8",
-							argFunc: cpuRegisters => new Events.CastSpellPerkEntryPointEventArguments(cpuRegisters.CX, cpuRegisters.DX),
-							afterFunc: (cpuRegisters, arguments) => { if (arguments.Skip) { cpuRegisters.Skip(); } }
-						),
-						new NetScriptFramework.EventHookParameters<Events.CastSpellPerkEntryPointEventArguments>
-						(
-							address: VIDS.Events.ApplyCombatHitSpellMelee + 0x79,
-							replaceLength: 5,
-							includeLength: 5,
-							pattern: "E8",
-							argFunc: cpuRegisters => new Events.CastSpellPerkEntryPointEventArguments(cpuRegisters.CX, cpuRegisters.DX),
-							afterFunc: (cpuRegisters, arguments) => { if (arguments.Skip) { cpuRegisters.Skip(); } }
-						),
-						new NetScriptFramework.EventHookParameters<Events.CastSpellPerkEntryPointEventArguments>
-						(
-							address: VIDS.Events.ApplyCombatHitSpellProjectile + 0x2A7,
-							replaceLength: 5,
-							includeLength: 5,
-							pattern: "E8",
-							argFunc: cpuRegisters => new Events.CastSpellPerkEntryPointEventArguments(cpuRegisters.CX, cpuRegisters.DX),
-							afterFunc: (cpuRegisters, arguments) => { if (arguments.Skip) { cpuRegisters.Skip(); } }
-						),
-						new NetScriptFramework.EventHookParameters<Events.CastSpellPerkEntryPointEventArguments>
-						(
-							address: VIDS.Events.ApplyReanimateSpell + 0xD2,
-							replaceLength: 5,
-							includeLength: 5,
-							pattern: "E8",
-							argFunc: cpuRegisters => new Events.CastSpellPerkEntryPointEventArguments(cpuRegisters.CX, cpuRegisters.DX),
-							afterFunc: (cpuRegisters, arguments) => { if (arguments.Skip) { cpuRegisters.Skip(); } }
-						),
-						new NetScriptFramework.EventHookParameters<Events.CastSpellPerkEntryPointEventArguments>
-						(
-							address: VIDS.Events.ApplySneakingSpell + 0xCE,
-							replaceLength: 5,
-							includeLength: 5,
-							pattern: "E8",
-							argFunc: cpuRegisters => new Events.CastSpellPerkEntryPointEventArguments(cpuRegisters.CX, cpuRegisters.DX),
-							afterFunc: (cpuRegisters, arguments) => { if (arguments.Skip) { cpuRegisters.Skip(); } }
-						),
-						new NetScriptFramework.EventHookParameters<Events.CastSpellPerkEntryPointEventArguments>
-						(
-							address: VIDS.Events.ApplyWeaponSwingSpell + 0xC3,
-							replaceLength: 5,
-							includeLength: 5,
-							pattern: "E8",
-							argFunc: cpuRegisters => new Events.CastSpellPerkEntryPointEventArguments(cpuRegisters.CX, cpuRegisters.DX),
-							afterFunc: (cpuRegisters, arguments) => { if (arguments.Skip) { cpuRegisters.Skip(); } }
-						)
-					);
-			}
-
-
-
-			static private NetScriptFramework.Event<Events.CastSpellPerkEntryPointEventArguments> _castSpellPerkEntryPoint;
-
-
-
-			static public void Register(NetScriptFramework.Event<Events.CastSpellPerkEntryPointEventArguments>.EventHandler eventHandler, System.Int32 priority = 0, System.Int32 count = 0, NetScriptFramework.EventRegistrationFlags eventRegistrationFlags = NetScriptFramework.EventRegistrationFlags.Distinct)
-			{
-				_castSpellPerkEntryPoint.Register(eventHandler, priority, count, eventRegistrationFlags);
-			}
-		}
-
 		static public class DetachPrecipitationObjectEvent
 		{
 			static DetachPrecipitationObjectEvent()
@@ -356,36 +241,36 @@ namespace Eggstensions.Bethesda
 						new NetScriptFramework.EventHookParameters<Events.DetachPrecipitationObjectEventArguments>
 						(
 							address: VIDS.Events.DetachPrecipitationObject1 + 0x25D,
+							pattern: "FF 90 C0010000",
 							replaceLength: 6,
 							includeLength: 6,
-							pattern: "FF 90 C0010000",
 							argFunc: cpuRegisters => new Events.DetachPrecipitationObjectEventArguments(cpuRegisters.CX, cpuRegisters.DX),
 							afterFunc: null
 						),
 						new NetScriptFramework.EventHookParameters<Events.DetachPrecipitationObjectEventArguments>
 						(
 							address: VIDS.Events.DetachPrecipitationObject1 + 0x32A,
+							pattern: "FF 90 C0010000",
 							replaceLength: 6,
 							includeLength: 6,
-							pattern: "FF 90 C0010000",
 							argFunc: cpuRegisters => new Events.DetachPrecipitationObjectEventArguments(cpuRegisters.CX, cpuRegisters.DX),
 							afterFunc: null
 						),
 						new NetScriptFramework.EventHookParameters<Events.DetachPrecipitationObjectEventArguments>
 						(
 							address: VIDS.Events.DetachPrecipitationObject2 + 0x28,
+							pattern: "FF 90 C0010000",
 							replaceLength: 6,
 							includeLength: 6,
-							pattern: "FF 90 C0010000",
 							argFunc: cpuRegisters => new Events.DetachPrecipitationObjectEventArguments(cpuRegisters.CX, cpuRegisters.DX),
 							afterFunc: null
 						),
 						new NetScriptFramework.EventHookParameters<Events.DetachPrecipitationObjectEventArguments>
 						(
 							address: VIDS.Events.DetachPrecipitationObject2 + 0x73,
+							pattern: "FF 90 C0010000",
 							replaceLength: 6,
 							includeLength: 6,
-							pattern: "FF 90 C0010000",
 							argFunc: cpuRegisters => new Events.DetachPrecipitationObjectEventArguments(cpuRegisters.CX, cpuRegisters.DX),
 							afterFunc: null
 						)
@@ -430,18 +315,18 @@ namespace Eggstensions.Bethesda
 				if (!NetScriptFramework.Memory.VerifyBytes
 					(
 						address + hookOffset1,
-						"8B 0D ????????" +
+						"8B 0D ?? ?? ?? ??" +
 						"65 48 8B 04 25 58000000" +
 						"BA 00060000" +
 						"49 C7 01 00000000" +
 						"48 8B 04 C8" +
 						"80 3C 02 00" +
 						"74 1B" +
-						"48 8B 0D ????????" +
-						"48 8D 15 ????????" +
+						"48 8B 0D ?? ?? ?? ??" +
+						"48 8D 15 ?? ?? ?? ??" +
 						"0F57 D2" +
 						"66 49 0F7E D0" +
-						"E8 ????????" +
+						"E8 ?? ?? ?? ??" +
 						"B0 01",
 						false
 					))
@@ -476,9 +361,9 @@ namespace Eggstensions.Bethesda
 				NetScriptFramework.Memory.WriteBytes(address + hookOffset2, bytes2, true);
 				hookOffset2 += bytes2.Length;
 
-				// RCX: Subject		(argument 1)
-				// RDX: Argument1	(argument 2)
-				// R9: Result		(argument 4)
+				// RCX: Subject
+				// RDX: Argument1
+				// R9: Result
 				_getIsCreatureTypeEvent =
 					new NetScriptFramework.EventHook<Events.GetIsCreatureTypeEventArguments>
 					(
@@ -487,9 +372,9 @@ namespace Eggstensions.Bethesda
 						new NetScriptFramework.EventHookParameters<Events.GetIsCreatureTypeEventArguments>
 						(
 							address: address + hookOffset1,
+							pattern: "",
 							replaceLength: hookLength,
 							includeLength: 0,
-							pattern: "",
 							argFunc: cpuRegisters =>
 							{
 								return new Events.GetIsCreatureTypeEventArguments(cpuRegisters.CX, cpuRegisters.DX.ToInt32());
@@ -506,9 +391,9 @@ namespace Eggstensions.Bethesda
 						new NetScriptFramework.EventHookParameters<Events.GetIsCreatureTypeEventArguments>
 						(
 							address: address + hookOffset2,
+							pattern: "",
 							replaceLength: 0x44 - hookOffset2,
 							includeLength: 0,
-							pattern: "",
 							argFunc: cpuRegisters =>
 							{
 								return new Events.GetIsCreatureTypeEventArguments(cpuRegisters.CX, cpuRegisters.DX.ToInt32());
@@ -546,18 +431,18 @@ namespace Eggstensions.Bethesda
 						new NetScriptFramework.EventHookParameters<Events.PlayHarvestSoundEventArguments>
 						(
 							address: VIDS.Events.Harvest + 0x258,
+							pattern: "E8 ?? ?? ?? ??",
 							replaceLength: 5,
 							includeLength: 5,
-							pattern: "E8",
 							argFunc: cpuRegisters => new Events.PlayHarvestSoundEventArguments(cpuRegisters.CX),
 							afterFunc: (cpuRegisters, arguments) => { if (arguments.Skip) { cpuRegisters.Skip(); } }
 						),
 						new NetScriptFramework.EventHookParameters<Events.PlayHarvestSoundEventArguments>
 						(
 							address: VIDS.Events.Harvest + 0x3C9,
+							pattern: "E8 ?? ?? ?? ??",
 							replaceLength: 5,
 							includeLength: 5,
-							pattern: "E8",
 							argFunc: cpuRegisters => new Events.PlayHarvestSoundEventArguments(cpuRegisters.CX),
 							afterFunc: (cpuRegisters, arguments) => { if (arguments.Skip) { cpuRegisters.Skip(); } }
 						)
@@ -576,41 +461,6 @@ namespace Eggstensions.Bethesda
 			}
 		}
 
-		static public class SetSpellPerkEntryPointEvent
-		{
-			static SetSpellPerkEntryPointEvent()
-			{
-				_setSpellPerkEntryPoint =
-					new NetScriptFramework.EventHook<Events.SetSpellPerkEntryPointEventArguments>
-					(
-						NetScriptFramework.EventHookFlags.None,
-						"SetSpellPerkEntryPoint",
-						new NetScriptFramework.EventHookParameters<Events.SetSpellPerkEntryPointEventArguments>
-						(
-							address: VIDS.Events.SetSpellPerkEntryPoint + 0x53,
-							replaceLength: 7,
-							includeLength: 7,
-							pattern:
-								"48 8B 43 08" +
-								"48 89 01",
-							argFunc: cpuRegisters => new Events.SetSpellPerkEntryPointEventArguments(cpuRegisters.CX, cpuRegisters.BX),
-							afterFunc: (cpuRegisters, arguments) => { if (arguments.Skip) { cpuRegisters.Skip(); } }
-						)
-					);
-			}
-
-
-
-			static private NetScriptFramework.Event<Events.SetSpellPerkEntryPointEventArguments> _setSpellPerkEntryPoint;
-
-
-
-			static public void Register(NetScriptFramework.Event<Events.SetSpellPerkEntryPointEventArguments>.EventHandler eventHandler, System.Int32 priority = 0, System.Int32 count = 0, NetScriptFramework.EventRegistrationFlags eventRegistrationFlags = NetScriptFramework.EventRegistrationFlags.Distinct)
-			{
-				_setSpellPerkEntryPoint.Register(eventHandler, priority, count, eventRegistrationFlags);
-			}
-		}
-
 		static public class ShowHarvestNotificationEvent
 		{
 			static ShowHarvestNotificationEvent()
@@ -623,18 +473,18 @@ namespace Eggstensions.Bethesda
 						new NetScriptFramework.EventHookParameters<Events.ShowHarvestNotificationEventArguments>
 						(
 							address: VIDS.Events.Harvest + 0x250,
+							pattern: "E8 ?? ?? ?? ??",
 							replaceLength: 5,
 							includeLength: 5,
-							pattern: "E8",
 							argFunc: cpuRegisters => new Events.ShowHarvestNotificationEventArguments(cpuRegisters.CX),
 							afterFunc: (cpuRegisters, arguments) => { if (arguments.Skip) { cpuRegisters.Skip(); } }
 						),
 						new NetScriptFramework.EventHookParameters<Events.ShowHarvestNotificationEventArguments>
 						(
 							address: VIDS.Events.Harvest + 0x3C1,
+							pattern: "E8 ?? ?? ?? ??",
 							replaceLength: 5,
 							includeLength: 5,
-							pattern: "E8",
 							argFunc: cpuRegisters => new Events.ShowHarvestNotificationEventArguments(cpuRegisters.CX),
 							afterFunc: (cpuRegisters, arguments) => { if (arguments.Skip) { cpuRegisters.Skip(); } }
 						)

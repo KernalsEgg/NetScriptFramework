@@ -14,6 +14,26 @@ namespace Eggstensions.Bethesda
 
 
 
+		public class ExistingReferenceFromHandle : TemporaryObject
+		{
+			public ExistingReferenceFromHandle(System.IntPtr reference)
+			{
+				Reference = reference;
+			}
+
+			override protected void Free()
+			{
+				if (Reference != System.IntPtr.Zero)
+				{
+					NiRefObject.DecrementReferenceCount(Reference + 0x20);
+				}
+			}
+
+
+
+			public System.IntPtr Reference { get; }
+		}
+
 		public class ReferenceFromHandle : TemporaryObject
 		{
 			public ReferenceFromHandle(System.IntPtr handle)
@@ -231,11 +251,11 @@ namespace Eggstensions.Bethesda
 			if (reference == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("reference"); }
 
 			return
-				(
-					TESObjectREFR.GetPositionX(reference),
-					TESObjectREFR.GetPositionY(reference),
-					TESObjectREFR.GetPositionZ(reference)
-				);
+			(
+				TESObjectREFR.GetPositionX(reference),
+				TESObjectREFR.GetPositionY(reference),
+				TESObjectREFR.GetPositionZ(reference)
+			);
 		}
 
 		/// <param name="reference">TESObjectREFR</param>
@@ -323,11 +343,11 @@ namespace Eggstensions.Bethesda
 			if (reference == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("reference"); }
 
 			return
-				(
-					TESObjectREFR.GetRotationX(reference),
-					TESObjectREFR.GetRotationY(reference),
-					TESObjectREFR.GetRotationZ(reference)
-				);
+			(
+				TESObjectREFR.GetRotationX(reference),
+				TESObjectREFR.GetRotationY(reference),
+				TESObjectREFR.GetRotationZ(reference)
+			);
 		}
 
 		/// <param name="reference">TESObjectREFR</param>
@@ -355,25 +375,6 @@ namespace Eggstensions.Bethesda
 			if (reference == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("reference"); }
 
 			return NetScriptFramework.Memory.ReadFloat(reference + 0x50);
-		}
-
-		/// <param name="reference">TESObjectREFR</param>
-		static public System.Boolean HasFormType(System.IntPtr reference, params FormTypes[] formTypes)
-		{
-			if (reference == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("reference"); }
-			if (formTypes == null) { throw new Eggceptions.ArgumentNullException("formTypes"); }
-
-			var formType = TESObjectREFR.GetFormType(reference);
-
-			for (var i = 0; i < formTypes.Length; i++)
-			{
-				if (formTypes[i] == formType)
-				{
-					return true;
-				}
-			}
-
-			return false;
 		}
 
 		/// <summary>&lt;SkyrimSE.exe&gt; + 0x994540 (VID55660)</summary>

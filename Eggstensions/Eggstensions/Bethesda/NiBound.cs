@@ -13,11 +13,11 @@ namespace Eggstensions.Bethesda
 			if (niBound == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("niBound"); }
 
 			return
-				(
-					NiBound.GetCenterX(niBound),
-					NiBound.GetCenterY(niBound),
-					NiBound.GetCenterZ(niBound)
-				);
+			(
+				NiBound.GetCenterX(niBound),
+				NiBound.GetCenterY(niBound),
+				NiBound.GetCenterZ(niBound)
+			);
 		}
 
 		/// <param name="niBound">NiBound</param>
