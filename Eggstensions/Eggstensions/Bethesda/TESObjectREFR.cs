@@ -285,7 +285,7 @@ namespace Eggstensions.Bethesda
 			return NetScriptFramework.Memory.ReadFloat(reference + 0x5C);
 		}
 
-		/// <param name = "handle">ObjectRefHandle</param>
+		/// <param name = "handle">Handle</param>
 		/// <returns>TESObjectREFR, System.IntPtr.Zero</returns>
 		static public System.IntPtr GetReferenceFromHandle(System.IntPtr handle)
 		{
@@ -301,7 +301,7 @@ namespace Eggstensions.Bethesda
 			}
 		}
 
-		/// <param name = "handle">ObjectRefHandle</param>
+		/// <param name = "handle">Handle</param>
 		/// <returns>TESObjectREFR, System.IntPtr.Zero</returns>
 		static public System.IntPtr GetReferenceFromHandle(System.UInt32 handle)
 		{

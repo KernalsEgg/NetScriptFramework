@@ -17,7 +17,7 @@
 
 
 		/// <param name="processLists">ProcessLists</param>
-		/// <returns>BSTArray&lt;ActorHandle&gt;</returns>
+		/// <returns>BSTArray&lt;Handle&gt;</returns>
 		static public System.IntPtr GetHighActorHandles(System.IntPtr processLists)
 		{
 			if (processLists == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("processLists"); }
@@ -34,7 +34,7 @@
 		}
 
 		/// <param name="processLists">ProcessLists</param>
-		/// <returns>BSTArray&lt;ActorHandle&gt;</returns>
+		/// <returns>BSTArray&lt;Handle&gt;</returns>
 		static public System.IntPtr GetLowActorHandles(System.IntPtr processLists)
 		{
 			if (processLists == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("processLists"); }
@@ -43,7 +43,7 @@
 		}
 
 		/// <param name="processLists">ProcessLists</param>
-		/// <returns>BSTArray&lt;ActorHandle&gt;</returns>
+		/// <returns>BSTArray&lt;Handle&gt;</returns>
 		static public System.IntPtr GetMiddleHighActorHandles(System.IntPtr processLists)
 		{
 			if (processLists == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("processLists"); }
@@ -52,7 +52,7 @@
 		}
 
 		/// <param name="processLists">ProcessLists</param>
-		/// <returns>BSTArray&lt;ActorHandle&gt;</returns>
+		/// <returns>BSTArray&lt;Handle&gt;</returns>
 		static public System.IntPtr GetMiddleLowActorHandles(System.IntPtr processLists)
 		{
 			if (processLists == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("processLists"); }

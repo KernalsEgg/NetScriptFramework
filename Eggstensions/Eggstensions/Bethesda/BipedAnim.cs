@@ -90,12 +90,12 @@
 		}
 
 		/// <param name = "bipedAnim">BSTSmartPointer&lt;BipedAnim&gt;</param>
-		/// <returns>ObjectRefHandle</returns>
-		static public System.UInt32 GetHandle(System.IntPtr bipedAnim)
+		/// <returns>Handle</returns>
+		static public System.IntPtr GetHandle(System.IntPtr bipedAnim)
 		{
 			if (bipedAnim == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("bipedAnim"); }
 
-			return NetScriptFramework.Memory.ReadUInt32(bipedAnim + 0x2770);
+			return bipedAnim + 0x2770;
 		}
 
 		/// <param name = "bipedAnim">BSTSmartPointer&lt;BipedAnim&gt;</param>

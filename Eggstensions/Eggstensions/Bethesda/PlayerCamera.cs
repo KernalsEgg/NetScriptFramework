@@ -17,7 +17,7 @@
 
 
 		/// <param name="playerCamera">PlayerCamera</param>
-		/// <returns>ObjectRefHandle</returns>
+		/// <returns>Handle</returns>
 		static public System.IntPtr GetCameraTarget(System.IntPtr playerCamera)
 		{
 			if (playerCamera == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("playerCamera"); }

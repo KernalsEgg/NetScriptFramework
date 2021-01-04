@@ -76,6 +76,8 @@
 
 
 
+		/// <param name="horseCameraState">HorseCameraState</param>
+		/// <returns>Handle</returns>
 		static public System.IntPtr GetHorse(System.IntPtr horseCameraState)
 		{
 			if (horseCameraState == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("horseCameraState"); }

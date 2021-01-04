@@ -10,4 +10,3 @@ C:\Users\Daniel\source\repos\MountedInteractions\MountedInteractions\obj\Release
 C:\Users\Daniel\source\repos\MountedInteractions\MountedInteractions\obj\Release\MountedInteractions.csproj.CopyComplete
 C:\Users\Daniel\source\repos\MountedInteractions\MountedInteractions\obj\Release\MountedInteractions.dll
 C:\Users\Daniel\source\repos\MountedInteractions\MountedInteractions\obj\Release\MountedInteractions.pdb
-C:\Users\Daniel\source\repos\MountedInteractions\MountedInteractions\obj\Release\MountedInteractions.csprojAssemblyReference.cache

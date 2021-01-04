@@ -37,6 +37,7 @@ namespace MountedInteractions
 
 		static Plugin()
 		{
+			Plugin._activateFurniture =			NetScriptFramework.Main.GameInfo.GetAddressOf(17034); // <SkyrimSE.exe> + 0x21A4B0
 			Plugin._crosshairPickData =			NetScriptFramework.Main.GameInfo.GetAddressOf(25591); // <SkyrimSE.exe> + 0x3AA4B0
 			Plugin._hudData =					NetScriptFramework.Main.GameInfo.GetAddressOf(39535); // <SkyrimSE.exe> + 0x6B0570
 			Plugin._hudMenu =					NetScriptFramework.Main.GameInfo.GetAddressOf(50718); // <SkyrimSE.exe> + 0x87D580
@@ -51,6 +52,7 @@ namespace MountedInteractions
 
 
 
+		readonly static private System.IntPtr _activateFurniture;
 		readonly static private System.IntPtr _crosshairPickData;
 		readonly static private System.IntPtr _hudData;
 		readonly static private System.IntPtr _hudMenu;
@@ -96,13 +98,13 @@ namespace MountedInteractions
 
 		static private void WriteHooks()
 		{
-			// Set camera offsets
+			// Set camera offsets when the player draws or sheathes their weapon
 			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters()
 			{
-				Address = Plugin._updateWeaponOut + 0x2C,
-				Pattern = "48 8B 01" + "40 0FB6 D7" + "FF 50 ??",
-				ReplaceLength = 3 + 4 + 3,
-				IncludeLength = 3 + 4,
+				Address = Plugin._updateWeaponOut + 0x2F,
+				Pattern = "40 0FB6 D7" + "FF 50 ??",
+				ReplaceLength = 4 + 3,
+				IncludeLength = 4,
 				After = cpuRegisters =>
 				{
 					var weaponOut = cpuRegisters.DX.ToBool();
@@ -137,8 +139,8 @@ namespace MountedInteractions
 					}
 				}
 			});
-			
-			// Set activation distance 1
+
+			// Set the maximum activation distance (1)
 			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters()
 			{
 				Address = Plugin._crosshairPickData + 0x180,
@@ -151,7 +153,7 @@ namespace MountedInteractions
 				}
 			});
 
-			// Set activation distance 2
+			// Set the maximum activation distance (2)
 			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters()
 			{
 				Address = Plugin._crosshairPickData + 0xC41,
@@ -164,7 +166,7 @@ namespace MountedInteractions
 				}
 			});
 			
-			// Set activation origin
+			// Correct the cameras origin
 			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters()
 			{
 				Address = Plugin._pickCrosshairReference + 0x214,
@@ -194,7 +196,7 @@ namespace MountedInteractions
 				}
 			});
 			
-			// Ignore the player and current horse camera target
+			// Ignore the player and the horse they are riding
 			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters()
 			{
 				Address = Plugin._crosshairPickData + 0x408,
@@ -224,6 +226,22 @@ namespace MountedInteractions
 					else
 					{
 						cpuRegisters.FLAGS = (reference == playerCharacter) ? new System.IntPtr(cpuRegisters.FLAGS.ToInt64() | 0x40) : new System.IntPtr(cpuRegisters.FLAGS.ToInt64() & ~0x40);
+					}
+				}
+			});
+
+			// Block activating furniture
+			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters()
+			{
+				Address = Plugin._activateFurniture + 0x25,
+				Pattern = "48 8B E9" + "4D 85 C0",
+				ReplaceLength = 6,
+				IncludeLength = 6,
+				After = cpuRegisters =>
+				{
+					if (PlayerCamera.IsHorse(PlayerCamera.Instance))
+					{
+						cpuRegisters.FLAGS = new System.IntPtr(cpuRegisters.FLAGS.ToInt64() | 0x40);
 					}
 				}
 			});

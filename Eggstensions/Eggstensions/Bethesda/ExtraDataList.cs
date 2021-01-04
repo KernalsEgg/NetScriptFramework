@@ -103,12 +103,19 @@
 		}
 
 		/// <param name="extraDataList">ExtraDataList</param>
-		/// <returns>BSReadWriteLock</returns>
-		static public System.IntPtr GetReadWriteLock(System.IntPtr extraDataList)
+		static public BSReadLockGuard GetReadLock(System.IntPtr extraDataList)
 		{
 			if (extraDataList == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("extraDataList"); }
 
-			return extraDataList + 0x10;
+			return new BSReadLockGuard(extraDataList + 0x10);
+		}
+
+		/// <param name="extraDataList">ExtraDataList</param>
+		static public BSWriteLockGuard GetWriteLock(System.IntPtr extraDataList)
+		{
+			if (extraDataList == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("extraDataList"); }
+
+			return new BSWriteLockGuard(extraDataList + 0x10);
 		}
 	}
 }
