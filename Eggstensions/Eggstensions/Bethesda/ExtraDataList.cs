@@ -2,8 +2,8 @@
 {
 	public enum ExtraDataTypes : System.Byte
 	{
-		None = 0x0,
-		Flags = 0xA0
+		None =	0x0,
+		Flags =	0xA0
 	}
 
 

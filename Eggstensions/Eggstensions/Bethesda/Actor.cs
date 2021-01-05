@@ -20,7 +20,7 @@ namespace Eggstensions.Bethesda
 		{
 			if (actor == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("actor"); }
 
-			using (var allocation = NetScriptFramework.Memory.Allocate(0x10))
+			using (var allocation = NetScriptFramework.Memory.Allocate(0x8))
 			{
 				allocation.Zero();
 
@@ -50,10 +50,10 @@ namespace Eggstensions.Bethesda
 		{
 			if (actor == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("actor"); }
 
-			using (var allocation = NetScriptFramework.Memory.Allocate(0x10))
+			using (var allocation = NetScriptFramework.Memory.Allocate(0x8))
 			{
 				allocation.Zero();
-				
+
 				NetScriptFramework.Memory.InvokeCdecl(VIDS.Actor.GetMount, actor, allocation.Address);
 
 				return new TESObjectREFR.ExistingReferenceFromHandle(NetScriptFramework.Memory.ReadPointer(allocation.Address));

@@ -2,10 +2,10 @@
 {
 	public enum Season : System.UInt32
 	{
-		Spring =	0u,
-		Summer =	1u,
-		Fall =		2u,
-		Winter =	3u
+		Spring =	0x0u,
+		Summer =	0x1u,
+		Fall =		0x2u,
+		Winter =	0x3u
 	}
 	
 

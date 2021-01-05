@@ -21,7 +21,7 @@ namespace Eggstensions.Bethesda
 			if (file == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("file"); }
 			// localFormID
 
-			using (var allocation = NetScriptFramework.Memory.Allocate(0x10))
+			using (var allocation = NetScriptFramework.Memory.Allocate(0x8))
 			{
 				allocation.Zero();
 				NetScriptFramework.Memory.WriteUInt32(allocation.Address, localFormID);

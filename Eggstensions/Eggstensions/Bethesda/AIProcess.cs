@@ -14,14 +14,14 @@
 	public enum Update3DModelFlags : System.Byte
 	{
 		None =			0,
-		Model =			1 << 0x0,
-		Skin =			1 << 0x1,
-		Head =			1 << 0x2,
-		Face =			1 << 0x3,
-		Scale =			1 << 0x4,
-		Skeleton =		1 << 0x5,
-		InitDefault =	1 << 0x6,
-		SkyCellSkin =	1 << 0x7
+		Model =			1 << 0,
+		Skin =			1 << 1,
+		Head =			1 << 2,
+		Face =			1 << 3,
+		Scale =			1 << 4,
+		Skeleton =		1 << 5,
+		InitDefault =	1 << 6,
+		SkyCellSkin =	1 << 7
 	}
 
 

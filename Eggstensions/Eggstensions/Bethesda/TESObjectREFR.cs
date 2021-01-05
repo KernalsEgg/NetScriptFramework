@@ -8,8 +8,8 @@ namespace Eggstensions.Bethesda
 	{
 		public enum RecordFlags : System.UInt32
 		{
-			Disabled = 1u << 11,
-			Harvested = 1u << 13 // TESFlora, TESObjectTREE
+			Disabled =	1u << 11,
+			Harvested =	1u << 13 // TESFlora, TESObjectTREE
 		}
 
 
@@ -38,6 +38,8 @@ namespace Eggstensions.Bethesda
 		{
 			public ReferenceFromHandle(System.IntPtr handle)
 			{
+				if (handle == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("handle"); }
+				
 				Reference = TESObjectREFR.GetReferenceFromHandle(handle);
 			}
 
@@ -61,9 +63,11 @@ namespace Eggstensions.Bethesda
 
 		public class HandleFromReference : TemporaryObject
 		{
-			public HandleFromReference(System.IntPtr instance)
+			public HandleFromReference(System.IntPtr reference)
 			{
-				Reference = instance;
+				if (reference == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("reference"); }
+
+				Reference = reference;
 				Handle = TESObjectREFR.GetHandleFromReference(Reference);
 			}
 
@@ -182,7 +186,7 @@ namespace Eggstensions.Bethesda
 		{
 			if (reference == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("reference"); }
 
-			using (var allocation = NetScriptFramework.Memory.Allocate(0x10))
+			using (var allocation = NetScriptFramework.Memory.Allocate(0x8))
 			{
 				allocation.Zero();
 				NetScriptFramework.Memory.InvokeCdecl(VIDS.TESObjectREFR.GetHandleFromReference, allocation.Address, reference);
@@ -291,7 +295,7 @@ namespace Eggstensions.Bethesda
 		{
 			// handle
 
-			using (var allocation = NetScriptFramework.Memory.Allocate(0x10))
+			using (var allocation = NetScriptFramework.Memory.Allocate(0x8))
 			{
 				allocation.Zero();
 
@@ -307,14 +311,14 @@ namespace Eggstensions.Bethesda
 		{
 			// handle
 
-			using (var allocation = NetScriptFramework.Memory.Allocate(0x20))
+			using (var allocation = NetScriptFramework.Memory.Allocate(0x10))
 			{
 				allocation.Zero();
 				NetScriptFramework.Memory.WriteUInt32(allocation.Address, handle);
 
-				NetScriptFramework.Memory.InvokeCdecl(VIDS.TESObjectREFR.GetReferenceFromHandle, allocation.Address, allocation.Address + 0x10);
+				NetScriptFramework.Memory.InvokeCdecl(VIDS.TESObjectREFR.GetReferenceFromHandle, allocation.Address, allocation.Address + 0x8);
 
-				return NetScriptFramework.Memory.ReadPointer(allocation.Address + 0x10);
+				return NetScriptFramework.Memory.ReadPointer(allocation.Address + 0x8);
 			}
 		}
 

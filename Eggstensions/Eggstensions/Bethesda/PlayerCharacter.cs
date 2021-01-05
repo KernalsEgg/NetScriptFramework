@@ -47,7 +47,6 @@ namespace Eggstensions.Bethesda
 			{
 				allocation.Zero();
 
-				// PlayerCharacter, TESObjectREFR, System.Byte*
 				var lineOfSight = NetScriptFramework.Memory.InvokeCdecl(VIDS.PlayerCharacter.HasLineOfSight, playerCharacter, target, allocation.Address).ToBool();
 				var fieldOfView = NetScriptFramework.Memory.ReadUInt8(allocation.Address) != 0;
 

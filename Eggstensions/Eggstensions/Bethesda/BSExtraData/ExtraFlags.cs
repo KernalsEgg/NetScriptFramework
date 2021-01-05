@@ -2,14 +2,14 @@
 {
 	static public class ExtraFlags
 	{
-		public enum Flags
+		public enum Flags : System.UInt32
 		{
-			None =					0,
-			BlockActivate =			1 << 0,
-			BlockPlayerActivate =	1 << 1,
-			BlockLoadEvents =		1 << 2,
-			BlockActivateText =		1 << 3,
-			PlayerHasTaken =		1 << 4
+			None =					0u,
+			BlockActivate =			1u << 0,
+			BlockPlayerActivate =	1u << 1,
+			BlockLoadEvents =		1u << 2,
+			BlockActivateText =		1u << 3,
+			PlayerHasTaken =		1u << 4
 		}
 
 

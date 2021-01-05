@@ -3,7 +3,7 @@
 	public enum NiAVObjectFlags : System.UInt32
 	{
 		None =		0u,
-		Hidden =	1u << 0x0
+		Hidden =	1u << 0
 	}
 
 

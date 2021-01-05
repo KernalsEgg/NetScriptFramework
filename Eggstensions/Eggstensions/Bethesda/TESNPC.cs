@@ -3,7 +3,7 @@
 	public enum ActorBaseFlags : System.UInt32
 	{
 		None =		0u,
-		Female =	1u << 0x0
+		Female =	1u << 0
 	}
 
 

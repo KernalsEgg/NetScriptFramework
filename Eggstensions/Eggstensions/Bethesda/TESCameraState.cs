@@ -2,19 +2,19 @@
 {
 	public enum TESCameraStates : System.UInt32
 	{
-		FirstPersonState = 0x0,
-		AutoVanityState = 0x1,
-		VATSCameraState = 0x2,
-		FreeCameraState = 0x3,
-		IronSightsState = 0x4,
-		FurnitureCameraState = 0x5,
-		PlayerCameraTransitionState = 0x6,
-		TweenMenuCameraState = 0x7,
-		ThirdPersonState1 = 0x8,
-		ThirdPersonState2 = 0x9,
-		HorseCameraState = 0xA,
-		BleedoutCameraState = 0xB,
-		DragonCameraState = 0xC
+		FirstPersonState =				0x0,
+		AutoVanityState =				0x1,
+		VATSCameraState =				0x2,
+		FreeCameraState =				0x3,
+		IronSightsState =				0x4,
+		FurnitureCameraState =			0x5,
+		PlayerCameraTransitionState =	0x6,
+		TweenMenuCameraState =			0x7,
+		ThirdPersonState1 =				0x8,
+		ThirdPersonState2 =				0x9,
+		HorseCameraState =				0xA,
+		BleedoutCameraState =			0xB,
+		DragonCameraState =				0xC
 	}
 
 

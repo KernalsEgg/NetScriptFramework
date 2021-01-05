@@ -1,6 +1,4 @@
-﻿using static NetScriptFramework._IntPtrExtensions;
-
-using Eggstensions.Bethesda;
+﻿using Eggstensions.Bethesda;
 
 
 
@@ -27,8 +25,8 @@ namespace MountedInteractions
 			Plugin._settings = new Settings();
 			Plugin._settings.Load();
 
-			Plugin.WriteNOPs();
 			Plugin.WriteHooks();
+			Plugin.WriteHooksUI();
 
 			return true;
 		}
@@ -39,14 +37,14 @@ namespace MountedInteractions
 		{
 			Plugin._activateFurniture =			NetScriptFramework.Main.GameInfo.GetAddressOf(17034); // <SkyrimSE.exe> + 0x21A4B0
 			Plugin._crosshairPickData =			NetScriptFramework.Main.GameInfo.GetAddressOf(25591); // <SkyrimSE.exe> + 0x3AA4B0
+			Plugin._dismountHorse =				NetScriptFramework.Main.GameInfo.GetAddressOf(49889); // <SkyrimSE.exe> + 0x84BF50
+			Plugin._dismountWarHorse =			NetScriptFramework.Main.GameInfo.GetAddressOf(39639); // <SkyrimSE.exe> + 0x6B62B0
 			Plugin._hudData =					NetScriptFramework.Main.GameInfo.GetAddressOf(39535); // <SkyrimSE.exe> + 0x6B0570
 			Plugin._hudMenu =					NetScriptFramework.Main.GameInfo.GetAddressOf(50718); // <SkyrimSE.exe> + 0x87D580
+			Plugin._mount =						NetScriptFramework.Main.GameInfo.GetAddressOf(49888); // <SkyrimSE.exe> + 0x84BE40
 			Plugin._pickCrosshairReference =	NetScriptFramework.Main.GameInfo.GetAddressOf(39534); // <SkyrimSE.exe> + 0x6B01E0
 			Plugin._rightHandWeaponDraw =		NetScriptFramework.Main.GameInfo.GetAddressOf(41743); // <SkyrimSE.exe> + 0x720FB0
 			Plugin._rightHandWeaponSheathe =	NetScriptFramework.Main.GameInfo.GetAddressOf(36190); // <SkyrimSE.exe> + 0x5CCE70
-			Plugin._stopMountHorse =			NetScriptFramework.Main.GameInfo.GetAddressOf(49889); // <SkyrimSE.exe> + 0x84BF50
-			Plugin._stopMountWarHorse =			NetScriptFramework.Main.GameInfo.GetAddressOf(39639); // <SkyrimSE.exe> + 0x6B62B0
-			Plugin._startMount =				NetScriptFramework.Main.GameInfo.GetAddressOf(49888); // <SkyrimSE.exe> + 0x84BE40
 			Plugin._updateWeaponOut =			NetScriptFramework.Main.GameInfo.GetAddressOf(49908); // <SkyrimSE.exe> + 0x84D630
 		}
 
@@ -54,51 +52,23 @@ namespace MountedInteractions
 
 		readonly static private System.IntPtr _activateFurniture;
 		readonly static private System.IntPtr _crosshairPickData;
+		readonly static private System.IntPtr _dismountHorse;
+		readonly static private System.IntPtr _dismountWarHorse;
 		readonly static private System.IntPtr _hudData;
 		readonly static private System.IntPtr _hudMenu;
+		readonly static private System.IntPtr _mount;
 		readonly static private System.IntPtr _pickCrosshairReference;
 		readonly static private System.IntPtr _rightHandWeaponDraw;
 		readonly static private System.IntPtr _rightHandWeaponSheathe;
-		readonly static private System.IntPtr _stopMountHorse;
-		readonly static private System.IntPtr _stopMountWarHorse;
-		readonly static private System.IntPtr _startMount;
 		readonly static private System.IntPtr _updateWeaponOut;
 
 		static private Settings _settings;
 
 
 
-		// HorseMode: Weapon sheathed
-		// WarHorseMode: Weapon drawn
-		static private void WriteNOPs()
-		{
-			// HorseMode
-			NetScriptFramework.Memory.VerifyBytes(Plugin._hudMenu + 0x121B, "E8");
-			NetScriptFramework.Memory.WriteNop(Plugin._hudMenu + 0x121B, 5);
-
-			NetScriptFramework.Memory.VerifyBytes(Plugin._stopMountHorse + 0x259, "E8");
-			NetScriptFramework.Memory.WriteNop(Plugin._stopMountHorse + 0x259, 5);
-
-			NetScriptFramework.Memory.VerifyBytes(Plugin._startMount + 0xED, "E8");
-			NetScriptFramework.Memory.WriteNop(Plugin._startMount + 0xED, 5);
-
-			// WarHorseMode
-			NetScriptFramework.Memory.VerifyBytes(Plugin._hudMenu + 0x1243, "E8");
-			NetScriptFramework.Memory.WriteNop(Plugin._hudMenu + 0x1243, 5);
-
-			NetScriptFramework.Memory.VerifyBytes(Plugin._rightHandWeaponDraw + 0x13E, "E8");
-			NetScriptFramework.Memory.WriteNop(Plugin._rightHandWeaponDraw + 0x13E, 5);
-
-			NetScriptFramework.Memory.VerifyBytes(Plugin._rightHandWeaponSheathe + 0x13D, "E8");
-			NetScriptFramework.Memory.WriteNop(Plugin._rightHandWeaponSheathe + 0x13D, 5);
-
-			NetScriptFramework.Memory.VerifyBytes(Plugin._stopMountWarHorse + 0x28, "E8");
-			NetScriptFramework.Memory.WriteNop(Plugin._stopMountWarHorse + 0x28, 5);
-		}
-
 		static private void WriteHooks()
 		{
-			// Set camera offsets when the player draws or sheathes their weapon
+			// Set camera offsets
 			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters()
 			{
 				Address = Plugin._updateWeaponOut + 0x2F,
@@ -107,7 +77,7 @@ namespace MountedInteractions
 				IncludeLength = 4,
 				After = cpuRegisters =>
 				{
-					var weaponOut = cpuRegisters.DX.ToBool();
+					var weaponOut = cpuRegisters.DX != System.IntPtr.Zero;
 					var horseCameraState = cpuRegisters.CX;
 
 					if (weaponOut)
@@ -120,53 +90,8 @@ namespace MountedInteractions
 					}
 				}
 			});
-			
-			// Set HUD data
-			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters()
-			{
-				Address = Plugin._hudData + 0xAA,
-				Pattern = "E8 ?? ?? ?? ??",
-				ReplaceLength = 5,
-				IncludeLength = 5,
-				After = cpuRegisters =>
-				{
-					var isOnMount = cpuRegisters.AX.ToBool();
 
-					// RAX is flipped
-					if (isOnMount && PlayerCamera.IsHorse(PlayerCamera.Instance))
-					{
-						cpuRegisters.AX = System.IntPtr.Zero; // new System.IntPtr(0)
-					}
-				}
-			});
-
-			// Set the maximum activation distance (1)
-			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters()
-			{
-				Address = Plugin._crosshairPickData + 0x180,
-				Pattern = "F3 44 0F10 35 ?? ?? ?? ??",
-				ReplaceLength = 9,
-				IncludeLength = 0,
-				Before = cpuRegisters =>
-				{
-					cpuRegisters.XMM14f = PlayerCamera.IsHorse(PlayerCamera.Instance) ? Plugin._settings.ActivateDistance : PlayerCharacter.ActivateDistance;
-				}
-			});
-
-			// Set the maximum activation distance (2)
-			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters()
-			{
-				Address = Plugin._crosshairPickData + 0xC41,
-				Pattern = "F3 0F10 05 ?? ?? ?? ??",
-				ReplaceLength = 8,
-				IncludeLength = 0,
-				Before = cpuRegisters =>
-				{
-					cpuRegisters.XMM0f = PlayerCamera.IsHorse(PlayerCamera.Instance) ? Plugin._settings.ActivateDistance : PlayerCharacter.ActivateDistance;
-				}
-			});
-			
-			// Correct the cameras origin
+			// Correct activation position
 			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters()
 			{
 				Address = Plugin._pickCrosshairReference + 0x214,
@@ -179,7 +104,7 @@ namespace MountedInteractions
 					// RDX = bhkWorld
 					// R8 = position
 					// R9 = rotation
-					
+
 					var playerCamera = PlayerCamera.Instance;
 					var currentState = TESCamera.GetCurrentState(playerCamera);
 
@@ -195,8 +120,33 @@ namespace MountedInteractions
 					}
 				}
 			});
+
+			// Set activation distance
+			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters()
+			{
+				Address = Plugin._crosshairPickData + 0x180,
+				Pattern = "F3 44 0F10 35 ?? ?? ?? ??",
+				ReplaceLength = 9,
+				IncludeLength = 0,
+				Before = cpuRegisters =>
+				{
+					cpuRegisters.XMM14f = PlayerCamera.IsHorse(PlayerCamera.Instance) ? Plugin._settings.ActivateDistance : PlayerCharacter.ActivateDistance;
+				}
+			});
+
+			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters()
+			{
+				Address = Plugin._crosshairPickData + 0xC41,
+				Pattern = "F3 0F10 05 ?? ?? ?? ??",
+				ReplaceLength = 8,
+				IncludeLength = 0,
+				Before = cpuRegisters =>
+				{
+					cpuRegisters.XMM0f = PlayerCamera.IsHorse(PlayerCamera.Instance) ? Plugin._settings.ActivateDistance : PlayerCharacter.ActivateDistance;
+				}
+			});
 			
-			// Ignore the player and the horse they are riding
+			// Skip picking player and horse
 			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters()
 			{
 				Address = Plugin._crosshairPickData + 0x408,
@@ -205,27 +155,28 @@ namespace MountedInteractions
 				IncludeLength = 0,
 				Before = cpuRegisters =>
 				{
-					var currentState = TESCamera.GetCurrentState(PlayerCamera.Instance);
-					var reference = cpuRegisters.AX;
 					var playerCharacter = PlayerCharacter.Instance;
+					var target = cpuRegisters.AX;
 
-					if (TESCameraState.IsHorse(currentState))
+					if (playerCharacter == target)
 					{
-						if (reference == playerCharacter)
-						{
-							cpuRegisters.FLAGS = new System.IntPtr(cpuRegisters.FLAGS.ToInt64() | 0x40);
-						}
-						else
-						{
-							using (var cameraTarget = new TESObjectREFR.ReferenceFromHandle(HorseCameraState.GetHorse(currentState)))
-							{
-								cpuRegisters.FLAGS = (reference == cameraTarget.Reference) ? new System.IntPtr(cpuRegisters.FLAGS.ToInt64() | 0x40) : new System.IntPtr(cpuRegisters.FLAGS.ToInt64() & ~0x40);
-							}
-						}
+						cpuRegisters.FLAGS = new System.IntPtr(cpuRegisters.FLAGS.ToInt64() | 0x40);
 					}
 					else
 					{
-						cpuRegisters.FLAGS = (reference == playerCharacter) ? new System.IntPtr(cpuRegisters.FLAGS.ToInt64() | 0x40) : new System.IntPtr(cpuRegisters.FLAGS.ToInt64() & ~0x40);
+						var currentState = TESCamera.GetCurrentState(PlayerCamera.Instance);
+
+						if (TESCameraState.IsHorse(currentState))
+						{
+							using (var horse = new TESObjectREFR.ReferenceFromHandle(HorseCameraState.GetHorse(currentState)))
+							{
+								cpuRegisters.FLAGS = (horse.Reference == target) ? new System.IntPtr(cpuRegisters.FLAGS.ToInt64() | 0x40) : new System.IntPtr(cpuRegisters.FLAGS.ToInt64() & ~0x40);
+							}
+						}
+						else
+						{
+							cpuRegisters.FLAGS = new System.IntPtr(cpuRegisters.FLAGS.ToInt64() & ~0x40);
+						}
 					}
 				}
 			});
@@ -239,12 +190,102 @@ namespace MountedInteractions
 				IncludeLength = 6,
 				After = cpuRegisters =>
 				{
-					if (PlayerCamera.IsHorse(PlayerCamera.Instance))
+					var playerCharacter = PlayerCharacter.Instance;
+
+					if (Actor.IsOnMount(playerCharacter) && !Actor.IsOnFlyingMount(playerCharacter))
 					{
 						cpuRegisters.FLAGS = new System.IntPtr(cpuRegisters.FLAGS.ToInt64() | 0x40);
 					}
 				}
 			});
+		}
+
+		static private void WriteHooksUI()
+		{
+			// Set HUD data
+			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters()
+			{
+				Address = Plugin._hudData + 0xAA,
+				Pattern = "E8 ?? ?? ?? ??",
+				ReplaceLength = 5,
+				IncludeLength = 5,
+				After = SkipMount
+			});
+
+			// HorseMode (weapon sheathed)
+			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters()
+			{
+				Address = Plugin._mount + 0xED,
+				Pattern = "E8 ?? ?? ?? ??",
+				ReplaceLength = 5,
+				IncludeLength = 5,
+				Before = SkipCameraState // true
+			});
+
+			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters()
+			{
+				Address = Plugin._dismountHorse + 0x259,
+				Pattern = "E8 ?? ?? ?? ??",
+				ReplaceLength = 5,
+				IncludeLength = 5,
+				Before = SkipCameraState // false
+			});
+
+			// WarHorseMode (weapon drawn)
+			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters()
+			{
+				Address = Plugin._dismountWarHorse + 0x28,
+				Pattern = "E8 ?? ?? ?? ??",
+				ReplaceLength = 5,
+				IncludeLength = 5,
+				Before = SkipCameraState // false
+			});
+
+			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters()
+			{
+				Address = Plugin._rightHandWeaponDraw + 0x12E,
+				Pattern = "E8 ?? ?? ?? ??",
+				ReplaceLength = 5,
+				IncludeLength = 5,
+				After = SkipMount // true
+			});
+
+			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters()
+			{
+				Address = Plugin._rightHandWeaponSheathe + 0x12D,
+				Pattern = "E8 ?? ?? ?? ??",
+				ReplaceLength = 5,
+				IncludeLength = 5,
+				After = SkipMount // false
+			});
+
+			// HorseMode WarHorseMode
+			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters()
+			{
+				Address = Plugin._hudMenu + 0x1209,
+				Pattern = "E8 ?? ?? ?? ??",
+				ReplaceLength = 5,
+				IncludeLength = 5,
+				After = SkipMount // true
+			});
+		}
+
+		static private void SkipCameraState(NetScriptFramework.CPURegisters cpuRegisters)
+		{
+			if (PlayerCamera.IsHorse(PlayerCamera.Instance))
+			{
+				cpuRegisters.Skip();
+			}
+		}
+
+		static private void SkipMount(NetScriptFramework.CPURegisters cpuRegisters)
+		{
+			var isOnMount = cpuRegisters.AX != System.IntPtr.Zero;
+
+			if (isOnMount && !Actor.IsOnFlyingMount(PlayerCharacter.Instance))
+			{
+				cpuRegisters.AX = System.IntPtr.Zero;
+			}
 		}
 	}
 }
