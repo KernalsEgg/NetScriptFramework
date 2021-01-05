@@ -3,7 +3,7 @@
 	public class Settings
 	{
 		[NetScriptFramework.Tools.ConfigValue("ActivateDistance", "ActivateDistance", "Maximum activation distance while mounted.", NetScriptFramework.Tools.ConfigEntryFlags.VeryShortComment)]
-		public System.Single ActivateDistance { get; private set; } = 2048.0f;
+		public System.Single ActivateDistance { get; private set; } = 270.0f; // 180.0f
 
 		[NetScriptFramework.Tools.ConfigValue("WeaponDrawnOffsetX", "Weapon Drawn Offset X", "Camera offset along the x-axis while mounted with your weapon drawn.\nIncreasing this value moves the camera rightwards.\nDecreasing this value moves the camera leftwards.", NetScriptFramework.Tools.ConfigEntryFlags.VeryShortComment)]
 		public System.Single WeaponDrawnOffsetX { get; private set; } = 0.0f; // 0.0f

@@ -245,7 +245,9 @@ namespace MountedInteractions
 
 		static private void IsOnFlyingMount(NetScriptFramework.CPURegisters cpuRegisters)
 		{
-			cpuRegisters.AX = new System.IntPtr(Actor.IsOnFlyingMount(PlayerCharacter.Instance) ? 1 : 0);
+			var playerCharacter = cpuRegisters.CX;
+
+			cpuRegisters.AX = new System.IntPtr(Actor.IsOnFlyingMount(playerCharacter) ? 1 : 0);
 		}
 	}
 }
