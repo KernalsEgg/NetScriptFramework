@@ -101,11 +101,11 @@
 		{
 			if (form == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("form"); }
 
-			using (var allocation = NetScriptFramework.Memory.Allocate(0x10))
+			using (var bsFixedStringAllocation = NetScriptFramework.Memory.Allocate(0x10))
 			{
-				allocation.Zero();
+				bsFixedStringAllocation.Zero();
 
-				var name = VirtualObject.InvokeVTableThisCall(form, 0x170, allocation.Address);
+				var name = VirtualObject.InvokeVTableThisCall(form, 0x170, bsFixedStringAllocation.Address);
 				if (name == System.IntPtr.Zero) { throw new Eggceptions.NullException("name"); }
 
 				return NetScriptFramework.Memory.ReadString(name, false);

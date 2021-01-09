@@ -17,12 +17,11 @@
 
 
 		/// <param name="processLists">ProcessLists</param>
-		/// <returns>BSTArray&lt;Handle&gt;</returns>
-		static public System.IntPtr GetHighActorHandles(System.IntPtr processLists)
+		static public BSTArray.Handle.IntPtr GetHighActorHandles(System.IntPtr processLists)
 		{
 			if (processLists == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("processLists"); }
 
-			return processLists + 0x30;
+			return new BSTArray.Handle.IntPtr(processLists + 0x30);
 		}
 
 		/// <param name="processLists">ProcessLists</param>
@@ -34,30 +33,27 @@
 		}
 
 		/// <param name="processLists">ProcessLists</param>
-		/// <returns>BSTArray&lt;Handle&gt;</returns>
-		static public System.IntPtr GetLowActorHandles(System.IntPtr processLists)
+		static public BSTArray.Handle.IntPtr GetLowActorHandles(System.IntPtr processLists)
 		{
 			if (processLists == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("processLists"); }
 
-			return processLists + 0x48;
+			return new BSTArray.Handle.IntPtr(processLists + 0x48);
 		}
 
 		/// <param name="processLists">ProcessLists</param>
-		/// <returns>BSTArray&lt;Handle&gt;</returns>
-		static public System.IntPtr GetMiddleHighActorHandles(System.IntPtr processLists)
+		static public BSTArray.Handle.IntPtr GetMiddleHighActorHandles(System.IntPtr processLists)
 		{
 			if (processLists == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("processLists"); }
 
-			return processLists + 0x60;
+			return new BSTArray.Handle.IntPtr(processLists + 0x60);
 		}
 
 		/// <param name="processLists">ProcessLists</param>
-		/// <returns>BSTArray&lt;Handle&gt;</returns>
-		static public System.IntPtr GetMiddleLowActorHandles(System.IntPtr processLists)
+		static public BSTArray.Handle.IntPtr GetMiddleLowActorHandles(System.IntPtr processLists)
 		{
 			if (processLists == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("processLists"); }
 
-			return processLists + 0x78;
+			return new BSTArray.Handle.IntPtr(processLists + 0x78);
 		}
 	}
 }

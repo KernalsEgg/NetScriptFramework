@@ -102,6 +102,14 @@
 			return false;
 		}
 
+		/// <param name="process">AIProcess</param>
+		static public System.Boolean IsInHigh(System.IntPtr process)
+		{
+			if (process == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("process"); }
+
+			return AIProcess.GetProcessLevel(process) == AIProcessLevels.High;
+		}
+
 		/// <param name = "process">AIProcess</param>
 		static public void SetUpdate3DModelFlags(System.IntPtr process, Update3DModelFlags update3DModelFlags)
 		{

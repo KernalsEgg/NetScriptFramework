@@ -10,8 +10,8 @@
 		FurnitureCameraState =			0x5,
 		PlayerCameraTransitionState =	0x6,
 		TweenMenuCameraState =			0x7,
-		ThirdPersonState1 =				0x8,
-		ThirdPersonState2 =				0x9,
+		ThirdPersonState1 =				0x8, // Furniture
+		ThirdPersonState2 =				0x9, // Third-person
 		HorseCameraState =				0xA,
 		BleedoutCameraState =			0xB,
 		DragonCameraState =				0xC
@@ -19,18 +19,23 @@
 
 
 
-	class TESCameraState
+	static public class TESCameraState
 	{
 		/// <param name="tesCameraState">TESCameraState</param>
 		static public (System.Single x, System.Single y, System.Single z) GetPosition(System.IntPtr tesCameraState)
 		{
 			if (tesCameraState == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("tesCameraState"); }
 
-			using (var position = new NiPoint3())
+			using (var positionAllocation = NetScriptFramework.Memory.Allocate(0x10))
 			{
-				VirtualObject.InvokeVTableThisCall(tesCameraState, 0x28, position.Address);
+				VirtualObject.InvokeVTableThisCall(tesCameraState, 0x28, positionAllocation.Address);
 
-				return (position.X, position.Y, position.Z);
+				return
+				(
+					NetScriptFramework.Memory.ReadFloat(positionAllocation.Address),
+					NetScriptFramework.Memory.ReadFloat(positionAllocation.Address + 0x4),
+					NetScriptFramework.Memory.ReadFloat(positionAllocation.Address + 0x8)
+				);
 			}
 		}
 
@@ -39,11 +44,16 @@
 		{
 			if (tesCameraState == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("tesCameraState"); }
 
-			using (var rotation = new NiQuaternion())
+			using (var rotationAllocation = NetScriptFramework.Memory.Allocate(0x10))
 			{
-				VirtualObject.InvokeVTableThisCall(tesCameraState, 0x20, rotation.Address);
+				VirtualObject.InvokeVTableThisCall(tesCameraState, 0x20, rotationAllocation.Address);
 
-				return rotation.Elements.QuaternionToMatrix33().Elements;
+				var quaternion = new System.Single[,]
+				{
+					{ NetScriptFramework.Memory.ReadFloat(rotationAllocation.Address), NetScriptFramework.Memory.ReadFloat(rotationAllocation.Address + 0x4), NetScriptFramework.Memory.ReadFloat(rotationAllocation.Address + 0x8), NetScriptFramework.Memory.ReadFloat(rotationAllocation.Address + 0xC) }
+				};
+
+				return Eggstensions.Math.Library.Quaternion.QuaternionToMatrix33(quaternion);
 			}
 		}
 
@@ -52,11 +62,17 @@
 		{
 			if (tesCameraState == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("tesCameraState"); }
 
-			using (var rotation = new NiQuaternion())
+			using (var rotationAllocation = NetScriptFramework.Memory.Allocate(0x10))
 			{
-				VirtualObject.InvokeVTableThisCall(tesCameraState, 0x20, rotation.Address);
+				VirtualObject.InvokeVTableThisCall(tesCameraState, 0x20, rotationAllocation.Address);
 
-				return (rotation.W, rotation.X, rotation.Y, rotation.Z);
+				return
+				(
+					NetScriptFramework.Memory.ReadFloat(rotationAllocation.Address),
+					NetScriptFramework.Memory.ReadFloat(rotationAllocation.Address + 0x4),
+					NetScriptFramework.Memory.ReadFloat(rotationAllocation.Address + 0x8),
+					NetScriptFramework.Memory.ReadFloat(rotationAllocation.Address + 0xC)
+				);
 			}
 		}
 

@@ -20,12 +20,19 @@
 
 			return (ExtraFlags.Flags)NetScriptFramework.Memory.ReadUInt32(extraFlags + 0x10);
 		}
+
+		static public System.Boolean HasFlags(System.IntPtr extraFlags, ExtraFlags.Flags flags)
+		{
+			if (extraFlags == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("extraFlags"); }
+
+			return (ExtraFlags.GetFlags(extraFlags) & flags) == flags;
+		}
 		
 		static public System.Boolean IsActivationBlocked(System.IntPtr extraFlags)
 		{
 			if (extraFlags == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("extraFlags"); }
 
-			return (ExtraFlags.GetFlags(extraFlags) & ExtraFlags.Flags.BlockActivate) != 0;
+			return ExtraFlags.HasFlags(extraFlags, ExtraFlags.Flags.BlockActivate);
 		}
 	}
 }

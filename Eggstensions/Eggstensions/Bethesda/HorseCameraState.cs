@@ -77,12 +77,11 @@
 
 
 		/// <param name="horseCameraState">HorseCameraState</param>
-		/// <returns>Handle</returns>
-		static public System.IntPtr GetHorse(System.IntPtr horseCameraState)
+		static public TESObjectREFR.ReferenceFromHandle GetHorse(System.IntPtr horseCameraState)
 		{
 			if (horseCameraState == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("horseCameraState"); }
 
-			return horseCameraState + 0xE8;
+			return new TESObjectREFR.ReferenceFromHandle(horseCameraState + 0xE8);
 		}
 	}
 }

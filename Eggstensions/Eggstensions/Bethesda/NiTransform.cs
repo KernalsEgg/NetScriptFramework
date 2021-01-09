@@ -44,24 +44,17 @@
 		}
 
 		/// <param name="niTransform">NiTransform</param>
-		/// <returns>Radians[,]</returns>
+		/// <returns>Radians</returns>
 		static public System.Single[,] GetRotation(System.IntPtr niTransform)
 		{
 			if (niTransform == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("niTransform"); }
 
-			var rows = 3;
-			var columns = 3;
-			var rotation = new System.Single[rows, columns];
-
-			for (var row = 0; row < rows; row++)
+			return new System.Single[,]
 			{
-				for (var column = 0; column < columns; column++)
-				{
-					rotation[row, column] = NetScriptFramework.Memory.ReadFloat(niTransform + 0x4 * (row + rows * column));
-				}
-			}
-
-			return rotation;
+				{ NetScriptFramework.Memory.ReadFloat(niTransform), NetScriptFramework.Memory.ReadFloat(niTransform + 0xC), NetScriptFramework.Memory.ReadFloat(niTransform + 0x18) },
+				{ NetScriptFramework.Memory.ReadFloat(niTransform + 0x4), NetScriptFramework.Memory.ReadFloat(niTransform + 0x10), NetScriptFramework.Memory.ReadFloat(niTransform + 0x1C) },
+				{ NetScriptFramework.Memory.ReadFloat(niTransform + 0x8), NetScriptFramework.Memory.ReadFloat(niTransform + 0x14), NetScriptFramework.Memory.ReadFloat(niTransform + 0x20) }
+			};
 		}
 
 		/// <param name="niTransform">NiTransform</param>

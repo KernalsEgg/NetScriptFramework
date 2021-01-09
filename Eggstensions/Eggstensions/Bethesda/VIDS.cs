@@ -10,6 +10,10 @@
 				_getCollisionFilter =		NetScriptFramework.Main.GameInfo.GetAddressOf(36559);
 				_getEyeLevel =				NetScriptFramework.Main.GameInfo.GetAddressOf(36478);
 				_getMount =					NetScriptFramework.Main.GameInfo.GetAddressOf(37757);
+				_getRider =					NetScriptFramework.Main.GameInfo.GetAddressOf(37758);
+				_isBeingRidden =			NetScriptFramework.Main.GameInfo.GetAddressOf(21343);
+				_isBeingRiddenBy =			NetScriptFramework.Main.GameInfo.GetAddressOf(36878);
+				_isHostileToActor =			NetScriptFramework.Main.GameInfo.GetAddressOf(36537);
 				_isOnFlyingMount =			NetScriptFramework.Main.GameInfo.GetAddressOf(36877);
 				_isOnMount =				NetScriptFramework.Main.GameInfo.GetAddressOf(17570);
 				_update3DModel =			NetScriptFramework.Main.GameInfo.GetAddressOf(38404);
@@ -24,6 +28,14 @@
 			readonly static private System.IntPtr _getEyeLevel;
 
 			readonly static private System.IntPtr _getMount;
+
+			readonly static private System.IntPtr _getRider;
+
+			readonly static private System.IntPtr _isBeingRidden;
+
+			readonly static private System.IntPtr _isBeingRiddenBy;
+
+			readonly static private System.IntPtr _isHostileToActor;
 
 			readonly static private System.IntPtr _isOnFlyingMount;
 
@@ -43,7 +55,19 @@
 			static public System.IntPtr GetEyeLevel				{ get { return _getEyeLevel; } }
 
 			/// <summary>&lt;SkyrimSE.exe&gt; + 0x62EBC0 (VID37757)</summary>
-			static public System.IntPtr GetMount { get { return _getMount; } }
+			static public System.IntPtr GetMount				{ get { return _getMount; } }
+
+			/// <summary>&lt;SkyrimSE.exe&gt; + 0x62ECD0 (VID37758)</summary>
+			static public System.IntPtr GetRider				{ get { return _getRider; } }
+
+			/// <summary>&lt;SkyrimSE.exe&gt; + 0x2E4310 (VID21343)</summary>
+			static public System.IntPtr IsBeingRidden			{ get { return _isBeingRidden; } }
+
+			/// <summary>&lt;SkyrimSE.exe&gt; + 0x605840 (VID36878)</summary>
+			static public System.IntPtr IsBeingRiddenBy			{ get { return _isBeingRiddenBy; } }
+
+			/// <summary>&lt;SkyrimSE.exe&gt; + 0x5E7E40 (VID36537)</summary>
+			static public System.IntPtr IsHostileToActor		{ get { return _isHostileToActor; } }
 
 			/// <summary>&lt;SkyrimSE.exe&gt; + 0x6057C0 (VID36877)</summary>
 			static public System.IntPtr IsOnFlyingMount			{ get { return _isOnFlyingMount; } }
@@ -408,6 +432,65 @@
 			static public System.IntPtr IsInMenuModeBase	{ get { return _isInMenuModeBase; } }
 		}
 
+		static public class Math
+		{
+			static Math()
+			{
+				_delta =				NetScriptFramework.Main.GameInfo.GetAddressOf(235554);
+				_half =					NetScriptFramework.Main.GameInfo.GetAddressOf(230690);
+				_halfPercent =			NetScriptFramework.Main.GameInfo.GetAddressOf(233241);
+				_halfPercentNegative =	NetScriptFramework.Main.GameInfo.GetAddressOf(262074);
+				_one =					NetScriptFramework.Main.GameInfo.GetAddressOf(228662);
+				_oneNegative =			NetScriptFramework.Main.GameInfo.GetAddressOf(228611);
+				_oneQuarter =			NetScriptFramework.Main.GameInfo.GetAddressOf(232866);
+				_threeQuarters =		NetScriptFramework.Main.GameInfo.GetAddressOf(235914);
+			}
+
+
+
+			readonly static private System.IntPtr _delta;
+
+			readonly static private System.IntPtr _half;
+
+			readonly static private System.IntPtr _halfPercent;
+
+			readonly static private System.IntPtr _halfPercentNegative;
+
+			readonly static private System.IntPtr _one;
+
+			readonly static private System.IntPtr _oneNegative;
+
+			readonly static private System.IntPtr _oneQuarter;
+
+			readonly static private System.IntPtr _threeQuarters;
+
+
+
+			/// <summary>&lt;SkyrimSE.exe&gt; + 0x156B7B4 (VID235554)</summary>
+			static public System.IntPtr Delta				{ get { return _delta; } }
+
+			/// <summary>&lt;SkyrimSE.exe&gt; + 0x1536B98 (VID230690)</summary>
+			static public System.IntPtr Half				{ get { return _half; } }
+
+			/// <summary>&lt;SkyrimSE.exe&gt; + 0x154C018 (VID233241)</summary>
+			static public System.IntPtr HalfPercent			{ get { return _halfPercent; } }
+
+			/// <summary>&lt;SkyrimSE.exe&gt; + 0x1665730 (VID262074)</summary>
+			static public System.IntPtr HalfPercentNegative	{ get { return _halfPercentNegative; } }
+
+			/// <summary>&lt;SkyrimSE.exe&gt; + 0x15232D8 (VID228662)</summary>
+			static public System.IntPtr One					{ get { return _one; } }
+
+			/// <summary>&lt;SkyrimSE.exe&gt; + 0x152259C (VID228611)</summary>
+			static public System.IntPtr OneNegative			{ get { return _oneNegative; } }
+
+			/// <summary>&lt;SkyrimSE.exe&gt; + 0x1548E48 (VID232866)</summary>
+			static public System.IntPtr OneQuarter			{ get { return _oneQuarter; } }
+
+			/// <summary>&lt;SkyrimSE.exe&gt; + 0x156F92C (VID235914)</summary>
+			static public System.IntPtr ThreeQuarters		{ get { return _threeQuarters; } }
+		}
+
 		static public class NiAVObject
 		{
 			static NiAVObject()
@@ -569,6 +652,55 @@
 			static public System.IntPtr WorldRootNode { get { return _worldRootNode; } }
 		}
 
+		static public class SettingT
+		{
+			static public class GameSettingCollection
+			{
+				static GameSettingCollection()
+				{
+					_autoAimBasedOnDistance =	NetScriptFramework.Main.GameInfo.GetAddressOf(504543);
+					_autoAimMaxDistance =		NetScriptFramework.Main.GameInfo.GetAddressOf(504545);
+					_autoAimScreenPercentage =	NetScriptFramework.Main.GameInfo.GetAddressOf(504547);
+				}
+
+
+
+				readonly static private System.IntPtr _autoAimBasedOnDistance;
+
+				readonly static private System.IntPtr _autoAimMaxDistance;
+
+				readonly static private System.IntPtr _autoAimScreenPercentage;
+
+
+
+				/// <summary>&lt;SkyrimSE.exe&gt; + 0x1DDEC70 (VID504543)</summary>
+				static public System.IntPtr AutoAimBasedOnDistance	{ get { return _autoAimBasedOnDistance; } }
+
+				/// <summary>&lt;SkyrimSE.exe&gt; + 0x1DDEC88 (VID504545)</summary>
+				static public System.IntPtr AutoAimMaxDistance		{ get { return _autoAimMaxDistance; } }
+
+				/// <summary>&lt;SkyrimSE.exe&gt; + 0x1DDECA0 (VID504547)</summary>
+				static public System.IntPtr AutoAimScreenPercentage	{ get { return _autoAimScreenPercentage; } }
+			}
+
+			static public class INISettingCollection
+			{
+				static INISettingCollection()
+				{
+					_gridsToLoad = NetScriptFramework.Main.GameInfo.GetAddressOf(501244);
+				}
+
+
+
+				readonly static private System.IntPtr _gridsToLoad;
+
+
+
+				/// <summary>&lt;SkyrimSE.exe&gt; + 0x1DB3E28 (VID501244)</summary>
+				static public System.IntPtr GridsToLoad { get { return _gridsToLoad; } }
+			}
+		}
+
 		static public class Sky
 		{
 			static Sky()
@@ -590,20 +722,14 @@
 		{
 			static TES()
 			{
-				_gridsToLoad =	NetScriptFramework.Main.GameInfo.GetAddressOf(501244);
 				_instance =		NetScriptFramework.Main.GameInfo.GetAddressOf(516923);
 			}
 
 
 
-			readonly static private System.IntPtr _gridsToLoad;
-
 			readonly static private System.IntPtr _instance;
 
 
-
-			/// <summary>&lt;SkyrimSE.exe&gt; + 0x1DB3E28 (VID501244)</summary>
-			static public System.IntPtr GridsToLoad	{ get { return _gridsToLoad; } }
 
 			/// <summary>&lt;SkyrimSE.exe&gt; + 0x2F26B20 (VID516923)</summary>
 			static public System.IntPtr Instance	{ get { return _instance; } }
@@ -710,15 +836,15 @@
 		{
 			static TESObjectREFR()
 			{
-				_getHandleFromReference =	NetScriptFramework.Main.GameInfo.GetAddressOf(12192);
-				_getLineOfSightFraction1 =	NetScriptFramework.Main.GameInfo.GetAddressOf(232866);
-				_getLineOfSightFraction2 =	NetScriptFramework.Main.GameInfo.GetAddressOf(230690);
-				_getLineOfSightFraction3 =	NetScriptFramework.Main.GameInfo.GetAddressOf(235914);
-				_getReferenceFromHandle =	NetScriptFramework.Main.GameInfo.GetAddressOf(16828);
-				_isCrimeToActivate =		NetScriptFramework.Main.GameInfo.GetAddressOf(19400);
+				_createHandleFromReference =	NetScriptFramework.Main.GameInfo.GetAddressOf(12192);
+				_getHandleFromReference =		NetScriptFramework.Main.GameInfo.GetAddressOf(19418);
+				_getReferenceFromHandle =		NetScriptFramework.Main.GameInfo.GetAddressOf(16828);
+				_isCrimeToActivate =			NetScriptFramework.Main.GameInfo.GetAddressOf(19400);
 			}
 
 
+
+			readonly static private System.IntPtr _createHandleFromReference;
 
 			readonly static private System.IntPtr _getHandleFromReference;
 
@@ -726,31 +852,19 @@
 
 			readonly static private System.IntPtr _isCrimeToActivate;
 
-			readonly static private System.IntPtr _getLineOfSightFraction1;
-
-			readonly static private System.IntPtr _getLineOfSightFraction2;
-
-			readonly static private System.IntPtr _getLineOfSightFraction3;
-
 
 
 			/// <summary>&lt;SkyrimSE.exe&gt; + 0x131F60 (VID12192)</summary>
-			static public System.IntPtr GetHandleFromReference	{ get { return _getHandleFromReference; } }
+			static public System.IntPtr CreateHandleFromReference	{ get { return _createHandleFromReference; } }
 
-			/// <summary>&lt;SkyrimSE.exe&gt; + 0x1548E48 (VID232866)</summary>
-			static public System.IntPtr GetLineOfSightFraction1	{ get { return _getLineOfSightFraction1; } }
-
-			/// <summary>&lt;SkyrimSE.exe&gt; + 0x1536B98 (VID230690)</summary>
-			static public System.IntPtr GetLineOfSightFraction2	{ get { return _getLineOfSightFraction2; } }
-
-			/// <summary>&lt;SkyrimSE.exe&gt; + 0x156F92C (VID235914)</summary>
-			static public System.IntPtr GetLineOfSightFraction3	{ get { return _getLineOfSightFraction3; } }
+			/// <summary>&lt;SkyrimSE.exe&gt; + 0x29B980 (VID19418)</summary>
+			static public System.IntPtr GetHandleFromReference		{ get { return _getHandleFromReference; } }
 
 			/// <summary>&lt;SkyrimSE.exe&gt; + 0x2130F0 (VID16828)</summary>
-			static public System.IntPtr GetReferenceFromHandle	{ get { return _getReferenceFromHandle; } }
+			static public System.IntPtr GetReferenceFromHandle		{ get { return _getReferenceFromHandle; } }
 
 			/// <summary>&lt;SkyrimSE.exe&gt; + 0x29A330 (VID19400)</summary>
-			static public System.IntPtr IsCrimeToActivate		{ get { return _isCrimeToActivate; } }
+			static public System.IntPtr IsCrimeToActivate			{ get { return _isCrimeToActivate; } }
 		}
 
 		static public class TESObjectTREE

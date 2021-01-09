@@ -32,14 +32,18 @@
     <Compile Include="$(MSBuildThisFileDirectory)Bethesda\ConsoleLog.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bethesda\ExtraDataList.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bethesda\HorseCameraState.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Bethesda\Math.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bethesda\MiddleHighProcessData.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bethesda\NiBound.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Bethesda\NiCamera.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Bethesda\NiFrustum.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bethesda\NiPointer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bethesda\NiQuaternion.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bethesda\NiRefObject.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bethesda\NiTransform.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bethesda\PlayerCamera.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bethesda\SceneGraph.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Bethesda\SettingT.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bethesda\TESCamera.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bethesda\TESCameraState.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bethesda\TESFileCollection.cs" />
@@ -81,6 +85,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Bethesda\ProcessLists.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bethesda\Sky.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Math\Unmanaged\Quaternion.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Bethesda\Setting.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TemporaryObject.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bethesda\TES.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bethesda\TESDataHandler.cs" />

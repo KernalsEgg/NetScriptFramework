@@ -31,21 +31,46 @@ namespace Eggstensions.Bethesda
 
 
 
-			public System.IntPtr Reference { get; }
+			/// <summary>TESObjectREFR, System.IntPtr.Zero</summary>
+			public System.IntPtr Reference { get; } = System.IntPtr.Zero;
+		}
+
+		public class HandleFromReference
+		{
+			public HandleFromReference(System.IntPtr reference)
+			{
+				Reference = reference;
+
+				if (Reference != System.IntPtr.Zero)
+				{
+					Handle = TESObjectREFR.GetHandleFromReference(Reference);
+				}
+			}
+
+
+
+			/// <summary>TESObjectREFR</summary>
+			public System.IntPtr Reference { get; } = System.IntPtr.Zero;
+
+			public System.UInt32 Handle { get; } = 0u;
 		}
 
 		public class ReferenceFromHandle : TemporaryObject
 		{
 			public ReferenceFromHandle(System.IntPtr handle)
 			{
-				if (handle == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("handle"); }
-				
-				Reference = TESObjectREFR.GetReferenceFromHandle(handle);
+				if (handle != System.IntPtr.Zero)
+				{
+					Reference = TESObjectREFR.GetReferenceFromHandle(handle);
+				}
 			}
 
 			public ReferenceFromHandle(System.UInt32 handle)
 			{
-				Reference = TESObjectREFR.GetReferenceFromHandle(handle);
+				if (handle != 0u)
+				{
+					Reference = TESObjectREFR.GetReferenceFromHandle(handle);
+				}
 			}
 
 			override protected void Free()
@@ -58,32 +83,8 @@ namespace Eggstensions.Bethesda
 
 
 
-			public System.IntPtr Reference { get; }
-		}
-
-		public class HandleFromReference : TemporaryObject
-		{
-			public HandleFromReference(System.IntPtr reference)
-			{
-				if (reference == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("reference"); }
-
-				Reference = reference;
-				Handle = TESObjectREFR.GetHandleFromReference(Reference);
-			}
-
-			override protected void Free()
-			{
-				if (Reference != System.IntPtr.Zero)
-				{
-					NiRefObject.DecrementReferenceCount(Reference + 0x20);
-				}
-			}
-
-
-
-			public System.IntPtr Reference { get; }
-
-			public System.UInt32 Handle { get; }
+			/// <summary>TESObjectREFR, System.IntPtr.Zero</summary>
+			public System.IntPtr Reference { get; } = System.IntPtr.Zero;
 		}
 
 
@@ -143,15 +144,15 @@ namespace Eggstensions.Bethesda
 		/// <param name="reference1">TESObjectREFR</param>
 		/// <param name="reference2">TESObjectREFR</param>
 		/// <returns>Units</returns>
-		static public System.Single GetDistanceBetween(System.IntPtr reference1, System.IntPtr reference2)
+		static public System.Single GetDistanceBetween(System.IntPtr reference, System.IntPtr target)
 		{
-			if (reference1 == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("reference1"); }
-			if (reference2 == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("reference2"); }
+			if (reference == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("reference1"); }
+			if (target == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("reference2"); }
 
-			(var x1, var y1, var z1) = TESObjectREFR.GetPosition(reference1);
-			(var x2, var y2, var z2) = TESObjectREFR.GetPosition(reference2);
+			(var referenceX, var referenceY, var referenceZ) = TESObjectREFR.GetPosition(reference);
+			(var targetX, var targetY, var targetZ) = TESObjectREFR.GetPosition(target);
 
-			return (System.Single)System.Math.Sqrt(((x2 - x1) * (x2 - x1)) + ((y2 - y1) * (y2 - y1)) + ((z2 - z1) * (z2 - z1)));
+			return (System.Single)System.Math.Sqrt(((targetX - referenceX) * (targetX - referenceX)) + ((targetY - referenceY) * (targetY - referenceY)) + ((targetZ - referenceZ) * (targetZ - referenceZ)));
 		}
 
 		/// <param name = "reference">TESObjectREFR</param>
@@ -182,16 +183,30 @@ namespace Eggstensions.Bethesda
 		}
 
 		/// <param name = "reference">TESObjectREFR</param>
+		static public System.UInt32 CreateHandleFromReference(System.IntPtr reference)
+		{
+			if (reference == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("reference"); }
+
+			using (var handleAllocation = NetScriptFramework.Memory.Allocate(0x8))
+			{
+				handleAllocation.Zero();
+				NetScriptFramework.Memory.InvokeCdecl(VIDS.TESObjectREFR.CreateHandleFromReference, handleAllocation.Address, reference);
+
+				return NetScriptFramework.Memory.ReadUInt32(handleAllocation.Address);
+			}
+		}
+
+		/// <param name = "reference">TESObjectREFR</param>
 		static public System.UInt32 GetHandleFromReference(System.IntPtr reference)
 		{
 			if (reference == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("reference"); }
 
-			using (var allocation = NetScriptFramework.Memory.Allocate(0x8))
+			using (var handleAllocation = NetScriptFramework.Memory.Allocate(0x8))
 			{
-				allocation.Zero();
-				NetScriptFramework.Memory.InvokeCdecl(VIDS.TESObjectREFR.GetHandleFromReference, allocation.Address, reference);
+				handleAllocation.Zero();
+				NetScriptFramework.Memory.InvokeCdecl(VIDS.TESObjectREFR.GetHandleFromReference, reference, handleAllocation.Address);
 
-				return NetScriptFramework.Memory.ReadUInt32(allocation.Address);
+				return NetScriptFramework.Memory.ReadUInt32(handleAllocation.Address);
 			}
 		}
 
@@ -201,11 +216,16 @@ namespace Eggstensions.Bethesda
 		{
 			if (reference == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("reference"); }
 
-			using (var lookAtPosition = new NiPoint3())
+			using (var lookAtPositionAllocation = NetScriptFramework.Memory.Allocate(0x10))
 			{
-				VirtualObject.InvokeVTableThisCall(reference, 0x2D8, lookAtPosition.Address);
+				VirtualObject.InvokeVTableThisCall(reference, 0x2D8, lookAtPositionAllocation.Address);
 
-				return (lookAtPosition.X, lookAtPosition.Y, lookAtPosition.Z);
+				return
+				(
+					NetScriptFramework.Memory.ReadFloat(lookAtPositionAllocation.Address),
+					NetScriptFramework.Memory.ReadFloat(lookAtPositionAllocation.Address + 0x4),
+					NetScriptFramework.Memory.ReadFloat(lookAtPositionAllocation.Address + 0x8)
+				);
 			}
 		}
 
@@ -215,11 +235,16 @@ namespace Eggstensions.Bethesda
 		{
 			if (reference == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("reference"); }
 
-			using (var maximumBounds = new NiPoint3())
+			using (var maximumBoundsAllocation = NetScriptFramework.Memory.Allocate(0x10))
 			{
-				VirtualObject.InvokeVTableThisCall(reference, 0x3A0, maximumBounds.Address);
+				VirtualObject.InvokeVTableThisCall(reference, 0x3A0, maximumBoundsAllocation.Address);
 
-				return (maximumBounds.X, maximumBounds.Y, maximumBounds.Z);
+				return
+				(
+					NetScriptFramework.Memory.ReadFloat(maximumBoundsAllocation.Address),
+					NetScriptFramework.Memory.ReadFloat(maximumBoundsAllocation.Address + 0x4),
+					NetScriptFramework.Memory.ReadFloat(maximumBoundsAllocation.Address + 0x8)
+				);
 			}
 		}
 
@@ -229,11 +254,16 @@ namespace Eggstensions.Bethesda
 		{
 			if (reference == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("reference"); }
 
-			using (var minimumBounds = new NiPoint3())
+			using (var minimumBoundsAllocation = NetScriptFramework.Memory.Allocate(0x10))
 			{
-				VirtualObject.InvokeVTableThisCall(reference, 0x398, minimumBounds.Address);
+				VirtualObject.InvokeVTableThisCall(reference, 0x398, minimumBoundsAllocation.Address);
 
-				return (minimumBounds.X, minimumBounds.Y, minimumBounds.Z);
+				return
+				(
+					NetScriptFramework.Memory.ReadFloat(minimumBoundsAllocation.Address),
+					NetScriptFramework.Memory.ReadFloat(minimumBoundsAllocation.Address + 0x4),
+					NetScriptFramework.Memory.ReadFloat(minimumBoundsAllocation.Address + 0x8)
+				);
 			}
 		}
 
@@ -295,13 +325,13 @@ namespace Eggstensions.Bethesda
 		{
 			// handle
 
-			using (var allocation = NetScriptFramework.Memory.Allocate(0x8))
+			using (var referenceAllocation = NetScriptFramework.Memory.Allocate(0x8))
 			{
-				allocation.Zero();
+				referenceAllocation.Zero();
 
-				NetScriptFramework.Memory.InvokeCdecl(VIDS.TESObjectREFR.GetReferenceFromHandle, handle, allocation.Address);
+				NetScriptFramework.Memory.InvokeCdecl(VIDS.TESObjectREFR.GetReferenceFromHandle, handle, referenceAllocation.Address);
 
-				return NetScriptFramework.Memory.ReadPointer(allocation.Address);
+				return NetScriptFramework.Memory.ReadPointer(referenceAllocation.Address);
 			}
 		}
 
@@ -311,14 +341,14 @@ namespace Eggstensions.Bethesda
 		{
 			// handle
 
-			using (var allocation = NetScriptFramework.Memory.Allocate(0x10))
+			using (var argumentsAllocation = NetScriptFramework.Memory.Allocate(0x10))
 			{
-				allocation.Zero();
-				NetScriptFramework.Memory.WriteUInt32(allocation.Address, handle);
+				argumentsAllocation.Zero();
+				NetScriptFramework.Memory.WriteUInt32(argumentsAllocation.Address, handle);
 
-				NetScriptFramework.Memory.InvokeCdecl(VIDS.TESObjectREFR.GetReferenceFromHandle, allocation.Address, allocation.Address + 0x8);
+				NetScriptFramework.Memory.InvokeCdecl(VIDS.TESObjectREFR.GetReferenceFromHandle, argumentsAllocation.Address, argumentsAllocation.Address + 0x8);
 
-				return NetScriptFramework.Memory.ReadPointer(allocation.Address + 0x8);
+				return NetScriptFramework.Memory.ReadPointer(argumentsAllocation.Address + 0x8);
 			}
 		}
 
@@ -398,6 +428,14 @@ namespace Eggstensions.Bethesda
 			if (reference == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("reference"); }
 
 			return NetScriptFramework.Memory.InvokeCdecl(VIDS.TESObjectREFR.IsCrimeToActivate, reference).ToBool();
+		}
+
+		/// <param name = "reference">TESObjectREFR</param>
+		static public System.Boolean IsDead(System.IntPtr reference, System.Boolean notEssential)
+		{
+			if (reference == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("reference"); }
+
+			return VirtualObject.InvokeVTableThisCall(reference, 0x4C8, notEssential).ToBool();
 		}
 
 		/// <param name="reference">TESObjectREFR</param>
@@ -492,11 +530,12 @@ namespace Eggstensions.Bethesda
 			// origin
 			// collisionLayer
 
+			var fractions = new System.Single[] { 0.75f, 0.5f, 0.25f };
 			var targetPosition = TESObjectREFR.GetPosition(target);
 			var targetMinimumBounds = TESObjectREFR.GetMinimumBounds(target);
 			var targetMaximumBounds = TESObjectREFR.GetMaximumBounds(target);
 
-			foreach (var fraction in GetFractions())
+			foreach (var fraction in fractions)
 			{
 				if (!TESObjectREFR.IsHit(reference, target, origin, (targetPosition.x, targetPosition.y, targetPosition.z + fraction * (targetMaximumBounds.z - targetMinimumBounds.z) + targetMinimumBounds.z), collisionLayer))
 				{
@@ -505,15 +544,6 @@ namespace Eggstensions.Bethesda
 			}
 
 			return true;
-
-
-
-			System.Collections.Generic.IEnumerable<System.Single> GetFractions()
-			{
-				yield return NetScriptFramework.Memory.ReadFloat(VIDS.TESObjectREFR.GetLineOfSightFraction1);
-				yield return NetScriptFramework.Memory.ReadFloat(VIDS.TESObjectREFR.GetLineOfSightFraction2);
-				yield return NetScriptFramework.Memory.ReadFloat(VIDS.TESObjectREFR.GetLineOfSightFraction3);
-			}
 		}
 
 		/*

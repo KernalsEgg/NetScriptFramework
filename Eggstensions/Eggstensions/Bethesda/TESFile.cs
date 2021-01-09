@@ -21,13 +21,13 @@ namespace Eggstensions.Bethesda
 			if (file == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("file"); }
 			// localFormID
 
-			using (var allocation = NetScriptFramework.Memory.Allocate(0x8))
+			using (var localFormIDAllocation = NetScriptFramework.Memory.Allocate(0x8))
 			{
-				allocation.Zero();
-				NetScriptFramework.Memory.WriteUInt32(allocation.Address, localFormID);
-				NetScriptFramework.Memory.InvokeCdecl(VIDS.TESFile.GetGlobalFormID, file, allocation.Address);
+				localFormIDAllocation.Zero();
+				NetScriptFramework.Memory.WriteUInt32(localFormIDAllocation.Address, localFormID);
+				NetScriptFramework.Memory.InvokeCdecl(VIDS.TESFile.GetGlobalFormID, file, localFormIDAllocation.Address);
 
-				return NetScriptFramework.Memory.ReadUInt32(allocation.Address);
+				return NetScriptFramework.Memory.ReadUInt32(localFormIDAllocation.Address);
 			}
 		}
 

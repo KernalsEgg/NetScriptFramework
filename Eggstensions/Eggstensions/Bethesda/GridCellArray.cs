@@ -20,6 +20,7 @@
 			var gridCellArray = Address;
 			var length = GridArray.GetLength(gridCellArray);
 			var begin = GridCellArray.GetBegin(gridCellArray);
+			if (begin == System.IntPtr.Zero) { yield break; }
 
 			for (var row = 0; row < length; row++)
 			{
@@ -45,10 +46,7 @@
 		{
 			if (gridCellArray == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("gridCellArray"); }
 
-			var begin = NetScriptFramework.Memory.ReadPointer(gridCellArray + 0x18);
-			if (begin == System.IntPtr.Zero) { throw new Eggceptions.NullException("begin"); }
-
-			return begin;
+			return NetScriptFramework.Memory.ReadPointer(gridCellArray + 0x18);
 		}
 	}
 }

@@ -90,12 +90,11 @@
 		}
 
 		/// <param name = "bipedAnim">BSTSmartPointer&lt;BipedAnim&gt;</param>
-		/// <returns>Handle</returns>
-		static public System.IntPtr GetHandle(System.IntPtr bipedAnim)
+		static public TESObjectREFR.ReferenceFromHandle GetHandle(System.IntPtr bipedAnim)
 		{
 			if (bipedAnim == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("bipedAnim"); }
 
-			return bipedAnim + 0x2770;
+			return new TESObjectREFR.ReferenceFromHandle(bipedAnim + 0x2770);
 		}
 
 		/// <param name = "bipedAnim">BSTSmartPointer&lt;BipedAnim&gt;</param>

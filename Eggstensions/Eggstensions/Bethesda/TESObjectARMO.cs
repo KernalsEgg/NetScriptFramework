@@ -45,7 +45,7 @@
 			var armorAddons = new System.Collections.Generic.List<System.IntPtr>();
 
 			// BSTArray<TESObjectARMA*, BSTArrayHeapAllocator>
-			foreach (var armorAddon in BSTArray.IntPtr(TESObjectARMO.GetArmorAddons(armor)))
+			foreach (var armorAddon in new BSTArray(TESObjectARMO.GetArmorAddons(armor)))
 			{
 				if (!TESForm.IsArmorAddon(armorAddon)) { throw new Eggceptions.Bethesda.FormTypeException("armorAddon"); }
 

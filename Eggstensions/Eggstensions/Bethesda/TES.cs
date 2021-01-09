@@ -2,14 +2,6 @@
 {
 	static public class TES
 	{
-		static public System.UInt32 GridsToLoad
-		{
-			get
-			{
-				return NetScriptFramework.Memory.ReadUInt32(VIDS.TES.GridsToLoad + 0x8); // SettingT<INISettingCollection>
-			}
-		}
-
 		/// <returns>TES</returns>
 		static public System.IntPtr Instance
 		{

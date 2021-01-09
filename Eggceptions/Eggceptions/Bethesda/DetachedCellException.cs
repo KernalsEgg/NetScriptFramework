@@ -1,6 +1,6 @@
 ﻿namespace Eggceptions.Bethesda
 {
-	class DetachedCellException : BethesdaException
+	public class DetachedCellException : BethesdaException
 	{
 		public DetachedCellException() { }
 

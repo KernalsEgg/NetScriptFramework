@@ -20,9 +20,9 @@
 		{
 			if (System.String.IsNullOrWhiteSpace(text)) { throw new Eggceptions.ArgumentNullOrWhiteSpaceException(text); }
 
-			using (var allocation = NetScriptFramework.Memory.AllocateString(text, false))
+			using (var textAllocation = NetScriptFramework.Memory.AllocateString(text, false))
 			{
-				NetScriptFramework.Memory.InvokeCdecl(VIDS.ConsoleLog.Print, consoleLog, allocation.Address, argument);
+				NetScriptFramework.Memory.InvokeCdecl(VIDS.ConsoleLog.Print, consoleLog, textAllocation.Address, argument);
 			}
 		}
 	}

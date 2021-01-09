@@ -20,6 +20,7 @@
 			var niTObjectArray = Address;
 			var capacity = NiTObjectArray.GetCapacity(niTObjectArray);
 			var begin = NiTObjectArray.GetBegin(niTObjectArray);
+			if (begin == System.IntPtr.Zero) { yield break; }
 
 			for (var i = 0; i < capacity; i++)
 			{
@@ -42,10 +43,7 @@
 		{
 			if (niTObjectArray == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("niTObjectArray"); }
 
-			var begin = NetScriptFramework.Memory.ReadPointer(niTObjectArray + 0x8);
-			if (begin == System.IntPtr.Zero) { throw new Eggceptions.NullException("begin"); }
-
-			return begin;
+			return NetScriptFramework.Memory.ReadPointer(niTObjectArray + 0x8);
 		}
 
 		/// <param name = "niTObjectArray">NiTObjectArray&lt;T&gt;</param>

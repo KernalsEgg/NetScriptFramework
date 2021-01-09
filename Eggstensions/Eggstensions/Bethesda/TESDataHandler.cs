@@ -23,9 +23,9 @@
 			if (dataHandler == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("dataHandler"); }
 			if (System.String.IsNullOrWhiteSpace(fileName)) { throw new Eggceptions.ArgumentNullOrWhiteSpaceException("fileName"); }
 
-			using (var allocation = NetScriptFramework.Memory.AllocateString(fileName, false))
+			using (var fileNameAllocation = NetScriptFramework.Memory.AllocateString(fileName, false))
 			{
-				return NetScriptFramework.Memory.InvokeCdecl(VIDS.TESDataHandler.GetFile, dataHandler, allocation.Address);
+				return NetScriptFramework.Memory.InvokeCdecl(VIDS.TESDataHandler.GetFile, dataHandler, fileNameAllocation.Address);
 			}
 		}
 
@@ -44,7 +44,7 @@
 		{
 			if (dataHandler == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("dataHandler"); }
 
-			var files = BSTArray.IntPtr(TESFileCollection.GetFiles(TESDataHandler.GetFileCollection(dataHandler)));
+			var files = new BSTArray(TESFileCollection.GetFiles(TESDataHandler.GetFileCollection(dataHandler)));
 
 			foreach (var file in files)
 			{
@@ -63,7 +63,7 @@
 		{
 			if (dataHandler == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("dataHandler"); }
 
-			var lightFiles = BSTArray.IntPtr(TESFileCollection.GetLightFiles(TESDataHandler.GetFileCollection(dataHandler)));
+			var lightFiles = new BSTArray(TESFileCollection.GetLightFiles(TESDataHandler.GetFileCollection(dataHandler)));
 
 			foreach (var lightFile in lightFiles)
 			{

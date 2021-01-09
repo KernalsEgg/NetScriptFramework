@@ -20,6 +20,7 @@
 			var bstSet = Address;
 			var capacity = BSTSet.GetCapacity(bstSet);
 			var begin = BSTSet.GetBegin(bstSet);
+			if (begin == System.IntPtr.Zero) { yield break; }
 
 			for (var i = 0; i < capacity; i++)
 			{
@@ -48,10 +49,7 @@
 		{
 			if (bstSet == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("bstSet"); }
 
-			var begin = NetScriptFramework.Memory.ReadPointer(bstSet + 0x20 + 0x8);
-			if (begin == System.IntPtr.Zero) { throw new Eggceptions.NullException("begin"); }
-
-			return begin;
+			return NetScriptFramework.Memory.ReadPointer(bstSet + 0x20 + 0x8);
 		}
 
 		/// <param name="bstSet">BSTSet</param>

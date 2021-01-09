@@ -9,11 +9,25 @@
 
 
 
+		static public TESRaceData.Flags GetFlags(System.IntPtr raceData)
+		{
+			if (raceData == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("raceData"); }
+
+			return (TESRaceData.Flags)NetScriptFramework.Memory.ReadUInt32(raceData + 0x20);
+		}
+
+		static public System.Boolean HasFlags(System.IntPtr raceData, TESRaceData.Flags flags)
+		{
+			if (raceData == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("raceData"); }
+
+			return (TESRaceData.GetFlags(raceData) & flags) == flags;
+		}
+
 		static public System.Boolean IsFlying(System.IntPtr raceData)
 		{
 			if (raceData == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("raceData"); }
 
-			return (NetScriptFramework.Memory.ReadUInt32(raceData + 0x20) & (System.UInt32)TESRaceData.Flags.Flying) != 0;
+			return TESRaceData.HasFlags(raceData, TESRaceData.Flags.Flying);
 		}
 	}
 	
@@ -61,7 +75,7 @@
 			if (armorAddonRace == race) { return true; }
 
 			// BSTArray<TESRace*, BSTArrayHeapAllocator>
-			foreach (var armorAddonAdditionalRace in BSTArray.IntPtr(TESObjectARMA.GetAdditionalRaces(armorAddon)))
+			foreach (var armorAddonAdditionalRace in new BSTArray(TESObjectARMA.GetAdditionalRaces(armorAddon)))
 			{
 				if (!TESForm.IsRace(armorAddonAdditionalRace)) { throw new Eggceptions.Bethesda.FormTypeException("armorAddonAdditionalRace"); }
 

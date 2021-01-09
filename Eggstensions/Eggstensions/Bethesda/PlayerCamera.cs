@@ -17,12 +17,11 @@
 
 
 		/// <param name="playerCamera">PlayerCamera</param>
-		/// <returns>Handle</returns>
-		static public System.IntPtr GetCameraTarget(System.IntPtr playerCamera)
+		static public TESObjectREFR.ReferenceFromHandle GetCameraTarget(System.IntPtr playerCamera)
 		{
 			if (playerCamera == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("playerCamera"); }
 
-			return playerCamera + 0x3C;
+			return new TESObjectREFR.ReferenceFromHandle(playerCamera + 0x3C);
 		}
 
 		/// <summary>&lt;SkyrimSE.exe&gt; + 0x850260 (VID49975)</summary>
@@ -33,7 +32,9 @@
 			if (playerCamera == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("playerCamera"); }
 			if (thirdPersonState == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("thirdPersonState"); }
 
-			using (var cameraTarget = new TESObjectREFR.ReferenceFromHandle(PlayerCamera.GetCameraTarget(playerCamera)))
+			(System.Single x, System.Single y, System.Single z) origin;
+
+			using (var cameraTarget = PlayerCamera.GetCameraTarget(playerCamera))
 			{
 				var rootNode = TESObjectREFR.GetRootNode(cameraTarget.Reference, false);
 
@@ -41,31 +42,30 @@
 				{
 					var worldTransform = NiAVObject.GetWorldTransform(rootNode);
 
-					return
+					origin =
 					(
 						NiTransform.GetPositionX(worldTransform),
 						NiTransform.GetPositionY(worldTransform),
-						ThirdPersonState.GetApplyOffsets(thirdPersonState)
-							?
-							NiTransform.GetPositionZ(worldTransform) + Actor.GetEyeLevel(cameraTarget.Reference)
-							:
-							NiTransform.GetPositionZ(worldTransform)
+						NiTransform.GetPositionZ(worldTransform)
 					);
 				}
 				else
 				{
-					return
+					origin =
 					(
 						TESObjectREFR.GetPositionX(cameraTarget.Reference),
 						TESObjectREFR.GetPositionY(cameraTarget.Reference),
-						ThirdPersonState.GetApplyOffsets(thirdPersonState)
-							?
-							TESObjectREFR.GetPositionZ(cameraTarget.Reference) + Actor.GetEyeLevel(cameraTarget.Reference)
-							:
-							TESObjectREFR.GetPositionZ(cameraTarget.Reference)
+						TESObjectREFR.GetPositionZ(cameraTarget.Reference)
 					);
 				}
+
+				if (ThirdPersonState.GetApplyOffsets(thirdPersonState))
+				{
+					origin.z += Actor.GetEyeLevel(cameraTarget.Reference);
+				}
 			}
+
+			return origin;
 		}
 
 		/// <param name="playerCamera">PlayerCamera</param>
