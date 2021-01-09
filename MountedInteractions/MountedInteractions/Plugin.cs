@@ -65,7 +65,7 @@ namespace MountedInteractions
 
 		static private void WriteHooks()
 		{
-			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters() // Set horse HUD data
+			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters() // Set HUD data on horse
 			{
 				Address = Plugin._setHUDData + 0xAA,
 				Pattern = "E8 ?? ?? ?? ??",
@@ -74,7 +74,7 @@ namespace MountedInteractions
 				Before = Plugin.IsOnFlyingMount
 			});
 
-			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters() // Skip HUD modes (HorseMode)
+			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters() // Skip HUD mode (HorseMode)
 			{
 				Address = Plugin._mount + 0xED,
 				Pattern = "E8 ?? ?? ?? ??",
@@ -89,7 +89,7 @@ namespace MountedInteractions
 				}
 			});
 
-			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters() // Skip HUD modes (WarHorseMode)
+			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters() // Skip HUD mode (WarHorseMode)
 			{
 				Address = Plugin._rightHandWeaponDraw + 0x12E,
 				Pattern = "E8 ?? ?? ?? ??",
@@ -129,7 +129,7 @@ namespace MountedInteractions
 				}
 			});
 
-			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters() // Correct actor being commanded
+			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters() // Correct actor being commanded by player
 			{
 				Address = Plugin._activateHandler + 0x7F,
 				Pattern = "E8 ?? ?? ?? ??",
@@ -145,7 +145,7 @@ namespace MountedInteractions
 				}
 			});
 
-			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters() // Correct horse wait marker position (origin)
+			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters() // Correct player wait marker position on horse (origin)
 			{
 				Address = Plugin._setCommandWaitMarker + 0x19D,
 				Pattern = "E8 ?? ?? ?? ??",
@@ -154,7 +154,7 @@ namespace MountedInteractions
 				Before = Plugin.SetOrigin
 			});
 
-			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters() // Correct horse wait marker position (current offset)
+			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters() // Correct player wait marker position on horse (current offset)
 			{
 				Address = Plugin._setCommandWaitMarker + 0x1BF,
 				Pattern = "E8 ?? ?? ?? ??",
@@ -163,7 +163,7 @@ namespace MountedInteractions
 				Before = Plugin.SetCurrentOffset
 			});
 			
-			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters() // Correct activation position (origin)
+			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters() // Correct player activation position on horse (origin)
 			{
 				Address = Plugin._pickCrosshairReference + 0xFF,
 				Pattern = "E8 ?? ?? ?? ??",
@@ -172,7 +172,7 @@ namespace MountedInteractions
 				Before = Plugin.SetOrigin
 			});
 
-			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters() // Correct activation position (current offset)
+			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters() // Correct player activation position on horse (current offset)
 			{
 				Address = Plugin._pickCrosshairReference + 0x131,
 				Pattern = "E8 ?? ?? ?? ??",
@@ -181,7 +181,7 @@ namespace MountedInteractions
 				Before = Plugin.SetCurrentOffset
 			});
 
-			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters() // Set activation distance
+			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters() // Set player activation distance on horse
 			{
 				Address = Plugin._pick + 0x180,
 				Pattern = "F3 44 0F10 35 ?? ?? ?? ??",
@@ -193,7 +193,7 @@ namespace MountedInteractions
 				}
 			});
 
-			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters() // Set activation distance
+			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters() // Set player activation distance on horse
 			{
 				Address = Plugin._pick + 0xC41,
 				Pattern = "F3 0F10 05 ?? ?? ?? ??",
@@ -239,7 +239,7 @@ namespace MountedInteractions
 				}
 			});
 			
-			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters() // Block activating furniture
+			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters() // Block player activating furniture on horse
 			{
 				Address = Plugin._activateFurniture + 0x25,
 				Pattern = "48 8B E9" + "4D 85 C0",

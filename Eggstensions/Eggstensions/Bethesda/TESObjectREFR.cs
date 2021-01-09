@@ -455,7 +455,7 @@ namespace Eggstensions.Bethesda
 		}
 
 		/// <param name="reference">TESObjectREFR</param>
-		static public System.Boolean IsHit(System.IntPtr reference, (System.Single x, System.Single y, System.Single z) origin, (System.Single x, System.Single y, System.Single z) ray, CollisionLayers collisionLayer)
+		static public System.Boolean IsHitAlong(System.IntPtr reference, (System.Single x, System.Single y, System.Single z) origin, (System.Single x, System.Single y, System.Single z) ray, CollisionLayers collisionLayer)
 		{
 			if (reference == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("reference"); }
 			// origin
@@ -464,32 +464,12 @@ namespace Eggstensions.Bethesda
 
 			var cell = TESObjectREFR.GetParentCell(reference);
 
-			foreach (var hit in TESObjectCELL.RaycastAlong(cell, origin, ray, collisionLayer))
-			{
-				var niObject = Havok.GetNiObjectFromHavokObject(hit.HavokObject);
-
-				if (niObject != System.IntPtr.Zero)
-				{
-					var owner = NiAVObject.GetOwnerRecursive(niObject);
-
-					if (owner != System.IntPtr.Zero)
-					{
-						if (owner == reference)
-						{
-							continue;
-						}
-					}
-				}
-
-				return true;
-			}
-
-			return false;
+			return TESObjectCELL.IsHitAlong(cell, origin, ray, collisionLayer, reference);
 		}
 
 		/// <param name="reference">TESObjectREFR</param>
 		/// <param name="target">TESObjectREFR</param>
-		static public System.Boolean IsHit(System.IntPtr reference, System.IntPtr target, (System.Single x, System.Single y, System.Single z) from, (System.Single x, System.Single y, System.Single z) to, CollisionLayers collisionLayer)
+		static public System.Boolean IsHitBetween(System.IntPtr reference, System.IntPtr target, (System.Single x, System.Single y, System.Single z) from, (System.Single x, System.Single y, System.Single z) to, CollisionLayers collisionLayer)
 		{
 			if (reference == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("reference"); }
 			if (target == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("target"); }
@@ -499,51 +479,7 @@ namespace Eggstensions.Bethesda
 
 			var cell = TESObjectREFR.GetParentCell(reference);
 
-			foreach (var hit in TESObjectCELL.RaycastBetween(cell, from, to, collisionLayer))
-			{
-				var niObject = Havok.GetNiObjectFromHavokObject(hit.HavokObject);
-
-				if (niObject != System.IntPtr.Zero)
-				{
-					var owner = NiAVObject.GetOwnerRecursive(niObject);
-
-					if (owner != System.IntPtr.Zero)
-					{
-						if (owner == reference || owner == target)
-						{
-							continue;
-						}
-					}
-				}
-
-				return true;
-			}
-
-			return false;
-		}
-
-		/// <param name="reference">TESObjectREFR</param>
-		static public System.Boolean IsInViewshed(System.IntPtr reference, System.IntPtr target, (System.Single x, System.Single y, System.Single z) origin, CollisionLayers collisionLayer)
-		{
-			if (reference == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("reference"); }
-			if (target == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("target"); }
-			// origin
-			// collisionLayer
-
-			var fractions = new System.Single[] { 0.75f, 0.5f, 0.25f };
-			var targetPosition = TESObjectREFR.GetPosition(target);
-			var targetMinimumBounds = TESObjectREFR.GetMinimumBounds(target);
-			var targetMaximumBounds = TESObjectREFR.GetMaximumBounds(target);
-
-			foreach (var fraction in fractions)
-			{
-				if (!TESObjectREFR.IsHit(reference, target, origin, (targetPosition.x, targetPosition.y, targetPosition.z + fraction * (targetMaximumBounds.z - targetMinimumBounds.z) + targetMinimumBounds.z), collisionLayer))
-				{
-					return false;
-				}
-			}
-
-			return true;
+			return TESObjectCELL.IsHitBetween(cell, from, to, collisionLayer, reference, target);
 		}
 
 		/*
@@ -552,7 +488,6 @@ namespace Eggstensions.Bethesda
 		{
 			if (reference == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("reference"); }
 			// harvested
-			if (!TESForm.HasFormType(TESObjectREFR.GetBaseForm(reference), FormTypes.TESObjectTREE, FormTypes.TESFlora)) { throw new Eggceptions.Bethesda.ArgumentFormTypeException("reference"); }
 
 			if (harvested)
 			{

@@ -11,8 +11,13 @@ namespace Eggstensions.Bethesda
 			PlayerTeammate = 1u << 26
 		}
 
+		public enum BoolFlags : System.UInt32
+		{
+			IsMount = 1u << 1
+		}
 
-		
+
+
 		/// <param name="actor">Actor</param>
 		/// <param name="spellItem">SpellItem</param>
 		static public void CastSpellPerkEntryPoint(System.IntPtr actor, System.IntPtr spellItem)
@@ -47,6 +52,14 @@ namespace Eggstensions.Bethesda
 		}
 
 		/// <param name="actor">Actor</param>
+		static public Actor.BoolFlags GetBoolFlags(System.IntPtr actor)
+		{
+			if (actor == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("actor"); }
+
+			return (Actor.BoolFlags)NetScriptFramework.Memory.ReadUInt32(actor + 0x1FC);
+		}
+
+		/// <param name="actor">Actor</param>
 		static public System.Single GetEyeLevel(System.IntPtr actor)
 		{
 			if (actor == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("actor"); }
@@ -75,6 +88,28 @@ namespace Eggstensions.Bethesda
 
 				return new TESObjectREFR.ExistingReferenceFromHandle(NetScriptFramework.Memory.ReadPointer(mountAllocation.Address));
 			}
+		}
+
+		static public TESObjectREFR.ExistingReferenceFromHandle GetMountOrRider(System.IntPtr actor)
+		{
+			if (actor == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("actor"); }
+
+			if (Actor.IsMount(actor))
+			{
+				if (Actor.IsBeingRidden(actor))
+				{
+					return Actor.GetRider(actor);
+				}
+			}
+			else
+			{
+				if (Actor.IsOnMount(actor))
+				{
+					return Actor.GetMount(actor);
+				}
+			}
+
+			return null;
 		}
 
 		/// <param name = "actor">Actor</param>
@@ -119,8 +154,18 @@ namespace Eggstensions.Bethesda
 		static public System.Boolean HasBoolBits(System.IntPtr actor, Actor.BoolBits boolBits)
 		{
 			if (actor == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("actor"); }
+			// boolBits
 
 			return (Actor.GetBoolBits(actor) & boolBits) == boolBits;
+		}
+
+		/// <param name="actor">Actor</param>
+		static public System.Boolean HasBoolFlags(System.IntPtr actor, Actor.BoolFlags boolFlags)
+		{
+			if (actor == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("actor"); }
+			// boolFlags
+
+			return (Actor.GetBoolFlags(actor) & boolFlags) == boolFlags;
 		}
 
 		/// <param name="actor">Actor</param>
@@ -148,6 +193,24 @@ namespace Eggstensions.Bethesda
 		}
 
 		/// <param name="actor">Actor</param>
+		static public System.Boolean IsHitAlong(System.IntPtr actor, (System.Single x, System.Single y, System.Single z) origin, (System.Single x, System.Single y, System.Single z) ray, CollisionLayers collisionLayer)
+		{
+			if (actor == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("actor"); }
+			// origin
+			// ray
+			// collisionLayer
+
+			var cell = TESObjectREFR.GetParentCell(actor);
+
+			using (var mountOrRider = Actor.GetMountOrRider(actor))
+			{
+				var mountOrRiderReference = mountOrRider != null ? mountOrRider.Reference : System.IntPtr.Zero;
+
+				return TESObjectCELL.IsHitAlong(cell, origin, ray, collisionLayer, actor, mountOrRiderReference);
+			}
+		}
+
+		/// <param name="actor">Actor</param>
 		static public System.Boolean IsHostileToActor(System.IntPtr actor, System.IntPtr target)
 		{
 			if (actor == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("actor"); }
@@ -162,6 +225,14 @@ namespace Eggstensions.Bethesda
 			if (actor == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("actor"); }
 
 			return AIProcess.IsInHigh(Actor.GetProcess(actor));
+		}
+
+		/// <param name="actor">Actor</param>
+		static public System.Boolean IsMount(System.IntPtr actor)
+		{
+			if (actor == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("actor"); }
+
+			return Actor.HasBoolFlags(actor, Actor.BoolFlags.IsMount);
 		}
 
 		/// <param name="actor">Actor</param>
@@ -186,6 +257,37 @@ namespace Eggstensions.Bethesda
 			if (actor == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("actor"); }
 
 			return Actor.HasBoolBits(actor, Actor.BoolBits.PlayerTeammate);
+		}
+
+		/// <param name="actor">Actor</param>
+		/// <param name="target">TESObjectREFR</param>
+		static public System.Boolean IsReferenceInViewshed(System.IntPtr actor, System.IntPtr target, (System.Single x, System.Single y, System.Single z) origin, CollisionLayers collisionLayer)
+		{
+			if (actor == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("actor"); }
+			if (target == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("target"); }
+			// origin
+			// collisionLayer
+
+			var fractions = new System.Single[] { 0.75f, 0.5f, 0.25f };
+			var cell = TESObjectREFR.GetParentCell(actor);
+			var targetPosition = TESObjectREFR.GetPosition(target);
+			var targetMinimumBounds = TESObjectREFR.GetMinimumBounds(target);
+			var targetMaximumBounds = TESObjectREFR.GetMaximumBounds(target);
+
+			using (var mountOrRider = Actor.GetMountOrRider(actor))
+			{
+				var mountOrRiderReference = mountOrRider != null ? mountOrRider.Reference : System.IntPtr.Zero;
+				
+				foreach (var fraction in fractions)
+				{
+					if (!TESObjectCELL.IsHitBetween(cell, origin, (targetPosition.x, targetPosition.y, targetPosition.z + fraction * (targetMaximumBounds.z - targetMinimumBounds.z) + targetMinimumBounds.z), collisionLayer, actor, target, mountOrRiderReference))
+					{
+						return true;
+					}
+				}
+
+				return false;
+			}
 		}
 
 		/// <param name = "actor">Actor</param>

@@ -153,7 +153,7 @@ namespace Eggstensions.Bethesda
 		{
 			if (playerCharacter == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("playerCharacter"); }
 
-			return PlayerCharacter.GetTargetActor(playerCharacter, (actor, _) => Actor.IsPlayerTeammate(actor));
+			return (PlayerCharacter.GetTeammateCount(playerCharacter) > 0) ? PlayerCharacter.GetTargetActor(playerCharacter, (actor, _) => Actor.IsPlayerTeammate(actor)) : System.IntPtr.Zero;
 		}
 
 		/// <param name="playerCharacter">PlayerCharacter</param>

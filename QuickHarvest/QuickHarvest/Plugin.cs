@@ -165,7 +165,7 @@ namespace QuickHarvest
 			switch (Settings.Visibility)
 			{
 				case Flags.Visibility.Viewshed:
-					return !TESObjectREFR.IsInViewshed(viewer, target, PlayerCamera.GetPosition(PlayerCamera.Instance), Plugin._collisionLayer);
+					return Actor.IsReferenceInViewshed(viewer, target, PlayerCamera.GetPosition(PlayerCamera.Instance), Plugin._collisionLayer);
 				case Flags.Visibility.LineOfSight:
 					return PlayerCharacter.HasLineOfSight(viewer, target).lineOfSight;
 				default:

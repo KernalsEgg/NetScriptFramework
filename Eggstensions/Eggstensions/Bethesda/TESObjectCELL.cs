@@ -1,4 +1,8 @@
-﻿namespace Eggstensions.Bethesda
+﻿using System.Linq;
+
+
+
+namespace Eggstensions.Bethesda
 {
 	public enum CellStates : System.Byte
 	{
@@ -129,6 +133,72 @@
 			if (cell == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("cell"); }
 
 			return GetCellState(cell) == CellStates.Attached;
+		}
+
+		/// <param name="cell">TESObjectCELL</param>
+		/// <param name="references">TESObjectREFR[]</param>
+		static public System.Boolean IsHitAlong(System.IntPtr cell, (System.Single x, System.Single y, System.Single z) origin, (System.Single x, System.Single y, System.Single z) ray, CollisionLayers collisionLayer, params System.IntPtr[] references)
+		{
+			if (cell == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("cell"); }
+			// origin
+			// ray
+			// collisionLayer
+			// references
+
+			foreach (var hit in TESObjectCELL.RaycastAlong(cell, origin, ray, collisionLayer))
+			{
+				var niObject = Havok.GetNiObjectFromHavokObject(hit.HavokObject);
+
+				if (niObject != System.IntPtr.Zero)
+				{
+					var owner = NiAVObject.GetOwnerRecursive(niObject);
+
+					if (owner != System.IntPtr.Zero)
+					{
+						if (references.Any(reference => reference == owner))
+						{
+							continue;
+						}
+					}
+				}
+
+				return true;
+			}
+
+			return false;
+		}
+
+		/// <param name="cell">TESObjectCELL</param>
+		/// <param name="references">TESObjectREFR[]</param>
+		static public System.Boolean IsHitBetween(System.IntPtr cell, (System.Single x, System.Single y, System.Single z) from, (System.Single x, System.Single y, System.Single z) to, CollisionLayers collisionLayer, params System.IntPtr[] references)
+		{
+			if (cell == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("cell"); }
+			// from
+			// to
+			// collisionLayer
+			// references
+
+			foreach (var hit in TESObjectCELL.RaycastBetween(cell, from, to, collisionLayer))
+			{
+				var niObject = Havok.GetNiObjectFromHavokObject(hit.HavokObject);
+
+				if (niObject != System.IntPtr.Zero)
+				{
+					var owner = NiAVObject.GetOwnerRecursive(niObject);
+
+					if (owner != System.IntPtr.Zero)
+					{
+						if (references.Any(reference => reference == owner))
+						{
+							continue;
+						}
+					}
+				}
+
+				return true;
+			}
+
+			return false;
 		}
 
 		/// <param name="cell">TESObjectCELL</param>

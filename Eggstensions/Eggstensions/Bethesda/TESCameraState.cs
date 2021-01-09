@@ -22,6 +22,7 @@
 	static public class TESCameraState
 	{
 		/// <param name="tesCameraState">TESCameraState</param>
+		/// <returns>(Units, Units, Units)</returns>
 		static public (System.Single x, System.Single y, System.Single z) GetPosition(System.IntPtr tesCameraState)
 		{
 			if (tesCameraState == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("tesCameraState"); }

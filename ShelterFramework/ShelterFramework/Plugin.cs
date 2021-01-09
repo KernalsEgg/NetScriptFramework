@@ -86,18 +86,18 @@ namespace ShelterFramework
 					throw new Eggceptions.Bethesda.FormTypeException("reference");
 			}
 		}
-		
-		/// <param name="reference">TESObjectREFR</param>
-		static private System.Boolean IsShelteredActor(System.IntPtr reference)
+
+		/// <param name="character">Character</param>
+		static private System.Boolean IsShelteredActor(System.IntPtr character)
 		{
-			if (reference == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("reference"); }
+			if (character == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("character"); }
 
-			var lastUpdate = Actor.GetLastUpdate(reference);
+			var lastUpdate = Actor.GetLastUpdate(character);
 
-			if (!Plugin._isShelteredCache.TryGetValue(reference, out var isShelteredCache) || lastUpdate != isShelteredCache.lastUpdate)
+			if (!Plugin._isShelteredCache.TryGetValue(character, out var isShelteredCache) || lastUpdate != isShelteredCache.lastUpdate)
 			{
-				isShelteredCache = (lastUpdate, TESObjectREFR.IsHit(reference, TESObjectREFR.GetLookAtPosition(reference), Plugin.GetRay(), Plugin._collisionLayer));
-				Plugin._isShelteredCache[reference] = isShelteredCache;
+				isShelteredCache = (lastUpdate, Actor.IsHitAlong(character, TESObjectREFR.GetLookAtPosition(character), Plugin.GetRay(), Plugin._collisionLayer));
+				Plugin._isShelteredCache[character] = isShelteredCache;
 
 				return isShelteredCache.isSheltered;
 			}
@@ -112,7 +112,7 @@ namespace ShelterFramework
 		{
 			if (reference == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("reference"); }
 
-			return TESObjectREFR.IsHit(reference, TESObjectREFR.GetLookAtPosition(reference), Plugin.GetRay(), Plugin._collisionLayer);
+			return TESObjectREFR.IsHitAlong(reference, TESObjectREFR.GetLookAtPosition(reference), Plugin.GetRay(), Plugin._collisionLayer);
 		}
 
 		static private (System.Single x, System.Single y, System.Single z) GetRay()
@@ -133,13 +133,13 @@ namespace ShelterFramework
 
 						if (precipitationVelocity != (0.0f, 0.0f, 0.0f))
 						{
-							return Plugin.Negate(Plugin.SetLength(precipitationVelocity, Plugin._settings.RayCastLength));
+							return Plugin.Negate(Plugin.SetLength(precipitationVelocity, Plugin._settings.RaycastDistance));
 						}
 					}
 				}
 			}
 
-			return (0.0f, 0.0f, Plugin._settings.RayCastLength);
+			return (0.0f, 0.0f, Plugin._settings.RaycastDistance);
 		}
 
 		static private (System.Single x, System.Single y, System.Single z) SetLength((System.Single x, System.Single y, System.Single z) vector, System.Single length)
