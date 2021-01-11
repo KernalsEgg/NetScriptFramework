@@ -36,6 +36,7 @@ namespace MountedInteractions
 		{
 			Plugin._activateFurniture =			NetScriptFramework.Main.GameInfo.GetAddressOf(17034); // <SkyrimSE.exe> + 0x21A4B0
 			Plugin._activateHandler =			NetScriptFramework.Main.GameInfo.GetAddressOf(41346); // <SkyrimSE.exe> + 0x708BF0
+			Plugin._activateHandlerActivate =	NetScriptFramework.Main.GameInfo.GetAddressOf(39471); // <SkyrimSE.exe> + 0x6A9F90
 			Plugin._hudMenu =					NetScriptFramework.Main.GameInfo.GetAddressOf(50718); // <SkyrimSE.exe> + 0x87D580
 			Plugin._mount =						NetScriptFramework.Main.GameInfo.GetAddressOf(49888); // <SkyrimSE.exe> + 0x84BE40
 			Plugin._pick =						NetScriptFramework.Main.GameInfo.GetAddressOf(25591); // <SkyrimSE.exe> + 0x3AA4B0
@@ -43,6 +44,7 @@ namespace MountedInteractions
 			Plugin._rightHandWeaponDraw =		NetScriptFramework.Main.GameInfo.GetAddressOf(41743); // <SkyrimSE.exe> + 0x720FB0
 			Plugin._setCommandWaitMarker =		NetScriptFramework.Main.GameInfo.GetAddressOf(39550); // <SkyrimSE.exe> + 0x6B11C0
 			Plugin._setHUDData =				NetScriptFramework.Main.GameInfo.GetAddressOf(39535); // <SkyrimSE.exe> + 0x6B0570
+			Plugin._sneakHandler =				NetScriptFramework.Main.GameInfo.GetAddressOf(41357); // <SkyrimSE.exe> + 0x7094C0
 			Plugin._updateWeaponOut =			NetScriptFramework.Main.GameInfo.GetAddressOf(49908); // <SkyrimSE.exe> + 0x84D630
 		}
 
@@ -50,6 +52,7 @@ namespace MountedInteractions
 
 		readonly static private System.IntPtr _activateFurniture;
 		readonly static private System.IntPtr _activateHandler;
+		readonly static private System.IntPtr _activateHandlerActivate;
 		readonly static private System.IntPtr _hudMenu;
 		readonly static private System.IntPtr _mount;
 		readonly static private System.IntPtr _pick;
@@ -57,6 +60,7 @@ namespace MountedInteractions
 		readonly static private System.IntPtr _rightHandWeaponDraw;
 		readonly static private System.IntPtr _setCommandWaitMarker;
 		readonly static private System.IntPtr _setHUDData;
+		readonly static private System.IntPtr _sneakHandler;
 		readonly static private System.IntPtr _updateWeaponOut;
 
 		static private Settings _settings;
@@ -65,6 +69,61 @@ namespace MountedInteractions
 
 		static private void WriteHooks()
 		{
+			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters() // Skip activating horse
+			{
+				Address = Plugin._activateHandlerActivate + 0x92,
+				Pattern = "E8 ?? ?? ?? ??",
+				ReplaceLength = 5,
+				IncludeLength = 5,
+				After = cpuRegisters =>
+				{
+					var playerCharacter = cpuRegisters.DI;
+
+					if (Actor.IsOnMount(playerCharacter))
+					{
+						var handle = NetScriptFramework.Memory.ReadUInt32(cpuRegisters.AX);
+						
+						var mountInteraction = Actor.GetMountInteraction(playerCharacter);
+						var mountHandle = RefrInteraction.GetActorHandle(mountInteraction);
+
+						if (handle == mountHandle)
+						{
+							cpuRegisters.AX = TESObjectREFR.NullHandle;
+						}
+					}
+				}
+			});
+			
+			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters() // Dismount on release sneak button
+			{
+				Address = Plugin._sneakHandler + 0xF,
+				Pattern = "0F57 C0" + "0F2E 42 28",
+				ReplaceLength = 7,
+				IncludeLength = 7,
+				Before = cpuRegisters =>
+				{
+					var buttonEvent = cpuRegisters.DX;
+
+					if (ButtonEvent.IsReleased(buttonEvent))
+					{
+						var playerCharacter = PlayerCharacter.Instance;
+
+						if (Actor.IsOnMount(playerCharacter))
+						{
+							using (var mount = Actor.GetMount(playerCharacter))
+							{
+								var mountReference = mount.Reference;
+
+								if (mountReference != System.IntPtr.Zero)
+								{
+									TESObjectREFR.Activate(mountReference, playerCharacter);
+								}
+							}
+						}
+					}
+				}
+			});
+			
 			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters() // Set HUD data on horse
 			{
 				Address = Plugin._setHUDData + 0xAA,
@@ -138,8 +197,13 @@ namespace MountedInteractions
 				After = cpuRegisters =>
 				{
 					var playerCharacter = cpuRegisters.CX;
-					var targetTeammate = PlayerCharacter.GetTargetTeammate(playerCharacter);
 					var targetTeammateAddress = cpuRegisters.DX;
+					var targetTeammate = PlayerCharacter.GetTargetTeammate(playerCharacter);
+
+					if (targetTeammate != System.IntPtr.Zero)
+					{
+						NiRefObject.IncrementReferenceCount(TESObjectREFR.GetHandleReferenceObject(targetTeammate));
+					}
 
 					NetScriptFramework.Memory.WritePointer(targetTeammateAddress, targetTeammate);
 				}
@@ -205,7 +269,7 @@ namespace MountedInteractions
 				}
 			});
 			
-			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters() // Skip activating player and horse
+			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters() // Skip picking player and horse
 			{
 				Address = Plugin._pick + 0x408,
 				Pattern = "48 3B 05 ?? ?? ?? ??",

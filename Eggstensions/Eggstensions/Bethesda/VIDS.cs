@@ -10,6 +10,7 @@
 				_getCollisionFilter =		NetScriptFramework.Main.GameInfo.GetAddressOf(36559);
 				_getEyeLevel =				NetScriptFramework.Main.GameInfo.GetAddressOf(36478);
 				_getMount =					NetScriptFramework.Main.GameInfo.GetAddressOf(37757);
+				_getMountInteraction =		NetScriptFramework.Main.GameInfo.GetAddressOf(19223);
 				_getRider =					NetScriptFramework.Main.GameInfo.GetAddressOf(37758);
 				_isBeingRidden =			NetScriptFramework.Main.GameInfo.GetAddressOf(21343);
 				_isBeingRiddenBy =			NetScriptFramework.Main.GameInfo.GetAddressOf(36878);
@@ -28,6 +29,8 @@
 			readonly static private System.IntPtr _getEyeLevel;
 
 			readonly static private System.IntPtr _getMount;
+
+			readonly static private System.IntPtr _getMountInteraction;
 
 			readonly static private System.IntPtr _getRider;
 
@@ -56,6 +59,9 @@
 
 			/// <summary>&lt;SkyrimSE.exe&gt; + 0x62EBC0 (VID37757)</summary>
 			static public System.IntPtr GetMount				{ get { return _getMount; } }
+
+			/// <summary>&lt;SkyrimSE.exe&gt; + 0x28C520 (VID19223)</summary>
+			static public System.IntPtr GetMountInteraction		{ get { return _getMountInteraction; } }
 
 			/// <summary>&lt;SkyrimSE.exe&gt; + 0x62ECD0 (VID37758)</summary>
 			static public System.IntPtr GetRider				{ get { return _getRider; } }
@@ -836,13 +842,17 @@
 		{
 			static TESObjectREFR()
 			{
+				_activate =						NetScriptFramework.Main.GameInfo.GetAddressOf(19369);
 				_createHandleFromReference =	NetScriptFramework.Main.GameInfo.GetAddressOf(12192);
 				_getHandleFromReference =		NetScriptFramework.Main.GameInfo.GetAddressOf(19418);
 				_getReferenceFromHandle =		NetScriptFramework.Main.GameInfo.GetAddressOf(16828);
 				_isCrimeToActivate =			NetScriptFramework.Main.GameInfo.GetAddressOf(19400);
+				_nullHandle =					NetScriptFramework.Main.GameInfo.GetAddressOf(514164);
 			}
 
 
+
+			readonly static private System.IntPtr _activate;
 
 			readonly static private System.IntPtr _createHandleFromReference;
 
@@ -852,7 +862,12 @@
 
 			readonly static private System.IntPtr _isCrimeToActivate;
 
+			readonly static private System.IntPtr _nullHandle;
 
+
+
+			/// <summary>&lt;SkyrimSE.exe&gt; + 0x296C00 (VID19369)</summary>
+			static public System.IntPtr Activate					{ get { return _activate; } }
 
 			/// <summary>&lt;SkyrimSE.exe&gt; + 0x131F60 (VID12192)</summary>
 			static public System.IntPtr CreateHandleFromReference	{ get { return _createHandleFromReference; } }
@@ -865,6 +880,9 @@
 
 			/// <summary>&lt;SkyrimSE.exe&gt; + 0x29A330 (VID19400)</summary>
 			static public System.IntPtr IsCrimeToActivate			{ get { return _isCrimeToActivate; } }
+
+			/// <summary>&lt;SkyrimSE.exe&gt; + 0x1EBEABC (VID514164)</summary>
+			static public System.IntPtr NullHandle					{ get { return _nullHandle; } }
 		}
 
 		static public class TESObjectTREE

@@ -1,4 +1,8 @@
-﻿namespace Eggstensions.Bethesda
+﻿using static NetScriptFramework._IntPtrExtensions;
+
+
+
+namespace Eggstensions.Bethesda
 {
 	public enum FormTypes : System.Byte
 	{
@@ -17,6 +21,18 @@
 
 	static public class TESForm
 	{
+		/// <param name="form">TESForm</param>
+		/// <param name="target">TESObjectREFR</param>
+		/// <param name="activator">TESObjectREFR</param>
+		static public System.Boolean Activate(System.IntPtr form, System.IntPtr target, System.IntPtr activator)
+		{
+			if (form == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("form"); }
+			if (target == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("target"); }
+			if (activator == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("activator"); }
+
+			return VirtualObject.InvokeVTableThisCall(form, 0x1B8, target, activator).ToBool();
+		}
+
 		/// <param name="form">TESForm</param>
 		static public void AddFormFlags(System.IntPtr form, System.UInt32 formFlags)
 		{

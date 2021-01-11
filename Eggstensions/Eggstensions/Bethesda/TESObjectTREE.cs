@@ -8,7 +8,7 @@
 		{
 			if (tree == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("tree"); }
 
-			return TESProduceForm.GetHarvestSound(tree + 0x68);
+			return TESProduceForm.GetHarvestSound(TESObjectTREE.GetProduceForm(tree));
 		}
 
 		/// <param name="tree">TESObjectTREE</param>
@@ -17,7 +17,7 @@
 		{
 			if (tree == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("tree"); }
 
-			return TESProduceForm.GetIngredient(tree + 0x68);
+			return TESProduceForm.GetIngredient(TESObjectTREE.GetProduceForm(tree));
 		}
 
 		/// <param name="tree">TESObjectTREE</param>
@@ -25,7 +25,16 @@
 		{
 			if (tree == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("tree"); }
 
-			return TESProduceForm.GetIngredientChance(tree + 0x68);
+			return TESProduceForm.GetIngredientChance(TESObjectTREE.GetProduceForm(tree));
+		}
+
+		/// <param name="tree">TESObjectTREE</param>
+		/// <returns>TESProduceForm</returns>
+		static public System.IntPtr GetProduceForm(System.IntPtr tree)
+		{
+			if (tree == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("tree"); }
+
+			return tree + 0x68;
 		}
 
 		/// <param name="tree">TESObjectTREE</param>
@@ -35,7 +44,7 @@
 			if (tree == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("tree"); }
 			if (harvestSound == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("harvestSound"); }
 
-			TESProduceForm.SetHarvestSound(tree + 0x68, harvestSound);
+			TESProduceForm.SetHarvestSound(TESObjectTREE.GetProduceForm(tree), harvestSound);
 		}
 
 		/// <param name="tree">TESObjectTREE</param>
@@ -45,7 +54,7 @@
 			if (tree == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("tree"); }
 			if (ingredient == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("ingredient"); }
 
-			TESProduceForm.SetHarvestSound(tree + 0x68, ingredient);
+			TESProduceForm.SetHarvestSound(TESObjectTREE.GetProduceForm(tree), ingredient);
 		}
 	}
 }

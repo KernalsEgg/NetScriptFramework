@@ -26,6 +26,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Bethesda\BSTSet.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bethesda\BSTSetEntry.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bethesda\BSTSmartPointer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Bethesda\ButtonEvent.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bethesda\Character.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bethesda\CrosshairPickData.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bethesda\Events.cs" />
@@ -42,6 +43,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Bethesda\NiRefObject.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bethesda\NiTransform.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bethesda\PlayerCamera.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Bethesda\RefrInteraction.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bethesda\SceneGraph.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bethesda\SettingT.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bethesda\TESCamera.cs" />

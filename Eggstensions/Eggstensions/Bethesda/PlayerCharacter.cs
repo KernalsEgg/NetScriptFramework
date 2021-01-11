@@ -36,6 +36,7 @@ namespace Eggstensions.Bethesda
 
 
 
+		/// <param name="playerCharacter">PlayerCharacter</param>
 		static public TESObjectREFR.ReferenceFromHandle GetActorBeingCommanded(System.IntPtr playerCharacter)
 		{
 			if (playerCharacter == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("playerCharacter"); }
@@ -43,11 +44,44 @@ namespace Eggstensions.Bethesda
 			return new TESObjectREFR.ReferenceFromHandle(playerCharacter + 0x894);
 		}
 
+		/// <param name="playerCharacter">PlayerCharacter</param>
+		static public System.UInt32 GetActorBeingCommandedHandle(System.IntPtr playerCharacter)
+		{
+			if (playerCharacter == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("playerCharacter"); }
+
+			return NetScriptFramework.Memory.ReadUInt32(playerCharacter + 0x894);
+		}
+
+		/// <param name="playerCharacter">PlayerCharacter</param>
+		static public System.IntPtr GetActorBeingCommandedHandleAddress(System.IntPtr playerCharacter)
+		{
+			if (playerCharacter == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("playerCharacter"); }
+
+			return playerCharacter + 0x894;
+		}
+
+		/// <param name="playerCharacter">PlayerCharacter</param>
 		static public TESObjectREFR.ReferenceFromHandle GetAutoAimActor(System.IntPtr playerCharacter)
 		{
 			if (playerCharacter == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("playerCharacter"); }
 
 			return new TESObjectREFR.ReferenceFromHandle(playerCharacter + 0x9B8);
+		}
+
+		/// <param name="playerCharacter">PlayerCharacter</param>
+		static public System.UInt32 GetAutoAimActorHandle(System.IntPtr playerCharacter)
+		{
+			if (playerCharacter == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("playerCharacter"); }
+
+			return NetScriptFramework.Memory.ReadUInt32(playerCharacter + 0x9B8);
+		}
+
+		/// <param name="playerCharacter">PlayerCharacter</param>
+		static public System.IntPtr GetAutoAimActorHandleAddress(System.IntPtr playerCharacter)
+		{
+			if (playerCharacter == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("playerCharacter"); }
+
+			return playerCharacter + 0x9B8;
 		}
 
 		/// <summary>&lt;SkyrimSE.exe&gt; + 0x6CFEF0 (VID40243)</summary>
@@ -153,7 +187,14 @@ namespace Eggstensions.Bethesda
 		{
 			if (playerCharacter == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("playerCharacter"); }
 
-			return (PlayerCharacter.GetTeammateCount(playerCharacter) > 0) ? PlayerCharacter.GetTargetActor(playerCharacter, (actor, _) => Actor.IsPlayerTeammate(actor)) : System.IntPtr.Zero;
+			if (PlayerCharacter.GetTeammateCount(playerCharacter) > 0)
+			{
+				return PlayerCharacter.GetTargetActor(playerCharacter, (actor, _) => Actor.IsPlayerTeammate(actor));
+			}
+			else
+			{
+				return System.IntPtr.Zero;
+			}
 		}
 
 		/// <param name="playerCharacter">PlayerCharacter</param>

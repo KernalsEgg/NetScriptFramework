@@ -83,5 +83,22 @@
 
 			return new TESObjectREFR.ReferenceFromHandle(horseCameraState + 0xE8);
 		}
+
+		/// <param name="horseCameraState">HorseCameraState</param>
+		static public System.UInt32 GetHorseHandle(System.IntPtr horseCameraState)
+		{
+			if (horseCameraState == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("horseCameraState"); }
+
+			return NetScriptFramework.Memory.ReadUInt32(horseCameraState + 0xE8);
+		}
+
+		/// <param name="horseCameraState">HorseCameraState</param>
+		/// <returns>Handle</returns>
+		static public System.IntPtr GetHorseHandleAddress(System.IntPtr horseCameraState)
+		{
+			if (horseCameraState == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("horseCameraState"); }
+
+			return horseCameraState + 0xE8;
+		}
 	}
 }

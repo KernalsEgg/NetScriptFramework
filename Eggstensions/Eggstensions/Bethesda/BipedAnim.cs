@@ -79,7 +79,7 @@
 
 	static public class BipedAnim
 	{
-		/// <param name = "bipedAnim">BSTSmartPointer&lt;BipedAnim&gt;</param>
+		/// <param name = "bipedAnim">BipedAnim</param>
 		/// <returns>BipedObject</returns>
 		static public System.IntPtr GetBipedObject(System.IntPtr bipedAnim, BipedObjectSlots bipedObjectSlot)
 		{
@@ -89,15 +89,31 @@
 			return bipedAnim + 0x10 + 0x78 * ((System.Int32)bipedObjectSlot - 0x1E);
 		}
 
-		/// <param name = "bipedAnim">BSTSmartPointer&lt;BipedAnim&gt;</param>
-		static public TESObjectREFR.ReferenceFromHandle GetHandle(System.IntPtr bipedAnim)
+		/// <param name = "bipedAnim">BipedAnim</param>
+		static public TESObjectREFR.ReferenceFromHandle GetActor(System.IntPtr bipedAnim)
 		{
 			if (bipedAnim == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("bipedAnim"); }
 
 			return new TESObjectREFR.ReferenceFromHandle(bipedAnim + 0x2770);
 		}
 
-		/// <param name = "bipedAnim">BSTSmartPointer&lt;BipedAnim&gt;</param>
+		/// <param name = "bipedAnim">BipedAnim</param>
+		static public System.UInt32 GetActorHandle(System.IntPtr bipedAnim)
+		{
+			if (bipedAnim == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("bipedAnim"); }
+
+			return NetScriptFramework.Memory.ReadUInt32(bipedAnim + 0x2770);
+		}
+
+		/// <param name = "bipedAnim">BipedAnim</param>
+		static public System.IntPtr GetActorHandleAddress(System.IntPtr bipedAnim)
+		{
+			if (bipedAnim == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("bipedAnim"); }
+
+			return bipedAnim + 0x2770;
+		}
+
+		/// <param name = "bipedAnim">BipedAnim</param>
 		/// <returns>NiNode</returns>
 		static public System.IntPtr GetRoot(System.IntPtr bipedAnim)
 		{

@@ -25,7 +25,7 @@ namespace Eggstensions.Bethesda
 			{
 				if (Reference != System.IntPtr.Zero)
 				{
-					NiRefObject.DecrementReferenceCount(Reference + 0x20);
+					NiRefObject.DecrementReferenceCount(TESObjectREFR.GetHandleReferenceObject(Reference));
 				}
 			}
 
@@ -77,7 +77,7 @@ namespace Eggstensions.Bethesda
 			{
 				if (Reference != System.IntPtr.Zero)
 				{
-					NiRefObject.DecrementReferenceCount(Reference + 0x20);
+					NiRefObject.DecrementReferenceCount(TESObjectREFR.GetHandleReferenceObject(Reference));
 				}
 			}
 
@@ -89,14 +89,38 @@ namespace Eggstensions.Bethesda
 
 
 
-		/// <param name = "reference">TESObjectREFR</param>
-		/// <param name = "activator">TESObjectREFR</param>
-		static public System.Boolean Activate(System.IntPtr reference, System.IntPtr activator)
+		static public System.IntPtr NullHandle
+		{
+			get
+			{
+				return VIDS.TESObjectREFR.NullHandle;
+			}
+		}
+
+
+
+		/// <param name="reference">TESObjectREFR</param>
+		/// <param name="activator">TESObjectREFR</param>
+		static public System.Boolean Activate(System.IntPtr reference, System.IntPtr activator, System.Boolean defaultProcessingOnly = false)
 		{
 			if (reference == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("reference"); }
 			if (activator == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("activator"); }
 
-			return VirtualObject.InvokeVTableThisCall(TESObjectREFR.GetBaseForm(reference), 0x1B8, reference, activator).ToBool();
+			return NetScriptFramework.Memory.InvokeCdecl(VIDS.TESObjectREFR.Activate, reference, activator, 0, 0, 1, defaultProcessingOnly ? 1 : 0).ToBool();
+		}
+
+		/// <param name = "reference">TESObjectREFR</param>
+		static public System.UInt32 CreateHandleFromReference(System.IntPtr reference)
+		{
+			if (reference == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("reference"); }
+
+			using (var handleAllocation = NetScriptFramework.Memory.Allocate(0x8))
+			{
+				handleAllocation.Zero();
+				NetScriptFramework.Memory.InvokeCdecl(VIDS.TESObjectREFR.CreateHandleFromReference, handleAllocation.Address, reference);
+
+				return NetScriptFramework.Memory.ReadUInt32(handleAllocation.Address);
+			}
 		}
 
 		/// <param name = "reference">TESObjectREFR</param>
@@ -141,13 +165,13 @@ namespace Eggstensions.Bethesda
 			return currentBiped;
 		}
 
-		/// <param name="reference1">TESObjectREFR</param>
-		/// <param name="reference2">TESObjectREFR</param>
+		/// <param name="reference">TESObjectREFR</param>
+		/// <param name="target">TESObjectREFR</param>
 		/// <returns>Units</returns>
 		static public System.Single GetDistanceBetween(System.IntPtr reference, System.IntPtr target)
 		{
-			if (reference == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("reference1"); }
-			if (target == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("reference2"); }
+			if (reference == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("reference"); }
+			if (target == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("target"); }
 
 			(var referenceX, var referenceY, var referenceZ) = TESObjectREFR.GetPosition(reference);
 			(var targetX, var targetY, var targetZ) = TESObjectREFR.GetPosition(target);
@@ -183,20 +207,6 @@ namespace Eggstensions.Bethesda
 		}
 
 		/// <param name = "reference">TESObjectREFR</param>
-		static public System.UInt32 CreateHandleFromReference(System.IntPtr reference)
-		{
-			if (reference == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("reference"); }
-
-			using (var handleAllocation = NetScriptFramework.Memory.Allocate(0x8))
-			{
-				handleAllocation.Zero();
-				NetScriptFramework.Memory.InvokeCdecl(VIDS.TESObjectREFR.CreateHandleFromReference, handleAllocation.Address, reference);
-
-				return NetScriptFramework.Memory.ReadUInt32(handleAllocation.Address);
-			}
-		}
-
-		/// <param name = "reference">TESObjectREFR</param>
 		static public System.UInt32 GetHandleFromReference(System.IntPtr reference)
 		{
 			if (reference == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("reference"); }
@@ -208,6 +218,15 @@ namespace Eggstensions.Bethesda
 
 				return NetScriptFramework.Memory.ReadUInt32(handleAllocation.Address);
 			}
+		}
+
+		/// <param name="reference">TESObjectREFR</param>
+		/// <returns>BSHandleRefObject</returns>
+		static public System.IntPtr GetHandleReferenceObject(System.IntPtr reference)
+		{
+			if (reference == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("reference"); }
+
+			return reference + 0x20;
 		}
 
 		/// <summary>&lt;SkyrimSE.exe&gt; + 0x28E8D0 (VID19283)</summary>

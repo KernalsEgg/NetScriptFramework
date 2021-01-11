@@ -24,6 +24,22 @@
 			return new TESObjectREFR.ReferenceFromHandle(playerCamera + 0x3C);
 		}
 
+		/// <param name="playerCamera">PlayerCamera</param>
+		static public System.UInt32 GetCameraTargetHandle(System.IntPtr playerCamera)
+		{
+			if (playerCamera == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("playerCamera"); }
+
+			return NetScriptFramework.Memory.ReadUInt32(playerCamera + 0x3C);
+		}
+
+		/// <param name="playerCamera">PlayerCamera</param>
+		static public System.IntPtr GetCameraTargetHandleAddress(System.IntPtr playerCamera)
+		{
+			if (playerCamera == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("playerCamera"); }
+
+			return playerCamera + 0x3C;
+		}
+
 		/// <summary>&lt;SkyrimSE.exe&gt; + 0x850260 (VID49975)</summary>
 		/// <param name="playerCamera">PlayerCamera</param>
 		/// <param name="thirdPersonState">ThirdPersonState</param>

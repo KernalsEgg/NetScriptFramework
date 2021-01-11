@@ -13,10 +13,19 @@ namespace Eggstensions.Bethesda
 
 		public enum BoolFlags : System.UInt32
 		{
-			IsMount = 1u << 1
+			IsMount =		1u << 1,
+			CanDoFavor =	1u << 7
 		}
 
 
+
+		/// <param name="actor">Actor</param>
+		static public System.Boolean CanDoFavor(System.IntPtr actor)
+		{
+			if (actor == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("actor"); }
+
+			return Actor.HasBoolFlags(actor, Actor.BoolFlags.CanDoFavor);
+		}
 
 		/// <param name="actor">Actor</param>
 		/// <param name="spellItem">SpellItem</param>
@@ -87,6 +96,21 @@ namespace Eggstensions.Bethesda
 				NetScriptFramework.Memory.InvokeCdecl(VIDS.Actor.GetMount, actor, mountAllocation.Address);
 
 				return new TESObjectREFR.ExistingReferenceFromHandle(NetScriptFramework.Memory.ReadPointer(mountAllocation.Address));
+			}
+		}
+
+		/// <param name = "actor">Actor</param>
+		static public System.IntPtr GetMountInteraction(System.IntPtr actor)
+		{
+			if (actor == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("actor"); }
+
+			using (var mountInteractionAllocation = NetScriptFramework.Memory.Allocate(0x8))
+			{
+				mountInteractionAllocation.Zero();
+
+				NetScriptFramework.Memory.InvokeCdecl(VIDS.Actor.GetMountInteraction, actor, mountInteractionAllocation.Address);
+
+				return NetScriptFramework.Memory.ReadPointer(mountInteractionAllocation.Address);
 			}
 		}
 
