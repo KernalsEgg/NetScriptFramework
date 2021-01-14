@@ -19,7 +19,7 @@ namespace Eggstensions.Math.Managed
 		public Vector(System.Single[,] elements)
 			: base(elements)
 		{
-			if (Rows != 1) { throw new Eggceptions.Math.Matrix.ArgumentMatrixDimensionsException("elements"); }
+			if (Rows != 1) { throw new Eggceptions.Math.Matrix.ArgumentMatrixDimensionsException(nameof(elements)); }
 		}
 
 
@@ -51,7 +51,7 @@ namespace Eggstensions.Math.Managed
 		/// <returns>Radians</returns>
 		public System.Single AngleBetween(Vector other)
 		{
-			if (other == null) { throw new Eggceptions.ArgumentNullException("other"); }
+			if (other == null) { throw new Eggceptions.ArgumentNullException(nameof(other)); }
 
 			return Library.Vector.AngleBetween(Elements, other.Elements);
 		}
@@ -59,7 +59,7 @@ namespace Eggstensions.Math.Managed
 		/// <summary>If the cross product of this Vector and other Vector's can be calculated. Valid only in 3D and 7D.</summary>
 		public System.Boolean CanCrossProduct(params Vector[] others)
 		{
-			if (others.IsNullOrSparse(1)) { throw new Eggceptions.ArgumentNullOrSparseException("others"); }
+			if (others.IsNullOrSparse(1)) { throw new Eggceptions.ArgumentNullOrSparseException(nameof(others)); }
 
 			var elements = others.Convert(other => other.Elements).Unshift(Elements);
 
@@ -69,7 +69,7 @@ namespace Eggstensions.Math.Managed
 		/// <summary>If the dot product of this Vector and another Vector can be calculated.</summary>
 		public System.Boolean CanDotProduct(Vector other)
 		{
-			if (other == null) { throw new Eggceptions.ArgumentNullException("other"); }
+			if (other == null) { throw new Eggceptions.ArgumentNullException(nameof(other)); }
 
 			return Library.Vector.CanDotProduct(Elements, other.Elements);
 		}
@@ -77,7 +77,7 @@ namespace Eggstensions.Math.Managed
 		/// <summary>The cross product of this Vector and other Vector's.</summary>
 		public Vector CrossProduct(params Vector[] others)
 		{
-			if (others.IsNullOrSparse(1)) { throw new Eggceptions.ArgumentNullOrSparseException("others"); }
+			if (others.IsNullOrSparse(1)) { throw new Eggceptions.ArgumentNullOrSparseException(nameof(others)); }
 
 			var elements = others.Convert(other => other.Elements).Unshift(Elements);
 
@@ -87,7 +87,7 @@ namespace Eggstensions.Math.Managed
 		/// <summary>The distance between this Vector and another Vector.</summary>
 		public System.Single DistanceBetween(Vector other)
 		{
-			if (other == null) { throw new Eggceptions.ArgumentNullException("other"); }
+			if (other == null) { throw new Eggceptions.ArgumentNullException(nameof(other)); }
 
 			return Library.Vector.DistanceBetween(Elements, other.Elements);
 		}
@@ -95,7 +95,7 @@ namespace Eggstensions.Math.Managed
 		/// <summary>The dot product of this Vector and another Vector.</summary>
 		public System.Single DotProduct(Vector other)
 		{
-			if (other == null) { throw new Eggceptions.ArgumentNullException("other"); }
+			if (other == null) { throw new Eggceptions.ArgumentNullException(nameof(other)); }
 
 			return Library.Vector.DotProduct(Elements, other.Elements);
 		}
@@ -113,8 +113,8 @@ namespace Eggstensions.Math.Managed
 		// Vector + Vector
 		static public Vector operator +(Vector left, Vector right)
 		{
-			if (left == null) { throw new Eggceptions.ArgumentNullException("left"); }
-			if (right == null) { throw new Eggceptions.ArgumentNullException("right"); }
+			if (left == null) { throw new Eggceptions.ArgumentNullException(nameof(left)); }
+			if (right == null) { throw new Eggceptions.ArgumentNullException(nameof(right)); }
 
 			return new Vector(Library.Matrix.Add(left.Elements, right.Elements));
 		}
@@ -122,7 +122,7 @@ namespace Eggstensions.Math.Managed
 		// Vector + System.Single
 		static public Vector operator +(Vector vector, System.Single scalar)
 		{
-			if (vector == null) { throw new Eggceptions.ArgumentNullException("vector"); }
+			if (vector == null) { throw new Eggceptions.ArgumentNullException(nameof(vector)); }
 			// scalar
 
 			return new Vector(Library.Matrix.Add(vector.Elements, scalar));
@@ -132,7 +132,7 @@ namespace Eggstensions.Math.Managed
 		static public Vector operator +(System.Single scalar, Vector vector)
 		{
 			// scalar
-			if (vector == null) { throw new Eggceptions.ArgumentNullException("vector"); }
+			if (vector == null) { throw new Eggceptions.ArgumentNullException(nameof(vector)); }
 
 			return new Vector(Library.Matrix.Add(vector.Elements, scalar));
 		}
@@ -140,8 +140,8 @@ namespace Eggstensions.Math.Managed
 		// Vector + System.Single[,]
 		static public Vector operator +(Vector left, System.Single[,] right)
 		{
-			if (left == null) { throw new Eggceptions.ArgumentNullException("left"); }
-			if (right == null) { throw new Eggceptions.ArgumentNullException("right"); }
+			if (left == null) { throw new Eggceptions.ArgumentNullException(nameof(left)); }
+			if (right == null) { throw new Eggceptions.ArgumentNullException(nameof(right)); }
 
 			return new Vector(Library.Matrix.Add(left.Elements, right));
 		}
@@ -149,8 +149,8 @@ namespace Eggstensions.Math.Managed
 		// System.Single[,] + Vector
 		static public Vector operator +(System.Single[,] left, Vector right)
 		{
-			if (left == null) { throw new Eggceptions.ArgumentNullException("left"); }
-			if (right == null) { throw new Eggceptions.ArgumentNullException("right"); }
+			if (left == null) { throw new Eggceptions.ArgumentNullException(nameof(left)); }
+			if (right == null) { throw new Eggceptions.ArgumentNullException(nameof(right)); }
 
 			return new Vector(Library.Matrix.Add(left, right.Elements));
 		}
@@ -158,7 +158,7 @@ namespace Eggstensions.Math.Managed
 		// -Vector
 		static public Vector operator -(Vector vector)
 		{
-			if (vector == null) { throw new Eggceptions.ArgumentNullException("vector"); }
+			if (vector == null) { throw new Eggceptions.ArgumentNullException(nameof(vector)); }
 
 			return new Vector(Library.Matrix.Negate(vector.Elements));
 		}
@@ -166,8 +166,8 @@ namespace Eggstensions.Math.Managed
 		// Vector - Vector
 		static public Vector operator -(Vector left, Vector right)
 		{
-			if (left == null) { throw new Eggceptions.ArgumentNullException("left"); }
-			if (right == null) { throw new Eggceptions.ArgumentNullException("right"); }
+			if (left == null) { throw new Eggceptions.ArgumentNullException(nameof(left)); }
+			if (right == null) { throw new Eggceptions.ArgumentNullException(nameof(right)); }
 
 			return new Vector(Library.Matrix.Subtract(left.Elements, right.Elements));
 		}
@@ -175,7 +175,7 @@ namespace Eggstensions.Math.Managed
 		// Vector - System.Single
 		static public Vector operator -(Vector vector, System.Single scalar)
 		{
-			if (vector == null) { throw new Eggceptions.ArgumentNullException("vector"); }
+			if (vector == null) { throw new Eggceptions.ArgumentNullException(nameof(vector)); }
 			// scalar
 
 			return new Vector(Library.Matrix.Subtract(vector.Elements, scalar));
@@ -185,7 +185,7 @@ namespace Eggstensions.Math.Managed
 		static public Vector operator -(System.Single scalar, Vector vector)
 		{
 			// scalar
-			if (vector == null) { throw new Eggceptions.ArgumentNullException("vector"); }
+			if (vector == null) { throw new Eggceptions.ArgumentNullException(nameof(vector)); }
 
 			return new Vector(Library.Matrix.Subtract(scalar, vector.Elements));
 		}
@@ -193,8 +193,8 @@ namespace Eggstensions.Math.Managed
 		// Vector - System.Single[,]
 		static public Vector operator -(Vector left, System.Single[,] right)
 		{
-			if (left == null) { throw new Eggceptions.ArgumentNullException("left"); }
-			if (right == null) { throw new Eggceptions.ArgumentNullException("right"); }
+			if (left == null) { throw new Eggceptions.ArgumentNullException(nameof(left)); }
+			if (right == null) { throw new Eggceptions.ArgumentNullException(nameof(right)); }
 
 			return new Vector(Library.Matrix.Subtract(left.Elements, right));
 		}
@@ -202,8 +202,8 @@ namespace Eggstensions.Math.Managed
 		// System.Single[,] - Vector
 		static public Vector operator -(System.Single[,] left, Vector right)
 		{
-			if (left == null) { throw new Eggceptions.ArgumentNullException("left"); }
-			if (right == null) { throw new Eggceptions.ArgumentNullException("right"); }
+			if (left == null) { throw new Eggceptions.ArgumentNullException(nameof(left)); }
+			if (right == null) { throw new Eggceptions.ArgumentNullException(nameof(right)); }
 
 			return new Vector(Library.Matrix.Subtract(left, right.Elements));
 		}
@@ -213,7 +213,7 @@ namespace Eggstensions.Math.Managed
 		// Vector * System.Single
 		static public Vector operator *(Vector vector, System.Single scalar)
 		{
-			if (vector == null) { throw new Eggceptions.ArgumentNullException("vector"); }
+			if (vector == null) { throw new Eggceptions.ArgumentNullException(nameof(vector)); }
 			// scalar
 
 			return new Vector(Library.Matrix.Multiply(vector.Elements, scalar));
@@ -223,7 +223,7 @@ namespace Eggstensions.Math.Managed
 		static public Vector operator *(System.Single scalar, Vector vector)
 		{
 			// scalar
-			if (vector == null) { throw new Eggceptions.ArgumentNullException("vector"); }
+			if (vector == null) { throw new Eggceptions.ArgumentNullException(nameof(vector)); }
 
 			return new Vector(Library.Matrix.Multiply(vector.Elements, scalar));
 		}

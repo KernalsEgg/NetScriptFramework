@@ -39,8 +39,8 @@
 		public Matrix33(System.Single[,] elements)
 			: base(elements)
 		{
-			if (Rows != 3) { throw new Eggceptions.Math.Matrix.ArgumentMatrixDimensionsException("elements"); }
-			if (Columns != 3) { throw new Eggceptions.Math.Matrix.ArgumentMatrixDimensionsException("elements"); }
+			if (Rows != 3) { throw new Eggceptions.Math.Matrix.ArgumentMatrixDimensionsException(nameof(elements)); }
+			if (Columns != 3) { throw new Eggceptions.Math.Matrix.ArgumentMatrixDimensionsException(nameof(elements)); }
 		}
 
 
@@ -49,7 +49,7 @@
 		/// <summary>The interpolated Matrix33 at the specified ratio between this Matrix33 and another Matrix33.</summary>
 		public Matrix33 Interpolate(Matrix33 other, System.Single ratio)
 		{
-			if (other == null) { throw new Eggceptions.ArgumentNullException("other"); }
+			if (other == null) { throw new Eggceptions.ArgumentNullException(nameof(other)); }
 			// ratio
 
 			return new Matrix33(Library.Matrix33.Interpolate(Elements, other.Elements, ratio));
@@ -104,8 +104,8 @@
 		// Matrix33 + Matrix33
 		static public Matrix33 operator +(Matrix33 left, Matrix33 right)
 		{
-			if (left == null) { throw new Eggceptions.ArgumentNullException("left"); }
-			if (right == null) { throw new Eggceptions.ArgumentNullException("right"); }
+			if (left == null) { throw new Eggceptions.ArgumentNullException(nameof(left)); }
+			if (right == null) { throw new Eggceptions.ArgumentNullException(nameof(right)); }
 
 			return new Matrix33(Library.Matrix.Add(left.Elements, right.Elements));
 		}
@@ -113,7 +113,7 @@
 		// Matrix33 + System.Single
 		static public Matrix33 operator +(Matrix33 matrix33, System.Single scalar)
 		{
-			if (matrix33 == null) { throw new Eggceptions.ArgumentNullException("matrix33"); }
+			if (matrix33 == null) { throw new Eggceptions.ArgumentNullException(nameof(matrix33)); }
 			// scalar
 
 			return new Matrix33(Library.Matrix.Add(matrix33.Elements, scalar));
@@ -123,7 +123,7 @@
 		static public Matrix33 operator +(System.Single scalar, Matrix33 matrix33)
 		{
 			// scalar
-			if (matrix33 == null) { throw new Eggceptions.ArgumentNullException("matrix33"); }
+			if (matrix33 == null) { throw new Eggceptions.ArgumentNullException(nameof(matrix33)); }
 
 			return new Matrix33(Library.Matrix.Add(matrix33.Elements, scalar));
 		}
@@ -131,8 +131,8 @@
 		// Matrix33 + System.Single[,]
 		static public Matrix33 operator +(Matrix33 left, System.Single[,] right)
 		{
-			if (left == null) { throw new Eggceptions.ArgumentNullException("left"); }
-			if (right == null) { throw new Eggceptions.ArgumentNullException("right"); }
+			if (left == null) { throw new Eggceptions.ArgumentNullException(nameof(left)); }
+			if (right == null) { throw new Eggceptions.ArgumentNullException(nameof(right)); }
 
 			return new Matrix33(Library.Matrix.Add(left.Elements, right));
 		}
@@ -140,8 +140,8 @@
 		// System.Single[,] + Matrix33
 		static public Matrix33 operator +(System.Single[,] left, Matrix33 right)
 		{
-			if (left == null) { throw new Eggceptions.ArgumentNullException("left"); }
-			if (right == null) { throw new Eggceptions.ArgumentNullException("right"); }
+			if (left == null) { throw new Eggceptions.ArgumentNullException(nameof(left)); }
+			if (right == null) { throw new Eggceptions.ArgumentNullException(nameof(right)); }
 
 			return new Matrix33(Library.Matrix.Add(left, right.Elements));
 		}
@@ -149,7 +149,7 @@
 		// -Matrix33
 		static public Matrix33 operator -(Matrix33 matrix33)
 		{
-			if (matrix33 == null) { throw new Eggceptions.ArgumentNullException("matrix33"); }
+			if (matrix33 == null) { throw new Eggceptions.ArgumentNullException(nameof(matrix33)); }
 
 			return new Matrix33(Library.Matrix.Negate(matrix33.Elements));
 		}
@@ -157,8 +157,8 @@
 		// Matrix33 - Matrix33
 		static public Matrix33 operator -(Matrix33 left, Matrix33 right)
 		{
-			if (left == null) { throw new Eggceptions.ArgumentNullException("left"); }
-			if (right == null) { throw new Eggceptions.ArgumentNullException("right"); }
+			if (left == null) { throw new Eggceptions.ArgumentNullException(nameof(left)); }
+			if (right == null) { throw new Eggceptions.ArgumentNullException(nameof(right)); }
 
 			return new Matrix33(Library.Matrix.Subtract(left.Elements, right.Elements));
 		}
@@ -166,7 +166,7 @@
 		// Matrix33 - System.Single
 		static public Matrix33 operator -(Matrix33 matrix33, System.Single scalar)
 		{
-			if (matrix33 == null) { throw new Eggceptions.ArgumentNullException("matrix33"); }
+			if (matrix33 == null) { throw new Eggceptions.ArgumentNullException(nameof(matrix33)); }
 			// scalar
 
 			return new Matrix33(Library.Matrix.Subtract(matrix33.Elements, scalar));
@@ -176,7 +176,7 @@
 		static public Matrix33 operator -(System.Single scalar, Matrix33 matrix33)
 		{
 			// scalar
-			if (matrix33 == null) { throw new Eggceptions.ArgumentNullException("matrix33"); }
+			if (matrix33 == null) { throw new Eggceptions.ArgumentNullException(nameof(matrix33)); }
 
 			return new Matrix33(Library.Matrix.Subtract(scalar, matrix33.Elements));
 		}
@@ -184,8 +184,8 @@
 		// Matrix33 - System.Single[,]
 		static public Matrix33 operator -(Matrix33 left, System.Single[,] right)
 		{
-			if (left == null) { throw new Eggceptions.ArgumentNullException("left"); }
-			if (right == null) { throw new Eggceptions.ArgumentNullException("right"); }
+			if (left == null) { throw new Eggceptions.ArgumentNullException(nameof(left)); }
+			if (right == null) { throw new Eggceptions.ArgumentNullException(nameof(right)); }
 
 			return new Matrix33(Library.Matrix.Subtract(left.Elements, right));
 		}
@@ -193,8 +193,8 @@
 		// System.Single[,] - Matrix33
 		static public Matrix33 operator -(System.Single[,] left, Matrix33 right)
 		{
-			if (left == null) { throw new Eggceptions.ArgumentNullException("left"); }
-			if (right == null) { throw new Eggceptions.ArgumentNullException("right"); }
+			if (left == null) { throw new Eggceptions.ArgumentNullException(nameof(left)); }
+			if (right == null) { throw new Eggceptions.ArgumentNullException(nameof(right)); }
 
 			return new Matrix33(Library.Matrix.Subtract(left, right.Elements));
 		}
@@ -202,8 +202,8 @@
 		// Matrix33 * Matrix33
 		static public Matrix33 operator *(Matrix33 left, Matrix33 right)
 		{
-			if (left == null) { throw new Eggceptions.ArgumentNullException("left"); }
-			if (right == null) { throw new Eggceptions.ArgumentNullException("right"); }
+			if (left == null) { throw new Eggceptions.ArgumentNullException(nameof(left)); }
+			if (right == null) { throw new Eggceptions.ArgumentNullException(nameof(right)); }
 
 			return new Matrix33(Library.Matrix.Multiply(left.Elements, right.Elements));
 		}
@@ -211,7 +211,7 @@
 		// Matrix33 * System.Single
 		static public Matrix33 operator *(Matrix33 matrix33, System.Single scalar)
 		{
-			if (matrix33 == null) { throw new Eggceptions.ArgumentNullException("matrix33"); }
+			if (matrix33 == null) { throw new Eggceptions.ArgumentNullException(nameof(matrix33)); }
 			// scalar
 
 			return new Matrix33(Library.Matrix.Multiply(matrix33.Elements, scalar));
@@ -221,7 +221,7 @@
 		static public Matrix33 operator *(System.Single scalar, Matrix33 matrix33)
 		{
 			// scalar
-			if (matrix33 == null) { throw new Eggceptions.ArgumentNullException("matrix33"); }
+			if (matrix33 == null) { throw new Eggceptions.ArgumentNullException(nameof(matrix33)); }
 
 			return new Matrix33(Library.Matrix.Multiply(matrix33.Elements, scalar));
 		}

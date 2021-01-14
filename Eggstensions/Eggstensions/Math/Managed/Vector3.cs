@@ -6,7 +6,7 @@
 		/// <summary>The cross product of this Vector and other Vector's.</summary>
 		public Vector3 CrossProduct(Vector3 other)
 		{
-			if (other == null) { throw new Eggceptions.ArgumentNullException("other"); }
+			if (other == null) { throw new Eggceptions.ArgumentNullException(nameof(other)); }
 			
 			return new Vector3(Library.Vector.CrossProduct(Elements, other.Elements));
 		}
@@ -29,7 +29,7 @@
 		public Vector3(System.Single[,] elements)
 			: base(elements)
 		{
-			if (Columns != 3) { throw new Eggceptions.Math.Matrix.ArgumentMatrixDimensionsException("elements"); }
+			if (Columns != 3) { throw new Eggceptions.Math.Matrix.ArgumentMatrixDimensionsException(nameof(elements)); }
 		}
 
 
@@ -123,7 +123,7 @@
 		/// <summary>The rotation matrix necessary to rotate this Vector3 onto another Vector3.</summary>
 		public Matrix33 RotationMatrixBetween(Vector3 other)
 		{
-			if (other == null) { throw new Eggceptions.ArgumentNullException("other"); }
+			if (other == null) { throw new Eggceptions.ArgumentNullException(nameof(other)); }
 
 			return new Matrix33(Library.Vector3.RotationMatrixBetween(Elements, other.Elements));
 		}
@@ -135,8 +135,8 @@
 		// Vector3 + Vector3
 		static public Vector3 operator +(Vector3 left, Vector3 right)
 		{
-			if (left == null) { throw new Eggceptions.ArgumentNullException("left"); }
-			if (right == null) { throw new Eggceptions.ArgumentNullException("right"); }
+			if (left == null) { throw new Eggceptions.ArgumentNullException(nameof(left)); }
+			if (right == null) { throw new Eggceptions.ArgumentNullException(nameof(right)); }
 
 			return new Vector3(Library.Matrix.Add(left.Elements, right.Elements));
 		}
@@ -144,7 +144,7 @@
 		// Vector3 + System.Single
 		static public Vector3 operator +(Vector3 vector3, System.Single scalar)
 		{
-			if (vector3 == null) { throw new Eggceptions.ArgumentNullException("vector3"); }
+			if (vector3 == null) { throw new Eggceptions.ArgumentNullException(nameof(vector3)); }
 			// scalar
 
 			return new Vector3(Library.Matrix.Add(vector3.Elements, scalar));
@@ -154,7 +154,7 @@
 		static public Vector3 operator +(System.Single scalar, Vector3 vector3)
 		{
 			// scalar
-			if (vector3 == null) { throw new Eggceptions.ArgumentNullException("vector3"); }
+			if (vector3 == null) { throw new Eggceptions.ArgumentNullException(nameof(vector3)); }
 
 			return new Vector3(Library.Matrix.Add(vector3.Elements, scalar));
 		}
@@ -162,8 +162,8 @@
 		// Vector3 + System.Single[,]
 		static public Vector3 operator +(Vector3 left, System.Single[,] right)
 		{
-			if (left == null) { throw new Eggceptions.ArgumentNullException("left"); }
-			if (right == null) { throw new Eggceptions.ArgumentNullException("right"); }
+			if (left == null) { throw new Eggceptions.ArgumentNullException(nameof(left)); }
+			if (right == null) { throw new Eggceptions.ArgumentNullException(nameof(right)); }
 
 			return new Vector3(Library.Matrix.Add(left.Elements, right));
 		}
@@ -171,8 +171,8 @@
 		// System.Single[,] + Vector3
 		static public Vector3 operator +(System.Single[,] left, Vector3 right)
 		{
-			if (left == null) { throw new Eggceptions.ArgumentNullException("left"); }
-			if (right == null) { throw new Eggceptions.ArgumentNullException("right"); }
+			if (left == null) { throw new Eggceptions.ArgumentNullException(nameof(left)); }
+			if (right == null) { throw new Eggceptions.ArgumentNullException(nameof(right)); }
 
 			return new Vector3(Library.Matrix.Add(left, right.Elements));
 		}
@@ -180,7 +180,7 @@
 		// -Vector3
 		static public Vector3 operator -(Vector3 vector3)
 		{
-			if (vector3 == null) { throw new Eggceptions.ArgumentNullException("vector3"); }
+			if (vector3 == null) { throw new Eggceptions.ArgumentNullException(nameof(vector3)); }
 
 			return new Vector3(Library.Matrix.Negate(vector3.Elements));
 		}
@@ -188,8 +188,8 @@
 		// Vector3 - Vector3
 		static public Vector3 operator -(Vector3 left, Vector3 right)
 		{
-			if (left == null) { throw new Eggceptions.ArgumentNullException("left"); }
-			if (right == null) { throw new Eggceptions.ArgumentNullException("right"); }
+			if (left == null) { throw new Eggceptions.ArgumentNullException(nameof(left)); }
+			if (right == null) { throw new Eggceptions.ArgumentNullException(nameof(right)); }
 
 			return new Vector3(Library.Matrix.Subtract(left.Elements, right.Elements));
 		}
@@ -197,7 +197,7 @@
 		// Vector3 - System.Single
 		static public Vector3 operator -(Vector3 vector3, System.Single scalar)
 		{
-			if (vector3 == null) { throw new Eggceptions.ArgumentNullException("vector3"); }
+			if (vector3 == null) { throw new Eggceptions.ArgumentNullException(nameof(vector3)); }
 			// scalar
 
 			return new Vector3(Library.Matrix.Subtract(vector3.Elements, scalar));
@@ -207,7 +207,7 @@
 		static public Vector3 operator -(System.Single scalar, Vector3 vector3)
 		{
 			// scalar
-			if (vector3 == null) { throw new Eggceptions.ArgumentNullException("vector3"); }
+			if (vector3 == null) { throw new Eggceptions.ArgumentNullException(nameof(vector3)); }
 
 			return new Vector3(Library.Matrix.Subtract(scalar, vector3.Elements));
 		}
@@ -215,8 +215,8 @@
 		// Vector3 - System.Single[,]
 		static public Vector3 operator -(Vector3 left, System.Single[,] right)
 		{
-			if (left == null) { throw new Eggceptions.ArgumentNullException("left"); }
-			if (right == null) { throw new Eggceptions.ArgumentNullException("right"); }
+			if (left == null) { throw new Eggceptions.ArgumentNullException(nameof(left)); }
+			if (right == null) { throw new Eggceptions.ArgumentNullException(nameof(right)); }
 
 			return new Vector3(Library.Matrix.Subtract(left.Elements, right));
 		}
@@ -224,8 +224,8 @@
 		// System.Single[,] - Vector3
 		static public Vector3 operator -(System.Single[,] left, Vector3 right)
 		{
-			if (left == null) { throw new Eggceptions.ArgumentNullException("left"); }
-			if (right == null) { throw new Eggceptions.ArgumentNullException("right"); }
+			if (left == null) { throw new Eggceptions.ArgumentNullException(nameof(left)); }
+			if (right == null) { throw new Eggceptions.ArgumentNullException(nameof(right)); }
 
 			return new Vector3(Library.Matrix.Subtract(left, right.Elements));
 		}
@@ -235,8 +235,8 @@
 		// Vector3 * Matrix33
 		static public Vector3 operator *(Vector3 left, Matrix33 right)
 		{
-			if (left == null) { throw new Eggceptions.ArgumentNullException("left"); }
-			if (right == null) { throw new Eggceptions.ArgumentNullException("right"); }
+			if (left == null) { throw new Eggceptions.ArgumentNullException(nameof(left)); }
+			if (right == null) { throw new Eggceptions.ArgumentNullException(nameof(right)); }
 
 			return new Vector3(Library.Matrix.Multiply(left.Elements, right.Elements));
 		}
@@ -244,7 +244,7 @@
 		// Vector3 * System.Single
 		static public Vector3 operator *(Vector3 vector3, System.Single scalar)
 		{
-			if (vector3 == null) { throw new Eggceptions.ArgumentNullException("vector3"); }
+			if (vector3 == null) { throw new Eggceptions.ArgumentNullException(nameof(vector3)); }
 			// scalar
 
 			return new Vector3(Library.Matrix.Multiply(vector3.Elements, scalar));
@@ -254,7 +254,7 @@
 		static public Vector3 operator *(System.Single scalar, Vector3 vector3)
 		{
 			// scalar
-			if (vector3 == null) { throw new Eggceptions.ArgumentNullException("vector3"); }
+			if (vector3 == null) { throw new Eggceptions.ArgumentNullException(nameof(vector3)); }
 
 			return new Vector3(Library.Matrix.Multiply(vector3.Elements, scalar));
 		}

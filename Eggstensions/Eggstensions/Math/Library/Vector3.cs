@@ -6,10 +6,10 @@
 		// radians
 		static public System.Single[,] AxisAngleToRotationMatrix(System.Single[,] axis, System.Single angle) // Matrix33
 		{
-			if (axis == null) { throw new Eggceptions.ArgumentNullException("axis"); }
+			if (axis == null) { throw new Eggceptions.ArgumentNullException(nameof(axis)); }
 			// angle
-			if (!Matrix.IsVector3(axis)) { throw new Eggceptions.Math.Matrix.ArgumentMatrixDimensionsException("axis"); }
-			if (!Vector.IsNormalized(axis)) { throw new Eggceptions.Math.Matrix.ArgumentUnnormalizedMatrixException("axis"); }
+			if (!Matrix.IsVector3(axis)) { throw new Eggceptions.Math.Matrix.ArgumentMatrixDimensionsException(nameof(axis)); }
+			if (!Vector.IsNormalized(axis)) { throw new Eggceptions.Math.Matrix.ArgumentUnnormalizedMatrixException(nameof(axis)); }
 
 			var cos = (System.Single)System.Math.Cos(angle);
 			var sin = (System.Single)System.Math.Sin(angle);
@@ -30,8 +30,8 @@
 		// Rx, Ry, Rz
 		static public System.Single[,] EulerAnglesToRotationMatrix(System.Single[,] eulerAngles) // Matrix33
 		{
-			if (eulerAngles == null) { throw new Eggceptions.ArgumentNullException("eulerAngles"); }
-			if (!Matrix.IsVector3(eulerAngles)) { throw new Eggceptions.Math.Matrix.ArgumentMatrixDimensionsException("eulerAngles"); }
+			if (eulerAngles == null) { throw new Eggceptions.ArgumentNullException(nameof(eulerAngles)); }
+			if (!Matrix.IsVector3(eulerAngles)) { throw new Eggceptions.Math.Matrix.ArgumentMatrixDimensionsException(nameof(eulerAngles)); }
 
 			var identity = Matrix.Identity(3);
 			var rotationX = Matrix33.RotateX(identity, eulerAngles[0, 0]);
@@ -44,10 +44,10 @@
 
 		static public System.Single[,] RotationMatrixBetween(System.Single[,] left, System.Single[,] right) // Matrix33
 		{
-			if (left == null) { throw new Eggceptions.ArgumentNullException("left"); }
-			if (right == null) { throw new Eggceptions.ArgumentNullException("right"); }
-			if (!Matrix.IsVector3(left)) { throw new Eggceptions.Math.Matrix.ArgumentMatrixDimensionsException("left"); }
-			if (!Matrix.IsVector3(right)) { throw new Eggceptions.Math.Matrix.ArgumentMatrixDimensionsException("right"); }
+			if (left == null) { throw new Eggceptions.ArgumentNullException(nameof(left)); }
+			if (right == null) { throw new Eggceptions.ArgumentNullException(nameof(right)); }
+			if (!Matrix.IsVector3(left)) { throw new Eggceptions.Math.Matrix.ArgumentMatrixDimensionsException(nameof(left)); }
+			if (!Matrix.IsVector3(right)) { throw new Eggceptions.Math.Matrix.ArgumentMatrixDimensionsException(nameof(right)); }
 
 			return Vector3.AxisAngleToRotationMatrix(Vector.CrossProduct(left, right), Vector.AngleBetween(left, right));
 		}

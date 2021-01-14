@@ -2,7 +2,13 @@
 {
 	public class Settings
 	{
-		[NetScriptFramework.Tools.ConfigValue("ActivateDistance", "ActivateDistance", "Maximum activation distance while mounted.", NetScriptFramework.Tools.ConfigEntryFlags.VeryShortComment)]
+		[NetScriptFramework.Tools.ConfigValue("AccurateFollowerCommands", "Accurate Follower Commands", "Command followers standing behind you in third-person, and more easily command followers standing among enemies.", NetScriptFramework.Tools.ConfigEntryFlags.VeryShortComment)]
+		public System.Boolean AccurateFollowerCommands { get; private set; } = true;
+
+		[NetScriptFramework.Tools.ConfigValue("SneakToDismount", "Sneak To Dismount", "Dismount using the sneak button instead of the activate button.", NetScriptFramework.Tools.ConfigEntryFlags.VeryShortComment)]
+		public System.Boolean SneakToDismount { get; private set; } = true;
+
+		[NetScriptFramework.Tools.ConfigValue("ActivateDistance", "Activate Distance", "Maximum activation distance while mounted.", NetScriptFramework.Tools.ConfigEntryFlags.VeryShortComment)]
 		public System.Single ActivateDistance { get; private set; } = 270.0f; // 180.0f
 
 		[NetScriptFramework.Tools.ConfigValue("WeaponDrawnOffsetX", "Weapon Drawn Offset X", "Camera offset along the x-axis while mounted with your weapon drawn.\nIncreasing this value moves the camera rightwards.\nDecreasing this value moves the camera leftwards.", NetScriptFramework.Tools.ConfigEntryFlags.VeryShortComment)]

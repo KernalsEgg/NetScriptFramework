@@ -5,11 +5,11 @@
 		// www.stackoverflow.com/questions/3093455/3d-geometry-how-to-interpolate-a-matrix
 		static public System.Single[,] Interpolate(System.Single[,] left, System.Single[,] right, System.Single ratio)
 		{
-			if (left == null) { throw new Eggceptions.ArgumentNullException("left"); }
-			if (right == null) { throw new Eggceptions.ArgumentNullException("right"); }
-			if (ratio < 0 || ratio > 1) { throw new Eggceptions.ArgumentOutOfRangeException("ratio"); }
-			if (!Matrix.IsMatrix33(left)) { throw new Eggceptions.Math.Matrix.ArgumentMatrixDimensionsException("left"); }
-			if (!Matrix.IsMatrix33(right)) { throw new Eggceptions.Math.Matrix.ArgumentMatrixDimensionsException("right"); }
+			if (left == null) { throw new Eggceptions.ArgumentNullException(nameof(left)); }
+			if (right == null) { throw new Eggceptions.ArgumentNullException(nameof(right)); }
+			if (ratio < 0 || ratio > 1) { throw new Eggceptions.ArgumentOutOfRangeException(nameof(ratio)); }
+			if (!Matrix.IsMatrix33(left)) { throw new Eggceptions.Math.Matrix.ArgumentMatrixDimensionsException(nameof(left)); }
+			if (!Matrix.IsMatrix33(right)) { throw new Eggceptions.Math.Matrix.ArgumentMatrixDimensionsException(nameof(right)); }
 
 			var transpose = Matrix.Transpose(left);
 			(var axis, var angle) = Matrix33.RotationMatrixToAxisAngle(Matrix.Multiply(right, transpose)); // rotationMatrix = delta
@@ -21,7 +21,7 @@
 		// radians
 		static public System.Single[,] RotateX(System.Single[,] matrix, System.Single angle)
 		{
-			if (matrix == null) { throw new Eggceptions.ArgumentNullException("matrix"); }
+			if (matrix == null) { throw new Eggceptions.ArgumentNullException(nameof(matrix)); }
 			// angle
 
 			var cos = (System.Single)System.Math.Cos(angle);
@@ -40,7 +40,7 @@
 		// radians
 		static public System.Single[,] RotateY(System.Single[,] matrix, System.Single angle)
 		{
-			if (matrix == null) { throw new Eggceptions.ArgumentNullException("matrix"); }
+			if (matrix == null) { throw new Eggceptions.ArgumentNullException(nameof(matrix)); }
 			// angle
 
 			var cos = (System.Single)System.Math.Cos(angle);
@@ -59,7 +59,7 @@
 		// radians
 		static public System.Single[,] RotateZ(System.Single[,] matrix, System.Single angle)
 		{
-			if (matrix == null) { throw new Eggceptions.ArgumentNullException("matrix"); }
+			if (matrix == null) { throw new Eggceptions.ArgumentNullException(nameof(matrix)); }
 			// angle
 
 			var cos = (System.Single)System.Math.Cos(angle);
@@ -79,9 +79,9 @@
 		// radians
 		static public (System.Single[,] axis, System.Single angle) RotationMatrixToAxisAngle(System.Single[,] rotationMatrix) // Vector3
 		{
-			if (rotationMatrix == null) { throw new Eggceptions.ArgumentNullException("rotationMatrix"); }
-			if (!Matrix.IsMatrix33(rotationMatrix)) { throw new Eggceptions.Math.Matrix.ArgumentMatrixDimensionsException("rotationMatrix"); }
-			if (!Matrix.IsRotationMatrix(rotationMatrix)) { throw new Eggceptions.Math.Matrix.ArgumentTransformationMatrixException("rotationMatrix"); }
+			if (rotationMatrix == null) { throw new Eggceptions.ArgumentNullException(nameof(rotationMatrix)); }
+			if (!Matrix.IsMatrix33(rotationMatrix)) { throw new Eggceptions.Math.Matrix.ArgumentMatrixDimensionsException(nameof(rotationMatrix)); }
+			if (!Matrix.IsRotationMatrix(rotationMatrix)) { throw new Eggceptions.Math.Matrix.ArgumentTransformationMatrixException(nameof(rotationMatrix)); }
 
 			if (Matrix.IsSymmetric(rotationMatrix, false))
 			{
@@ -176,9 +176,9 @@
 		// radians
 		static public System.Single[,] RotationMatrixToEulerAngles(System.Single[,] rotationMatrix) // Vector3
 		{
-			if (rotationMatrix == null) { throw new Eggceptions.ArgumentNullException("rotationMatrix"); }
-			if (!Matrix.IsMatrix33(rotationMatrix)) { throw new Eggceptions.Math.Matrix.ArgumentMatrixDimensionsException("rotationMatrix"); }
-			if (!Matrix.IsRotationMatrix(rotationMatrix)) { throw new Eggceptions.Math.Matrix.ArgumentTransformationMatrixException("rotationMatrix"); }
+			if (rotationMatrix == null) { throw new Eggceptions.ArgumentNullException(nameof(rotationMatrix)); }
+			if (!Matrix.IsMatrix33(rotationMatrix)) { throw new Eggceptions.Math.Matrix.ArgumentMatrixDimensionsException(nameof(rotationMatrix)); }
+			if (!Matrix.IsRotationMatrix(rotationMatrix)) { throw new Eggceptions.Math.Matrix.ArgumentTransformationMatrixException(nameof(rotationMatrix)); }
 
 			if (rotationMatrix[0, 2] < 1)
 			{

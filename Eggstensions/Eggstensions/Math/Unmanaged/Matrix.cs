@@ -8,8 +8,6 @@ namespace Eggstensions.Math.Unmanaged
 	{
 		virtual public System.Int32 Size { get; } = 0x4; // > 0
 
-		virtual public System.Int32? Padding { get; } = null; // >= Size * (Rows * Columns)
-
 
 
 		virtual public System.Int32 Index(System.Int32 row, System.Int32 column)
@@ -21,13 +19,13 @@ namespace Eggstensions.Math.Unmanaged
 
 		public Matrix(System.Int32 rows, System.Int32 columns)
 		{
-			if (rows < 0) { throw new Eggceptions.ArgumentOutOfRangeException("rows"); }
-			if (columns < 0) { throw new Eggceptions.ArgumentOutOfRangeException("columns"); }
+			if (rows < 0) { throw new Eggceptions.ArgumentOutOfRangeException(nameof(rows)); }
+			if (columns < 0) { throw new Eggceptions.ArgumentOutOfRangeException(nameof(columns)); }
 
 			Rows = rows;
 			Columns = columns;
 
-			_allocation = NetScriptFramework.Memory.Allocate(Padding.HasValue ? Padding.Value : Size * Rows * Columns);
+			_allocation = NetScriptFramework.Memory.Allocate(Size * Rows * Columns);
 			_allocation.Pin();
 			_allocation.Zero();
 		}
@@ -44,9 +42,9 @@ namespace Eggstensions.Math.Unmanaged
 
 		public Matrix(System.IntPtr address, System.Int32 rows, System.Int32 columns)
 		{
-			if (address == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("address"); }
-			if (rows < 0) { throw new Eggceptions.ArgumentOutOfRangeException("rows"); }
-			if (columns < 0) { throw new Eggceptions.ArgumentOutOfRangeException("columns"); }
+			if (address == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException(nameof(address)); }
+			if (rows < 0) { throw new Eggceptions.ArgumentOutOfRangeException(nameof(rows)); }
+			if (columns < 0) { throw new Eggceptions.ArgumentOutOfRangeException(nameof(columns)); }
 
 			Rows = rows;
 			Columns = columns;
@@ -90,8 +88,8 @@ namespace Eggstensions.Math.Unmanaged
 			}
 			set
 			{
-				if (value == null) { throw new Eggceptions.NullException("value"); }
-				if (!value.HasDimensions(Rows, Columns)) { throw new Eggceptions.Math.Matrix.MatrixDimensionsException("this, value"); }
+				if (value == null) { throw new Eggceptions.NullException(nameof(value)); }
+				if (!value.HasDimensions(Rows, Columns)) { throw new Eggceptions.Math.Matrix.MatrixDimensionsException(nameof(value)); }
 
 				var elements = value.Elements;
 
@@ -116,7 +114,7 @@ namespace Eggstensions.Math.Unmanaged
 			get
 			{
 				var address = _allocation?.Address ?? _instance;
-				if (address == System.IntPtr.Zero) { throw new Eggceptions.NullException("address"); }
+				if (address == System.IntPtr.Zero) { throw new Eggceptions.NullException(nameof(address)); }
 
 				return address;
 			}
@@ -129,15 +127,15 @@ namespace Eggstensions.Math.Unmanaged
 		{
 			get
 			{
-				if (row < 0 || row >= Rows) { throw new Eggceptions.ArgumentOutOfRangeException("row"); }
-				if (column < 0 || column >= Columns) { throw new Eggceptions.ArgumentOutOfRangeException("column"); }
+				if (row < 0 || row >= Rows) { throw new Eggceptions.ArgumentOutOfRangeException(nameof(row)); }
+				if (column < 0 || column >= Columns) { throw new Eggceptions.ArgumentOutOfRangeException(nameof(column)); }
 
 				return NetScriptFramework.Memory.ReadFloat(Address + Size * Index(row, column));
 			}
 			set
 			{
-				if (row < 0 || row >= Rows) { throw new Eggceptions.ArgumentOutOfRangeException("row"); }
-				if (column < 0 || column >= Columns) { throw new Eggceptions.ArgumentOutOfRangeException("column"); }
+				if (row < 0 || row >= Rows) { throw new Eggceptions.ArgumentOutOfRangeException(nameof(row)); }
+				if (column < 0 || column >= Columns) { throw new Eggceptions.ArgumentOutOfRangeException(nameof(column)); }
 
 				NetScriptFramework.Memory.WriteFloat(Address + Size * Index(row, column), value);
 			}

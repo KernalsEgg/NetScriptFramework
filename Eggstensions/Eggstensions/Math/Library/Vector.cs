@@ -10,20 +10,20 @@ namespace Eggstensions.Math.Library
 	{
 		static public System.Single AngleBetween(System.Single[,] left, System.Single[,] right)
 		{
-			if (left == null) { throw new Eggceptions.ArgumentNullException("left"); }
-			if (right == null) { throw new Eggceptions.ArgumentNullException("right"); }
-			if (!Matrix.IsVector(left)) { throw new Eggceptions.Math.Matrix.ArgumentMatrixDimensionsException("left"); }
-			if (!Matrix.IsVector(right)) { throw new Eggceptions.Math.Matrix.ArgumentMatrixDimensionsException("right"); }
-			if (!Matrix.SameDimensions(left, right)) { throw new Eggceptions.Math.Matrix.ArgumentMatrixDimensionsException("left, right"); }
-			if (Matrix.IsZero(left)) { throw new Eggceptions.Math.Matrix.ZeroMatrixException("left"); }
-			if (Matrix.IsZero(right)) { throw new Eggceptions.Math.Matrix.ZeroMatrixException("right"); }
+			if (left == null) { throw new Eggceptions.ArgumentNullException(nameof(left)); }
+			if (right == null) { throw new Eggceptions.ArgumentNullException(nameof(right)); }
+			if (!Matrix.IsVector(left)) { throw new Eggceptions.Math.Matrix.ArgumentMatrixDimensionsException(nameof(left)); }
+			if (!Matrix.IsVector(right)) { throw new Eggceptions.Math.Matrix.ArgumentMatrixDimensionsException(nameof(right)); }
+			if (!Matrix.SameDimensions(left, right)) { throw new Eggceptions.Math.Matrix.ArgumentMatrixDimensionsException(System.String.Join(", ", nameof(left), nameof(right))); }
+			if (Matrix.IsZero(left)) { throw new Eggceptions.Math.Matrix.ZeroMatrixException(nameof(left)); }
+			if (Matrix.IsZero(right)) { throw new Eggceptions.Math.Matrix.ZeroMatrixException(nameof(right)); }
 
 			return (System.Single)System.Math.Acos(Vector.DotProduct(left, right) / (Vector.Magnitude(left) * Vector.Magnitude(right)));
 		}
 
 		static public System.Boolean CanCrossProduct(params System.Single[][,] vectors)
 		{
-			if (vectors.IsNullOrSparse(2)) { throw new Eggceptions.ArgumentNullOrSparseException("vectors"); }
+			if (vectors.IsNullOrSparse(2)) { throw new Eggceptions.ArgumentNullOrSparseException(nameof(vectors)); }
 
 			return
 				(
@@ -37,8 +37,8 @@ namespace Eggstensions.Math.Library
 
 		static public System.Boolean CanDotProduct(System.Single[,] left, System.Single[,] right)
 		{
-			if (left == null) { throw new Eggceptions.ArgumentNullException("left"); }
-			if (right == null) { throw new Eggceptions.ArgumentNullException("right"); }
+			if (left == null) { throw new Eggceptions.ArgumentNullException(nameof(left)); }
+			if (right == null) { throw new Eggceptions.ArgumentNullException(nameof(right)); }
 
 			return
 				Matrix.IsVector(left)
@@ -50,8 +50,8 @@ namespace Eggstensions.Math.Library
 
 		static public System.Single[,] CrossProduct(params System.Single[][,] vectors)
 		{
-			if (vectors.IsNullOrSparse(2)) { throw new Eggceptions.ArgumentNullOrSparseException("vectors"); }
-			if (!Vector.CanCrossProduct(vectors)) { throw new Eggceptions.Math.Matrix.ArgumentMatrixDimensionsException("vectors"); }
+			if (vectors.IsNullOrSparse(2)) { throw new Eggceptions.ArgumentNullOrSparseException(nameof(vectors)); }
+			if (!Vector.CanCrossProduct(vectors)) { throw new Eggceptions.Math.Matrix.ArgumentMatrixDimensionsException(nameof(vectors)); }
 
 			var rows = vectors.Length + 1; // +1: Cross product
 			var columns = vectors.Length + 1;
@@ -88,11 +88,11 @@ namespace Eggstensions.Math.Library
 
 		static public System.Single DistanceBetween(System.Single[,] left, System.Single[,] right)
 		{
-			if (left == null) { throw new Eggceptions.ArgumentNullException("left"); }
-			if (right == null) { throw new Eggceptions.ArgumentNullException("right"); }
-			if (!Matrix.IsVector(left)) { throw new Eggceptions.Math.Matrix.ArgumentMatrixDimensionsException("left"); }
-			if (!Matrix.IsVector(right)) { throw new Eggceptions.Math.Matrix.ArgumentMatrixDimensionsException("right"); }
-			if (!Matrix.SameDimensions(left, right)) { throw new Eggceptions.Math.Matrix.ArgumentMatrixDimensionsException("left, right"); }
+			if (left == null) { throw new Eggceptions.ArgumentNullException(nameof(left)); }
+			if (right == null) { throw new Eggceptions.ArgumentNullException(nameof(right)); }
+			if (!Matrix.IsVector(left)) { throw new Eggceptions.Math.Matrix.ArgumentMatrixDimensionsException(nameof(left)); }
+			if (!Matrix.IsVector(right)) { throw new Eggceptions.Math.Matrix.ArgumentMatrixDimensionsException(nameof(right)); }
+			if (!Matrix.SameDimensions(left, right)) { throw new Eggceptions.Math.Matrix.ArgumentMatrixDimensionsException(System.String.Join(", ", nameof(left), nameof(right))); }
 
 			var rows = left.Rows(); // left.Rows == right.Rows
 			var columns = left.Columns(); // left.Columns == right.Columns
@@ -112,9 +112,9 @@ namespace Eggstensions.Math.Library
 
 		static public System.Single DotProduct(System.Single[,] left, System.Single[,] right)
 		{
-			if (left == null) { throw new Eggceptions.ArgumentNullException("left"); }
-			if (right == null) { throw new Eggceptions.ArgumentNullException("right"); }
-			if (!Vector.CanDotProduct(left, right)) { throw new Eggceptions.Math.Matrix.ArgumentMatrixDimensionsException("left, right"); }
+			if (left == null) { throw new Eggceptions.ArgumentNullException(nameof(left)); }
+			if (right == null) { throw new Eggceptions.ArgumentNullException(nameof(right)); }
+			if (!Vector.CanDotProduct(left, right)) { throw new Eggceptions.Math.Matrix.ArgumentMatrixDimensionsException(System.String.Join(", ", nameof(left), nameof(right))); }
 
 			var rows = left.Rows(); // left.Rows == right.Rows
 			var columns = left.Columns(); // left.Columns == right.Columns
@@ -134,15 +134,15 @@ namespace Eggstensions.Math.Library
 
 		static public System.Boolean IsNormalized(System.Single[,] vector)
 		{
-			if (vector == null) { throw new Eggceptions.ArgumentNullException("vector"); }
+			if (vector == null) { throw new Eggceptions.ArgumentNullException(nameof(vector)); }
 
 			return Vector.Magnitude(vector) == 1;
 		}
 
 		static public System.Single Magnitude(System.Single[,] vector)
 		{
-			if (vector == null) { throw new Eggceptions.ArgumentNullException("vector"); }
-			if (!Matrix.IsVector(vector)) { throw new Eggceptions.Math.Matrix.ArgumentMatrixDimensionsException("vector"); }
+			if (vector == null) { throw new Eggceptions.ArgumentNullException(nameof(vector)); }
+			if (!Matrix.IsVector(vector)) { throw new Eggceptions.Math.Matrix.ArgumentMatrixDimensionsException(nameof(vector)); }
 
 			var rows = vector.Rows();
 			var columns = vector.Columns();
@@ -162,9 +162,9 @@ namespace Eggstensions.Math.Library
 
 		static public System.Single[,] Normalize(System.Single[,] vector)
 		{
-			if (vector == null) { throw new Eggceptions.ArgumentNullException("vector"); }
-			if (!Matrix.IsVector(vector)) { throw new Eggceptions.Math.Matrix.ArgumentMatrixDimensionsException("vector"); }
-			if (Matrix.IsZero(vector)) { throw new Eggceptions.Math.Matrix.ZeroMatrixException("vector"); }
+			if (vector == null) { throw new Eggceptions.ArgumentNullException(nameof(vector)); }
+			if (!Matrix.IsVector(vector)) { throw new Eggceptions.Math.Matrix.ArgumentMatrixDimensionsException(nameof(vector)); }
+			if (Matrix.IsZero(vector)) { throw new Eggceptions.Math.Matrix.ZeroMatrixException(nameof(vector)); }
 
 			return Matrix.Multiply(vector, 1 / Vector.Magnitude(vector));
 		}

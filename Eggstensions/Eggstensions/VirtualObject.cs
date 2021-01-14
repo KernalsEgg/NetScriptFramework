@@ -6,15 +6,15 @@
 		/// <param name = "virtualObject">VirtualObject</param>
 		static public System.IntPtr InvokeVTableThisCall(System.IntPtr virtualObject, System.Int32 offset, params NetScriptFramework.InvokeArgument[] arguments)
 		{
-			if (virtualObject == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("virtualObject"); }
+			if (virtualObject == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException(nameof(virtualObject)); }
 			// offset
 			// arguments
 
 			var virtualTable = NetScriptFramework.Memory.ReadPointer(virtualObject);
-			if (virtualTable == System.IntPtr.Zero) { throw new Eggceptions.NullException("virtualTable"); }
+			if (virtualTable == System.IntPtr.Zero) { throw new Eggceptions.NullException(nameof(virtualTable)); }
 
 			var functionAddress = NetScriptFramework.Memory.ReadPointer(virtualTable + offset);
-			if (functionAddress == System.IntPtr.Zero) { throw new Eggceptions.NullException("functionAddress"); }
+			if (functionAddress == System.IntPtr.Zero) { throw new Eggceptions.NullException(nameof(functionAddress)); }
 
 			return NetScriptFramework.Memory.InvokeThisCall(virtualObject, functionAddress, arguments);
 		}

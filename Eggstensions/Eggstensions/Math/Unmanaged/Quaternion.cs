@@ -20,8 +20,8 @@
 			}
 			set
 			{
-				if (value == null) { throw new Eggceptions.NullException("value"); }
-				if (!value.HasDimensions(Rows, Columns)) { throw new Eggceptions.Math.Matrix.MatrixDimensionsException("this, value"); }
+				if (value == null) { throw new Eggceptions.NullException(nameof(value)); }
+				if (!value.HasDimensions(Rows, Columns)) { throw new Eggceptions.Math.Matrix.MatrixDimensionsException(nameof(value)); }
 
 				var elements = value.Elements;
 

@@ -8,7 +8,7 @@ namespace Eggstensions.Math.Managed
 	{
 		public Matrix(System.Single[,] elements)
 		{
-			if (elements == null) { throw new Eggceptions.ArgumentNullException("elements"); }
+			if (elements == null) { throw new Eggceptions.ArgumentNullException(nameof(elements)); }
 
 			Elements = elements;
 		}
@@ -150,7 +150,7 @@ namespace Eggstensions.Math.Managed
 		/// <summary>If this Matrix and another Matrix can be multiplied.</summary>
 		public (System.Boolean condition, (System.Int32 rows, System.Int32 columns)? dimensions) CanMultiply(Matrix other)
 		{
-			if (other == null) { throw new Eggceptions.ArgumentNullException("other"); }
+			if (other == null) { throw new Eggceptions.ArgumentNullException(nameof(other)); }
 
 			return Library.Matrix.CanMultiply(Elements, other.Elements);
 		}
@@ -164,7 +164,7 @@ namespace Eggstensions.Math.Managed
 		/// <summary>If this Matrix is equal to another Matrix.</summary>
 		public System.Boolean Equals(Matrix other)
 		{
-			if (other == null) { throw new Eggceptions.ArgumentNullException("other"); }
+			if (other == null) { throw new Eggceptions.ArgumentNullException(nameof(other)); }
 
 			return Library.Matrix.Equals(Elements, other.Elements);
 		}
@@ -193,7 +193,7 @@ namespace Eggstensions.Math.Managed
 		/// <summary>If this Matrix and another Matrix have the same dimensions.</summary>
 		public System.Boolean SameDimensions(Matrix other)
 		{
-			if (other == null) { throw new Eggceptions.ArgumentNullException("other"); }
+			if (other == null) { throw new Eggceptions.ArgumentNullException(nameof(other)); }
 
 			return Library.Matrix.SameDimensions(Elements, other.Elements);
 		}
@@ -217,8 +217,8 @@ namespace Eggstensions.Math.Managed
 		// Matrix + Matrix
 		static public Matrix operator +(Matrix left, Matrix right)
 		{
-			if (left == null) { throw new Eggceptions.ArgumentNullException("left"); }
-			if (right == null) { throw new Eggceptions.ArgumentNullException("right"); }
+			if (left == null) { throw new Eggceptions.ArgumentNullException(nameof(left)); }
+			if (right == null) { throw new Eggceptions.ArgumentNullException(nameof(right)); }
 
 			return new Matrix(Library.Matrix.Add(left.Elements, right.Elements));
 		}
@@ -226,7 +226,7 @@ namespace Eggstensions.Math.Managed
 		// Matrix + System.Single
 		static public Matrix operator +(Matrix matrix, System.Single scalar)
 		{
-			if (matrix == null) { throw new Eggceptions.ArgumentNullException("matrix"); }
+			if (matrix == null) { throw new Eggceptions.ArgumentNullException(nameof(matrix)); }
 			// scalar
 
 			return new Matrix(Library.Matrix.Add(matrix.Elements, scalar));
@@ -236,7 +236,7 @@ namespace Eggstensions.Math.Managed
 		static public Matrix operator +(System.Single scalar, Matrix matrix)
 		{
 			// scalar
-			if (matrix == null) { throw new Eggceptions.ArgumentNullException("matrix"); }
+			if (matrix == null) { throw new Eggceptions.ArgumentNullException(nameof(matrix)); }
 
 			return new Matrix(Library.Matrix.Add(matrix.Elements, scalar));
 		}
@@ -244,8 +244,8 @@ namespace Eggstensions.Math.Managed
 		// Matrix + System.Single[,]
 		static public Matrix operator +(Matrix left, System.Single[,] right)
 		{
-			if (left == null) { throw new Eggceptions.ArgumentNullException("left"); }
-			if (right == null) { throw new Eggceptions.ArgumentNullException("right"); }
+			if (left == null) { throw new Eggceptions.ArgumentNullException(nameof(left)); }
+			if (right == null) { throw new Eggceptions.ArgumentNullException(nameof(right)); }
 
 			return new Matrix(Library.Matrix.Add(left.Elements, right));
 		}
@@ -253,8 +253,8 @@ namespace Eggstensions.Math.Managed
 		// System.Single[,] + Matrix
 		static public Matrix operator +(System.Single[,] left, Matrix right)
 		{
-			if (left == null) { throw new Eggceptions.ArgumentNullException("left"); }
-			if (right == null) { throw new Eggceptions.ArgumentNullException("right"); }
+			if (left == null) { throw new Eggceptions.ArgumentNullException(nameof(left)); }
+			if (right == null) { throw new Eggceptions.ArgumentNullException(nameof(right)); }
 
 			return new Matrix(Library.Matrix.Add(left, right.Elements));
 		}
@@ -262,7 +262,7 @@ namespace Eggstensions.Math.Managed
 		// -Matrix
 		static public Matrix operator -(Matrix matrix)
 		{
-			if (matrix == null) { throw new Eggceptions.ArgumentNullException("matrix"); }
+			if (matrix == null) { throw new Eggceptions.ArgumentNullException(nameof(matrix)); }
 
 			return new Matrix(Library.Matrix.Negate(matrix.Elements));
 		}
@@ -270,8 +270,8 @@ namespace Eggstensions.Math.Managed
 		// Matrix - Matrix
 		static public Matrix operator -(Matrix left, Matrix right)
 		{
-			if (left == null) { throw new Eggceptions.ArgumentNullException("left"); }
-			if (right == null) { throw new Eggceptions.ArgumentNullException("right"); }
+			if (left == null) { throw new Eggceptions.ArgumentNullException(nameof(left)); }
+			if (right == null) { throw new Eggceptions.ArgumentNullException(nameof(right)); }
 
 			return new Matrix(Library.Matrix.Subtract(left.Elements, right.Elements));
 		}
@@ -279,7 +279,7 @@ namespace Eggstensions.Math.Managed
 		// Matrix - System.Single
 		static public Matrix operator -(Matrix matrix, System.Single scalar)
 		{
-			if (matrix == null) { throw new Eggceptions.ArgumentNullException("matrix"); }
+			if (matrix == null) { throw new Eggceptions.ArgumentNullException(nameof(matrix)); }
 			// scalar
 
 			return new Matrix(Library.Matrix.Subtract(matrix.Elements, scalar));
@@ -289,7 +289,7 @@ namespace Eggstensions.Math.Managed
 		static public Matrix operator -(System.Single scalar, Matrix matrix)
 		{
 			// scalar
-			if (matrix == null) { throw new Eggceptions.ArgumentNullException("matrix"); }
+			if (matrix == null) { throw new Eggceptions.ArgumentNullException(nameof(matrix)); }
 
 			return new Matrix(Library.Matrix.Subtract(scalar, matrix.Elements));
 		}
@@ -297,8 +297,8 @@ namespace Eggstensions.Math.Managed
 		// Matrix - System.Single[,]
 		static public Matrix operator -(Matrix left, System.Single[,] right)
 		{
-			if (left == null) { throw new Eggceptions.ArgumentNullException("left"); }
-			if (right == null) { throw new Eggceptions.ArgumentNullException("right"); }
+			if (left == null) { throw new Eggceptions.ArgumentNullException(nameof(left)); }
+			if (right == null) { throw new Eggceptions.ArgumentNullException(nameof(right)); }
 
 			return new Matrix(Library.Matrix.Subtract(left.Elements, right));
 		}
@@ -306,8 +306,8 @@ namespace Eggstensions.Math.Managed
 		// System.Single[,] - Matrix
 		static public Matrix operator -(System.Single[,] left, Matrix right)
 		{
-			if (left == null) { throw new Eggceptions.ArgumentNullException("left"); }
-			if (right == null) { throw new Eggceptions.ArgumentNullException("right"); }
+			if (left == null) { throw new Eggceptions.ArgumentNullException(nameof(left)); }
+			if (right == null) { throw new Eggceptions.ArgumentNullException(nameof(right)); }
 
 			return new Matrix(Library.Matrix.Subtract(left, right.Elements));
 		}
@@ -315,8 +315,8 @@ namespace Eggstensions.Math.Managed
 		// Matrix * Matrix
 		static public Matrix operator *(Matrix left, Matrix right)
 		{
-			if (left == null) { throw new Eggceptions.ArgumentNullException("left"); }
-			if (right == null) { throw new Eggceptions.ArgumentNullException("right"); }
+			if (left == null) { throw new Eggceptions.ArgumentNullException(nameof(left)); }
+			if (right == null) { throw new Eggceptions.ArgumentNullException(nameof(right)); }
 
 			return new Matrix(Library.Matrix.Multiply(left.Elements, right.Elements));
 		}
@@ -324,7 +324,7 @@ namespace Eggstensions.Math.Managed
 		// Matrix * System.Single
 		static public Matrix operator *(Matrix matrix, System.Single scalar)
 		{
-			if (matrix == null) { throw new Eggceptions.ArgumentNullException("matrix"); }
+			if (matrix == null) { throw new Eggceptions.ArgumentNullException(nameof(matrix)); }
 			// scalar
 
 			return new Matrix(Library.Matrix.Multiply(matrix.Elements, scalar));
@@ -334,7 +334,7 @@ namespace Eggstensions.Math.Managed
 		static public Matrix operator *(System.Single scalar, Matrix matrix)
 		{
 			// scalar
-			if (matrix == null) { throw new Eggceptions.ArgumentNullException("matrix"); }
+			if (matrix == null) { throw new Eggceptions.ArgumentNullException(nameof(matrix)); }
 
 			return new Matrix(Library.Matrix.Multiply(matrix.Elements, scalar));
 		}
@@ -342,8 +342,8 @@ namespace Eggstensions.Math.Managed
 		// Matrix * System.Single[,]
 		static public Matrix operator *(Matrix left, System.Single[,] right)
 		{
-			if (left == null) { throw new Eggceptions.ArgumentNullException("left"); }
-			if (right == null) { throw new Eggceptions.ArgumentNullException("right"); }
+			if (left == null) { throw new Eggceptions.ArgumentNullException(nameof(left)); }
+			if (right == null) { throw new Eggceptions.ArgumentNullException(nameof(right)); }
 
 			return new Matrix(Library.Matrix.Multiply(left.Elements, right));
 		}
@@ -351,8 +351,8 @@ namespace Eggstensions.Math.Managed
 		// System.Single[,] * Matrix
 		static public Matrix operator *(System.Single[,] left, Matrix right)
 		{
-			if (left == null) { throw new Eggceptions.ArgumentNullException("left"); }
-			if (right == null) { throw new Eggceptions.ArgumentNullException("right"); }
+			if (left == null) { throw new Eggceptions.ArgumentNullException(nameof(left)); }
+			if (right == null) { throw new Eggceptions.ArgumentNullException(nameof(right)); }
 
 			return new Matrix(Library.Matrix.Multiply(left, right.Elements));
 		}

@@ -10,8 +10,8 @@ namespace Eggstensions.ExtensionMethods
 		/// <summary>If all elements in this array meet the specified condition.</summary>
 		static public System.Boolean All<T>(this T[,] array, System.Func<T, System.Boolean> condition)
 		{
-			if (array == null) { throw new Eggceptions.ArgumentNullException("array"); }
-			if (condition == null) { throw new Eggceptions.ArgumentNullException("condition"); }
+			if (array == null) { throw new Eggceptions.ArgumentNullException(nameof(array)); }
+			if (condition == null) { throw new Eggceptions.ArgumentNullException(nameof(condition)); }
 
 			var upperBoundRows = array.UpperBoundRows();
 			var upperBoundColumns = array.UpperBoundColumns();
@@ -33,8 +33,8 @@ namespace Eggstensions.ExtensionMethods
 		/// <summary>If all elements in this array meet the specified condition.</summary>
 		static public System.Boolean AllJagged<T>(this T[][,] arrays, System.Func<T, System.Boolean> condition)
 		{
-			if (arrays == null) { throw new Eggceptions.ArgumentNullException("arrays"); }
-			if (condition == null) { throw new Eggceptions.ArgumentNullException("condition"); }
+			if (arrays == null) { throw new Eggceptions.ArgumentNullException(nameof(arrays)); }
+			if (condition == null) { throw new Eggceptions.ArgumentNullException(nameof(condition)); }
 
 			var upperBound = arrays.UpperBound();
 
@@ -70,8 +70,8 @@ namespace Eggstensions.ExtensionMethods
 		/// <summary>If all dimensions of this array meet the specified condition.</summary>
 		static public System.Boolean AllDimensions<T>(this T[] array, System.Func<System.Int32, System.Int32, System.Boolean> condition, System.Int32? length)
 		{
-			if (array == null) { throw new Eggceptions.ArgumentNullException("array"); }
-			if (condition == null) { throw new Eggceptions.ArgumentNullException("condition"); }
+			if (array == null) { throw new Eggceptions.ArgumentNullException(nameof(array)); }
+			if (condition == null) { throw new Eggceptions.ArgumentNullException(nameof(condition)); }
 
 			return
 				Length();
@@ -82,7 +82,7 @@ namespace Eggstensions.ExtensionMethods
 			{
 				if (length.HasValue)
 				{
-					if (length.Value < 0) { throw new Eggceptions.ArgumentOutOfRangeException("length"); }
+					if (length.Value < 0) { throw new Eggceptions.ArgumentOutOfRangeException(nameof(length)); }
 					if (condition(length.Value, array.Length)) { return true; }
 
 					return false;
@@ -95,8 +95,8 @@ namespace Eggstensions.ExtensionMethods
 		/// <summary>If all dimensions of this array meet the specified condition.</summary>
 		static public System.Boolean AllDimensions<T>(this T[,] array, System.Func<System.Int32, System.Int32, System.Boolean> condition, System.Int32? rows, System.Int32? columns)
 		{
-			if (array == null) { throw new Eggceptions.ArgumentNullException("array"); }
-			if (condition == null) { throw new Eggceptions.ArgumentNullException("condition"); }
+			if (array == null) { throw new Eggceptions.ArgumentNullException(nameof(array)); }
+			if (condition == null) { throw new Eggceptions.ArgumentNullException(nameof(condition)); }
 
 			return
 				Rows()
@@ -109,7 +109,7 @@ namespace Eggstensions.ExtensionMethods
 			{
 				if (rows.HasValue)
 				{
-					if (rows.Value < 0) { throw new Eggceptions.ArgumentOutOfRangeException("rows"); }
+					if (rows.Value < 0) { throw new Eggceptions.ArgumentOutOfRangeException(nameof(rows)); }
 					if (condition(rows.Value, array.Rows())) { return true; }
 
 					return false;
@@ -122,7 +122,7 @@ namespace Eggstensions.ExtensionMethods
 			{
 				if (columns.HasValue)
 				{
-					if (columns.Value < 0) { throw new Eggceptions.ArgumentOutOfRangeException("columns"); }
+					if (columns.Value < 0) { throw new Eggceptions.ArgumentOutOfRangeException(nameof(columns)); }
 					if (condition(columns.Value, array.Columns())) { return true; }
 
 					return false;
@@ -135,8 +135,8 @@ namespace Eggstensions.ExtensionMethods
 		/// <summary>If all dimensions of this array meet the specified condition.</summary>
 		static public System.Boolean AllDimensionsJagged<T>(this T[][,] arrays, System.Func<System.Int32, System.Int32, System.Boolean> condition, System.Int32? length, System.Int32? rows, System.Int32? columns)
 		{
-			if (arrays == null) { throw new Eggceptions.ArgumentNullException("arrays"); }
-			if (condition == null) { throw new Eggceptions.ArgumentNullException("condition"); }
+			if (arrays == null) { throw new Eggceptions.ArgumentNullException(nameof(arrays)); }
+			if (condition == null) { throw new Eggceptions.ArgumentNullException(nameof(condition)); }
 
 			return
 				Length()
@@ -151,7 +151,7 @@ namespace Eggstensions.ExtensionMethods
 			{
 				if (length.HasValue)
 				{
-					if (length.Value < 0) { throw new Eggceptions.ArgumentOutOfRangeException("length"); }
+					if (length.Value < 0) { throw new Eggceptions.ArgumentOutOfRangeException(nameof(length)); }
 					if (condition(length.Value, arrays.Length)) { return true; }
 
 					return false;
@@ -164,7 +164,7 @@ namespace Eggstensions.ExtensionMethods
 			{
 				if (rows.HasValue)
 				{
-					if (rows.Value < 0) { throw new Eggceptions.ArgumentOutOfRangeException("rows"); }
+					if (rows.Value < 0) { throw new Eggceptions.ArgumentOutOfRangeException(nameof(rows)); }
 
 					return arrays.All(elements => elements != null ? condition(rows.Value, elements.Rows()) : false);
 				}
@@ -176,7 +176,7 @@ namespace Eggstensions.ExtensionMethods
 			{
 				if (columns.HasValue)
 				{
-					if (columns.Value < 0) { throw new Eggceptions.ArgumentOutOfRangeException("columns"); }
+					if (columns.Value < 0) { throw new Eggceptions.ArgumentOutOfRangeException(nameof(columns)); }
 
 					return arrays.All(elements => elements != null ? condition(columns.Value, elements.Columns()) : false);
 				}
@@ -192,8 +192,8 @@ namespace Eggstensions.ExtensionMethods
 		/// <summary>If any elements in this array meet the specified condition.</summary>
 		static public System.Boolean Any<T>(this T[,] array, System.Func<T, System.Boolean> condition)
 		{
-			if (array == null) { throw new Eggceptions.ArgumentNullException("array"); }
-			if (condition == null) { throw new Eggceptions.ArgumentNullException("condition"); }
+			if (array == null) { throw new Eggceptions.ArgumentNullException(nameof(array)); }
+			if (condition == null) { throw new Eggceptions.ArgumentNullException(nameof(condition)); }
 
 			var upperBoundRows = array.UpperBoundRows();
 			var upperBoundColumns = array.UpperBoundColumns();
@@ -215,8 +215,8 @@ namespace Eggstensions.ExtensionMethods
 		/// <summary>If any elements in this array meet the specified condition.</summary>
 		static public System.Boolean AnyJagged<T>(this T[][,] arrays, System.Func<T, System.Boolean> condition)
 		{
-			if (arrays == null) { throw new Eggceptions.ArgumentNullException("arrays"); }
-			if (condition == null) { throw new Eggceptions.ArgumentNullException("condition"); }
+			if (arrays == null) { throw new Eggceptions.ArgumentNullException(nameof(arrays)); }
+			if (condition == null) { throw new Eggceptions.ArgumentNullException(nameof(condition)); }
 
 			var upperBound = arrays.UpperBound();
 
@@ -252,8 +252,8 @@ namespace Eggstensions.ExtensionMethods
 		/// <summary>If any dimensions of this array meet the specified condition.</summary>
 		static public System.Boolean AnyDimensions<T>(this T[] array, System.Func<System.Int32, System.Int32, System.Boolean> condition, System.Int32? length)
 		{
-			if (array == null) { throw new Eggceptions.ArgumentNullException("array"); }
-			if (condition == null) { throw new Eggceptions.ArgumentNullException("condition"); }
+			if (array == null) { throw new Eggceptions.ArgumentNullException(nameof(array)); }
+			if (condition == null) { throw new Eggceptions.ArgumentNullException(nameof(condition)); }
 
 			return
 				Length();
@@ -264,7 +264,7 @@ namespace Eggstensions.ExtensionMethods
 			{
 				if (length.HasValue)
 				{
-					if (length.Value < 0) { throw new Eggceptions.ArgumentOutOfRangeException("length"); }
+					if (length.Value < 0) { throw new Eggceptions.ArgumentOutOfRangeException(nameof(length)); }
 					if (condition(length.Value, array.Length)) { return true; }
 				}
 
@@ -275,8 +275,8 @@ namespace Eggstensions.ExtensionMethods
 		/// <summary>If any dimensions of this array meet the specified condition.</summary>
 		static public System.Boolean AnyDimensions<T>(this T[,] array, System.Func<System.Int32, System.Int32, System.Boolean> condition, System.Int32? rows, System.Int32? columns)
 		{
-			if (array == null) { throw new Eggceptions.ArgumentNullException("array"); }
-			if (condition == null) { throw new Eggceptions.ArgumentNullException("condition"); }
+			if (array == null) { throw new Eggceptions.ArgumentNullException(nameof(array)); }
+			if (condition == null) { throw new Eggceptions.ArgumentNullException(nameof(condition)); }
 
 			return
 				Rows()
@@ -289,7 +289,7 @@ namespace Eggstensions.ExtensionMethods
 			{
 				if (rows.HasValue)
 				{
-					if (rows.Value < 0) { throw new Eggceptions.ArgumentOutOfRangeException("rows"); }
+					if (rows.Value < 0) { throw new Eggceptions.ArgumentOutOfRangeException(nameof(rows)); }
 					if (condition(rows.Value, array.Rows())) { return true; }
 				}
 
@@ -300,7 +300,7 @@ namespace Eggstensions.ExtensionMethods
 			{
 				if (columns.HasValue)
 				{
-					if (columns.Value < 0) { throw new Eggceptions.ArgumentOutOfRangeException("columns"); }
+					if (columns.Value < 0) { throw new Eggceptions.ArgumentOutOfRangeException(nameof(columns)); }
 					if (condition(columns.Value, array.Columns())) { return true; }
 				}
 
@@ -311,8 +311,8 @@ namespace Eggstensions.ExtensionMethods
 		/// <summary>If any dimensions of this array meet the specified condition.</summary>
 		static public System.Boolean AnyDimensionsJagged<T>(this T[][,] arrays, System.Func<System.Int32, System.Int32, System.Boolean> condition, System.Int32? length, System.Int32? rows, System.Int32? columns)
 		{
-			if (arrays == null) { throw new Eggceptions.ArgumentNullException("arrays"); }
-			if (condition == null) { throw new Eggceptions.ArgumentNullException("condition"); }
+			if (arrays == null) { throw new Eggceptions.ArgumentNullException(nameof(arrays)); }
+			if (condition == null) { throw new Eggceptions.ArgumentNullException(nameof(condition)); }
 
 			return
 				Length()
@@ -327,7 +327,7 @@ namespace Eggstensions.ExtensionMethods
 			{
 				if (length.HasValue)
 				{
-					if (length.Value < 0) { throw new Eggceptions.ArgumentOutOfRangeException("length"); }
+					if (length.Value < 0) { throw new Eggceptions.ArgumentOutOfRangeException(nameof(length)); }
 					if (condition(length.Value, arrays.Length)) { return true; }
 				}
 
@@ -338,7 +338,7 @@ namespace Eggstensions.ExtensionMethods
 			{
 				if (rows.HasValue)
 				{
-					if (rows.Value < 0) { throw new Eggceptions.ArgumentOutOfRangeException("rows"); }
+					if (rows.Value < 0) { throw new Eggceptions.ArgumentOutOfRangeException(nameof(rows)); }
 
 					return arrays.Any(elements => elements != null ? condition(rows.Value, elements.Rows()) : false);
 				}
@@ -350,7 +350,7 @@ namespace Eggstensions.ExtensionMethods
 			{
 				if (columns.HasValue)
 				{
-					if (columns.Value < 0) { throw new Eggceptions.ArgumentOutOfRangeException("columns"); }
+					if (columns.Value < 0) { throw new Eggceptions.ArgumentOutOfRangeException(nameof(columns)); }
 
 					return arrays.Any(elements => elements != null ? condition(columns.Value, elements.Columns()) : false);
 				}
@@ -366,8 +366,8 @@ namespace Eggstensions.ExtensionMethods
 		/// <summary>The specified column of this array.</summary>
 		static public T[] Column<T>(this T[,] array, System.Int32 column, System.Int32 lowerBound = 0)
 		{
-			if (array == null) { throw new Eggceptions.ArgumentNullException("array"); }
-			if (array.OutOfBounds(null, column)) { throw new Eggceptions.ArgumentOutOfRangeException("column"); }
+			if (array == null) { throw new Eggceptions.ArgumentNullException(nameof(array)); }
+			if (array.OutOfBounds(null, column)) { throw new Eggceptions.ArgumentOutOfRangeException(nameof(column)); }
 			// lowerBound
 
 			var rows = array.Rows();
@@ -391,10 +391,10 @@ namespace Eggstensions.ExtensionMethods
 		/// <summary>Creates a multidimensional array from this jagged array where each element is a column.</summary>
 		static public T[,] ColumnBindJagged<T>(this T[][] arrays, System.Int32 lowerBoundRows = 0, System.Int32 lowerBoundColumns = 0)
 		{
-			if (arrays == null) { throw new Eggceptions.ArgumentNullException("arrays"); }
+			if (arrays == null) { throw new Eggceptions.ArgumentNullException(nameof(arrays)); }
 			// lowerBoundRows
 			// lowerBoundColumns
-			if (!arrays.SameDimensionsJagged()) { throw new Eggceptions.ArgumentOutOfRangeException("arrays"); }
+			if (!arrays.SameDimensionsJagged()) { throw new Eggceptions.ArgumentOutOfRangeException(nameof(arrays)); }
 
 			var arraysLowerBound = arrays.LowerBound();
 
@@ -427,7 +427,7 @@ namespace Eggstensions.ExtensionMethods
 		/// <summary>The number of columns in this array.</summary>
 		static public System.Int32 Columns<T>(this T[,] array)
 		{
-			if (array == null) { throw new Eggceptions.ArgumentNullException("array"); }
+			if (array == null) { throw new Eggceptions.ArgumentNullException(nameof(array)); }
 
 			return array.GetLength(1);
 		}
@@ -439,8 +439,8 @@ namespace Eggstensions.ExtensionMethods
 		/// <summary>Converts each element of this array to an array of another type.</summary>
 		static public TOutput[] Convert<TInput, TOutput>(this TInput[] array, System.Func<TInput, TOutput> converter)
 		{
-			if (array == null) { throw new Eggceptions.ArgumentNullException("array"); }
-			if (converter == null) { throw new Eggceptions.ArgumentNullException("converter"); }
+			if (array == null) { throw new Eggceptions.ArgumentNullException(nameof(array)); }
+			if (converter == null) { throw new Eggceptions.ArgumentNullException(nameof(converter)); }
 
 			var lowerBound = array.LowerBound();
 			var upperBound = array.UpperBound();
@@ -457,8 +457,8 @@ namespace Eggstensions.ExtensionMethods
 		/// <summary>Convert an array of one type to an array of another type.</summary>
 		static public TOutput[,] Convert<TInput, TOutput>(this TInput[,] array, System.Func<TInput, TOutput> converter)
 		{
-			if (array == null) { throw new Eggceptions.ArgumentNullException("array"); }
-			if (converter == null) { throw new Eggceptions.ArgumentNullException("converter"); }
+			if (array == null) { throw new Eggceptions.ArgumentNullException(nameof(array)); }
+			if (converter == null) { throw new Eggceptions.ArgumentNullException(nameof(converter)); }
 
 			var lowerBoundRows = array.LowerBoundRows();
 			var upperBoundRows = array.UpperBoundRows();
@@ -480,8 +480,8 @@ namespace Eggstensions.ExtensionMethods
 		/// <summary>Convert an array of one type to an array of another type.</summary>
 		static public TOutput[][,] ConvertJagged<TInput, TOutput>(this TInput[][,] arrays, System.Func<TInput, TOutput> converter)
 		{
-			if (arrays == null) { throw new Eggceptions.ArgumentNullException("arrays"); }
-			if (converter == null) { throw new Eggceptions.ArgumentNullException("converter"); }
+			if (arrays == null) { throw new Eggceptions.ArgumentNullException(nameof(arrays)); }
+			if (converter == null) { throw new Eggceptions.ArgumentNullException(nameof(converter)); }
 
 			var lowerBound = arrays.LowerBound();
 			var upperBound = arrays.UpperBound();
@@ -519,7 +519,7 @@ namespace Eggstensions.ExtensionMethods
 		/// <summary>A deep copy of this array.</summary>
 		static public T[] Copy<T>(this T[] array)
 		{
-			if (array == null) { throw new Eggceptions.ArgumentNullException("array"); }
+			if (array == null) { throw new Eggceptions.ArgumentNullException(nameof(array)); }
 
 			var lowerBound = array.LowerBound();
 			var upperBound = array.UpperBound();
@@ -536,7 +536,7 @@ namespace Eggstensions.ExtensionMethods
 		/// <summary>A deep copy of this array.</summary>
 		static public T[,] Copy<T>(this T[,] array)
 		{
-			if (array == null) { throw new Eggceptions.ArgumentNullException("array"); }
+			if (array == null) { throw new Eggceptions.ArgumentNullException(nameof(array)); }
 
 			var lowerBoundRows = array.LowerBoundRows();
 			var upperBoundRows = array.UpperBoundRows();
@@ -558,7 +558,7 @@ namespace Eggstensions.ExtensionMethods
 		/// <summary>A deep copy of this array.</summary>
 		static public T[][,] CopyJagged<T>(this T[][,] arrays)
 		{
-			if (arrays == null) { throw new Eggceptions.ArgumentNullException("arrays"); }
+			if (arrays == null) { throw new Eggceptions.ArgumentNullException(nameof(arrays)); }
 
 			var lowerBound = arrays.LowerBound();
 			var upperBound = arrays.UpperBound();
@@ -598,7 +598,7 @@ namespace Eggstensions.ExtensionMethods
 		static public System.Boolean Equals<T>(this T[,] array, params T[][,] arrays)
 		{
 			// array
-			if (arrays == null) { throw new Eggceptions.ArgumentNullException("arrays"); }
+			if (arrays == null) { throw new Eggceptions.ArgumentNullException(nameof(arrays)); }
 
 			return arrays.Unshift(array).EqualsJagged();
 		}
@@ -606,8 +606,8 @@ namespace Eggstensions.ExtensionMethods
 		/// <summary>If each element in this jagged array are equal.</summary>
 		static public System.Boolean EqualsJagged<T>(this T[][,] arrays)
 		{
-			if (arrays == null) { throw new Eggceptions.ArgumentNullException("arrays"); }
-			if (arrays.Length < 2) { throw new Eggceptions.ArgumentOutOfRangeException("arrays"); }
+			if (arrays == null) { throw new Eggceptions.ArgumentNullException(nameof(arrays)); }
+			if (arrays.Length < 2) { throw new Eggceptions.ArgumentOutOfRangeException(nameof(arrays)); }
 
 			if (arrays.Any(elements => elements == null))
 			{
@@ -652,7 +652,7 @@ namespace Eggstensions.ExtensionMethods
 		/// <summary>Creates a new one-dimension array from this two-dimensional array.</summary>
 		static public T[] Flatten<T>(this T[,] array, System.Int32 lowerBound = 0)
 		{
-			if (array == null) { throw new Eggceptions.ArgumentNullException("array"); }
+			if (array == null) { throw new Eggceptions.ArgumentNullException(nameof(array)); }
 			// lowerBound
 
 			var rows = array.Rows();
@@ -680,8 +680,8 @@ namespace Eggstensions.ExtensionMethods
 		/// <summary>Performs the specified action on each element of this array.</summary>
 		static public void ForEach<T>(this T[] array, System.Action<T, System.Int32> action)
 		{
-			if (array == null) { throw new Eggceptions.ArgumentNullException("array"); }
-			if (action == null) { throw new Eggceptions.ArgumentNullException("action"); }
+			if (array == null) { throw new Eggceptions.ArgumentNullException(nameof(array)); }
+			if (action == null) { throw new Eggceptions.ArgumentNullException(nameof(action)); }
 
 			var upperBound = array.UpperBound();
 
@@ -694,8 +694,8 @@ namespace Eggstensions.ExtensionMethods
 		/// <summary>Performs the specified action on each element of this array.</summary>
 		static public void ForEach<T>(this T[,] array, System.Action<T, System.Int32, System.Int32> action)
 		{
-			if (array == null) { throw new Eggceptions.ArgumentNullException("array"); }
-			if (action == null) { throw new Eggceptions.ArgumentNullException("action"); }
+			if (array == null) { throw new Eggceptions.ArgumentNullException(nameof(array)); }
+			if (action == null) { throw new Eggceptions.ArgumentNullException(nameof(action)); }
 
 			var upperBoundRows = array.UpperBoundRows();
 			var upperBoundColumns = array.UpperBoundColumns();
@@ -712,8 +712,8 @@ namespace Eggstensions.ExtensionMethods
 		/// <summary>Performs the specified action on each element of this array.</summary>
 		static public void ForEach<T>(this T[][,] array, System.Action<T, System.Int32, System.Int32, System.Int32> action)
 		{
-			if (array == null) { throw new Eggceptions.ArgumentNullException("array"); }
-			if (action == null) { throw new Eggceptions.ArgumentNullException("action"); }
+			if (array == null) { throw new Eggceptions.ArgumentNullException(nameof(array)); }
+			if (action == null) { throw new Eggceptions.ArgumentNullException(nameof(action)); }
 
 			var upperBound = array.UpperBound();
 
@@ -744,9 +744,9 @@ namespace Eggstensions.ExtensionMethods
 		/// <summary>Inserts the specified elements into this array at the specified index.</summary>
 		static public T[] Insert<T>(this T[] array, System.Int32 index, params T[] elements)
 		{
-			if (array == null) { throw new Eggceptions.ArgumentNullException("array"); }
-			if (array.OutOfBounds(index)) { throw new Eggceptions.ArgumentOutOfRangeException("index"); }
-			if (elements == null) { throw new Eggceptions.ArgumentNullException("elements"); }
+			if (array == null) { throw new Eggceptions.ArgumentNullException(nameof(array)); }
+			if (array.OutOfBounds(index)) { throw new Eggceptions.ArgumentOutOfRangeException(nameof(index)); }
+			if (elements == null) { throw new Eggceptions.ArgumentNullException(nameof(elements)); }
 
 			var lowerBoundArray = array.LowerBound();
 			var lowerBoundElements = elements.LowerBound();
@@ -879,7 +879,7 @@ namespace Eggstensions.ExtensionMethods
 		/// <summary>The index of the first element in this array.</summary>
 		static public System.Int32 LowerBound<T>(this T[] array)
 		{
-			if (array == null) { throw new Eggceptions.ArgumentNullException("array"); }
+			if (array == null) { throw new Eggceptions.ArgumentNullException(nameof(array)); }
 
 			return array.GetLowerBound(0);
 		}
@@ -887,7 +887,7 @@ namespace Eggstensions.ExtensionMethods
 		/// <summary>The index of the first element in the columns of this array.</summary>
 		static public System.Int32 LowerBoundColumns<T>(this T[,] array)
 		{
-			if (array == null) { throw new Eggceptions.ArgumentNullException("array"); }
+			if (array == null) { throw new Eggceptions.ArgumentNullException(nameof(array)); }
 
 			return array.GetLowerBound(1);
 		}
@@ -895,7 +895,7 @@ namespace Eggstensions.ExtensionMethods
 		/// <summary>The index of the first element in the rows of this array.</summary>
 		static public System.Int32 LowerBoundRows<T>(this T[,] array)
 		{
-			if (array == null) { throw new Eggceptions.ArgumentNullException("array"); }
+			if (array == null) { throw new Eggceptions.ArgumentNullException(nameof(array)); }
 
 			return array.GetLowerBound(0);
 		}
@@ -907,7 +907,7 @@ namespace Eggstensions.ExtensionMethods
 		/// <summary>If the specified index is out of bounds.</summary>
 		static public System.Boolean OutOfBounds<T>(this T[] array, System.Int32? index)
 		{
-			if (array == null) { throw new Eggceptions.ArgumentNullException("array"); }
+			if (array == null) { throw new Eggceptions.ArgumentNullException(nameof(array)); }
 			// index
 
 			return
@@ -932,7 +932,7 @@ namespace Eggstensions.ExtensionMethods
 		/// <summary>If the specified row or column is out of bounds.</summary>
 		static public System.Boolean OutOfBounds<T>(this T[,] array, System.Int32? row, System.Int32? column)
 		{
-			if (array == null) { throw new Eggceptions.ArgumentNullException("array"); }
+			if (array == null) { throw new Eggceptions.ArgumentNullException(nameof(array)); }
 			// row
 			// column
 
@@ -977,7 +977,7 @@ namespace Eggstensions.ExtensionMethods
 		/// <summary>Removes elements from the end of this array.</summary>
 		static public T[] Pop<T>(this T[] array, System.Int32 count = 1)
 		{
-			if (array == null) { throw new Eggceptions.ArgumentNullException("array"); }
+			if (array == null) { throw new Eggceptions.ArgumentNullException(nameof(array)); }
 			// count
 
 			var upperBound = array.UpperBound();
@@ -992,8 +992,8 @@ namespace Eggstensions.ExtensionMethods
 		/// <summary>Adds elements to the end of this array.</summary>
 		static public T[] Push<T>(this T[] array, params T[] elements)
 		{
-			if (array == null) { throw new Eggceptions.ArgumentNullException("array"); }
-			if (elements == null) { throw new Eggceptions.ArgumentNullException("elements"); }
+			if (array == null) { throw new Eggceptions.ArgumentNullException(nameof(array)); }
+			if (elements == null) { throw new Eggceptions.ArgumentNullException(nameof(elements)); }
 
 			return array.Insert(array.UpperBound(), elements);
 		}
@@ -1005,8 +1005,8 @@ namespace Eggstensions.ExtensionMethods
 		/// <summary>Removes elements from this array at the specified index.</summary>
 		static public T[] Remove<T>(this T[] array, System.Int32 index, System.Int32 count = 1)
 		{
-			if (array == null) { throw new Eggceptions.ArgumentNullException("array"); }
-			if (array.OutOfBounds(index)) { throw new Eggceptions.ArgumentOutOfRangeException("index"); }
+			if (array == null) { throw new Eggceptions.ArgumentNullException(nameof(array)); }
+			if (array.OutOfBounds(index)) { throw new Eggceptions.ArgumentOutOfRangeException(nameof(index)); }
 			// count
 
 			if (count < 0 || count > array.Length)
@@ -1037,8 +1037,8 @@ namespace Eggstensions.ExtensionMethods
 		/// <summary>The specified row of this array.</summary>
 		static public T[] Row<T>(this T[,] array, System.Int32 row, System.Int32 lowerBound = 0)
 		{
-			if (array == null) { throw new Eggceptions.ArgumentNullException("array"); }
-			if (array.OutOfBounds(row, null)) { throw new Eggceptions.ArgumentOutOfRangeException("row"); }
+			if (array == null) { throw new Eggceptions.ArgumentNullException(nameof(array)); }
+			if (array.OutOfBounds(row, null)) { throw new Eggceptions.ArgumentOutOfRangeException(nameof(row)); }
 			// lowerBound
 
 			var columns = array.Columns();
@@ -1062,10 +1062,10 @@ namespace Eggstensions.ExtensionMethods
 		/// <summary>Creates a multidimensional array from this jagged array where each element is a row.</summary>
 		static public T[,] RowBindJagged<T>(this T[][] arrays, System.Int32 lowerBoundRows = 0, System.Int32 lowerBoundColumns = 0)
 		{
-			if (arrays == null) { throw new Eggceptions.ArgumentNullException("arrays"); }
+			if (arrays == null) { throw new Eggceptions.ArgumentNullException(nameof(arrays)); }
 			// lowerBoundRows
 			// lowerBoundColumns
-			if (!arrays.SameDimensionsJagged()) { throw new Eggceptions.ArgumentOutOfRangeException("arrays"); }
+			if (!arrays.SameDimensionsJagged()) { throw new Eggceptions.ArgumentOutOfRangeException(nameof(arrays)); }
 
 			var arraysLowerBound = arrays.LowerBound();
 
@@ -1098,7 +1098,7 @@ namespace Eggstensions.ExtensionMethods
 		/// <summary>The number of rows in this array.</summary>
 		static public System.Int32 Rows<T>(this T[,] array)
 		{
-			if (array == null) { throw new Eggceptions.ArgumentNullException("array"); }
+			if (array == null) { throw new Eggceptions.ArgumentNullException(nameof(array)); }
 
 			return array.GetLength(0);
 		}
@@ -1111,7 +1111,7 @@ namespace Eggstensions.ExtensionMethods
 		static public System.Boolean SameDimensions<T>(this T[] array, params T[][] arrays)
 		{
 			// array
-			if (arrays == null) { throw new Eggceptions.ArgumentNullException("arrays"); }
+			if (arrays == null) { throw new Eggceptions.ArgumentNullException(nameof(arrays)); }
 
 			return arrays.Unshift(array).SameDimensionsJagged();
 		}
@@ -1120,7 +1120,7 @@ namespace Eggstensions.ExtensionMethods
 		static public System.Boolean SameDimensions<T>(this T[,] array, params T[][,] arrays)
 		{
 			// array
-			if (arrays == null) { throw new Eggceptions.ArgumentNullException("arrays"); }
+			if (arrays == null) { throw new Eggceptions.ArgumentNullException(nameof(arrays)); }
 
 			return arrays.Unshift(array).SameDimensionsJagged();
 		}
@@ -1128,8 +1128,8 @@ namespace Eggstensions.ExtensionMethods
 		/// <summary>If the dimensions of each element in this jagged array are equal.</summary>
 		static public System.Boolean SameDimensionsJagged<T>(this T[][] arrays)
 		{
-			if (arrays == null) { throw new Eggceptions.ArgumentNullException("arrays"); }
-			if (arrays.Length < 2) { throw new Eggceptions.ArgumentOutOfRangeException("arrays"); }
+			if (arrays == null) { throw new Eggceptions.ArgumentNullException(nameof(arrays)); }
+			if (arrays.Length < 2) { throw new Eggceptions.ArgumentOutOfRangeException(nameof(arrays)); }
 
 			if (arrays.Any(elements => elements == null))
 			{
@@ -1162,8 +1162,8 @@ namespace Eggstensions.ExtensionMethods
 		/// <summary>If the dimensions of each element in this jagged array are equal.</summary>
 		static public System.Boolean SameDimensionsJagged<T>(this T[][,] arrays)
 		{
-			if (arrays == null) { throw new Eggceptions.ArgumentNullException("arrays"); }
-			if (arrays.Length < 2) { throw new Eggceptions.ArgumentOutOfRangeException("arrays"); }
+			if (arrays == null) { throw new Eggceptions.ArgumentNullException(nameof(arrays)); }
+			if (arrays.Length < 2) { throw new Eggceptions.ArgumentOutOfRangeException(nameof(arrays)); }
 
 			if (arrays.Any(elements => elements == null))
 			{
@@ -1206,7 +1206,7 @@ namespace Eggstensions.ExtensionMethods
 		/// <summary>Removes elements from the beginning of this array.</summary>
 		static public T[] Shift<T>(this T[] array, System.Int32 count = 1)
 		{
-			if (array == null) { throw new Eggceptions.ArgumentNullException("array"); }
+			if (array == null) { throw new Eggceptions.ArgumentNullException(nameof(array)); }
 			// count
 
 			return array.Remove(array.LowerBound(), count);
@@ -1219,7 +1219,7 @@ namespace Eggstensions.ExtensionMethods
 		/// <summary>Converts each element in this array to <i>System.Double</i>.</summary>
 		static public System.Double[] ToDouble<T>(this T[] array)
 		{
-			if (array == null) { throw new Eggceptions.ArgumentNullException("array"); }
+			if (array == null) { throw new Eggceptions.ArgumentNullException(nameof(array)); }
 
 			return array.Convert(element => System.Convert.ToDouble(element));
 		}
@@ -1227,7 +1227,7 @@ namespace Eggstensions.ExtensionMethods
 		/// <summary>Converts each element in this array to <i>System.Double</i>.</summary>
 		static public System.Double[,] ToDouble<T>(this T[,] array)
 		{
-			if (array == null) { throw new Eggceptions.ArgumentNullException("array"); }
+			if (array == null) { throw new Eggceptions.ArgumentNullException(nameof(array)); }
 
 			return array.Convert(element => System.Convert.ToDouble(element));
 		}
@@ -1235,7 +1235,7 @@ namespace Eggstensions.ExtensionMethods
 		/// <summary>Converts each element in this array to <i>System.Double</i>.</summary>
 		static public System.Double[][,] ToDoubleJagged<T>(this T[][,] arrays)
 		{
-			if (arrays == null) { throw new Eggceptions.ArgumentNullException("arrays"); }
+			if (arrays == null) { throw new Eggceptions.ArgumentNullException(nameof(arrays)); }
 
 			return arrays.ConvertJagged(element => System.Convert.ToDouble(element));
 		}
@@ -1247,7 +1247,7 @@ namespace Eggstensions.ExtensionMethods
 		/// <summary>Converts each element in this array to <i>System.Single</i>.</summary>
 		static public System.Single[] ToSingle<T>(this T[] array)
 		{
-			if (array == null) { throw new Eggceptions.ArgumentNullException("array"); }
+			if (array == null) { throw new Eggceptions.ArgumentNullException(nameof(array)); }
 
 			return array.Convert(element => System.Convert.ToSingle(element));
 		}
@@ -1255,7 +1255,7 @@ namespace Eggstensions.ExtensionMethods
 		/// <summary>Converts each element in this array to <i>System.Single</i>.</summary>
 		static public System.Single[,] ToSingle<T>(this T[,] array)
 		{
-			if (array == null) { throw new Eggceptions.ArgumentNullException("array"); }
+			if (array == null) { throw new Eggceptions.ArgumentNullException(nameof(array)); }
 
 			return array.Convert(element => System.Convert.ToSingle(element));
 		}
@@ -1263,7 +1263,7 @@ namespace Eggstensions.ExtensionMethods
 		/// <summary>Converts each element in this array to <i>System.Single</i>.</summary>
 		static public System.Single[][,] ToSingleJagged<T>(this T[][,] arrays)
 		{
-			if (arrays == null) { throw new Eggceptions.ArgumentNullException("arrays"); }
+			if (arrays == null) { throw new Eggceptions.ArgumentNullException(nameof(arrays)); }
 
 			return arrays.ConvertJagged(element => System.Convert.ToSingle(element));
 		}
@@ -1275,7 +1275,7 @@ namespace Eggstensions.ExtensionMethods
 		/// <summary>Converts each element in this array to the specified type.</summary>
 		static public TOutput[] ToType<TInput, TOutput>(this TInput[] array)
 		{
-			if (array == null) { throw new Eggceptions.ArgumentNullException("array"); }
+			if (array == null) { throw new Eggceptions.ArgumentNullException(nameof(array)); }
 
 			return array.Convert(element => (TOutput)System.Convert.ChangeType(element, typeof(TOutput)));
 		}
@@ -1283,7 +1283,7 @@ namespace Eggstensions.ExtensionMethods
 		/// <summary>Converts each element in this array to the specified type.</summary>
 		static public TOutput[,] ToType<TInput, TOutput>(this TInput[,] array)
 		{
-			if (array == null) { throw new Eggceptions.ArgumentNullException("array"); }
+			if (array == null) { throw new Eggceptions.ArgumentNullException(nameof(array)); }
 
 			return array.Convert(element => (TOutput)System.Convert.ChangeType(element, typeof(TOutput)));
 		}
@@ -1291,7 +1291,7 @@ namespace Eggstensions.ExtensionMethods
 		/// <summary>Converts each element in this array to the specified type.</summary>
 		static public TOutput[][,] ToTypeJagged<TInput, TOutput>(this TInput[][,] arrays)
 		{
-			if (arrays == null) { throw new Eggceptions.ArgumentNullException("arrays"); }
+			if (arrays == null) { throw new Eggceptions.ArgumentNullException(nameof(arrays)); }
 
 			return arrays.ConvertJagged(element => (TOutput)System.Convert.ChangeType(element, typeof(TOutput)));
 		}
@@ -1303,7 +1303,7 @@ namespace Eggstensions.ExtensionMethods
 		/// <summary>The index of the last element in this array.</summary>
 		static public System.Int32 UpperBound<T>(this T[] array)
 		{
-			if (array == null) { throw new Eggceptions.ArgumentNullException("array"); }
+			if (array == null) { throw new Eggceptions.ArgumentNullException(nameof(array)); }
 
 			return array.GetLowerBound(0) + (array.Length - 1);
 		}
@@ -1311,7 +1311,7 @@ namespace Eggstensions.ExtensionMethods
 		/// <summary>The index of the last element in the columns of this array.</summary>
 		static public System.Int32 UpperBoundColumns<T>(this T[,] array)
 		{
-			if (array == null) { throw new Eggceptions.ArgumentNullException("array"); }
+			if (array == null) { throw new Eggceptions.ArgumentNullException(nameof(array)); }
 
 			return array.GetLowerBound(1) + (array.Columns() - 1);
 		}
@@ -1319,7 +1319,7 @@ namespace Eggstensions.ExtensionMethods
 		/// <summary>The index of the last element in the rows of this array.</summary>
 		static public System.Int32 UpperBoundRows<T>(this T[,] array)
 		{
-			if (array == null) { throw new Eggceptions.ArgumentNullException("array"); }
+			if (array == null) { throw new Eggceptions.ArgumentNullException(nameof(array)); }
 
 			return array.GetLowerBound(0) + (array.Rows() - 1);
 		}
@@ -1331,8 +1331,8 @@ namespace Eggstensions.ExtensionMethods
 		/// <summary>Adds elements to the beginning of this array.</summary>
 		static public T[] Unshift<T>(this T[] array, params T[] elements)
 		{
-			if (array == null) { throw new Eggceptions.ArgumentNullException("array"); }
-			if (elements == null) { throw new Eggceptions.ArgumentNullException("elements"); }
+			if (array == null) { throw new Eggceptions.ArgumentNullException(nameof(array)); }
+			if (elements == null) { throw new Eggceptions.ArgumentNullException(nameof(elements)); }
 
 			return array.Insert(array.LowerBound(), elements);
 		}

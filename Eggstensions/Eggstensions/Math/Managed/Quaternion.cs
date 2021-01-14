@@ -23,7 +23,7 @@
 		public Quaternion(System.Single[,] elements)
 			: base(elements)
 		{
-			if (Columns != 4) { throw new Eggceptions.Math.Matrix.ArgumentMatrixDimensionsException("elements"); }
+			if (Columns != 4) { throw new Eggceptions.Math.Matrix.ArgumentMatrixDimensionsException(nameof(elements)); }
 		}
 
 
@@ -97,8 +97,8 @@
 		// Quaternion + Quaternion
 		static public Quaternion operator +(Quaternion left, Quaternion right)
 		{
-			if (left == null) { throw new Eggceptions.ArgumentNullException("left"); }
-			if (right == null) { throw new Eggceptions.ArgumentNullException("right"); }
+			if (left == null) { throw new Eggceptions.ArgumentNullException(nameof(left)); }
+			if (right == null) { throw new Eggceptions.ArgumentNullException(nameof(right)); }
 
 			return new Quaternion(Library.Matrix.Add(left.Elements, right.Elements));
 		}
@@ -106,7 +106,7 @@
 		// Quaternion + System.Single
 		static public Quaternion operator +(Quaternion quaternion, System.Single scalar)
 		{
-			if (quaternion == null) { throw new Eggceptions.ArgumentNullException("quaternion"); }
+			if (quaternion == null) { throw new Eggceptions.ArgumentNullException(nameof(quaternion)); }
 			// scalar
 
 			return new Quaternion(Library.Matrix.Add(quaternion.Elements, scalar));
@@ -116,7 +116,7 @@
 		static public Quaternion operator +(System.Single scalar, Quaternion quaternion)
 		{
 			// scalar
-			if (quaternion == null) { throw new Eggceptions.ArgumentNullException("quaternion"); }
+			if (quaternion == null) { throw new Eggceptions.ArgumentNullException(nameof(quaternion)); }
 
 			return new Quaternion(Library.Matrix.Add(quaternion.Elements, scalar));
 		}
@@ -124,8 +124,8 @@
 		// Quaternion + System.Single[,]
 		static public Quaternion operator +(Quaternion left, System.Single[,] right)
 		{
-			if (left == null) { throw new Eggceptions.ArgumentNullException("left"); }
-			if (right == null) { throw new Eggceptions.ArgumentNullException("right"); }
+			if (left == null) { throw new Eggceptions.ArgumentNullException(nameof(left)); }
+			if (right == null) { throw new Eggceptions.ArgumentNullException(nameof(right)); }
 
 			return new Quaternion(Library.Matrix.Add(left.Elements, right));
 		}
@@ -133,8 +133,8 @@
 		// System.Single[,] + QuaternionQuaternion
 		static public Quaternion operator +(System.Single[,] left, Quaternion right)
 		{
-			if (left == null) { throw new Eggceptions.ArgumentNullException("left"); }
-			if (right == null) { throw new Eggceptions.ArgumentNullException("right"); }
+			if (left == null) { throw new Eggceptions.ArgumentNullException(nameof(left)); }
+			if (right == null) { throw new Eggceptions.ArgumentNullException(nameof(right)); }
 
 			return new Quaternion(Library.Matrix.Add(left, right.Elements));
 		}
@@ -142,7 +142,7 @@
 		// -Quaternion
 		static public Quaternion operator -(Quaternion quaternion)
 		{
-			if (quaternion == null) { throw new Eggceptions.ArgumentNullException("quaternion"); }
+			if (quaternion == null) { throw new Eggceptions.ArgumentNullException(nameof(quaternion)); }
 
 			return new Quaternion(Library.Matrix.Negate(quaternion.Elements));
 		}
@@ -150,8 +150,8 @@
 		// Quaternion - Quaternion
 		static public Quaternion operator -(Quaternion left, Quaternion right)
 		{
-			if (left == null) { throw new Eggceptions.ArgumentNullException("left"); }
-			if (right == null) { throw new Eggceptions.ArgumentNullException("right"); }
+			if (left == null) { throw new Eggceptions.ArgumentNullException(nameof(left)); }
+			if (right == null) { throw new Eggceptions.ArgumentNullException(nameof(right)); }
 
 			return new Quaternion(Library.Matrix.Subtract(left.Elements, right.Elements));
 		}
@@ -159,7 +159,7 @@
 		// Quaternion - System.Single
 		static public Quaternion operator -(Quaternion quaternion, System.Single scalar)
 		{
-			if (quaternion == null) { throw new Eggceptions.ArgumentNullException("quaternion"); }
+			if (quaternion == null) { throw new Eggceptions.ArgumentNullException(nameof(quaternion)); }
 			// scalar
 
 			return new Quaternion(Library.Matrix.Subtract(quaternion.Elements, scalar));
@@ -169,7 +169,7 @@
 		static public Quaternion operator -(System.Single scalar, Quaternion quaternion)
 		{
 			// scalar
-			if (quaternion == null) { throw new Eggceptions.ArgumentNullException("quaternion"); }
+			if (quaternion == null) { throw new Eggceptions.ArgumentNullException(nameof(quaternion)); }
 
 			return new Quaternion(Library.Matrix.Subtract(scalar, quaternion.Elements));
 		}
@@ -177,8 +177,8 @@
 		// Quaternion - System.Single[,]
 		static public Quaternion operator -(Quaternion left, System.Single[,] right)
 		{
-			if (left == null) { throw new Eggceptions.ArgumentNullException("left"); }
-			if (right == null) { throw new Eggceptions.ArgumentNullException("right"); }
+			if (left == null) { throw new Eggceptions.ArgumentNullException(nameof(left)); }
+			if (right == null) { throw new Eggceptions.ArgumentNullException(nameof(right)); }
 
 			return new Quaternion(Library.Matrix.Subtract(left.Elements, right));
 		}
@@ -186,8 +186,8 @@
 		// System.Single[,] - Quaternion
 		static public Quaternion operator -(System.Single[,] left, Quaternion right)
 		{
-			if (left == null) { throw new Eggceptions.ArgumentNullException("left"); }
-			if (right == null) { throw new Eggceptions.ArgumentNullException("right"); }
+			if (left == null) { throw new Eggceptions.ArgumentNullException(nameof(left)); }
+			if (right == null) { throw new Eggceptions.ArgumentNullException(nameof(right)); }
 
 			return new Quaternion(Library.Matrix.Subtract(left, right.Elements));
 		}
@@ -197,7 +197,7 @@
 		// Quaternion * System.Single
 		static public Quaternion operator *(Quaternion quaternion, System.Single scalar)
 		{
-			if (quaternion == null) { throw new Eggceptions.ArgumentNullException("quaternion"); }
+			if (quaternion == null) { throw new Eggceptions.ArgumentNullException(nameof(quaternion)); }
 			// scalar
 
 			return new Quaternion(Library.Matrix.Multiply(quaternion.Elements, scalar));
@@ -207,7 +207,7 @@
 		static public Quaternion operator *(System.Single scalar, Quaternion quaternion)
 		{
 			// scalar
-			if (quaternion == null) { throw new Eggceptions.ArgumentNullException("quaternion"); }
+			if (quaternion == null) { throw new Eggceptions.ArgumentNullException(nameof(quaternion)); }
 
 			return new Quaternion(Library.Matrix.Multiply(quaternion.Elements, scalar));
 		}
