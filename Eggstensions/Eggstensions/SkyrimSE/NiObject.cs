@@ -22,9 +22,9 @@
 			if (niObject == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException(nameof(niObject)); }
 			if (niRTTI == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException(nameof(niRTTI)); }
 
-			foreach (var currentNiRTTI in new NiRTTI(NiObject.GetNiRTTI(niObject)))
+			foreach (var inheritedNiRTTI in new NiRTTI(NiObject.GetNiRTTI(niObject)))
 			{
-				if (currentNiRTTI == niRTTI)
+				if (inheritedNiRTTI == niRTTI)
 				{
 					return true;
 				}

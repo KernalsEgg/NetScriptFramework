@@ -1,18 +1,14 @@
-﻿using System.Linq;
-
-
-
-namespace Eggstensions.SkyrimSE
+﻿namespace Eggstensions.SkyrimSE
 {
-	public enum CellStates : System.Byte
-	{
-		Attached = 0x7
-	}
-
-
-
 	static public class TESObjectCELL
 	{
+		public enum States : System.Byte
+		{
+			Attached = 0x7
+		}
+
+
+
 		/// <param name = "cell">TESObjectCELL</param>
 		static public BSSpinLockGuard GetCellLock(System.IntPtr cell)
 		{
@@ -21,24 +17,13 @@ namespace Eggstensions.SkyrimSE
 			return new BSSpinLockGuard(cell + 0x118);
 		}
 
-		/// <param name = "cell">TESObjectCELL</param>
-		static public CellStates GetCellState(System.IntPtr cell)
-		{
-			if (cell == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException(nameof(cell)); }
-
-			return (CellStates)NetScriptFramework.Memory.ReadUInt8(cell + 0x44);
-		}
-
 		/// <param name="cell">TESObjectCELL</param>
-		/// <returns>bhkWorld</returns>
+		/// <returns>bhkWorldM, System.IntPtr.Zero</returns>
 		static public System.IntPtr GetHavokWorld(System.IntPtr cell)
 		{
 			if (cell == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException(nameof(cell)); }
 
-			var havokWorld = NetScriptFramework.Memory.InvokeCdecl(VIDS.TESObjectCELL.GetHavokWorld, cell);
-			if (havokWorld == System.IntPtr.Zero) { throw new Eggceptions.NullException(nameof(havokWorld)); }
-
-			return havokWorld;
+			return NetScriptFramework.Memory.InvokeCdecl(VIDS.TESObjectCELL.GetHavokWorld, cell);
 		}
 
 		/// <param name = "cell">TESObjectCELL</param>
@@ -115,6 +100,14 @@ namespace Eggstensions.SkyrimSE
 			}
 		}
 
+		/// <param name = "cell">TESObjectCELL</param>
+		static public TESObjectCELL.States GetState(System.IntPtr cell)
+		{
+			if (cell == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException(nameof(cell)); }
+
+			return (TESObjectCELL.States)NetScriptFramework.Memory.ReadUInt8(cell + 0x44);
+		}
+
 		/// <param name="cell">TESObjectCELL</param>
 		/// <returns>TESWorldSpace</returns>
 		static public System.IntPtr GetWorldSpace(System.IntPtr cell)
@@ -128,11 +121,20 @@ namespace Eggstensions.SkyrimSE
 		}
 
 		/// <param name = "cell">TESObjectCELL</param>
+		static public System.Boolean HasState(System.IntPtr cell, TESObjectCELL.States state)
+		{
+			if (cell == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException(nameof(cell)); }
+			// state
+
+			return TESObjectCELL.GetState(cell) == state;
+		}
+
+		/// <param name = "cell">TESObjectCELL</param>
 		static public System.Boolean IsAttached(System.IntPtr cell)
 		{
 			if (cell == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException(nameof(cell)); }
 
-			return GetCellState(cell) == CellStates.Attached;
+			return TESObjectCELL.HasState(cell, TESObjectCELL.States.Attached);
 		}
 
 		/// <param name="cell">TESObjectCELL</param>
@@ -145,27 +147,10 @@ namespace Eggstensions.SkyrimSE
 			// collisionLayer
 			// references
 
-			foreach (var hit in TESObjectCELL.RaycastAlong(cell, origin, ray, collisionLayer))
-			{
-				var niObject = Havok.GetNiObjectFromHavokObject(hit.HavokObject);
+			var havokWorld = TESObjectCELL.GetHavokWorld(cell);
+			if (havokWorld == System.IntPtr.Zero) { return false; }
 
-				if (niObject != System.IntPtr.Zero)
-				{
-					var owner = NiAVObject.GetOwnerRecursive(niObject);
-
-					if (owner != System.IntPtr.Zero)
-					{
-						if (references.Any(reference => reference == owner))
-						{
-							continue;
-						}
-					}
-				}
-
-				return true;
-			}
-
-			return false;
+			return bhkWorldM.IsHitAlong(havokWorld, origin, ray, collisionLayer, references);
 		}
 
 		/// <param name="cell">TESObjectCELL</param>
@@ -178,153 +163,10 @@ namespace Eggstensions.SkyrimSE
 			// collisionLayer
 			// references
 
-			foreach (var hit in TESObjectCELL.RaycastBetween(cell, from, to, collisionLayer))
-			{
-				var niObject = Havok.GetNiObjectFromHavokObject(hit.HavokObject);
+			var havokWorld = TESObjectCELL.GetHavokWorld(cell);
+			if (havokWorld == System.IntPtr.Zero) { return false; }
 
-				if (niObject != System.IntPtr.Zero)
-				{
-					var owner = NiAVObject.GetOwnerRecursive(niObject);
-
-					if (owner != System.IntPtr.Zero)
-					{
-						if (references.Any(reference => reference == owner))
-						{
-							continue;
-						}
-					}
-				}
-
-				return true;
-			}
-
-			return false;
-		}
-
-		/// <param name="cell">TESObjectCELL</param>
-		static public System.Collections.Generic.List<RaycastHit> RaycastAlong(System.IntPtr cell, (System.Single x, System.Single y, System.Single z) origin, (System.Single x, System.Single y, System.Single z) ray)
-		{
-			if (cell == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException(nameof(cell)); }
-			// origin
-			// ray
-
-			using (var argumentsAllocation = NetScriptFramework.Memory.Allocate(0x110))
-			using (var allRayHitTempCollector = new hkpAllRayHitTempCollector())
-			{
-				argumentsAllocation.Zero();
-
-				var havokWorld = TESObjectCELL.GetHavokWorld(cell);
-				var havokWorldScale = Havok.HavokWorldScale;
-
-				NetScriptFramework.Memory.WriteFloat(argumentsAllocation.Address, havokWorldScale * origin.x);
-				NetScriptFramework.Memory.WriteFloat(argumentsAllocation.Address + 0x4, havokWorldScale * origin.y);
-				NetScriptFramework.Memory.WriteFloat(argumentsAllocation.Address + 0x8, havokWorldScale * origin.z);
-
-				NetScriptFramework.Memory.WriteFloat(argumentsAllocation.Address + 0x90, havokWorldScale * ray.x);
-				NetScriptFramework.Memory.WriteFloat(argumentsAllocation.Address + 0x94, havokWorldScale * ray.y);
-				NetScriptFramework.Memory.WriteFloat(argumentsAllocation.Address + 0x98, havokWorldScale * ray.z);
-
-				NetScriptFramework.Memory.WritePointer(argumentsAllocation.Address + 0xA8, allRayHitTempCollector.Address);
-
-				VirtualObject.InvokeVTableThisCall(havokWorld, 0x198, argumentsAllocation.Address); // SkyrimSE.exe + 0xDA7580 (VID76027)
-
-				return hkpAllRayHitTempCollector.GetHits(allRayHitTempCollector.Address);
-			}
-		}
-
-		/// <param name="cell">TESObjectCELL</param>
-		static public System.Collections.Generic.List<RaycastHit> RaycastAlong(System.IntPtr cell, (System.Single x, System.Single y, System.Single z) origin, (System.Single x, System.Single y, System.Single z) ray, CollisionLayers collisionLayer)
-		{
-			if (cell == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException(nameof(cell)); }
-			// origin
-			// ray
-
-			using (var argumentsAllocation = NetScriptFramework.Memory.Allocate(0x110))
-			using (var allRayHitTempCollector = new hkpAllRayHitTempCollector())
-			{
-				argumentsAllocation.Zero();
-
-				var havokWorld = TESObjectCELL.GetHavokWorld(cell);
-				var havokWorldScale = Havok.HavokWorldScale;
-
-				NetScriptFramework.Memory.WriteFloat(argumentsAllocation.Address, havokWorldScale * origin.x);
-				NetScriptFramework.Memory.WriteFloat(argumentsAllocation.Address + 0x4, havokWorldScale * origin.y);
-				NetScriptFramework.Memory.WriteFloat(argumentsAllocation.Address + 0x8, havokWorldScale * origin.z);
-
-				NetScriptFramework.Memory.WriteFloat(argumentsAllocation.Address + 0x90, havokWorldScale * ray.x);
-				NetScriptFramework.Memory.WriteFloat(argumentsAllocation.Address + 0x94, havokWorldScale * ray.y);
-				NetScriptFramework.Memory.WriteFloat(argumentsAllocation.Address + 0x98, havokWorldScale * ray.z);
-
-				NetScriptFramework.Memory.WriteUInt32(argumentsAllocation.Address + 0x24, (0xA << 0x10) | (System.UInt32)collisionLayer);
-				NetScriptFramework.Memory.WritePointer(argumentsAllocation.Address + 0xA8, allRayHitTempCollector.Address);
-
-				VirtualObject.InvokeVTableThisCall(havokWorld, 0x198, argumentsAllocation.Address); // SkyrimSE.exe + 0xDA7580 (VID76027)
-
-				return hkpAllRayHitTempCollector.GetHits(allRayHitTempCollector.Address);
-			}
-		}
-
-		/// <param name="cell">TESObjectCELL</param>
-		static public System.Collections.Generic.List<RaycastHit> RaycastBetween(System.IntPtr cell, (System.Single x, System.Single y, System.Single z) from, (System.Single x, System.Single y, System.Single z) to)
-		{
-			if (cell == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException(nameof(cell)); }
-			// from
-			// to
-
-			using (var argumentsAllocation = NetScriptFramework.Memory.Allocate(0x110))
-			using (var allRayHitTempCollector = new hkpAllRayHitTempCollector())
-			{
-				argumentsAllocation.Zero();
-
-				var havokWorld = TESObjectCELL.GetHavokWorld(cell);
-				var havokWorldScale = Havok.HavokWorldScale;
-
-				NetScriptFramework.Memory.WriteFloat(argumentsAllocation.Address, havokWorldScale * from.x);
-				NetScriptFramework.Memory.WriteFloat(argumentsAllocation.Address + 0x4, havokWorldScale * from.y);
-				NetScriptFramework.Memory.WriteFloat(argumentsAllocation.Address + 0x8, havokWorldScale * from.z);
-
-				NetScriptFramework.Memory.WriteFloat(argumentsAllocation.Address + 0x10, havokWorldScale * to.x);
-				NetScriptFramework.Memory.WriteFloat(argumentsAllocation.Address + 0x14, havokWorldScale * to.y);
-				NetScriptFramework.Memory.WriteFloat(argumentsAllocation.Address + 0x18, havokWorldScale * to.z);
-
-				NetScriptFramework.Memory.WritePointer(argumentsAllocation.Address + 0xA8, allRayHitTempCollector.Address);
-
-				VirtualObject.InvokeVTableThisCall(havokWorld, 0x198, argumentsAllocation.Address); // SkyrimSE.exe + 0xDA7580 (VID76027)
-
-				return hkpAllRayHitTempCollector.GetHits(allRayHitTempCollector.Address);
-			}
-		}
-
-		/// <param name="cell">TESObjectCELL</param>
-		static public System.Collections.Generic.List<RaycastHit> RaycastBetween(System.IntPtr cell, (System.Single x, System.Single y, System.Single z) from, (System.Single x, System.Single y, System.Single z) to, CollisionLayers collisionLayer)
-		{
-			if (cell == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException(nameof(cell)); }
-			// from
-			// to
-
-			using (var argumentsAllocation = NetScriptFramework.Memory.Allocate(0x110))
-			using (var allRayHitTempCollector = new hkpAllRayHitTempCollector())
-			{
-				argumentsAllocation.Zero();
-
-				var havokWorld = TESObjectCELL.GetHavokWorld(cell);
-				var havokWorldScale = Havok.HavokWorldScale;
-
-				NetScriptFramework.Memory.WriteFloat(argumentsAllocation.Address, havokWorldScale * from.x);
-				NetScriptFramework.Memory.WriteFloat(argumentsAllocation.Address + 0x4, havokWorldScale * from.y);
-				NetScriptFramework.Memory.WriteFloat(argumentsAllocation.Address + 0x8, havokWorldScale * from.z);
-
-				NetScriptFramework.Memory.WriteFloat(argumentsAllocation.Address + 0x10, havokWorldScale * to.x);
-				NetScriptFramework.Memory.WriteFloat(argumentsAllocation.Address + 0x14, havokWorldScale * to.y);
-				NetScriptFramework.Memory.WriteFloat(argumentsAllocation.Address + 0x18, havokWorldScale * to.z);
-
-				NetScriptFramework.Memory.WriteUInt32(argumentsAllocation.Address + 0x24, (0xA << 0x10) | (System.UInt32)collisionLayer);
-				NetScriptFramework.Memory.WritePointer(argumentsAllocation.Address + 0xA8, allRayHitTempCollector.Address);
-
-				VirtualObject.InvokeVTableThisCall(havokWorld, 0x198, argumentsAllocation.Address); // SkyrimSE.exe + 0xDA7580 (VID76027)
-
-				return hkpAllRayHitTempCollector.GetHits(allRayHitTempCollector.Address);
-			}
+			return bhkWorldM.IsHitBetween(havokWorld, from, to, collisionLayer, references);
 		}
 	}
 }

@@ -174,14 +174,12 @@ namespace Eggstensions.SkyrimSE
 		}
 
 		/// <param name="reference">TESObjectREFR</param>
+		/// <returns>TESObjectCELL, System.IntPtr.Zero</returns>
 		static public System.IntPtr GetParentCell(System.IntPtr reference)
 		{
 			if (reference == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException(nameof(reference)); }
 
-			var parentCell = NetScriptFramework.Memory.ReadPointer(reference + 0x60);
-			if (parentCell == System.IntPtr.Zero) { throw new Eggceptions.NullException(nameof(parentCell)); }
-
-			return parentCell;
+			return NetScriptFramework.Memory.ReadPointer(reference + 0x60);
 		}
 
 		/// <param name="reference">TESObjectREFR</param>
@@ -343,9 +341,10 @@ namespace Eggstensions.SkyrimSE
 			// ray
 			// collisionLayer
 
-			var cell = TESObjectREFR.GetParentCell(reference);
+			var parentCell = TESObjectREFR.GetParentCell(reference);
+			if (parentCell == System.IntPtr.Zero) { return false; }
 
-			return TESObjectCELL.IsHitAlong(cell, origin, ray, collisionLayer, reference);
+			return TESObjectCELL.IsHitAlong(parentCell, origin, ray, collisionLayer, reference);
 		}
 
 		/// <param name="reference">TESObjectREFR</param>
@@ -358,11 +357,11 @@ namespace Eggstensions.SkyrimSE
 			// to
 			// collisionLayer
 
-			var cell = TESObjectREFR.GetParentCell(reference);
+			var parentCell = TESObjectREFR.GetParentCell(reference);
+			if (parentCell == System.IntPtr.Zero) { return false; }
 
-			return TESObjectCELL.IsHitBetween(cell, from, to, collisionLayer, reference, target);
+			return TESObjectCELL.IsHitBetween(parentCell, from, to, collisionLayer, reference, target);
 		}
-
 		/*
 		/// <param name="reference">TESObjectREFR</param>
 		static public void SetHarvested(System.IntPtr reference, System.Boolean harvested)

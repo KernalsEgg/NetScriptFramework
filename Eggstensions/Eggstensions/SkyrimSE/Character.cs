@@ -13,7 +13,7 @@ namespace Eggstensions.SkyrimSE
 			if (character == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException(nameof(character)); }
 			if (target == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException(nameof(target)); }
 
-			// Character, Character, 3u
+			// GetLineOfSight == 3u, AutoAimActor == 5u
 			return NetScriptFramework.Memory.InvokeCdecl(VIDS.Character.HasLineOfSight, character, target, 3u).ToBool();
 		}
 	}

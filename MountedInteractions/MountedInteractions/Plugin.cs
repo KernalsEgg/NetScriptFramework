@@ -32,9 +32,14 @@ namespace MountedInteractions
 				Plugin.WriteHooksAccurateFollowerCommands();
 			}
 
-			if (Plugin._settings.SneakToDismount)
+			if (!Plugin._settings.DismountByActivating)
 			{
-				Plugin.WriteHooksSneakToDismount();
+				Plugin.WriteHooksDismountByActivating();
+			}
+
+			if (Plugin._settings.DismountBySneaking)
+			{
+				Plugin.WriteHooksDismountBySneaking();
 			}
 
 			return true;
@@ -96,7 +101,7 @@ namespace MountedInteractions
 				IncludeLength = 5,
 				Before = cpuRegisters =>
 				{
-					if (PlayerCamera.IsHorse(PlayerCamera.Instance))
+					if (TESCamera.IsHorse(PlayerCamera.Instance))
 					{
 						cpuRegisters.Skip();
 					}
@@ -143,7 +148,7 @@ namespace MountedInteractions
 				}
 			});
 
-			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters() // Correct player wait marker position on horse (origin)
+			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters() // Correct player wait command position on horse (origin)
 			{
 				Address = Plugin._placeCommandWaitMarker + 0x19D,
 				Pattern = "E8 ?? ?? ?? ??",
@@ -152,7 +157,7 @@ namespace MountedInteractions
 				Before = Plugin.SetOrigin
 			});
 
-			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters() // Correct player wait marker position on horse (current offset)
+			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters() // Correct player wait command position on horse (current offset)
 			{
 				Address = Plugin._placeCommandWaitMarker + 0x1BF,
 				Pattern = "E8 ?? ?? ?? ??",
@@ -187,7 +192,7 @@ namespace MountedInteractions
 				IncludeLength = 0,
 				Before = cpuRegisters =>
 				{
-					cpuRegisters.XMM14f = PlayerCamera.IsHorse(PlayerCamera.Instance) ? Plugin._settings.ActivateDistance : PlayerCharacter.ActivateDistance;
+					cpuRegisters.XMM14f = Plugin.GetActivateDistance(cpuRegisters);
 				}
 			});
 
@@ -199,7 +204,7 @@ namespace MountedInteractions
 				IncludeLength = 0,
 				Before = cpuRegisters =>
 				{
-					cpuRegisters.XMM0f = PlayerCamera.IsHorse(PlayerCamera.Instance) ? Plugin._settings.ActivateDistance : PlayerCharacter.ActivateDistance;
+					cpuRegisters.XMM0f = Plugin.GetActivateDistance(cpuRegisters);
 				}
 			});
 			
@@ -228,7 +233,7 @@ namespace MountedInteractions
 				}
 			});
 			
-			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters() // Block player activating furniture on horse
+			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters() // Block player activating furniture on mount
 			{
 				Address = Plugin._activateFurniture + 0x25,
 				Pattern = "48 8B E9" + "4D 85 C0",
@@ -238,7 +243,7 @@ namespace MountedInteractions
 				{
 					var playerCharacter = PlayerCharacter.Instance;
 
-					if (Actor.IsOnMount(playerCharacter) && !Actor.IsOnFlyingMount(playerCharacter))
+					if (Actor.IsOnMount(playerCharacter))
 					{
 						cpuRegisters.FLAGS = new System.IntPtr(cpuRegisters.FLAGS.ToInt64() | 0x40);
 					}
@@ -257,7 +262,6 @@ namespace MountedInteractions
 				After = cpuRegisters =>
 				{
 					var playerCharacter = cpuRegisters.CX;
-					var targetTeammateAddress = cpuRegisters.DX;
 					var targetTeammate = PlayerCharacter.GetTargetTeammate(playerCharacter);
 
 					if (targetTeammate != System.IntPtr.Zero)
@@ -265,14 +269,14 @@ namespace MountedInteractions
 						NiRefObject.IncrementReferenceCount(TESObjectREFR.GetHandleRefObject(targetTeammate));
 					}
 
-					NetScriptFramework.Memory.WritePointer(targetTeammateAddress, targetTeammate);
+					NetScriptFramework.Memory.WritePointer(cpuRegisters.DX, targetTeammate);
 				}
 			});
 		}
 
-		static private void WriteHooksSneakToDismount()
+		static private void WriteHooksDismountByActivating()
 		{
-			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters() // Skip activating horse
+			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters() // Do not dismount on release activate button
 			{
 				Address = Plugin._activateHandlerActivate + 0x92,
 				Pattern = "E8 ?? ?? ?? ??",
@@ -280,43 +284,19 @@ namespace MountedInteractions
 				IncludeLength = 5,
 				Before = cpuRegisters =>
 				{
-					var playerCharacter = cpuRegisters.DI;
+					var playerCharacter = PlayerCharacter.Instance;
 
 					if (Actor.IsOnMount(playerCharacter) && !Actor.IsOnFlyingMount(playerCharacter))
 					{
-						cpuRegisters.AX = GetInteractionHandle();
+						cpuRegisters.AX = BSPointerHandle.Null;
 						cpuRegisters.Skip();
-					}
-
-
-
-					System.IntPtr GetInteractionHandle()
-					{
-						var occupiedFurnitureHandleAddress = Actor.GetOccupiedFurnitureHandleAddress(playerCharacter);
-
-						using (var occupiedFurniture = new BSPointerHandle.ReferenceFromHandle(occupiedFurnitureHandleAddress))
-						{
-							if (occupiedFurniture.Reference != System.IntPtr.Zero)
-							{
-								return occupiedFurnitureHandleAddress;
-							}
-						}
-
-						var vehicleHandleAddress = Actor.GetVehicleHandleAddress(playerCharacter);
-
-						using (var vehicle = new BSPointerHandle.ReferenceFromHandle(vehicleHandleAddress))
-						{
-							if (vehicle.Reference != System.IntPtr.Zero)
-							{
-								return vehicleHandleAddress;
-							}
-						}
-
-						return BSPointerHandle.Null;
 					}
 				}
 			});
+		}
 
+		static private void WriteHooksDismountBySneaking()
+		{
 			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters() // Dismount on release sneak button
 			{
 				Address = Plugin._sneakHandler + 0xF,
@@ -350,6 +330,8 @@ namespace MountedInteractions
 
 		static private void IsOnFlyingMount(NetScriptFramework.CPURegisters cpuRegisters)
 		{
+			// cpuRegisters
+
 			var playerCharacter = cpuRegisters.CX;
 
 			cpuRegisters.AX = new System.IntPtr(Actor.IsOnFlyingMount(playerCharacter) ? 1 : 0);
@@ -357,6 +339,8 @@ namespace MountedInteractions
 
 		static private void SetOrigin(NetScriptFramework.CPURegisters cpuRegisters)
 		{
+			// cpuRegisters
+
 			var playerCamera = cpuRegisters.CX;
 			var currentState = TESCamera.GetCurrentState(playerCamera);
 
@@ -375,6 +359,8 @@ namespace MountedInteractions
 
 		static private void SetCurrentOffset(NetScriptFramework.CPURegisters cpuRegisters)
 		{
+			// cpuRegisters
+
 			var playerCamera = cpuRegisters.CX;
 			var currentState = TESCamera.GetCurrentState(playerCamera);
 
@@ -389,6 +375,15 @@ namespace MountedInteractions
 
 				cpuRegisters.Skip();
 			}
+		}
+
+		static public System.Single GetActivateDistance(NetScriptFramework.CPURegisters cpuRegisters)
+		{
+			// cpuRegisters
+
+			var playerCharacter = PlayerCharacter.Instance;
+
+			return (Actor.IsOnMount(playerCharacter) && !Actor.IsOnFlyingMount(playerCharacter)) ? Plugin._settings.ActivateDistance : PlayerCharacter.ActivateDistance;
 		}
 	}
 }

@@ -3,10 +3,13 @@
 	public class Settings
 	{
 		[NetScriptFramework.Tools.ConfigValue("AccurateFollowerCommands", "Accurate Follower Commands", "Command followers standing behind you in third-person, and more easily command followers standing among enemies.", NetScriptFramework.Tools.ConfigEntryFlags.VeryShortComment)]
-		public System.Boolean AccurateFollowerCommands { get; private set; } = true;
+		public System.Boolean AccurateFollowerCommands { get; private set; } = true; // false
 
-		[NetScriptFramework.Tools.ConfigValue("SneakToDismount", "Sneak To Dismount", "Dismount using the sneak button instead of the activate button.", NetScriptFramework.Tools.ConfigEntryFlags.VeryShortComment)]
-		public System.Boolean SneakToDismount { get; private set; } = true;
+		[NetScriptFramework.Tools.ConfigValue("DismountByActivating", "Dismount By Activating", "Dismount by releasing the activate button.", NetScriptFramework.Tools.ConfigEntryFlags.VeryShortComment)]
+		public System.Boolean DismountByActivating { get; private set; } = false; // true
+
+		[NetScriptFramework.Tools.ConfigValue("DismountBySneaking", "Dismount By Sneaking", "Dismount by releasing the sneak button instead of the activate button.", NetScriptFramework.Tools.ConfigEntryFlags.VeryShortComment)]
+		public System.Boolean DismountBySneaking { get; private set; } = true; // false
 
 		[NetScriptFramework.Tools.ConfigValue("ActivateDistance", "Activate Distance", "Maximum activation distance while mounted.", NetScriptFramework.Tools.ConfigEntryFlags.VeryShortComment)]
 		public System.Single ActivateDistance { get; private set; } = 270.0f; // 180.0f

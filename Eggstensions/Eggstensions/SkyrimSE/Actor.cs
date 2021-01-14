@@ -256,7 +256,8 @@ namespace Eggstensions.SkyrimSE
 			// ray
 			// collisionLayer
 
-			var cell = TESObjectREFR.GetParentCell(actor);
+			var parentCell = TESObjectREFR.GetParentCell(actor);
+			if (parentCell == System.IntPtr.Zero) { return false; }
 
 			using (var mountInteraction = Actor.GetMountInteraction(actor))
 			{
@@ -278,7 +279,7 @@ namespace Eggstensions.SkyrimSE
 
 			System.Boolean IsHitAlong(params System.IntPtr[] references)
 			{
-				return TESObjectCELL.IsHitAlong(cell, origin, ray, collisionLayer, references);
+				return TESObjectCELL.IsHitAlong(parentCell, origin, ray, collisionLayer, references);
 			}
 		}
 
@@ -340,8 +341,10 @@ namespace Eggstensions.SkyrimSE
 			// origin
 			// collisionLayer
 
+			var parentCell = TESObjectREFR.GetParentCell(actor);
+			if (parentCell == System.IntPtr.Zero) { return false; }
+
 			var fractions = new System.Single[] { 0.75f, 0.5f, 0.25f };
-			var cell = TESObjectREFR.GetParentCell(actor);
 			var targetPosition = TESObjectREFR.GetPosition(target);
 			var targetMinimumBounds = TESObjectREFR.GetMinimumBounds(target);
 			var targetMaximumBounds = TESObjectREFR.GetMaximumBounds(target);
@@ -368,7 +371,7 @@ namespace Eggstensions.SkyrimSE
 			{
 				foreach (var fraction in fractions)
 				{
-					if (!TESObjectCELL.IsHitBetween(cell, origin, (targetPosition.x, targetPosition.y, targetPosition.z + fraction * (targetMaximumBounds.z - targetMinimumBounds.z) + targetMinimumBounds.z), collisionLayer, references))
+					if (!TESObjectCELL.IsHitBetween(parentCell, origin, (targetPosition.x, targetPosition.y, targetPosition.z + fraction * (targetMaximumBounds.z - targetMinimumBounds.z) + targetMinimumBounds.z), collisionLayer, references))
 					{
 						return true;
 					}

@@ -1,4 +1,4 @@
-﻿using Eggstensions.Bethesda;
+﻿using Eggstensions.SkyrimSE;
 
 
 
@@ -18,9 +18,6 @@ namespace ShelterFramework
 
 
 
-		// Exceptions
-		//	GetParentCell: The subject is not in a loaded cell
-		//	GetHavokWorld: The subject is not in the loaded world space
 		override protected System.Boolean Initialize(System.Boolean loadedAny)
 		{
 			// loadedAny

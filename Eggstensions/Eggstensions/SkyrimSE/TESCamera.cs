@@ -25,5 +25,13 @@
 
 			return currentState;
 		}
+
+		/// <param name="camera">TESCamera</param>
+		static public System.Boolean IsHorse(System.IntPtr playerCamera)
+		{
+			if (playerCamera == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException(nameof(playerCamera)); }
+
+			return TESCameraState.IsHorse(TESCamera.GetCurrentState(playerCamera));
+		}
 	}
 }

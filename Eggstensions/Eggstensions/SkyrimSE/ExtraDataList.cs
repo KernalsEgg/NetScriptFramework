@@ -9,56 +9,58 @@
 
 
 
-	static public class PresenceBitfield
-	{
-		static public System.UInt32 Length { get; } = 0x18;
-		
-		
-		
-		static public System.Boolean HasType(System.IntPtr presenceBitfield, ExtraDataTypes type)
-		{
-			if (presenceBitfield == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException(nameof(presenceBitfield)); }
-			// type
-
-			var index = (System.Byte)type >> 3;
-
-			if (index < PresenceBitfield.Length)
-			{
-				var mask = (System.Byte)(1 << ((System.Byte)type % 8));
-
-				return (NetScriptFramework.Memory.ReadUInt8(presenceBitfield + 0x1 * index) & mask) != 0;
-			}
-
-			return false;
-		}
-
-		static public void MarkType(System.IntPtr presenceBitfield, ExtraDataTypes type, System.Boolean cleared)
-		{
-			if (presenceBitfield == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException(nameof(presenceBitfield)); }
-			// type
-			// cleared
-
-			var index = (System.Byte)type >> 3;
-
-			if (index < PresenceBitfield.Length)
-			{
-				var address = presenceBitfield + 0x1 * index;
-				var mask = (System.Byte)(1 << ((System.Byte)type % 8));
-
-				if (cleared)
-				{
-					NetScriptFramework.Memory.WriteUInt8(address, (System.Byte)(NetScriptFramework.Memory.ReadUInt8(address) & ~mask));
-				}
-				else
-				{
-					NetScriptFramework.Memory.WriteUInt8(address, (System.Byte)(NetScriptFramework.Memory.ReadUInt8(address) | mask));
-				}
-			}
-		}
-	}
-
 	public class ExtraDataList : System.Collections.Generic.IEnumerable<System.IntPtr>
 	{
+		static public class PresenceBitfield
+		{
+			static public System.UInt32 Length { get; } = 0x18;
+
+
+
+			static public System.Boolean HasExtraDataType(System.IntPtr presenceBitfield, ExtraDataTypes type)
+			{
+				if (presenceBitfield == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException(nameof(presenceBitfield)); }
+				// type
+
+				var index = (System.Byte)type >> 3;
+
+				if (index < PresenceBitfield.Length)
+				{
+					var mask = (System.Byte)(1 << ((System.Byte)type % 8));
+
+					return (NetScriptFramework.Memory.ReadUInt8(presenceBitfield + 0x1 * index) & mask) != 0;
+				}
+
+				return false;
+			}
+
+			static public void MarkExtraDataType(System.IntPtr presenceBitfield, ExtraDataTypes type, System.Boolean cleared)
+			{
+				if (presenceBitfield == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException(nameof(presenceBitfield)); }
+				// type
+				// cleared
+
+				var index = (System.Byte)type >> 3;
+
+				if (index < PresenceBitfield.Length)
+				{
+					var address = presenceBitfield + 0x1 * index;
+					var mask = (System.Byte)(1 << ((System.Byte)type % 8));
+
+					if (cleared)
+					{
+						NetScriptFramework.Memory.WriteUInt8(address, (System.Byte)(NetScriptFramework.Memory.ReadUInt8(address) & ~mask));
+					}
+					else
+					{
+						NetScriptFramework.Memory.WriteUInt8(address, (System.Byte)(NetScriptFramework.Memory.ReadUInt8(address) | mask));
+					}
+				}
+			}
+		}
+
+
+
 		public ExtraDataList(System.IntPtr extraDataList)
 		{
 			if (extraDataList == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException(nameof(extraDataList)); }
@@ -132,7 +134,7 @@
 
 			using (ExtraDataList.GetReadLock(extraDataList))
 			{
-				return PresenceBitfield.HasType(ExtraDataList.GetPresenceBitfield(extraDataList), extraDataType);
+				return ExtraDataList.PresenceBitfield.HasExtraDataType(ExtraDataList.GetPresenceBitfield(extraDataList), extraDataType);
 			}
 		}
 

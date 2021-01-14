@@ -2,24 +2,6 @@
 {
 	static public class Havok
 	{
-		static public System.Single HavokWorldScale
-		{
-			get
-			{
-				return NetScriptFramework.Memory.ReadFloat(VIDS.Havok.HavokWorldScale);
-			}
-		}
-
-		static public System.Single HavokWorldScaleInverse
-		{
-			get
-			{
-				return NetScriptFramework.Memory.ReadFloat(VIDS.Havok.HavokWorldScaleInverse);
-			}
-		}
-
-
-
 		/// <param name="havokObject">HavokObject</param>
 		static public CollisionLayers GetCollisionLayer(System.IntPtr havokObject)
 		{

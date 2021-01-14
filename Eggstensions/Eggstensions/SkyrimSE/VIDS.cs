@@ -102,6 +102,29 @@
 			static public System.IntPtr CollisionFilter { get { return _collisionFilter; } }
 		}
 
+		static public class bhkWorldM
+		{
+			static bhkWorldM()
+			{
+				_scale =		NetScriptFramework.Main.GameInfo.GetAddressOf(231896);
+				_scaleInverse =	NetScriptFramework.Main.GameInfo.GetAddressOf(230692);
+			}
+
+
+
+			readonly static private System.IntPtr _scale;
+
+			readonly static private System.IntPtr _scaleInverse;
+
+
+
+			/// <summary>SkyrimSE.exe + 0x154064C (VID231896)</summary>
+			static public System.IntPtr Scale			{ get { return _scale; } }
+
+			/// <summary>SkyrimSE.exe + 0x1536BA0 (VID230692)</summary>
+			static public System.IntPtr ScaleInverse	{ get { return _scaleInverse; } }
+		}
+
 		static public class BSFixedString
 		{
 			static BSFixedString()
@@ -355,29 +378,16 @@
 		{
 			static Havok()
 			{
-				_getNiObjectFromHavokObject =	NetScriptFramework.Main.GameInfo.GetAddressOf(76160);
-				_havokWorldScale =				NetScriptFramework.Main.GameInfo.GetAddressOf(231896);
-				_havokWorldScaleInverse =		NetScriptFramework.Main.GameInfo.GetAddressOf(230692);
+				_getNiObjectFromHavokObject = NetScriptFramework.Main.GameInfo.GetAddressOf(76160);
 			}
 
 
 
 			readonly static private System.IntPtr _getNiObjectFromHavokObject;
 
-			readonly static private System.IntPtr _havokWorldScale;
-
-			readonly static private System.IntPtr _havokWorldScaleInverse;
-
-
 
 			/// <summary>SkyrimSE.exe + 0xDAD060 (VID76160)</summary>
-			static public System.IntPtr GetNiObjectFromHavokObject	{ get { return _getNiObjectFromHavokObject; } }
-
-			/// <summary>SkyrimSE.exe + 0x154064C (VID231896)</summary>
-			static public System.IntPtr HavokWorldScale				{ get { return _havokWorldScale; } }
-
-			/// <summary>SkyrimSE.exe + 0x1536BA0 (VID230692)</summary>
-			static public System.IntPtr HavokWorldScaleInverse		{ get { return _havokWorldScaleInverse; } }
+			static public System.IntPtr GetNiObjectFromHavokObject { get { return _getNiObjectFromHavokObject; } }
 		}
 
 		static public class hkpAllRayHitTempCollector

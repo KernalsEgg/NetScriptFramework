@@ -11,6 +11,7 @@
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)SkyrimSE\Actor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SkyrimSE\AIProcess.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SkyrimSE\bhkWorldM.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SkyrimSE\BipedAnim.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SkyrimSE\BipedObject.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SkyrimSE\BSDismemberSkinInstance.cs" />

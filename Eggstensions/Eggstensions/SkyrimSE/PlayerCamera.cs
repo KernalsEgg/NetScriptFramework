@@ -124,12 +124,5 @@
 
 			return NetScriptFramework.Memory.ReadFloat(playerCamera + 0x14C);
 		}
-
-		static public System.Boolean IsHorse(System.IntPtr playerCamera)
-		{
-			if (playerCamera == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException(nameof(playerCamera)); }
-
-			return TESCameraState.GetState(TESCamera.GetCurrentState(playerCamera)) == TESCameraStates.HorseCameraState;
-		}
 	}
 }
