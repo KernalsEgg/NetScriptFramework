@@ -80,7 +80,7 @@ namespace ShelterFramework
 				case FormTypes.TESObjectREFR:
 					return Plugin.IsShelteredReference(reference);
 				default:
-					throw new Eggceptions.Bethesda.FormTypeException("reference");
+					throw new Eggceptions.SkyrimSE.FormTypeException("reference");
 			}
 		}
 

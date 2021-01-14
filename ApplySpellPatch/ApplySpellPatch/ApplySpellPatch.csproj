@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{88A63F57-559D-4958-B16B-79FC2020C999}</ProjectGuid>
+    <ProjectGuid>{096BC761-97FE-4EB9-84FF-F1F2F9EC03F5}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ApplySpellPatch</RootNamespace>
@@ -34,10 +34,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="NetScriptFramework">
-      <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Skyrim Special Edition\Data\NetScriptFramework\NetScriptFramework.dll</HintPath>
+      <HintPath>..\..\..\Program Files (x86)\Steam\steamapps\common\Skyrim Special Edition\Data\NetScriptFramework\NetScriptFramework.dll</HintPath>
     </Reference>
     <Reference Include="NetScriptFramework.SkyrimSE">
-      <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Skyrim Special Edition\Data\NetScriptFramework\NetScriptFramework.SkyrimSE.dll</HintPath>
+      <HintPath>..\..\..\Program Files (x86)\Steam\steamapps\common\Skyrim Special Edition\Data\NetScriptFramework\NetScriptFramework.SkyrimSE.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

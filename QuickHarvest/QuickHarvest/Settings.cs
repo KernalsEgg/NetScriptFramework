@@ -219,7 +219,7 @@ namespace QuickHarvest
 				if (System.String.IsNullOrWhiteSpace(excludedFileName)) { break; }
 
 				var excludedForm = TESForm.GetFormFromFile(excludedFormID, excludedFileName);
-				if (excludedForm == System.IntPtr.Zero) { throw new Eggceptions.Bethesda.FormNotFoundException("Form ID: " + excludedFormID.ToString("X8") + ", File Name: " + excludedFileName); }
+				if (excludedForm == System.IntPtr.Zero) { throw new Eggceptions.SkyrimSE.FormNotFoundException("Form ID: " + excludedFormID.ToString("X8") + ", File Name: " + excludedFileName); }
 
 				ExcludedIngredients.Add(excludedForm);
 			}
@@ -238,7 +238,7 @@ namespace QuickHarvest
 				if (System.String.IsNullOrWhiteSpace(includedFileName)) { break; }
 
 				var includedForm = TESForm.GetFormFromFile(includedFormID, includedFileName);
-				if (includedForm == System.IntPtr.Zero) { throw new Eggceptions.Bethesda.FormNotFoundException("Form ID: " + includedFormID.ToString("X8") + ", File Name: " + includedFileName); }
+				if (includedForm == System.IntPtr.Zero) { throw new Eggceptions.SkyrimSE.FormNotFoundException("Form ID: " + includedFormID.ToString("X8") + ", File Name: " + includedFileName); }
 
 				IncludedIngredients.Add(includedForm);
 			}

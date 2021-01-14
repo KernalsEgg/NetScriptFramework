@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{D28B7114-FB4F-4048-A903-54A890170A58}</ProjectGuid>
+    <ProjectGuid>{8C5FB27C-1A2E-43B9-AFE5-8B4F3E47681E}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>QuickHarvest</RootNamespace>
@@ -34,10 +34,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="NetScriptFramework">
-      <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Skyrim Special Edition\Data\NetScriptFramework\NetScriptFramework.dll</HintPath>
+      <HintPath>..\..\..\Program Files (x86)\Steam\steamapps\common\Skyrim Special Edition\Data\NetScriptFramework\NetScriptFramework.dll</HintPath>
     </Reference>
     <Reference Include="NetScriptFramework.SkyrimSE">
-      <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Skyrim Special Edition\Data\NetScriptFramework\NetScriptFramework.SkyrimSE.dll</HintPath>
+      <HintPath>..\..\..\Program Files (x86)\Steam\steamapps\common\Skyrim Special Edition\Data\NetScriptFramework\NetScriptFramework.SkyrimSE.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

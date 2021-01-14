@@ -3,7 +3,7 @@
   <PropertyGroup>
     <MSBuildAllProjects Condition="'$(MSBuildVersion)' == '' Or '$(MSBuildVersion)' &lt; '16.0'">$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
     <HasSharedItems>true</HasSharedItems>
-    <SharedGUID>08b7ca21-64aa-4785-bce8-2e3dd047784e</SharedGUID>
+    <SharedGUID>85893cec-5726-43b8-922c-4f90ce24f0ac</SharedGUID>
   </PropertyGroup>
   <PropertyGroup Label="Configuration">
     <Import_RootNamespace>Eggceptions</Import_RootNamespace>
@@ -15,15 +15,15 @@
     <Compile Include="$(MSBuildThisFileDirectory)ArgumentNullOrSparseException.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ArgumentNullOrWhiteSpaceException.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ArgumentOutOfRangeException.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Bethesda\ArgumentDetachedCellException.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Bethesda\ArgumentFormNotFoundException.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Bethesda\ArgumentFormTypeException.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Bethesda\ArgumentRunTimeTypeInformationException.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Bethesda\BethesdaException.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Bethesda\DetachedCellException.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Bethesda\FormNotFoundException.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Bethesda\FormTypeException.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Bethesda\RunTimeTypeInformationException.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SkyrimSE\ArgumentDetachedCellException.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SkyrimSE\ArgumentFormNotFoundException.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SkyrimSE\ArgumentFormTypeException.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SkyrimSE\ArgumentRunTimeTypeInformationException.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SkyrimSE\SkyrimSEException.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SkyrimSE\DetachedCellException.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SkyrimSE\FormNotFoundException.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SkyrimSE\FormTypeException.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SkyrimSE\RunTimeTypeInformationException.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Eggception.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)FormatException.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Math\MathException.cs" />

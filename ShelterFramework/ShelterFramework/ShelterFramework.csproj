@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{4BF614A6-82E0-4474-B105-D93D34F1A7C3}</ProjectGuid>
+    <ProjectGuid>{70B7C4EF-C832-4D96-843F-7F5195A358F0}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ShelterFramework</RootNamespace>
@@ -34,10 +34,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="NetScriptFramework">
-      <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Skyrim Special Edition\Data\NetScriptFramework\NetScriptFramework.dll</HintPath>
+      <HintPath>..\..\..\Program Files (x86)\Steam\steamapps\common\Skyrim Special Edition\Data\NetScriptFramework\NetScriptFramework.dll</HintPath>
     </Reference>
     <Reference Include="NetScriptFramework.SkyrimSE">
-      <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Skyrim Special Edition\Data\NetScriptFramework\NetScriptFramework.SkyrimSE.dll</HintPath>
+      <HintPath>..\..\..\Program Files (x86)\Steam\steamapps\common\Skyrim Special Edition\Data\NetScriptFramework\NetScriptFramework.SkyrimSE.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

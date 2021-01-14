@@ -48,7 +48,7 @@
 
 			if (currentInteriorCell != System.IntPtr.Zero)
 			{
-				if (!TESObjectCELL.IsAttached(currentInteriorCell)) { throw new Eggceptions.Bethesda.DetachedCellException(nameof(currentInteriorCell)); }
+				if (!TESObjectCELL.IsAttached(currentInteriorCell)) { throw new Eggceptions.SkyrimSE.DetachedCellException(nameof(currentInteriorCell)); }
 
 				loadedCells.Add(currentInteriorCell);
 			}
@@ -56,7 +56,7 @@
 			{
 				foreach (var loadedCell in new GridCellArray(TES.GetGridCellArray(tes)))
 				{
-					if (!TESObjectCELL.IsAttached(loadedCell)) { throw new Eggceptions.Bethesda.DetachedCellException(nameof(loadedCell)); }
+					if (!TESObjectCELL.IsAttached(loadedCell)) { throw new Eggceptions.SkyrimSE.DetachedCellException(nameof(loadedCell)); }
 
 					loadedCells.Add(loadedCell);
 				}

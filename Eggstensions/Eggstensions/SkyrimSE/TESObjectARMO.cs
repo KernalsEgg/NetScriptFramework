@@ -47,7 +47,7 @@
 			// BSTArray<TESObjectARMA*, BSTArrayHeapAllocator>
 			foreach (var armorAddon in new BSTArray(TESObjectARMO.GetArmorAddons(armor)))
 			{
-				if (!TESForm.IsArmorAddon(armorAddon)) { throw new Eggceptions.Bethesda.FormTypeException(nameof(armorAddon)); }
+				if (!TESForm.IsArmorAddon(armorAddon)) { throw new Eggceptions.SkyrimSE.FormTypeException(nameof(armorAddon)); }
 
 				if (TESRace.CanUseArmorAddon(race, armorAddon))
 				{

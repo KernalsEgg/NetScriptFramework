@@ -66,7 +66,7 @@
 
 			if (armorRace != System.IntPtr.Zero)
 			{
-				if (!TESForm.IsRace(armorRace)) { throw new Eggceptions.Bethesda.FormTypeException(nameof(armorRace)); }
+				if (!TESForm.IsRace(armorRace)) { throw new Eggceptions.SkyrimSE.FormTypeException(nameof(armorRace)); }
 
 				race = armorRace;
 			}
@@ -77,7 +77,7 @@
 			// BSTArray<TESRace*, BSTArrayHeapAllocator>
 			foreach (var armorAddonAdditionalRace in new BSTArray(TESObjectARMA.GetAdditionalRaces(armorAddon)))
 			{
-				if (!TESForm.IsRace(armorAddonAdditionalRace)) { throw new Eggceptions.Bethesda.FormTypeException(nameof(armorAddonAdditionalRace)); }
+				if (!TESForm.IsRace(armorAddonAdditionalRace)) { throw new Eggceptions.SkyrimSE.FormTypeException(nameof(armorAddonAdditionalRace)); }
 
 				if (armorAddonAdditionalRace == race)
 				{

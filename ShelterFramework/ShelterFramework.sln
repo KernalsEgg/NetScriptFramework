@@ -1,35 +1,35 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
-VisualStudioVersion = 16.0.30717.126
+VisualStudioVersion = 16.0.30907.101
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShelterFramework", "ShelterFramework\ShelterFramework.csproj", "{4BF614A6-82E0-4474-B105-D93D34F1A7C3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShelterFramework", "ShelterFramework\ShelterFramework.csproj", "{70B7C4EF-C832-4D96-843F-7F5195A358F0}"
 EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Eggceptions", "..\Eggceptions\Eggceptions\Eggceptions.shproj", "{08B7CA21-64AA-4785-BCE8-2E3DD047784E}"
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Eggceptions", "..\Eggceptions\Eggceptions\Eggceptions.shproj", "{85893CEC-5726-43B8-922C-4F90CE24F0AC}"
 EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Eggstensions", "..\Eggstensions\Eggstensions\Eggstensions.shproj", "{06C05C2E-74EE-4478-AEBC-C42BD57E993D}"
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Eggstensions", "..\Eggstensions\Eggstensions\Eggstensions.shproj", "{587E27B6-0A48-4E55-BD50-682E14342F19}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		..\Eggstensions\Eggstensions\Eggstensions.projitems*{06c05c2e-74ee-4478-aebc-c42bd57e993d}*SharedItemsImports = 13
-		..\Eggceptions\Eggceptions\Eggceptions.projitems*{08b7ca21-64aa-4785-bce8-2e3dd047784e}*SharedItemsImports = 13
-		..\Eggceptions\Eggceptions\Eggceptions.projitems*{4bf614a6-82e0-4474-b105-d93d34f1a7c3}*SharedItemsImports = 4
-		..\Eggstensions\Eggstensions\Eggstensions.projitems*{4bf614a6-82e0-4474-b105-d93d34f1a7c3}*SharedItemsImports = 4
+		..\Eggstensions\Eggstensions\Eggstensions.projitems*{587e27b6-0a48-4e55-bd50-682e14342f19}*SharedItemsImports = 13
+		..\Eggceptions\Eggceptions\Eggceptions.projitems*{70b7c4ef-c832-4d96-843f-7f5195a358f0}*SharedItemsImports = 4
+		..\Eggstensions\Eggstensions\Eggstensions.projitems*{70b7c4ef-c832-4d96-843f-7f5195a358f0}*SharedItemsImports = 4
+		..\Eggceptions\Eggceptions\Eggceptions.projitems*{85893cec-5726-43b8-922c-4f90ce24f0ac}*SharedItemsImports = 13
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{4BF614A6-82E0-4474-B105-D93D34F1A7C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4BF614A6-82E0-4474-B105-D93D34F1A7C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4BF614A6-82E0-4474-B105-D93D34F1A7C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4BF614A6-82E0-4474-B105-D93D34F1A7C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{70B7C4EF-C832-4D96-843F-7F5195A358F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{70B7C4EF-C832-4D96-843F-7F5195A358F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{70B7C4EF-C832-4D96-843F-7F5195A358F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{70B7C4EF-C832-4D96-843F-7F5195A358F0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {DD63670C-6DD2-428C-B7AB-77BA1131C1C7}
+		SolutionGuid = {FB7A0099-5F63-4A7F-B3C8-247836DAE3AC}
 	EndGlobalSection
 EndGlobal
