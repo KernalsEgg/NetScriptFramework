@@ -22,6 +22,17 @@
 
 
 		/// <param name="cameraState">TESCameraState</param>
+		static public System.IntPtr GetCamera(System.IntPtr cameraState)
+		{
+			if (cameraState == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException(nameof(cameraState)); }
+
+			var camera = NetScriptFramework.Memory.ReadPointer(cameraState + 0x10);
+			if (camera == System.IntPtr.Zero) { throw new Eggceptions.NullException(nameof(camera)); }
+
+			return camera;
+		}
+
+		/// <param name="cameraState">TESCameraState</param>
 		/// <returns>(Units, Units, Units)</returns>
 		static public (System.Single x, System.Single y, System.Single z) GetPosition(System.IntPtr cameraState)
 		{

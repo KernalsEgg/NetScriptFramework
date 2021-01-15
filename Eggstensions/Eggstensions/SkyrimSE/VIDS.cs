@@ -726,9 +726,14 @@
 			{
 				static GameSettingCollection()
 				{
-					_autoAimBasedOnDistance =	NetScriptFramework.Main.GameInfo.GetAddressOf(504543);
-					_autoAimMaxDistance =		NetScriptFramework.Main.GameInfo.GetAddressOf(504545);
-					_autoAimScreenPercentage =	NetScriptFramework.Main.GameInfo.GetAddressOf(504547);
+					_autoAimBasedOnDistance =			NetScriptFramework.Main.GameInfo.GetAddressOf(504543);
+					_autoAimMaxDistance =				NetScriptFramework.Main.GameInfo.GetAddressOf(504545);
+					_autoAimScreenPercentage =			NetScriptFramework.Main.GameInfo.GetAddressOf(504547);
+					_horseMaxUpwardPitch =				NetScriptFramework.Main.GameInfo.GetAddressOf(509845);
+					_mountedMaxLookingDown =			NetScriptFramework.Main.GameInfo.GetAddressOf(503103);
+					_overShoulderRangedMountedAddY =	NetScriptFramework.Main.GameInfo.GetAddressOf(509841);
+					_overShoulderRangedMountedPosX =	NetScriptFramework.Main.GameInfo.GetAddressOf(509837);
+					_overShoulderRangedMountedPosZ =	NetScriptFramework.Main.GameInfo.GetAddressOf(509839);
 				}
 
 
@@ -739,33 +744,76 @@
 
 				readonly static private System.IntPtr _autoAimScreenPercentage;
 
+				readonly static private System.IntPtr _horseMaxUpwardPitch;
+
+				readonly static private System.IntPtr _mountedMaxLookingDown;
+
+				readonly static private System.IntPtr _overShoulderRangedMountedAddY;
+
+				readonly static private System.IntPtr _overShoulderRangedMountedPosX;
+
+				readonly static private System.IntPtr _overShoulderRangedMountedPosZ;
+
 
 
 				/// <summary>SkyrimSE.exe + 0x1DDEC70 (VID504543)</summary>
-				static public System.IntPtr AutoAimBasedOnDistance	{ get { return _autoAimBasedOnDistance; } }
+				static public System.IntPtr AutoAimBasedOnDistance			{ get { return _autoAimBasedOnDistance; } }
 
 				/// <summary>SkyrimSE.exe + 0x1DDEC88 (VID504545)</summary>
-				static public System.IntPtr AutoAimMaxDistance		{ get { return _autoAimMaxDistance; } }
+				static public System.IntPtr AutoAimMaxDistance				{ get { return _autoAimMaxDistance; } }
 
 				/// <summary>SkyrimSE.exe + 0x1DDECA0 (VID504547)</summary>
-				static public System.IntPtr AutoAimScreenPercentage	{ get { return _autoAimScreenPercentage; } }
+				static public System.IntPtr AutoAimScreenPercentage			{ get { return _autoAimScreenPercentage; } }
+
+				/// <summary>SkyrimSE.exe + 0x1DF3650 (VID509845)</summary>
+				static public System.IntPtr HorseMaxUpwardPitch				{ get { return _horseMaxUpwardPitch; } }
+
+				/// <summary>SkyrimSE.exe + 0x1DD9E18 (VID503103)</summary>
+				static public System.IntPtr MountedMaxLookingDown			{ get { return _mountedMaxLookingDown; } }
+
+				/// <summary>SkyrimSE.exe + 0x1DF3620 (VID509841)</summary>
+				static public System.IntPtr OverShoulderRangedMountedAddY	{ get { return _overShoulderRangedMountedAddY; } }
+
+				/// <summary>SkyrimSE.exe + 0x1DF35F0 (VID509837)</summary>
+				static public System.IntPtr OverShoulderRangedMountedPosX	{ get { return _overShoulderRangedMountedPosX; } }
+
+				/// <summary>SkyrimSE.exe + 0x1DF3608 (VID509839)</summary>
+				static public System.IntPtr OverShoulderRangedMountedPosZ	{ get { return _overShoulderRangedMountedPosZ; } }
 			}
 
 			static public class INISettingCollection
 			{
 				static INISettingCollection()
 				{
-					_gridsToLoad = NetScriptFramework.Main.GameInfo.GetAddressOf(501244);
+					_gridsToLoad =				NetScriptFramework.Main.GameInfo.GetAddressOf(501244);
+					_overShoulderHorseAddY =	NetScriptFramework.Main.GameInfo.GetAddressOf(509835);
+					_overShoulderHorsePosX =	NetScriptFramework.Main.GameInfo.GetAddressOf(509831);
+					_overShoulderHorsePosZ =	NetScriptFramework.Main.GameInfo.GetAddressOf(509833);
 				}
 
 
 
 				readonly static private System.IntPtr _gridsToLoad;
 
+				readonly static private System.IntPtr _overShoulderHorseAddY;
+
+				readonly static private System.IntPtr _overShoulderHorsePosX;
+
+				readonly static private System.IntPtr _overShoulderHorsePosZ;
+
 
 
 				/// <summary>SkyrimSE.exe + 0x1DB3E28 (VID501244)</summary>
-				static public System.IntPtr GridsToLoad { get { return _gridsToLoad; } }
+				static public System.IntPtr GridsToLoad				{ get { return _gridsToLoad; } }
+
+				/// <summary>SkyrimSE.exe + 0x1DF35D8 (VID509835)</summary>
+				static public System.IntPtr OverShoulderHorseAddY	{ get { return _overShoulderHorseAddY; } }
+
+				/// <summary>SkyrimSE.exe + 0x1DF35A8 (VID509831)</summary>
+				static public System.IntPtr OverShoulderHorsePosX	{ get { return _overShoulderHorsePosX; } }
+
+				/// <summary>SkyrimSE.exe + 0x1DF35C0 (VID509833)</summary>
+				static public System.IntPtr OverShoulderHorsePosZ	{ get { return _overShoulderHorsePosZ; } }
 			}
 		}
 
@@ -938,6 +986,23 @@
 
 			/// <summary>SkyrimSE.exe + 0x155B7F8 (VID234296)</summary>
 			static public System.IntPtr VTable { get { return _vTable; } }
+		}
+
+		static public class TimeManager
+		{
+			static TimeManager()
+			{
+				_instance = NetScriptFramework.Main.GameInfo.GetAddressOf(523657);
+			}
+
+
+
+			readonly static private System.IntPtr _instance;
+
+
+
+			/// <summary>SkyrimSE.exe + 0x2F6B930 (VID523657)</summary>
+			static public System.IntPtr Instance { get { return _instance; } }
 		}
 
 		static public class UI

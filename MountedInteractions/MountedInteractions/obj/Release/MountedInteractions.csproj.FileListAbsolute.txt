@@ -6,8 +6,8 @@ C:\SkyrimSE\MountedInteractions\MountedInteractions\bin\Release\NetScriptFramewo
 C:\SkyrimSE\MountedInteractions\MountedInteractions\bin\Release\NetScriptFramework.xml
 C:\SkyrimSE\MountedInteractions\MountedInteractions\bin\Release\NetScriptFramework.SkyrimSE.pdb
 C:\SkyrimSE\MountedInteractions\MountedInteractions\bin\Release\NetScriptFramework.SkyrimSE.xml
-C:\SkyrimSE\MountedInteractions\MountedInteractions\obj\Release\MountedInteractions.csprojAssemblyReference.cache
 C:\SkyrimSE\MountedInteractions\MountedInteractions\obj\Release\MountedInteractions.csproj.CoreCompileInputs.cache
 C:\SkyrimSE\MountedInteractions\MountedInteractions\obj\Release\MountedInteractions.csproj.CopyComplete
 C:\SkyrimSE\MountedInteractions\MountedInteractions\obj\Release\MountedInteractions.dll
 C:\SkyrimSE\MountedInteractions\MountedInteractions\obj\Release\MountedInteractions.pdb
+C:\SkyrimSE\MountedInteractions\MountedInteractions\obj\Release\MountedInteractions.csprojAssemblyReference.cache

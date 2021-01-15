@@ -38,6 +38,15 @@ namespace Eggstensions.SkyrimSE
 		}
 
 		/// <param name="actor">Actor</param>
+		/// <returns>ActorState</returns>
+		static public System.IntPtr GetActorState(System.IntPtr actor)
+		{
+			if (actor == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException(nameof(actor)); }
+
+			return actor + 0xB8;
+		}
+
+		/// <param name="actor">Actor</param>
 		static public System.UInt32 GetCollisionFilter(System.IntPtr actor)
 		{
 			if (actor == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException(nameof(actor)); }

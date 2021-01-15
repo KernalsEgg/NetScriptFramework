@@ -124,5 +124,13 @@
 
 			return NetScriptFramework.Memory.ReadFloat(playerCamera + 0x14C);
 		}
+
+		/// <param name="playerCamera">PlayerCamera</param>
+		static public System.Boolean GetWeaponSheathed(System.IntPtr playerCamera)
+		{
+			if (playerCamera == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException(nameof(playerCamera)); }
+
+			return NetScriptFramework.Memory.ReadUInt8(playerCamera + 0x162) != 0;
+		}
 	}
 }

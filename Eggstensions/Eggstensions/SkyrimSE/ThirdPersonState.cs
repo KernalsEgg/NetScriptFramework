@@ -44,7 +44,35 @@
 				);
 			}
 		}
-		
+
+		/// <param name="thirdPersonState">ThirdPersonState</param>
+		static public (System.Single x, System.Single y) GetFreeRotation(System.IntPtr thirdPersonState)
+		{
+			if (thirdPersonState == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException(nameof(thirdPersonState)); }
+
+			return
+			(
+				ThirdPersonState.GetFreeRotationX(thirdPersonState),
+				ThirdPersonState.GetFreeRotationY(thirdPersonState)
+			);
+		}
+
+		/// <param name="thirdPersonState">ThirdPersonState</param>
+		static public System.Single GetFreeRotationX(System.IntPtr thirdPersonState)
+		{
+			if (thirdPersonState == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException(nameof(thirdPersonState)); }
+
+			return NetScriptFramework.Memory.ReadFloat(thirdPersonState + 0xD4);
+		}
+
+		/// <param name="thirdPersonState">ThirdPersonState</param>
+		static public System.Single GetFreeRotationY(System.IntPtr thirdPersonState)
+		{
+			if (thirdPersonState == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException(nameof(thirdPersonState)); }
+
+			return NetScriptFramework.Memory.ReadFloat(thirdPersonState + 0xD8);
+		}
+
 		/// <param name="thirdPersonState">ThirdPersonState</param>
 		static public (System.Single x, System.Single y, System.Single z) GetTargetOffsets(System.IntPtr thirdPersonState)
 		{
@@ -80,6 +108,33 @@
 			if (thirdPersonState == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException(nameof(thirdPersonState)); }
 
 			return NetScriptFramework.Memory.ReadFloat(thirdPersonState + 0x64);
+		}
+
+		/// <param name="thirdPersonState">ThirdPersonState</param>
+		static public void GetFreeRotations(System.IntPtr thirdPersonState, (System.Single x, System.Single y) freeRotations)
+		{
+			if (thirdPersonState == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException(nameof(thirdPersonState)); }
+
+			ThirdPersonState.SetFreeRotationX(thirdPersonState, freeRotations.x);
+			ThirdPersonState.SetFreeRotationY(thirdPersonState, freeRotations.y);
+		}
+
+		/// <param name="thirdPersonState">ThirdPersonState</param>
+		static public void SetFreeRotationX(System.IntPtr thirdPersonState, System.Single freeRotationX)
+		{
+			if (thirdPersonState == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException(nameof(thirdPersonState)); }
+			// freeRotationX
+
+			NetScriptFramework.Memory.WriteFloat(thirdPersonState + 0xD4, freeRotationX);
+		}
+
+		/// <param name="thirdPersonState">ThirdPersonState</param>
+		static public void SetFreeRotationY(System.IntPtr thirdPersonState, System.Single freeRotationY)
+		{
+			if (thirdPersonState == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException(nameof(thirdPersonState)); }
+			// freeRotationY
+
+			NetScriptFramework.Memory.WriteFloat(thirdPersonState + 0xD8, freeRotationY);
 		}
 
 		/// <param name="thirdPersonState">ThirdPersonState</param>

@@ -26,6 +26,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Math\Unmanaged\Vector.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Math\Unmanaged\Vector3.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SkyrimSE\Actor.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SkyrimSE\ActorState.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SkyrimSE\AIProcess.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SkyrimSE\BGSCollisionLayer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SkyrimSE\bhkWorldM.cs" />
@@ -104,6 +105,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)SkyrimSE\TESProduceForm.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SkyrimSE\TESRace.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SkyrimSE\ThirdPersonState.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SkyrimSE\TimeManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SkyrimSE\UI.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SkyrimSE\VIDS.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TemporaryObject.cs" />

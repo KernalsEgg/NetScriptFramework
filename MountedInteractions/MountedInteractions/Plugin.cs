@@ -32,11 +32,6 @@ namespace MountedInteractions
 				Plugin.WriteHooksAccurateFollowerCommands();
 			}
 
-			if (!Plugin._settings.DismountByActivating)
-			{
-				Plugin.WriteHooksDismountByActivating();
-			}
-
 			if (Plugin._settings.DismountBySneaking)
 			{
 				Plugin.WriteHooksDismountBySneaking();
@@ -52,6 +47,7 @@ namespace MountedInteractions
 			Plugin._activateFurniture =			NetScriptFramework.Main.GameInfo.GetAddressOf(17034); // SkyrimSE.exe + 0x21A4B0
 			Plugin._activateHandler =			NetScriptFramework.Main.GameInfo.GetAddressOf(41346); // SkyrimSE.exe + 0x708BF0
 			Plugin._activateHandlerActivate =	NetScriptFramework.Main.GameInfo.GetAddressOf(39471); // SkyrimSE.exe + 0x6A9F90
+			Plugin._handleLookInput =			NetScriptFramework.Main.GameInfo.GetAddressOf(49839); // SkyrimSE.exe + 0x849930
 			Plugin._hudMenu =					NetScriptFramework.Main.GameInfo.GetAddressOf(50718); // SkyrimSE.exe + 0x87D580
 			Plugin._mount =						NetScriptFramework.Main.GameInfo.GetAddressOf(49888); // SkyrimSE.exe + 0x84BE40
 			Plugin._pick =						NetScriptFramework.Main.GameInfo.GetAddressOf(25591); // SkyrimSE.exe + 0x3AA4B0
@@ -68,6 +64,7 @@ namespace MountedInteractions
 		readonly static private System.IntPtr _activateFurniture;
 		readonly static private System.IntPtr _activateHandler;
 		readonly static private System.IntPtr _activateHandlerActivate;
+		readonly static private System.IntPtr _handleLookInput;
 		readonly static private System.IntPtr _hudMenu;
 		readonly static private System.IntPtr _mount;
 		readonly static private System.IntPtr _pick;
@@ -134,10 +131,10 @@ namespace MountedInteractions
 				IncludeLength = 4,
 				After = cpuRegisters =>
 				{
-					var weaponOut = cpuRegisters.DX != System.IntPtr.Zero;
+					var weaponDrawn = cpuRegisters.DX != System.IntPtr.Zero;
 					var horseCameraState = cpuRegisters.CX;
 
-					if (weaponOut)
+					if (weaponDrawn)
 					{
 						ThirdPersonState.SetTargetOffsets(horseCameraState, (Plugin._settings.WeaponDrawnOffsetX, Plugin._settings.WeaponDrawnOffsetY, Plugin._settings.WeaponDrawnOffsetZ));
 					}
@@ -145,6 +142,62 @@ namespace MountedInteractions
 					{
 						ThirdPersonState.SetTargetOffsets(horseCameraState, (Plugin._settings.WeaponSheathedOffsetX, Plugin._settings.WeaponSheathedOffsetY, Plugin._settings.WeaponSheathedOffsetZ));
 					}
+				}
+			});
+
+			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters() // Set horse camera minimum and maximum pitch
+			{
+				Address = Plugin._handleLookInput + 0x8A,
+				Pattern = "F3 0F11 A3 D8000000",
+				ReplaceLength = 8,
+				IncludeLength = 8,
+				After = cpuReigsters =>
+				{
+					var horseCameraState = cpuReigsters.BX;
+					var playerCamera = TESCameraState.GetCamera(horseCameraState);
+					var weaponSheathed = PlayerCamera.GetWeaponSheathed(playerCamera);
+
+					var degreesToRadians = (System.Single)(System.Math.PI / 180.0d);
+					var freeRotationY = ThirdPersonState.GetFreeRotationY(horseCameraState);
+
+					if (weaponSheathed)
+					{
+						var weaponSheathedRotationUpward = Plugin._settings.WeaponSheathedRotationUpward * degreesToRadians;
+
+						if (freeRotationY > weaponSheathedRotationUpward)
+						{
+							ThirdPersonState.SetFreeRotationY(horseCameraState, weaponSheathedRotationUpward);
+						}
+						else
+						{
+							var weaponSheathedRotationDownward = -Plugin._settings.WeaponSheathedRotationDownward * degreesToRadians;
+
+							if (freeRotationY < weaponSheathedRotationDownward)
+							{
+								ThirdPersonState.SetFreeRotationY(horseCameraState, weaponSheathedRotationDownward);
+							}
+						}
+					}
+					else
+					{
+						var weaponDrawnRotationUpward = Plugin._settings.WeaponDrawnRotationUpward * degreesToRadians;
+
+						if (freeRotationY > weaponDrawnRotationUpward)
+						{
+							ThirdPersonState.SetFreeRotationY(horseCameraState, weaponDrawnRotationUpward);
+						}
+						else
+						{
+							var weaponDrawnRotationDownward = -Plugin._settings.WeaponDrawnRotationDownward * degreesToRadians;
+
+							if (freeRotationY < weaponDrawnRotationDownward)
+							{
+								ThirdPersonState.SetFreeRotationY(horseCameraState, weaponDrawnRotationDownward);
+							}
+						}
+					}
+
+					cpuReigsters.IP += 0x4B;
 				}
 			});
 
@@ -274,7 +327,7 @@ namespace MountedInteractions
 			});
 		}
 
-		static private void WriteHooksDismountByActivating()
+		static private void WriteHooksDismountBySneaking()
 		{
 			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters() // Do not dismount on release activate button
 			{
@@ -293,10 +346,7 @@ namespace MountedInteractions
 					}
 				}
 			});
-		}
 
-		static private void WriteHooksDismountBySneaking()
-		{
 			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters() // Dismount on release sneak button
 			{
 				Address = Plugin._sneakHandler + 0xF,
