@@ -25,6 +25,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Math\Unmanaged\Quaternion.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Math\Unmanaged\Vector.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Math\Unmanaged\Vector3.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SkyrimSE\ActivateHandler.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SkyrimSE\Actor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SkyrimSE\ActorState.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SkyrimSE\AIProcess.cs" />
@@ -81,6 +82,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)SkyrimSE\NiTransform.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SkyrimSE\PlayerCamera.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SkyrimSE\PlayerCharacter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SkyrimSE\PlayerControls.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SkyrimSE\Precipitation.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SkyrimSE\ProcessLists.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SkyrimSE\RefrInteraction.cs" />

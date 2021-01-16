@@ -614,23 +614,17 @@
 		{
 			static PlayerCamera()
 			{
-				_getCameraTarget =	NetScriptFramework.Main.GameInfo.GetAddressOf(49904);
-				_instance =			NetScriptFramework.Main.GameInfo.GetAddressOf(514642);
+				_instance = NetScriptFramework.Main.GameInfo.GetAddressOf(514642);
 			}
 
 
-
-			readonly static private System.IntPtr _getCameraTarget;
 
 			readonly static private System.IntPtr _instance;
 
 
 
-			/// <summary>SkyrimSE.exe + 0x84D320 (VID49904)</summary>
-			static public System.IntPtr GetCameraTarget	{ get { return _getCameraTarget; } }
-
 			/// <summary>SkyrimSE.exe + 0x2EC59B8 (VID514642)</summary>
-			static public System.IntPtr Instance		{ get { return _instance; } }
+			static public System.IntPtr Instance { get { return _instance; } }
 		}
 
 		static public class PlayerCharacter
@@ -672,6 +666,23 @@
 
 			/// <summary>SkyrimSE.exe + 0x6B3670 (VID39579)</summary>
 			static public System.IntPtr IsCommandingActor	{ get { return _isCommandingActor; } }
+		}
+
+		static public class PlayerControls
+		{
+			static PlayerControls()
+			{
+				_instance = NetScriptFramework.Main.GameInfo.GetAddressOf(514706);
+			}
+
+
+
+			readonly static private System.IntPtr _instance;
+
+
+
+			/// <summary>SkyrimSE.exe + 0x2EC5BD8 (VID514706)</summary>
+			static public System.IntPtr Instance { get { return _instance; } }
 		}
 
 		static public class ProcessLists
