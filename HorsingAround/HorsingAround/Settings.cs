@@ -1,4 +1,4 @@
-﻿namespace MountedInteractions
+﻿namespace HorsingAround
 {
 	public class Settings
 	{
@@ -45,7 +45,7 @@
 
 		internal void Load()
 		{
-			NetScriptFramework.Tools.ConfigFile.LoadFrom<Settings>(this, "MountedInteractions", true);
+			NetScriptFramework.Tools.ConfigFile.LoadFrom<Settings>(this, "HorsingAround", true);
 		}
 	}
 }

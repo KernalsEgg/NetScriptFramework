@@ -1,0 +1,13 @@
+C:\SkyrimSE\HorsingAround\HorsingAround\bin\Release\HorsingAround.dll
+C:\SkyrimSE\HorsingAround\HorsingAround\bin\Release\HorsingAround.pdb
+C:\SkyrimSE\HorsingAround\HorsingAround\bin\Release\NetScriptFramework.dll
+C:\SkyrimSE\HorsingAround\HorsingAround\bin\Release\NetScriptFramework.SkyrimSE.dll
+C:\SkyrimSE\HorsingAround\HorsingAround\bin\Release\NetScriptFramework.pdb
+C:\SkyrimSE\HorsingAround\HorsingAround\bin\Release\NetScriptFramework.xml
+C:\SkyrimSE\HorsingAround\HorsingAround\bin\Release\NetScriptFramework.SkyrimSE.pdb
+C:\SkyrimSE\HorsingAround\HorsingAround\bin\Release\NetScriptFramework.SkyrimSE.xml
+C:\SkyrimSE\HorsingAround\HorsingAround\obj\Release\HorsingAround.csprojAssemblyReference.cache
+C:\SkyrimSE\HorsingAround\HorsingAround\obj\Release\HorsingAround.csproj.CoreCompileInputs.cache
+C:\SkyrimSE\HorsingAround\HorsingAround\obj\Release\HorsingAround.csproj.CopyComplete
+C:\SkyrimSE\HorsingAround\HorsingAround\obj\Release\HorsingAround.dll
+C:\SkyrimSE\HorsingAround\HorsingAround\obj\Release\HorsingAround.pdb

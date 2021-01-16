@@ -2,7 +2,7 @@
 
 
 
-namespace MountedInteractions
+namespace HorsingAround
 {
     public class Plugin : NetScriptFramework.Plugin
     {
@@ -12,9 +12,9 @@ namespace MountedInteractions
 
 		override public System.String Author				{ get { return "meh321 and KernalsEgg"; } }
 
-		override public System.String Key					{ get { return "MountedInteractions"; } }
+		override public System.String Key					{ get { return "HorsingAround"; } }
 
-		override public System.String Name					{ get { return "Mounted Interactions"; } }
+		override public System.String Name					{ get { return "Horsing Around"; } }
 
 
 
@@ -197,7 +197,7 @@ namespace MountedInteractions
 						}
 					}
 
-					cpuReigsters.IP += 0x4B;
+					cpuReigsters.IP += 0x4B; // + 0xDD
 				}
 			});
 
