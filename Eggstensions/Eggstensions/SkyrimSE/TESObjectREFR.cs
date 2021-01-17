@@ -294,7 +294,7 @@ namespace Eggstensions.SkyrimSE
 		}
 
 		/// <param name = "reference">TESObjectREFR</param>
-		static public System.Boolean IsActor(System.IntPtr reference)
+		static public System.Boolean IsCharacter(System.IntPtr reference)
 		{
 			if (reference == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException(nameof(reference)); }
 

@@ -13,7 +13,7 @@
 
 
 		/// <param name="timeManager">TimeManager</param>
-		static public System.Single GetFrameTime1(System.IntPtr timeManager)
+		static public System.Single GetFrameTimeGameTime(System.IntPtr timeManager)
 		{
 			if (timeManager == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException(nameof(timeManager)); }
 			
@@ -21,11 +21,19 @@
 		}
 
 		/// <param name="timeManager">TimeManager</param>
-		static public System.Single GetFrameTime2(System.IntPtr timeManager)
+		static public System.Single GetFrameTimeRealTime(System.IntPtr timeManager)
 		{
 			if (timeManager == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException(nameof(timeManager)); }
 
 			return NetScriptFramework.Memory.ReadFloat(timeManager + 0x1C);
+		}
+
+		/// <param name="timeManager">TimeManager</param>
+		static public System.Single GetRunTime(System.IntPtr timeManager)
+		{
+			if (timeManager == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException(nameof(timeManager)); }
+
+			return NetScriptFramework.Memory.ReadFloat(timeManager + 0x20);
 		}
 	}
 }

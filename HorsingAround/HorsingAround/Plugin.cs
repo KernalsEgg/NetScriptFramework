@@ -44,39 +44,6 @@ namespace HorsingAround
 
 
 
-		static Plugin()
-		{
-			Plugin._activateHandlerActivate =					NetScriptFramework.Main.GameInfo.GetAddressOf(39471); // SkyrimSE.exe + 0x6A9F90
-			Plugin._activateHandlerButtonEvent =				NetScriptFramework.Main.GameInfo.GetAddressOf(41346); // SkyrimSE.exe + 0x708BF0
-			Plugin._crosshairPickDataPick =						NetScriptFramework.Main.GameInfo.GetAddressOf(25591); // SkyrimSE.exe + 0x3AA4B0
-			Plugin._furnitureActivate =							NetScriptFramework.Main.GameInfo.GetAddressOf(17034); // SkyrimSE.exe + 0x21A4B0
-			Plugin._horseCameraStateLookInput =					NetScriptFramework.Main.GameInfo.GetAddressOf(49839); // SkyrimSE.exe + 0x849930
-			Plugin._hudData =									NetScriptFramework.Main.GameInfo.GetAddressOf(39535); // SkyrimSE.exe + 0x6B0570
-			Plugin._hudMenu =									NetScriptFramework.Main.GameInfo.GetAddressOf(50718); // SkyrimSE.exe + 0x87D580
-			Plugin._playerCameraMount =							NetScriptFramework.Main.GameInfo.GetAddressOf(49888); // SkyrimSE.exe + 0x84BE40
-			Plugin._playerCameraUpdateWeaponDrawn =				NetScriptFramework.Main.GameInfo.GetAddressOf(49908); // SkyrimSE.exe + 0x84D630
-			Plugin._playerCharacterPickCrosshairReference =		NetScriptFramework.Main.GameInfo.GetAddressOf(39534); // SkyrimSE.exe + 0x6B01E0
-			Plugin._playerCharacterPlaceWaitCommandMarker =		NetScriptFramework.Main.GameInfo.GetAddressOf(39550); // SkyrimSE.exe + 0x6B11C0
-			Plugin._rightHandWeaponDrawHandlerPlayerCharacter =	NetScriptFramework.Main.GameInfo.GetAddressOf(41743); // SkyrimSE.exe + 0x720FB0
-			Plugin._sneakHandlerButtonEvent =					NetScriptFramework.Main.GameInfo.GetAddressOf(41357); // SkyrimSE.exe + 0x7094C0
-		}
-
-
-
-		readonly static private System.IntPtr _activateHandlerActivate;
-		readonly static private System.IntPtr _activateHandlerButtonEvent;
-		readonly static private System.IntPtr _crosshairPickDataPick;
-		readonly static private System.IntPtr _furnitureActivate;
-		readonly static private System.IntPtr _horseCameraStateLookInput;
-		readonly static private System.IntPtr _hudData;
-		readonly static private System.IntPtr _hudMenu;
-		readonly static private System.IntPtr _playerCameraMount;
-		readonly static private System.IntPtr _playerCameraUpdateWeaponDrawn;
-		readonly static private System.IntPtr _playerCharacterPickCrosshairReference;
-		readonly static private System.IntPtr _playerCharacterPlaceWaitCommandMarker;
-		readonly static private System.IntPtr _rightHandWeaponDrawHandlerPlayerCharacter;
-		readonly static private System.IntPtr _sneakHandlerButtonEvent;
-
 		static private Settings _settings;
 
 
@@ -85,7 +52,7 @@ namespace HorsingAround
 		{
 			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters() // Allow the player to command followers standing behind them while in third-person, and more easily command followers standing among hostiles
 			{
-				Address = Plugin._activateHandlerButtonEvent + 0x7F,
+				Address = VIDS.ActivateHandler.ProcessButton + 0x7F,
 				Pattern = "E8 ?? ?? ?? ??",
 				ReplaceLength = 5,
 				IncludeLength = 0,
@@ -108,7 +75,7 @@ namespace HorsingAround
 		{
 			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters() // Block the player from activating furniture while mounted
 			{
-				Address = Plugin._furnitureActivate + 0x25,
+				Address = VIDS.TESFurniture.Activate + 0x25,
 				Pattern = "48 8B E9" + "4D 85 C0",
 				ReplaceLength = 6,
 				IncludeLength = 6,
@@ -126,7 +93,7 @@ namespace HorsingAround
 		{
 			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters() // Do not dismount from horseback when the activate button is released
 			{
-				Address = Plugin._activateHandlerActivate + 0x92,
+				Address = VIDS.PlayerCharacter.ProcessActivate + 0x92,
 				Pattern = "E8 ?? ?? ?? ??",
 				ReplaceLength = 5,
 				IncludeLength = 5,
@@ -144,7 +111,7 @@ namespace HorsingAround
 
 			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters() // Dismount from horseback when the sneak button is released
 			{
-				Address = Plugin._sneakHandlerButtonEvent + 0xF,
+				Address = VIDS.SneakHandler.ProcessButton + 0xF,
 				Pattern = "0F57 C0" + "0F2E 42 28",
 				ReplaceLength = 7,
 				IncludeLength = 7,
@@ -154,22 +121,17 @@ namespace HorsingAround
 
 					if (ButtonEvent.IsReleased(buttonEvent))
 					{
-						var activateHandler = PlayerControls.GetActivateHandler(PlayerControls.Instance);
+						var playerCharacter = PlayerCharacter.Instance;
 
-						if (ActivateHandler.IsActivateControlsEnabled(activateHandler))
+						if (Actor.IsOnMount(playerCharacter) && !Actor.IsOnFlyingMount(playerCharacter))
 						{
-							var playerCharacter = PlayerCharacter.Instance;
-
-							if (Actor.IsOnMount(playerCharacter) && !Actor.IsOnFlyingMount(playerCharacter))
+							using (var mount = Actor.GetMount(playerCharacter))
 							{
-								using (var mount = Actor.GetMount(playerCharacter))
-								{
-									var mountReference = mount.Reference;
+								var mountReference = mount.Reference;
 
-									if (mountReference != System.IntPtr.Zero)
-									{
-										TESObjectREFR.Activate(mountReference, playerCharacter);
-									}
+								if (mountReference != System.IntPtr.Zero)
+								{
+									TESObjectREFR.Activate(mountReference, playerCharacter);
 								}
 							}
 						}
@@ -182,7 +144,7 @@ namespace HorsingAround
 		{
 			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters() // Set the maximum activation distance while on horseback
 			{
-				Address = Plugin._crosshairPickDataPick + 0x180,
+				Address = VIDS.CrosshairPickData.Pick + 0x180,
 				Pattern = "F3 44 0F10 35 ?? ?? ?? ??",
 				ReplaceLength = 9,
 				IncludeLength = 0,
@@ -194,7 +156,7 @@ namespace HorsingAround
 
 			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters() // Set the maximum activation distance while on horseback
 			{
-				Address = Plugin._crosshairPickDataPick + 0xC41,
+				Address = VIDS.CrosshairPickData.Pick + 0xC41,
 				Pattern = "F3 0F10 05 ?? ?? ?? ??",
 				ReplaceLength = 8,
 				IncludeLength = 0,
@@ -209,7 +171,7 @@ namespace HorsingAround
 		{
 			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters() // Set the camera offsets while on horseback
 			{
-				Address = Plugin._playerCameraUpdateWeaponDrawn + 0x2F,
+				Address = VIDS.PlayerCamera.UpdateWeaponDrawn + 0x2F,
 				Pattern = "40 0FB6 D7" + "FF 50 ??",
 				ReplaceLength = 4 + 3,
 				IncludeLength = 4,
@@ -234,7 +196,7 @@ namespace HorsingAround
 		{
 			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters() // Set the minimum and maximum camera rotation while on horseback
 			{
-				Address = Plugin._horseCameraStateLookInput + 0x8A,
+				Address = VIDS.HorseCameraState.HandleLookInput + 0x8A,
 				Pattern = "F3 0F11 A3 D8000000",
 				ReplaceLength = 8,
 				IncludeLength = 8,
@@ -293,7 +255,7 @@ namespace HorsingAround
 		{
 			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters() // Correct the position of the follower wait command while on horseback (origin)
 			{
-				Address = Plugin._playerCharacterPlaceWaitCommandMarker + 0x19D,
+				Address = VIDS.PlayerCharacter.PlaceWaitCommandMarker + 0x19D,
 				Pattern = "E8 ?? ?? ?? ??",
 				ReplaceLength = 5,
 				IncludeLength = 5,
@@ -302,7 +264,7 @@ namespace HorsingAround
 
 			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters() // Correct the position of the follower wait command while on horseback (current offset)
 			{
-				Address = Plugin._playerCharacterPlaceWaitCommandMarker + 0x1BF,
+				Address = VIDS.PlayerCharacter.PlaceWaitCommandMarker + 0x1BF,
 				Pattern = "E8 ?? ?? ?? ??",
 				ReplaceLength = 5,
 				IncludeLength = 5,
@@ -311,7 +273,7 @@ namespace HorsingAround
 
 			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters() // Correct the activation position while on horseback (origin)
 			{
-				Address = Plugin._playerCharacterPickCrosshairReference + 0xFF,
+				Address = VIDS.PlayerCharacter.PickCrosshairReference + 0xFF,
 				Pattern = "E8 ?? ?? ?? ??",
 				ReplaceLength = 5,
 				IncludeLength = 5,
@@ -320,7 +282,7 @@ namespace HorsingAround
 
 			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters() // Correct the activation position while on horseback (current offset)
 			{
-				Address = Plugin._playerCharacterPickCrosshairReference + 0x131,
+				Address = VIDS.PlayerCharacter.PickCrosshairReference + 0x131,
 				Pattern = "E8 ?? ?? ?? ??",
 				ReplaceLength = 5,
 				IncludeLength = 5,
@@ -332,7 +294,7 @@ namespace HorsingAround
 		{
 			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters() // Set HUD data while on horseback
 			{
-				Address = Plugin._hudData + 0xAA,
+				Address = VIDS.PlayerCharacter.HUDData + 0xAA,
 				Pattern = "E8 ?? ?? ?? ??",
 				ReplaceLength = 5,
 				IncludeLength = 0,
@@ -341,7 +303,7 @@ namespace HorsingAround
 
 			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters() // Do not set the HorseMode HUD mode when mounting a horse
 			{
-				Address = Plugin._playerCameraMount + 0xED,
+				Address = VIDS.PlayerCamera.Mount + 0xED,
 				Pattern = "E8 ?? ?? ?? ??",
 				ReplaceLength = 5,
 				IncludeLength = 5,
@@ -356,7 +318,7 @@ namespace HorsingAround
 
 			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters() // Do not set the WarHorseMode HUD mode when drawing a weapon on horseback
 			{
-				Address = Plugin._rightHandWeaponDrawHandlerPlayerCharacter + 0x12E,
+				Address = VIDS.RightHandWeaponDrawHandler.ExecuteHandler + 0x12E,
 				Pattern = "E8 ?? ?? ?? ??",
 				ReplaceLength = 5,
 				IncludeLength = 0,
@@ -365,7 +327,7 @@ namespace HorsingAround
 
 			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters() // Do not set the HorseMode or WarHorseMode HUD modes
 			{
-				Address = Plugin._hudMenu + 0x1209,
+				Address = VIDS.HUDMenu.ProcessMessage + 0x1209,
 				Pattern = "E8 ?? ?? ?? ??",
 				ReplaceLength = 5,
 				IncludeLength = 0,
@@ -377,26 +339,39 @@ namespace HorsingAround
 		{
 			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters() // Skip picking both the player and the mount they may be riding
 			{
-				Address = Plugin._crosshairPickDataPick + 0x408,
+				Address = VIDS.CrosshairPickData.Pick + 0x408,
 				Pattern = "48 3B 05 ?? ?? ?? ??",
 				ReplaceLength = 7,
 				IncludeLength = 0,
 				Before = cpuRegisters =>
 				{
-					var target = cpuRegisters.AX;
-					var flags = new System.IntPtr(cpuRegisters.FLAGS.ToInt64() & ~0x40);
+					cpuRegisters.FLAGS = SkipCrosshairPick() ? new System.IntPtr(cpuRegisters.FLAGS.ToInt64() | 0x40) : new System.IntPtr(cpuRegisters.FLAGS.ToInt64() & ~0x40);
 
-					if ((target != System.IntPtr.Zero) && TESObjectREFR.IsActor(target))
+
+
+					System.Boolean SkipCrosshairPick()
 					{
-						var playerCharacter = PlayerCharacter.Instance;
+						var target = cpuRegisters.AX;
 
-						if ((playerCharacter == target) || Actor.IsBeingRiddenBy(target, playerCharacter))
+						if (target != System.IntPtr.Zero)
 						{
-							flags = new System.IntPtr(cpuRegisters.FLAGS.ToInt64() | 0x40);
-						}
-					}
+							if (TESObjectREFR.IsCharacter(target))
+							{
+								var playerCharacter = PlayerCharacter.Instance;
 
-					cpuRegisters.FLAGS = flags;
+								if (playerCharacter == target)
+								{
+									return true;
+								}
+								else if (Actor.IsBeingRiddenBy(target, playerCharacter))
+								{
+									return true;
+								}
+							}
+						}
+
+						return false;
+					}
 				}
 			});
 		}

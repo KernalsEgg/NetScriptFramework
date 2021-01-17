@@ -912,17 +912,17 @@
 		{
 			static TESFlora()
 			{
-				_vTable = NetScriptFramework.Main.GameInfo.GetAddressOf(233756);
+				_activate = NetScriptFramework.Main.GameInfo.GetAddressOf(16986);
 			}
 
 
 
-			readonly static private System.IntPtr _vTable;
+			readonly static private System.IntPtr _activate;
 
 
 
-			/// <summary>SkyrimSE.exe + 0x1553738 (VID233756)</summary>
-			static public System.IntPtr VTable { get { return _vTable; } }
+			/// <summary>SkyrimSE.exe + 0x218CE0 (VID16986)<br/>VTable + 0x1B8</summary>
+			static public System.IntPtr Activate { get { return _activate; } }
 		}
 
 		static public class TESForm
@@ -986,17 +986,17 @@
 		{
 			static TESObjectTREE()
 			{
-				_vTable = NetScriptFramework.Main.GameInfo.GetAddressOf(234296);
+				_activate = NetScriptFramework.Main.GameInfo.GetAddressOf(17636);
 			}
 
 
 
-			readonly static private System.IntPtr _vTable;
+			readonly static private System.IntPtr _activate;
 
 
 
-			/// <summary>SkyrimSE.exe + 0x155B7F8 (VID234296)</summary>
-			static public System.IntPtr VTable { get { return _vTable; } }
+			/// <summary>SkyrimSE.exe + 0x231580 (VID17636)<br/>VTable + 0x1B8</summary>
+			static public System.IntPtr Activate { get { return _activate; } }
 		}
 
 		static public class TimeManager

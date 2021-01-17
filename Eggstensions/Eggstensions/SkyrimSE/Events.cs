@@ -141,7 +141,7 @@ namespace Eggstensions.SkyrimSE
 						"ActivateFlora",
 						new NetScriptFramework.EventHookParameters<Events.ActivateFloraEventArguments>
 						(
-							address: NetScriptFramework.Memory.ReadPointer(VIDS.TESFlora.VTable + 0x1B8),
+							address: VIDS.TESFlora.Activate,
 							pattern: "48 81 C1 C8 00 00 00",
 							replaceLength: 7,
 							includeLength: 7,
@@ -174,10 +174,10 @@ namespace Eggstensions.SkyrimSE
 						"ActivateTree",
 						new NetScriptFramework.EventHookParameters<Events.ActivateTreeEventArguments>
 						(
-							address: NetScriptFramework.Memory.ReadPointer(VIDS.TESObjectTREE.VTable + 0x1B8),
-							pattern: "48 89 5C 24 08",
-							replaceLength: 5,
-							includeLength: 5,
+							address: VIDS.TESObjectTREE.Activate + 0xF,
+							pattern: "48 8B 41 58" + "48 8B D9",
+							replaceLength: 7,
+							includeLength: 7,
 							argFunc: cpuRegisters => new Events.ActivateTreeEventArguments(cpuRegisters.CX, cpuRegisters.DX, cpuRegisters.R8),
 							afterFunc: null
 						)
