@@ -1,35 +1,33 @@
 ﻿namespace Eggstensions.SkyrimSE
 {
-	/// <summary>PROCESS_TYPE</summary>
-	public enum AIProcessLevels : System.Byte
-	{
-		High =			0x0,
-		MiddleHigh =	0x1,
-		MiddleLow =		0x2,
-		Low =			0x3,
-		None =			0xFF
-	}
-	
-	/// <summary>RESET_3D_FLAGS</summary>
-	public enum Update3DModelFlags : System.Byte
-	{
-		None =			0,
-		Model =			1 << 0,
-		Skin =			1 << 1,
-		Head =			1 << 2,
-		Face =			1 << 3,
-		Scale =			1 << 4,
-		Skeleton =		1 << 5,
-		InitDefault =	1 << 6,
-		SkyCellSkin =	1 << 7
-	}
-
-
-
 	static public class AIProcess
 	{
+		public enum Levels : System.Byte
+		{
+			High =			0x0,
+			MiddleHigh =	0x1,
+			MiddleLow =		0x2,
+			Low =			0x3,
+			None =			0xFF
+		}
+
+		public enum Update3DModelFlags : System.Byte
+		{
+			None =			0,
+			Model =			1 << 0,
+			Skin =			1 << 1,
+			Head =			1 << 2,
+			Face =			1 << 3,
+			Scale =			1 << 4,
+			Skeleton =		1 << 5,
+			InitDefault =	1 << 6,
+			SkyCellSkin =	1 << 7
+		}
+
+
+
 		/// <param name="aiProcess">AIProcess</param>
-		static public void AddUpdate3DModelFlags(System.IntPtr aiProcess, Update3DModelFlags update3DModelFlags)
+		static public void AddUpdate3DModelFlags(System.IntPtr aiProcess, AIProcess.Update3DModelFlags update3DModelFlags)
 		{
 			if (aiProcess == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException(nameof(aiProcess)); }
 			// update3DModelFlags
@@ -98,28 +96,28 @@
 		}
 
 		/// <param name="aiProcess">AIProcess</param>
-		static public AIProcessLevels GetProcessLevel(System.IntPtr aiProcess)
+		static public AIProcess.Levels GetProcessLevel(System.IntPtr aiProcess)
 		{
 			if (aiProcess == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException(nameof(aiProcess)); }
 
-			return (AIProcessLevels)(NetScriptFramework.Memory.ReadUInt8(aiProcess + 0x137));
+			return (AIProcess.Levels)(NetScriptFramework.Memory.ReadUInt8(aiProcess + 0x137));
 		}
 
 		/// <param name = "aiProcess">AIProcess</param>
-		static public Update3DModelFlags GetUpdate3DModelFlags(System.IntPtr aiProcess)
+		static public AIProcess.Update3DModelFlags GetUpdate3DModelFlags(System.IntPtr aiProcess)
 		{
 			if (aiProcess == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException(nameof(aiProcess)); }
 
 			if (AIProcess.HasMiddleHighProcessData(aiProcess))
 			{
-				return (Update3DModelFlags)NetScriptFramework.Memory.ReadUInt8(aiProcess + 0x311);
+				return (AIProcess.Update3DModelFlags)NetScriptFramework.Memory.ReadUInt8(aiProcess + 0x311);
 			}
 
-			return Update3DModelFlags.None;
+			return AIProcess.Update3DModelFlags.None;
 		}
 
 		/// <param name = "aiProcess">AIProcess</param>
-		static public System.Boolean HasUpdate3DModelFlags(System.IntPtr aiProcess, Update3DModelFlags update3DModelFlags)
+		static public System.Boolean HasUpdate3DModelFlags(System.IntPtr aiProcess, AIProcess.Update3DModelFlags update3DModelFlags)
 		{
 			if (aiProcess == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException(nameof(aiProcess)); }
 			// update3DModelFlags
@@ -137,11 +135,11 @@
 		{
 			if (aiProcess == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException(nameof(aiProcess)); }
 
-			return AIProcess.GetProcessLevel(aiProcess) == AIProcessLevels.High;
+			return AIProcess.GetProcessLevel(aiProcess) == AIProcess.Levels.High;
 		}
 
 		/// <param name = "aiProcess">AIProcess</param>
-		static public void SetUpdate3DModelFlags(System.IntPtr aiProcess, Update3DModelFlags update3DModelFlags)
+		static public void SetUpdate3DModelFlags(System.IntPtr aiProcess, AIProcess.Update3DModelFlags update3DModelFlags)
 		{
 			if (aiProcess == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException(nameof(aiProcess)); }
 			// update3DModelFlags
@@ -157,11 +155,11 @@
 		{
 			if (aiProcess == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException(nameof(aiProcess)); }
 
-			return AIProcess.GetHighProcessData(aiProcess) != System.IntPtr.Zero;
+			return AIProcess.GetMiddleHighProcessData(aiProcess) != System.IntPtr.Zero;
 		}
 
 		/// <param name = "aiProcess">AIProcess</param>
-		static public void RemoveUpdate3DModelFlags(System.IntPtr aiProcess, Update3DModelFlags update3DModelFlags)
+		static public void RemoveUpdate3DModelFlags(System.IntPtr aiProcess, AIProcess.Update3DModelFlags update3DModelFlags)
 		{
 			if (aiProcess == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException(nameof(aiProcess)); }
 			// update3DModelFlags

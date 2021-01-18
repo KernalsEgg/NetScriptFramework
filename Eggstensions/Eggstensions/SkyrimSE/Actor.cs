@@ -258,12 +258,12 @@ namespace Eggstensions.SkyrimSE
 		}
 
 		/// <param name="actor">Actor</param>
-		static public System.Boolean IsHitAlong(System.IntPtr actor, (System.Single x, System.Single y, System.Single z) origin, (System.Single x, System.Single y, System.Single z) ray, CollisionLayers collisionLayer)
+		static public System.Boolean IsHitAlong(System.IntPtr actor, (System.Single x, System.Single y, System.Single z) origin, (System.Single x, System.Single y, System.Single z) ray, BGSCollisionLayer.CollisionLayerTypes collisionLayerType)
 		{
 			if (actor == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException(nameof(actor)); }
 			// origin
 			// ray
-			// collisionLayer
+			// collisionLayerType
 
 			var parentCell = TESObjectREFR.GetParentCell(actor);
 			if (parentCell == System.IntPtr.Zero) { return false; }
@@ -288,7 +288,7 @@ namespace Eggstensions.SkyrimSE
 
 			System.Boolean IsHitAlong(params System.IntPtr[] references)
 			{
-				return TESObjectCELL.IsHitAlong(parentCell, origin, ray, collisionLayer, references);
+				return TESObjectCELL.IsHitAlong(parentCell, origin, ray, collisionLayerType, references);
 			}
 		}
 
@@ -343,12 +343,12 @@ namespace Eggstensions.SkyrimSE
 
 		/// <param name="actor">Actor</param>
 		/// <param name="target">TESObjectREFR</param>
-		static public System.Boolean IsReferenceInViewshed(System.IntPtr actor, System.IntPtr target, (System.Single x, System.Single y, System.Single z) origin, CollisionLayers collisionLayer)
+		static public System.Boolean IsReferenceInViewshed(System.IntPtr actor, System.IntPtr target, (System.Single x, System.Single y, System.Single z) origin, BGSCollisionLayer.CollisionLayerTypes collisionLayerType)
 		{
 			if (actor == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException(nameof(actor)); }
 			if (target == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException(nameof(target)); }
 			// origin
-			// collisionLayer
+			// collisionLayerType
 
 			var parentCell = TESObjectREFR.GetParentCell(actor);
 			if (parentCell == System.IntPtr.Zero) { return false; }
@@ -380,7 +380,7 @@ namespace Eggstensions.SkyrimSE
 			{
 				foreach (var fraction in fractions)
 				{
-					if (!TESObjectCELL.IsHitBetween(parentCell, origin, (targetPosition.x, targetPosition.y, targetPosition.z + fraction * (targetMaximumBounds.z - targetMinimumBounds.z) + targetMinimumBounds.z), collisionLayer, references))
+					if (!TESObjectCELL.IsHitBetween(parentCell, origin, (targetPosition.x, targetPosition.y, targetPosition.z + fraction * (targetMaximumBounds.z - targetMinimumBounds.z) + targetMinimumBounds.z), collisionLayerType, references))
 					{
 						return true;
 					}

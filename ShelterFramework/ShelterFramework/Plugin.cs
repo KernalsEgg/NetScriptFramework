@@ -32,11 +32,11 @@ namespace ShelterFramework
 
 
 
-		readonly static private CollisionLayers _collisionLayer = CollisionLayers.LOS;
+		readonly static private BGSCollisionLayer.CollisionLayerTypes _collisionLayer = BGSCollisionLayer.CollisionLayerTypes.LOS;
 
 		readonly static private System.String _messageBox =
 			"Shelter Framework has thrown an exception." +
-			"\nDetails are logged to Data\\NetScriptFramework\\NetScriptFramework.log.txt.";
+			"\nLogs are written to Data\\NetScriptFramework\\NetScriptFramework.log.txt.";
 
 
 
@@ -49,7 +49,7 @@ namespace ShelterFramework
 
 		static private void OnGetIsCreatureType(Events.GetIsCreatureTypeEventArguments arguments)
 		{
-			if (arguments == null) { throw new Eggceptions.ArgumentNullException("arguments"); }
+			if (arguments == null) { throw new Eggceptions.ArgumentNullException(nameof(arguments)); }
 
 			try
 			{
@@ -71,23 +71,23 @@ namespace ShelterFramework
 		/// <param name="reference">TESObjectREFR</param>
 		static private System.Boolean IsSheltered(System.IntPtr reference)
 		{
-			if (reference == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("reference"); }
+			if (reference == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException(nameof(reference)); }
 
 			switch (TESForm.GetFormType(reference))
 			{
-				case FormTypes.Character:
+				case TESForm.FormTypes.Character:
 					return Plugin.IsShelteredActor(reference);
-				case FormTypes.TESObjectREFR:
+				case TESForm.FormTypes.TESObjectREFR:
 					return Plugin.IsShelteredReference(reference);
 				default:
-					throw new Eggceptions.SkyrimSE.FormTypeException("reference");
+					throw new Eggceptions.SkyrimSE.FormTypeException(nameof(reference));
 			}
 		}
 
 		/// <param name="character">Character</param>
 		static private System.Boolean IsShelteredActor(System.IntPtr character)
 		{
-			if (character == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("character"); }
+			if (character == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException(nameof(character)); }
 
 			var lastUpdate = Actor.GetLastUpdate(character);
 
@@ -107,7 +107,7 @@ namespace ShelterFramework
 		/// <param name="reference">TESObjectREFR</param>
 		static private System.Boolean IsShelteredReference(System.IntPtr reference)
 		{
-			if (reference == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("reference"); }
+			if (reference == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException(nameof(reference)); }
 
 			return TESObjectREFR.IsHitAlong(reference, TESObjectREFR.GetLookAtPosition(reference), Plugin.GetRay(), Plugin._collisionLayer);
 		}

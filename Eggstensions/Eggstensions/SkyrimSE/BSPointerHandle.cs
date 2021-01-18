@@ -174,6 +174,7 @@
 			return reference;
 		}
 
+		/// <summary>SkyrimSE.exe + 0x62F1C0 (VID 37763)</summary>
 		/// <param name = "pointerHandle">BSPointerHandle</param>
 		static public System.Boolean IsHandleValid(System.UInt32 pointerHandle)
 		{

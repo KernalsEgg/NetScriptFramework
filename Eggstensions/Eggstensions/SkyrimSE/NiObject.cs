@@ -14,7 +14,7 @@
 			return niRTTI;
 		}
 		
-		/// <summary>SkyrimSE.exe + 0x1C4510 (VID15449)</summary>
+		/// <summary>SkyrimSE.exe + 0x1C4510 (VID 15449)</summary>
 		/// <param name = "niObject">NiObject</param>
 		/// <param name = "niRTTI">NiRTTI</param>
 		static public System.Boolean HasNiRTTI(System.IntPtr niObject, System.IntPtr niRTTI)

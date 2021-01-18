@@ -32,11 +32,11 @@ namespace QuickHarvest
 
 
 
-		readonly static private CollisionLayers _collisionLayer = CollisionLayers.LOS;
+		readonly static private BGSCollisionLayer.CollisionLayerTypes _collisionLayer = BGSCollisionLayer.CollisionLayerTypes.LOS;
 
 		readonly static private System.String _messageBox =
 			"Quick Harvest has thrown an exception." +
-			"\nDetails are logged to Data\\NetScriptFramework\\NetScriptFramework.log.txt.";
+			"\nLogs are written to Data\\NetScriptFramework\\NetScriptFramework.log.txt.";
 
 
 
@@ -46,7 +46,7 @@ namespace QuickHarvest
 
 		static public void OnActivateFlora(Events.ActivateFloraEventArguments arguments)
 		{
-			if (arguments == null) { throw new Eggceptions.ArgumentNullException("arguments"); }
+			if (arguments == null) { throw new Eggceptions.ArgumentNullException(nameof(arguments)); }
 
 			if (System.Threading.Interlocked.Exchange(ref Plugin._harvesting, 1) == 0)
 			{
@@ -66,7 +66,7 @@ namespace QuickHarvest
 
 		static public void OnActivateTree(Events.ActivateTreeEventArguments arguments)
 		{
-			if (arguments == null) { throw new Eggceptions.ArgumentNullException("arguments"); }
+			if (arguments == null) { throw new Eggceptions.ArgumentNullException(nameof(arguments)); }
 
 			if (System.Threading.Interlocked.Exchange(ref Plugin._harvesting, 1) == 0)
 			{
@@ -87,8 +87,8 @@ namespace QuickHarvest
 		static public void QuickHarvest(System.IntPtr ingredient, System.IntPtr target, System.IntPtr activator)
 		{
 			// ingredient
-			if (target == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("target"); }
-			if (activator == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("activator"); }
+			if (target == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException(nameof(target)); }
+			if (activator == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException(nameof(activator)); }
 
 			if (activator != PlayerCharacter.Instance) { return; }
 			if (ingredient == System.IntPtr.Zero) { return; }
@@ -101,7 +101,7 @@ namespace QuickHarvest
 
 			foreach (var loadedCell in TES.GetLoadedCells(TES.Instance))
 			{
-				(var loadedFloras, var loadedTrees) = TESObjectCELL.GetReferences(loadedCell, FormTypes.TESFlora, FormTypes.TESObjectTREE);
+				(var loadedFloras, var loadedTrees) = TESObjectCELL.GetReferences(loadedCell, TESForm.FormTypes.TESFlora, TESForm.FormTypes.TESObjectTREE);
 
 				foreach (var loadedFlora in loadedFloras)
 				{
@@ -159,14 +159,14 @@ namespace QuickHarvest
 		/// <param name="target">TESObjectREFR</param>
 		static private System.Boolean Visibility(System.IntPtr viewer, System.IntPtr target)
 		{
-			if (viewer == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("viewer"); }
-			if (target == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("target"); }
+			if (viewer == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException(nameof(viewer)); }
+			if (target == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException(nameof(target)); }
 
 			switch (Settings.Visibility)
 			{
-				case Flags.Visibility.Viewshed:
+				case Settings.Flags.Visibility.Viewshed:
 					return Actor.IsReferenceInViewshed(viewer, target, PlayerCamera.GetPosition(PlayerCamera.Instance), Plugin._collisionLayer);
-				case Flags.Visibility.LineOfSight:
+				case Settings.Flags.Visibility.LineOfSight:
 					return PlayerCharacter.HasLineOfSight(viewer, target).lineOfSight;
 				default:
 					return true;
@@ -175,6 +175,8 @@ namespace QuickHarvest
 
 		static public void OnPlayHarvestSound(Events.PlayHarvestSoundEventArguments arguments)
 		{
+			if (arguments == null) { throw new Eggceptions.ArgumentNullException(nameof(arguments)); }
+
 			arguments.Skip =
 				(Plugin._harvesting != 0)
 				&&
@@ -183,6 +185,8 @@ namespace QuickHarvest
 
 		static public void OnShowHarvestNotification(Events.ShowHarvestNotificationEventArguments arguments)
 		{
+			if (arguments == null) { throw new Eggceptions.ArgumentNullException(nameof(arguments)); }
+
 			arguments.Skip =
 				(Plugin._harvesting != 0)
 				&&

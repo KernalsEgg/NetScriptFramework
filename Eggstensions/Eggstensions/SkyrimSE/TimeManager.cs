@@ -1,6 +1,6 @@
 ﻿namespace Eggstensions.SkyrimSE
 {
-	class TimeManager
+	static public class TimeManager
 	{
 		static public System.IntPtr Instance
 		{

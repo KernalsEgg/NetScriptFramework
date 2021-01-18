@@ -1,4 +1,8 @@
-﻿namespace Eggstensions.SkyrimSE
+﻿using static NetScriptFramework._IntPtrExtensions;
+
+
+
+namespace Eggstensions.SkyrimSE
 {
 	static public class Sky
 	{
@@ -51,6 +55,22 @@
 			if (precipitation == System.IntPtr.Zero) { throw new Eggceptions.NullException(nameof(precipitation)); }
 
 			return precipitation;
+		}
+
+		/// <param name="sky">Sky</param>
+		static public System.Boolean IsRaining(System.IntPtr sky)
+		{
+			if (sky == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException(nameof(sky)); }
+
+			return NetScriptFramework.Memory.InvokeCdecl(VIDS.Sky.IsRaining, sky).ToBool();
+		}
+
+		/// <param name="sky">Sky</param>
+		static public System.Boolean IsSnowing(System.IntPtr sky)
+		{
+			if (sky == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException(nameof(sky)); }
+
+			return NetScriptFramework.Memory.InvokeCdecl(VIDS.Sky.IsSnowing, sky).ToBool();
 		}
 	}
 }

@@ -10,3 +10,4 @@ C:\SkyrimSE\ApplySpellPatch\ApplySpellPatch\bin\Release\NetScriptFramework.Skyri
 C:\SkyrimSE\ApplySpellPatch\ApplySpellPatch\obj\Release\ApplySpellPatch.csproj.CopyComplete
 C:\SkyrimSE\ApplySpellPatch\ApplySpellPatch\obj\Release\ApplySpellPatch.dll
 C:\SkyrimSE\ApplySpellPatch\ApplySpellPatch\obj\Release\ApplySpellPatch.pdb
+C:\SkyrimSE\ApplySpellPatch\ApplySpellPatch\obj\Release\ApplySpellPatch.csprojAssemblyReference.cache

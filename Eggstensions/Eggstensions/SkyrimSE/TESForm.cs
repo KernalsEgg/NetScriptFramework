@@ -4,23 +4,23 @@
 
 namespace Eggstensions.SkyrimSE
 {
-	public enum FormTypes : System.Byte
-	{
-		TESRace =			0xE,
-		TESObjectARMO =		0x1A,
-		TESObjectTREE =		0x26,
-		TESFlora =			0x27,
-		TESNPC =			0x2B,
-		TESObjectREFR =		0x3D,
-		Character =			0x3E,
-		TESObjectARMA =		0x66,
-		BGSCollisionLayer =	0x84
-	}
-
-
-
 	static public class TESForm
 	{
+		public enum FormTypes : System.Byte
+		{
+			TESRace =			0xE,
+			TESObjectARMO =		0x1A,
+			TESObjectTREE =		0x26,
+			TESFlora =			0x27,
+			TESNPC =			0x2B,
+			TESObjectREFR =		0x3D,
+			Character =			0x3E,
+			TESObjectARMA =		0x66,
+			BGSCollisionLayer =	0x84
+		}
+
+
+
 		/// <param name="form">TESForm</param>
 		/// <param name="target">TESObjectREFR</param>
 		/// <param name="activator">TESObjectREFR</param>
@@ -66,7 +66,7 @@ namespace Eggstensions.SkyrimSE
 			return NetScriptFramework.Memory.ReadUInt32(form + 0x10);
 		}
 
-		/// <summary>SkyrimSE.exe + 0x972E10 (VID54832)</summary>
+		/// <summary>SkyrimSE.exe + 0x972E10 (VID 54832)</summary>
 		/// <returns>TESForm, System.IntPtr.Zero</returns>
 		static public System.IntPtr GetFormFromFile(System.UInt32 localFormID, System.String fileName)
 		{
@@ -97,11 +97,11 @@ namespace Eggstensions.SkyrimSE
 		}
 
 		/// <param name = "form">TESForm</param>
-		static public FormTypes GetFormType(System.IntPtr form)
+		static public TESForm.FormTypes GetFormType(System.IntPtr form)
 		{
 			if (form == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException(nameof(form)); }
 
-			return (FormTypes)NetScriptFramework.Memory.ReadUInt8(form + 0x1A);
+			return (TESForm.FormTypes)NetScriptFramework.Memory.ReadUInt8(form + 0x1A);
 		}
 
 		/// <param name = "form">TESForm</param>
@@ -138,7 +138,7 @@ namespace Eggstensions.SkyrimSE
 		}
 
 		/// <param name = "form">TESForm</param>
-		static public System.Boolean HasFormType(System.IntPtr form, FormTypes formType)
+		static public System.Boolean HasFormType(System.IntPtr form, TESForm.FormTypes formType)
 		{
 			if (form == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException(nameof(form)); }
 			// formType
@@ -151,7 +151,7 @@ namespace Eggstensions.SkyrimSE
 		{
 			if (form == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException(nameof(form)); }
 
-			return TESForm.GetFormType(form) == FormTypes.TESObjectARMA;
+			return TESForm.HasFormType(form, TESForm.FormTypes.TESObjectARMA);
 		}
 
 		/// <param name = "form">TESForm</param>
@@ -159,7 +159,7 @@ namespace Eggstensions.SkyrimSE
 		{
 			if (form == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException(nameof(form)); }
 
-			return TESForm.GetFormType(form) == FormTypes.TESRace;
+			return TESForm.HasFormType(form, TESForm.FormTypes.TESRace);
 		}
 
 		/// <param name="form">TESForm</param>

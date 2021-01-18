@@ -5,7 +5,7 @@
 		/// <param name = "armor">TESObjectARMO</param>
 		/// <param name = "race">TESRace</param>
 		/// <returns>TESObjectARMA, System.IntPtr.Zero</returns>
-		static public System.IntPtr GetArmorAddon(System.IntPtr armor, BipedObjectSlots bipedObjectSlot, System.IntPtr race)
+		static public System.IntPtr GetArmorAddon(System.IntPtr armor, BipedObject.Slots bipedObjectSlot, System.IntPtr race)
 		{
 			if (armor == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException(nameof(armor)); }
 			// bipedObjectSlot
@@ -33,7 +33,7 @@
 			return armor + 0x208;
 		}
 
-		/// <summary>SkyrimSE.exe + 0x228AD0 (VID17392)</summary>
+		/// <summary>SkyrimSE.exe + 0x228AD0 (VID 17392)</summary>
 		/// <param name = "armor">TESObjectARMO</param>
 		/// <param name = "race">TESRace</param>
 		/// <returns>System.Collections.Generic.List&lt;TESObjectARMA&gt;</returns>
@@ -67,7 +67,7 @@
 		}
 
 		/// <param name = "armor">TESObjectARMO</param>
-		static public System.Boolean HasBipedObjectSlot(System.IntPtr armor, BipedObjectSlots bipedObjectSlot)
+		static public System.Boolean HasBipedObjectSlot(System.IntPtr armor, BipedObject.Slots bipedObjectSlot)
 		{
 			if (armor == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException(nameof(armor)); }
 			// bipedObjectSlot

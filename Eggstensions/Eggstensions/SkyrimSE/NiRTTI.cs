@@ -66,31 +66,31 @@
 
 
 
-		/// <summary>SkyrimSE.exe + 0x3013660 (VID523941)</summary>
+		/// <summary>SkyrimSE.exe + 0x3013660 (VID 523941)</summary>
 		static public System.IntPtr BSDismemberSkinInstance		{ get { return _bsDismemberSkinInstance; } }
 
-		/// <summary>SkyrimSE.exe + 0x30136C8 (VID523951)</summary>
+		/// <summary>SkyrimSE.exe + 0x30136C8 (VID 523951)</summary>
 		static public System.IntPtr BSGeometry					{ get { return _bsGeometry; } }
 
-		/// <summary>SkyrimSE.exe + 0x32331B8 (VID527992)</summary>
+		/// <summary>SkyrimSE.exe + 0x32331B8 (VID 527992)</summary>
 		static public System.IntPtr BSParticleShaderProperty	{ get { return _bsParticleShaderProperty; } }
 
-		/// <summary>SkyrimSE.exe + 0x30125B0 (VID523928)</summary>
+		/// <summary>SkyrimSE.exe + 0x30125B0 (VID 523928)</summary>
 		static public System.IntPtr BSTriShape					{ get { return _bsTriShape; } }
 
-		/// <summary>SkyrimSE.exe + 0x30123C0 (VID523895)</summary>
+		/// <summary>SkyrimSE.exe + 0x30123C0 (VID 523895)</summary>
 		static public System.IntPtr NiAVObject					{ get { return _niAVObject; } }
 
-		/// <summary>SkyrimSE.exe + 0x30123E0 (VID523900)</summary>
+		/// <summary>SkyrimSE.exe + 0x30123E0 (VID 523900)</summary>
 		static public System.IntPtr NiNode						{ get { return _niNode; } }
 
-		/// <summary>SkyrimSE.exe + 0x3012388 (VID523891)</summary>
+		/// <summary>SkyrimSE.exe + 0x3012388 (VID 523891)</summary>
 		static public System.IntPtr NiObject					{ get { return _niObject; } }
 
-		/// <summary>SkyrimSE.exe + 0x30125C0 (VID523929)</summary>
+		/// <summary>SkyrimSE.exe + 0x30125C0 (VID 523929)</summary>
 		static public System.IntPtr NiProperty					{ get { return _niProperty; } }
 
-		/// <summary>SkyrimSE.exe + 0x30138D0 (VID523976)</summary>
+		/// <summary>SkyrimSE.exe + 0x30138D0 (VID 523976)</summary>
 		static public System.IntPtr NiSkinInstance				{ get { return _niSkinInstance; } }
 
 

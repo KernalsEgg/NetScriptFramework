@@ -1,14 +1,5 @@
 ﻿namespace Eggstensions.SkyrimSE
 {
-	public enum ExtraDataTypes : System.Byte
-	{
-		None =			0x0,
-		Flags =			0xA0,
-		Interaction =	0xA9
-	}
-
-
-
 	public class ExtraDataList : System.Collections.Generic.IEnumerable<System.IntPtr>
 	{
 		static public class PresenceBitfield
@@ -17,7 +8,7 @@
 
 
 
-			static public System.Boolean HasExtraDataType(System.IntPtr presenceBitfield, ExtraDataTypes type)
+			static public System.Boolean HasExtraDataType(System.IntPtr presenceBitfield, BSExtraData.ExtraDataTypes type)
 			{
 				if (presenceBitfield == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException(nameof(presenceBitfield)); }
 				// type
@@ -34,7 +25,7 @@
 				return false;
 			}
 
-			static public void MarkExtraDataType(System.IntPtr presenceBitfield, ExtraDataTypes type, System.Boolean cleared)
+			static public void MarkExtraDataType(System.IntPtr presenceBitfield, BSExtraData.ExtraDataTypes type, System.Boolean cleared)
 			{
 				if (presenceBitfield == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException(nameof(presenceBitfield)); }
 				// type
@@ -127,7 +118,7 @@
 		}
 
 		/// <param name="extraDataList">ExtraDataList</param>
-		static public System.Boolean HasExtraDataType(System.IntPtr extraDataList, ExtraDataTypes extraDataType)
+		static public System.Boolean HasExtraDataType(System.IntPtr extraDataList, BSExtraData.ExtraDataTypes extraDataType)
 		{
 			if (extraDataList == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException(nameof(extraDataList)); }
 			// extraDataType
@@ -143,7 +134,7 @@
 		{
 			if (extraDataList == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException(nameof(extraDataList)); }
 
-			return ExtraDataList.HasExtraDataType(extraDataList, ExtraDataTypes.Interaction);
+			return ExtraDataList.HasExtraDataType(extraDataList, BSExtraData.ExtraDataTypes.Interaction);
 		}
 	}
 }

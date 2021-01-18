@@ -294,7 +294,7 @@ namespace HorsingAround
 		{
 			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters() // Set HUD data while on horseback
 			{
-				Address = VIDS.PlayerCharacter.HUDData + 0xAA,
+				Address = VIDS.PlayerCharacter.SetHUDData + 0xAA,
 				Pattern = "E8 ?? ?? ?? ??",
 				ReplaceLength = 5,
 				IncludeLength = 0,

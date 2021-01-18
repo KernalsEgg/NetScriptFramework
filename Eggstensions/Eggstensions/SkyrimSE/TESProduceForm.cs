@@ -1,17 +1,17 @@
 ﻿namespace Eggstensions.SkyrimSE
 {
-	public enum Season : System.UInt32
-	{
-		Spring =	0x0u,
-		Summer =	0x1u,
-		Fall =		0x2u,
-		Winter =	0x3u
-	}
-	
-
-
 	static public class TESProduceForm
 	{
+		public enum Seasons : System.UInt32
+		{
+			Spring =	0x0u,
+			Summer =	0x1u,
+			Fall =		0x2u,
+			Winter =	0x3u
+		}
+
+
+
 		/// <param name="produceForm">TESProduceForm</param>
 		/// <returns>BGSSoundDescriptorForm, System.IntPtr.Zero</returns>
 		static public System.IntPtr GetHarvestSound(System.IntPtr produceForm)

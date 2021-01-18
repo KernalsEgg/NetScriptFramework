@@ -35,7 +35,7 @@
 		}
 
 		/// <param name = "armorAddon">TESObjectARMA</param>
-		static public System.Boolean HasBipedObjectSlot(System.IntPtr armorAddon, BipedObjectSlots bipedObjectSlot)
+		static public System.Boolean HasBipedObjectSlot(System.IntPtr armorAddon, BipedObject.Slots bipedObjectSlot)
 		{
 			if (armorAddon == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException(nameof(armorAddon)); }
 			// bipedObjectSlot

@@ -40,7 +40,7 @@
 			return playerCamera + 0x3C;
 		}
 
-		/// <summary>SkyrimSE.exe + 0x850260 (VID49975)</summary>
+		/// <summary>SkyrimSE.exe + 0x850260 (VID 49975)</summary>
 		/// <param name="playerCamera">PlayerCamera</param>
 		/// <param name="thirdPersonState">ThirdPersonState</param>
 		static public (System.Single x, System.Single y, System.Single z) GetOrigin(System.IntPtr playerCamera, System.IntPtr thirdPersonState)

@@ -99,20 +99,11 @@
 		{
 			if (niAVObject == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException(nameof(niAVObject)); }
 
-			return NetScriptFramework.Memory.ReadPointer(niAVObject + 0xF8); // userData
-		}
-
-		/// <param name = "niAVObject">NiAVObject</param>
-		/// <returns>TESObjectREFR, System.IntPtr.Zero</returns>
-		static public System.IntPtr GetOwnerRecursive(System.IntPtr niAVObject)
-		{
-			if (niAVObject == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException(nameof(niAVObject)); }
-
-			var owner = NiAVObject.GetOwner(niAVObject);
+			var owner = NetScriptFramework.Memory.ReadPointer(niAVObject + 0xF8);
 			if (owner != System.IntPtr.Zero) { return owner; }
 
 			var parent = NiAVObject.GetParent(niAVObject);
-			if (parent != System.IntPtr.Zero) { return NiAVObject.GetOwnerRecursive(parent); }
+			if (parent != System.IntPtr.Zero) { return NiAVObject.GetOwner(parent); }
 
 			return System.IntPtr.Zero;
 		}

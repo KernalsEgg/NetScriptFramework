@@ -2,13 +2,13 @@
 {
 	static public class BSDismemberSkinInstance
 	{
-		/// <summary>SkyrimSE.exe + 0x1CBD10 (VID15540)</summary>
+		/// <summary>SkyrimSE.exe + 0x1CBD10 (VID 15540)</summary>
 		/// <param name = "dismemberSkinInstance">BSDismemberSkinInstance</param>
-		static public System.Collections.Generic.List<BipedObjectSlots> GetBipedObjectSlots(System.IntPtr dismemberSkinInstance)
+		static public System.Collections.Generic.List<BipedObject.Slots> GetBipedObjectSlots(System.IntPtr dismemberSkinInstance)
 		{
 			if (dismemberSkinInstance == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException(nameof(dismemberSkinInstance)); }
 
-			var bipedObjectSlots = new System.Collections.Generic.List<BipedObjectSlots>();
+			var bipedObjectSlots = new System.Collections.Generic.List<BipedObject.Slots>();
 
 			var partitionsCount = BSDismemberSkinInstance.GetPartitionsCount(dismemberSkinInstance);
 			var partitions = BSDismemberSkinInstance.GetPartitions(dismemberSkinInstance);
@@ -26,7 +26,7 @@
 					bipedObjectSlot -= 200;
 				}
 
-				bipedObjectSlots.Add((BipedObjectSlots)bipedObjectSlot);
+				bipedObjectSlots.Add((BipedObject.Slots)bipedObjectSlot);
 			}
 
 			return bipedObjectSlots;

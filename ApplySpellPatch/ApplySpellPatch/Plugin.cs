@@ -22,8 +22,10 @@ namespace ApplySpellPatch
 		{
 			// loadedAny
 
-			Plugin._spellItems = new System.Collections.Generic.Dictionary<System.Int64, System.Collections.Generic.HashSet<System.IntPtr>>();
-			Plugin._key = 0;
+			Plugin._settings = new Settings();
+			Plugin._settings.Load();
+
+			Plugin._spellItems = new System.Collections.Generic.Dictionary<System.IntPtr, System.Collections.Generic.HashSet<System.IntPtr>>();
 			Plugin._lock = new System.Object();
 
 			Plugin.WriteHooks();
@@ -40,8 +42,8 @@ namespace ApplySpellPatch
 			Plugin._applyCombatHitSpellProjectile =		NetScriptFramework.Main.GameInfo.GetAddressOf(42547); // <SkyrimSE.exe> + 0x732400
 			Plugin._applyReanimateSpell =				NetScriptFramework.Main.GameInfo.GetAddressOf(37865); // <SkyrimSE.exe> + 0x634BF0
 			Plugin._applySneakingSpell =				NetScriptFramework.Main.GameInfo.GetAddressOf(36926); // <SkyrimSE.exe> + 0x6089E0
-			Plugin._applyWeaponSwingSpell =				NetScriptFramework.Main.GameInfo.GetAddressOf(37628); // <SkyrimSE.exe> + 0x6260F0
-			Plugin._setSpellPerkEntryPoint =			NetScriptFramework.Main.GameInfo.GetAddressOf(23089); // <SkyrimSE.exe> + 0x32FA00
+			Plugin._applyWeaponSwingSpell =				NetScriptFramework.Main.GameInfo.GetAddressOf(37628); // <SkyrimSE.exe> + 0x6260F0 Actor::WeaponSwingCallBack
+			Plugin._setSpellPerkEntryPoint =			NetScriptFramework.Main.GameInfo.GetAddressOf(23089); // <SkyrimSE.exe> + 0x32FA00 Actor::SetSpellPerkEntryPoint
 		}
 
 
@@ -54,12 +56,16 @@ namespace ApplySpellPatch
 		readonly static private System.IntPtr _applyWeaponSwingSpell;
 		readonly static private System.IntPtr _setSpellPerkEntryPoint;
 
-		static private System.Collections.Generic.Dictionary<System.Int64, System.Collections.Generic.HashSet<System.IntPtr>> _spellItems;
-		static private System.Int64 _key;
+		readonly static private System.String _messageBox =
+			"Apply Spell Patch has thrown an exception." +
+			"\nLogs are written to Data\\NetScriptFramework\\NetScriptFramework.log.txt.";
+
+		static private Settings _settings;
+		static private System.Collections.Generic.Dictionary<System.IntPtr, System.Collections.Generic.HashSet<System.IntPtr>> _spellItems;
 		static private System.Object _lock;
 
 
-
+		
 		static private void WriteHooks()
 		{
 			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters()
@@ -67,11 +73,9 @@ namespace ApplySpellPatch
 				Address = Plugin._setSpellPerkEntryPoint + 0x53,
 				Pattern = "48 8B 43 08" + "48 89 01",
 				ReplaceLength = 7,
-				IncludeLength = 0,
-				Before = cpuRegisters => Plugin.SetSpellPerkEntryPoint(cpuRegisters.BX, cpuRegisters.CX),
+				IncludeLength = 7,
+				After = cpuRegisters => Plugin.SetSpellPerkEntryPoint(cpuRegisters.CX, cpuRegisters.AX), // RCX: HandleEntryPointVisitor->*SpellItem, RAX: SpellItem, RBX: BGSEntryPointFunctionDataSpellItem
 			});
-
-
 
 			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters()
 			{
@@ -79,7 +83,7 @@ namespace ApplySpellPatch
 				Pattern = "E8 ?? ?? ?? ??",
 				ReplaceLength = 5,
 				IncludeLength = 0,
-				Before = cpuRegisters => Plugin.CastSpellPerkEntryPoint(cpuRegisters.CX, cpuRegisters.DX),
+				Before = cpuRegisters => Plugin.CastSpellPerkEntryPoint(cpuRegisters.SP + 0x118, cpuRegisters.CX),
 			});
 
 			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters()
@@ -88,7 +92,7 @@ namespace ApplySpellPatch
 				Pattern = "E8 ?? ?? ?? ??",
 				ReplaceLength = 5,
 				IncludeLength = 0,
-				Before = cpuRegisters => Plugin.CastSpellPerkEntryPoint(cpuRegisters.CX, cpuRegisters.DX),
+				Before = cpuRegisters => Plugin.CastSpellPerkEntryPoint(cpuRegisters.SP + 0x78, cpuRegisters.CX),
 			});
 
 			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters()
@@ -97,7 +101,7 @@ namespace ApplySpellPatch
 				Pattern = "E8 ?? ?? ?? ??",
 				ReplaceLength = 5,
 				IncludeLength = 0,
-				Before = cpuRegisters => Plugin.CastSpellPerkEntryPoint(cpuRegisters.CX, cpuRegisters.DX),
+				Before = cpuRegisters => Plugin.CastSpellPerkEntryPoint(cpuRegisters.SP + 0x50, cpuRegisters.CX),
 			});
 
 			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters()
@@ -106,7 +110,7 @@ namespace ApplySpellPatch
 				Pattern = "E8 ?? ?? ?? ??",
 				ReplaceLength = 5,
 				IncludeLength = 0,
-				Before = cpuRegisters => Plugin.CastSpellPerkEntryPoint(cpuRegisters.CX, cpuRegisters.DX),
+				Before = cpuRegisters => Plugin.CastSpellPerkEntryPoint(cpuRegisters.SP + 0x50, cpuRegisters.CX),
 			});
 
 			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters()
@@ -115,7 +119,7 @@ namespace ApplySpellPatch
 				Pattern = "E8 ?? ?? ?? ??",
 				ReplaceLength = 5,
 				IncludeLength = 0,
-				Before = cpuRegisters => Plugin.CastSpellPerkEntryPoint(cpuRegisters.CX, cpuRegisters.DX),
+				Before = cpuRegisters => Plugin.CastSpellPerkEntryPoint(cpuRegisters.SP + 0x40, cpuRegisters.CX),
 			});
 
 			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters()
@@ -124,59 +128,59 @@ namespace ApplySpellPatch
 				Pattern = "E8 ?? ?? ?? ??",
 				ReplaceLength = 5,
 				IncludeLength = 0,
-				Before = cpuRegisters => Plugin.CastSpellPerkEntryPoint(cpuRegisters.CX, cpuRegisters.DX),
+				Before = cpuRegisters => Plugin.CastSpellPerkEntryPoint(cpuRegisters.SP + 0x70, cpuRegisters.CX),
 			});
 		}
 
-		/// <param name="perkEntryPoint">BGSEntryPointFunctionDataSpellItem</param>
-		/// <param name="spellToSet">SpellItem</param>
-		static private void SetSpellPerkEntryPoint(System.IntPtr perkEntryPoint, System.IntPtr spellToSet)
+		/// <param name="spellItem">SpellItem</param>
+		static private void SetSpellPerkEntryPoint(System.IntPtr address, System.IntPtr spellItem)
 		{
-			if (perkEntryPoint == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("perkEntryPoint"); }
-			if (spellToSet == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("spellToSet"); }
+			if (address == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException(nameof(address)); }
+			if (spellItem == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException(nameof(spellItem)); }
 
 			lock (Plugin._lock)
 			{
-				var key = NetScriptFramework.Memory.ReadInt64(spellToSet);
-
-				while (key == 0)
+				if (Plugin._spellItems.TryGetValue(address, out var spellItems))
 				{
-					key = System.Threading.Interlocked.Increment(ref Plugin._key);
-					NetScriptFramework.Memory.WriteInt64(spellToSet, key);
-				}
-
-				if (Plugin._spellItems.TryGetValue(key, out var spellItems))
-				{
-					spellItems.Add(NetScriptFramework.Memory.ReadPointer(perkEntryPoint + 0x8));
+					spellItems.Add(spellItem);
 				}
 				else
 				{
 					spellItems = new System.Collections.Generic.HashSet<System.IntPtr>();
-					spellItems.Add(NetScriptFramework.Memory.ReadPointer(perkEntryPoint + 0x8));
-					Plugin._spellItems[key] = spellItems;
+					spellItems.Add(spellItem);
+					Plugin._spellItems[address] = spellItems;
 				}
 			}
 		}
 
 		/// <param name="target">Actor</param>
-		/// <param name="spellItemToSet">SpellItem</param>
-		static private void CastSpellPerkEntryPoint(System.IntPtr target, System.IntPtr spellToSet)
+		static private void CastSpellPerkEntryPoint(System.IntPtr address, System.IntPtr target)
 		{
-			if (target == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("target"); }
-			if (spellToSet == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException("spellToSet"); }
+			if (address == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException(nameof(address)); }
+			if (target == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException(nameof(target)); }
 
 			lock (Plugin._lock)
 			{
-				var key = spellToSet.ToInt64();
-
-				if (Plugin._spellItems.TryGetValue(key, out var spellItems))
+				try
 				{
-					Plugin._spellItems.Remove(key);
-
-					foreach (var spellItem in spellItems)
+					if (Plugin._spellItems.TryGetValue(address, out var spellItems))
 					{
-						Actor.CastSpellPerkEntryPoint(target, spellItem);
+						Plugin._spellItems.Remove(address);
+
+						foreach (var spellItem in spellItems)
+						{
+							Actor.CastSpellPerkEntryPoint(target, spellItem);
+						}
 					}
+					else
+					{
+						throw new Eggceptions.NullException(nameof(spellItems));
+					}
+				}
+				catch (Eggceptions.Eggception eggception)
+				{
+					if (Plugin._settings.LogHandledExceptions) { NetScriptFramework.Main.Log.Append(eggception); }
+					if (Plugin._settings.ShowHandledExceptions) { UI.ShowMessageBox(Plugin._messageBox); }
 				}
 			}
 		}

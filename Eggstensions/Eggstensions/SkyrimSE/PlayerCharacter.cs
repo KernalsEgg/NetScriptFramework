@@ -84,7 +84,7 @@ namespace Eggstensions.SkyrimSE
 			return playerCharacter + 0x9B8;
 		}
 
-		/// <summary>SkyrimSE.exe + 0x6CFEF0 (VID40243)</summary>
+		/// <summary>SkyrimSE.exe + 0x6CFEF0 (VID 40243)</summary>
 		/// <param name="playerCharacter">PlayerCharacter</param>
 		static public System.IntPtr GetTargetActor(System.IntPtr playerCharacter, System.Func<System.IntPtr, System.IntPtr, System.Boolean> condition)
 		{
@@ -211,14 +211,6 @@ namespace Eggstensions.SkyrimSE
 
 				return (fieldOfView, lineOfSight);
 			}
-		}
-
-		/// <param name="playerCharacter">PlayerCharacter</param>
-		static public System.Boolean IsCommandingActor(System.IntPtr playerCharacter)
-		{
-			if (playerCharacter == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException(nameof(playerCharacter)); }
-
-			return NetScriptFramework.Memory.InvokeCdecl(VIDS.PlayerCharacter.IsCommandingActor, playerCharacter).ToBool();
 		}
 	}
 }

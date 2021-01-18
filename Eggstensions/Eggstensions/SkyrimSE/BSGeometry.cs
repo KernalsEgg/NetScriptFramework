@@ -4,8 +4,8 @@
 	{
 		public enum States
 		{
-			Property,
-			Effect
+			Property =	0,
+			Effect =	1
 		}
 
 

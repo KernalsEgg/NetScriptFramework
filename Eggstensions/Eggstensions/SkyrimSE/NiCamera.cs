@@ -27,7 +27,7 @@
 			};
 		}
 
-		/// <summary>SkyrimSE.exe + 0xC65A20 (VID69265)</summary>
+		/// <summary>SkyrimSE.exe + 0xC65A20 (VID 69265)</summary>
 		/// <param name="niCamera">NiCamera</param>
 		/// <param name="center">NiPoint3</param>
 		static public ((System.Single x, System.Single y, System.Single z) negativeResult, (System.Single x, System.Single y, System.Single z) positiveResult) IsInCenter(System.IntPtr niCamera, (System.Single x, System.Single y, System.Single z) center, System.Single radius, System.Single delta)

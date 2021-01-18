@@ -3,7 +3,7 @@
 	static public class Quaternion
 	{
 		// www.euclideanspace.com/maths/geometry/rotations/conversions/quaternionToMatrix
-		/// <summary>SkyrimSE.exe + 0x1CFA50 (VID15612)</summary>
+		/// <summary>SkyrimSE.exe + 0x1CFA50 (VID 15612)</summary>
 		static public System.Single[,] QuaternionToMatrix33(System.Single[,] quaternion)
 		{
 			if (quaternion == null) { throw new Eggceptions.ArgumentNullException(nameof(quaternion)); }

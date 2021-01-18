@@ -4,20 +4,20 @@
 
 namespace QuickHarvest
 {
-	static public class Flags
-	{
-		public enum Visibility : System.Int32
-		{
-			All = 0,
-			Viewshed = 1,
-			LineOfSight = 2
-		}
-	}
-
-
-
 	static public class Settings
 	{
+		static public class Flags
+		{
+			public enum Visibility : System.Int32
+			{
+				All = 0,
+				Viewshed = 1,
+				LineOfSight = 2
+			}
+		}
+
+
+
 		static Settings()
 		{
 			_configFile = new NetScriptFramework.Tools.ConfigFile("QuickHarvest");
@@ -36,7 +36,7 @@ namespace QuickHarvest
 				"ShowHandledExceptions",
 				new NetScriptFramework.Tools.Value(false),
 				"Show Handled Exceptions",
-				"Show an in-game message box each time an exception is handled.",
+				"Show an in-game message box when an exception is handled.",
 				NetScriptFramework.Tools.ConfigEntryFlags.VeryShortComment
 			);
 
@@ -163,44 +163,44 @@ namespace QuickHarvest
 			}
 
 			var logHandledExceptionsValue = _configFile.GetValue("LogHandledExceptions");
-			if (logHandledExceptionsValue == null) { throw new Eggceptions.NullException("logHandledExceptionsValue"); }
+			if (logHandledExceptionsValue == null) { throw new Eggceptions.NullException(nameof(logHandledExceptionsValue)); }
 			LogHandledExceptions = logHandledExceptionsValue.ToBoolean();
 
 			var showHandledExceptionsValue = _configFile.GetValue("ShowHandledExceptions");
-			if (showHandledExceptionsValue == null) { throw new Eggceptions.NullException("showHandledExceptionsValue"); }
+			if (showHandledExceptionsValue == null) { throw new Eggceptions.NullException(nameof(showHandledExceptionsValue)); }
 			ShowHandledExceptions = showHandledExceptionsValue.ToBoolean();
 
 			var playSoundsValue = _configFile.GetValue("PlaySounds");
-			if (playSoundsValue == null) { throw new Eggceptions.NullException("playSoundsValue"); }
+			if (playSoundsValue == null) { throw new Eggceptions.NullException(nameof(playSoundsValue)); }
 			PlaySounds = playSoundsValue.ToBoolean();
 
 			var showNotificationsValue = _configFile.GetValue("ShowNotifications");
-			if (showNotificationsValue == null) { throw new Eggceptions.NullException("showNotificationsValue"); }
+			if (showNotificationsValue == null) { throw new Eggceptions.NullException(nameof(showNotificationsValue)); }
 			ShowNotifications = showNotificationsValue.ToBoolean();
 
 			var harvestEverythingValue = _configFile.GetValue("HarvestEverything");
-			if (harvestEverythingValue == null) { throw new Eggceptions.NullException("harvestEverythingValue"); }
+			if (harvestEverythingValue == null) { throw new Eggceptions.NullException(nameof(harvestEverythingValue)); }
 			HarvestEverything = harvestEverythingValue.ToBoolean();
 
 			var maximumDistanceValue = _configFile.GetValue("MaximumDistance");
-			if (maximumDistanceValue == null) { throw new Eggceptions.NullException("maximumDistanceValue"); }
+			if (maximumDistanceValue == null) { throw new Eggceptions.NullException(nameof(maximumDistanceValue)); }
 			MaximumDistance = maximumDistanceValue.ToSingle();
 
 			var stealValue = _configFile.GetValue("Steal");
-			if (stealValue == null) { throw new Eggceptions.NullException("stealValue"); }
+			if (stealValue == null) { throw new Eggceptions.NullException(nameof(stealValue)); }
 			Steal = stealValue.ToBoolean();
 
 			var visibilityValue = _configFile.GetValue("Visibility");
-			if (visibilityValue == null) { throw new Eggceptions.NullException("visibilityValue"); }
-			Visibility = (Flags.Visibility)visibilityValue.ToInt32();
+			if (visibilityValue == null) { throw new Eggceptions.NullException(nameof(visibilityValue)); }
+			Visibility = (Settings.Flags.Visibility)visibilityValue.ToInt32();
 
-			IncludedIngredientFormTypes = new System.Collections.Generic.List<FormTypes>();
+			IncludedIngredientFormTypes = new System.Collections.Generic.List<TESForm.FormTypes>();
 
 			for (var index = 0u; index <= System.Byte.MaxValue; index++)
 			{
 				var includedFormTypeValue = _configFile.GetValue("IncludedFormType" + index);
 				if (includedFormTypeValue == null) { break; }
-				var includedFormType = (FormTypes)includedFormTypeValue.ToByte();
+				var includedFormType = (TESForm.FormTypes)includedFormTypeValue.ToByte();
 
 				IncludedIngredientFormTypes.Add(includedFormType);
 			}
@@ -219,7 +219,7 @@ namespace QuickHarvest
 				if (System.String.IsNullOrWhiteSpace(excludedFileName)) { break; }
 
 				var excludedForm = TESForm.GetFormFromFile(excludedFormID, excludedFileName);
-				if (excludedForm == System.IntPtr.Zero) { throw new Eggceptions.SkyrimSE.FormNotFoundException("Form ID: " + excludedFormID.ToString("X8") + ", File Name: " + excludedFileName); }
+				if (excludedForm == System.IntPtr.Zero) { throw new Eggceptions.SkyrimSE.FormNotFoundException("File Name: " + excludedFileName + ", Form ID: " + excludedFormID.ToString("X8")); }
 
 				ExcludedIngredients.Add(excludedForm);
 			}
@@ -238,7 +238,7 @@ namespace QuickHarvest
 				if (System.String.IsNullOrWhiteSpace(includedFileName)) { break; }
 
 				var includedForm = TESForm.GetFormFromFile(includedFormID, includedFileName);
-				if (includedForm == System.IntPtr.Zero) { throw new Eggceptions.SkyrimSE.FormNotFoundException("Form ID: " + includedFormID.ToString("X8") + ", File Name: " + includedFileName); }
+				if (includedForm == System.IntPtr.Zero) { throw new Eggceptions.SkyrimSE.FormNotFoundException("File Name: " + includedFileName + ", Form ID: " + includedFormID.ToString("X8")); }
 
 				IncludedIngredients.Add(includedForm);
 			}
@@ -250,7 +250,7 @@ namespace QuickHarvest
 
 
 
-		static public Flags.Visibility Visibility { get; }
+		static public Settings.Flags.Visibility Visibility { get; }
 
 		static public System.Boolean HarvestEverything { get; }
 
@@ -268,7 +268,7 @@ namespace QuickHarvest
 
 		static public System.Collections.Generic.HashSet<System.IntPtr> IncludedIngredients { get; }
 
-		static public System.Collections.Generic.List<FormTypes> IncludedIngredientFormTypes { get; }
+		static public System.Collections.Generic.List<TESForm.FormTypes> IncludedIngredientFormTypes { get; }
 
 		static public System.Single MaximumDistance { get; }
 	}

@@ -54,7 +54,7 @@
 			return race + 0xE8;
 		}
 
-		/// <summary>SkyrimSE.exe + 0x226D70 (VID17359)</summary>
+		/// <summary>SkyrimSE.exe + 0x226D70 (VID 17359)</summary>
 		/// <param name = "race">TESRace</param>
 		/// <param name = "armorAddon">TESObjectARMA</param>
 		static public System.Boolean CanUseArmorAddon(System.IntPtr race, System.IntPtr armorAddon)

@@ -10,7 +10,7 @@
 			return NetScriptFramework.Memory.ReadUInt8(thirdPersonState + 0xE1) != 0;
 		}
 
-		/// <summary>SkyrimSE.exe + 0x84F8A0 (VID49967)</summary>
+		/// <summary>SkyrimSE.exe + 0x84F8A0 (VID 49967)</summary>
 		/// <param name="thirdPersonState">ThirdPersonState</param>
 		static public (System.Single x, System.Single y, System.Single z) GetCurrentOffset(System.IntPtr thirdPersonState, System.Boolean zoom)
 		{

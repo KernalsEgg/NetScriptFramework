@@ -15,7 +15,7 @@
 
 
 
-			/// <summary>SkyrimSE.exe + 0x708BF0 (VID41346)<br/>VTable + 0x20</summary>
+			/// <summary>SkyrimSE.exe + 0x708BF0 (VID 41346)<br/>VTable + 0x20</summary>
 			static public System.IntPtr ProcessButton { get { return _processButton; } }
 		}
 
@@ -32,7 +32,7 @@
 
 
 
-			/// <summary>SkyrimSE.exe + 0x3AA4B0 (VID25591)</summary>
+			/// <summary>SkyrimSE.exe + 0x3AA4B0 (VID 25591)</summary>
 			static public System.IntPtr Pick { get { return _pick; } }
 		}
 
@@ -49,7 +49,7 @@
 
 
 
-			/// <summary>SkyrimSE.exe + 0x849930 (VID49839)<br/>VTable + 0x78</summary>
+			/// <summary>SkyrimSE.exe + 0x849930 (VID 49839)<br/>VTable + 0x78</summary>
 			static public System.IntPtr HandleLookInput { get { return _handleLookInput; } }
 		}
 
@@ -66,7 +66,7 @@
 
 
 
-			/// <summary>SkyrimSE.exe + 0x87D580 (VID50718)<br/>VTable + 0x20</summary>
+			/// <summary>SkyrimSE.exe + 0x87D580 (VID 50718)<br/>VTable + 0x20</summary>
 			static public System.IntPtr ProcessMessage { get { return _processMessage; } }
 		}
 
@@ -86,10 +86,10 @@
 
 
 
-			/// <summary>SkyrimSE.exe + 0x84BE40 (VID49888)</summary>
+			/// <summary>SkyrimSE.exe + 0x84BE40 (VID 49888)</summary>
 			static public System.IntPtr Mount				{ get { return _mount; } }
 
-			/// <summary>SkyrimSE.exe + 0x84D630 (VID49908)</summary>
+			/// <summary>SkyrimSE.exe + 0x84D630 (VID 49908)</summary>
 			static public System.IntPtr UpdateWeaponDrawn	{ get { return _updateWeaponDrawn; } }
 		}
 
@@ -97,15 +97,13 @@
 		{
 			static PlayerCharacter()
 			{
-				_hudData =					NetScriptFramework.Main.GameInfo.GetAddressOf(39535);
 				_pickCrosshairReference =	NetScriptFramework.Main.GameInfo.GetAddressOf(39534);
 				_placeWaitCommandMarker =	NetScriptFramework.Main.GameInfo.GetAddressOf(39550);
 				_processActivate =			NetScriptFramework.Main.GameInfo.GetAddressOf(39471);
+				_setHUDData =				NetScriptFramework.Main.GameInfo.GetAddressOf(39535);
 			}
 
 
-
-			readonly static private System.IntPtr _hudData;
 
 			readonly static private System.IntPtr _pickCrosshairReference;
 
@@ -113,19 +111,21 @@
 
 			readonly static private System.IntPtr _processActivate;
 
+			readonly static private System.IntPtr _setHUDData;
 
 
-			/// <summary>SkyrimSE.exe + 0x6B0570 (VID39535)</summary>
-			static public System.IntPtr HUDData					{ get { return _hudData; } }
 
-			/// <summary>SkyrimSE.exe + 0x6B01E0 (VID39534)</summary>
+			/// <summary>SkyrimSE.exe + 0x6B01E0 (VID 39534)</summary>
 			static public System.IntPtr PickCrosshairReference	{ get { return _pickCrosshairReference; } }
 
-			/// <summary>SkyrimSE.exe + 0x6B11C0 (VID39550)</summary>
+			/// <summary>SkyrimSE.exe + 0x6B11C0 (VID 39550)</summary>
 			static public System.IntPtr PlaceWaitCommandMarker	{ get { return _placeWaitCommandMarker; } }
 
-			/// <summary>SkyrimSE.exe + 0x6A9F90 (VID39471)</summary>
+			/// <summary>SkyrimSE.exe + 0x6A9F90 (VID 39471)</summary>
 			static public System.IntPtr ProcessActivate			{ get { return _processActivate; } }
+
+			/// <summary>SkyrimSE.exe + 0x6B0570 (VID 39535)</summary>
+			static public System.IntPtr SetHUDData				{ get { return _setHUDData; } }
 		}
 
 		static public class RightHandWeaponDrawHandler
@@ -141,7 +141,7 @@
 
 
 
-			/// <summary>SkyrimSE.exe + 0x720FB0 (VID41743)<br/>VTable + 0x8</summary>
+			/// <summary>SkyrimSE.exe + 0x720FB0 (VID 41743)<br/>VTable + 0x8</summary>
 			static public System.IntPtr ExecuteHandler { get { return _executeHandler; } }
 		}
 
@@ -158,7 +158,7 @@
 
 
 
-			/// <summary>SkyrimSE.exe + 0x7094C0 (VID41357)<br/>VTable + 0x20</summary>
+			/// <summary>SkyrimSE.exe + 0x7094C0 (VID 41357)<br/>VTable + 0x20</summary>
 			static public System.IntPtr ProcessButton { get { return _processButton; } }
 		}
 
@@ -175,7 +175,7 @@
 
 
 
-			/// <summary>SkyrimSE.exe + 0x21A4B0 (VID17034)<br/>VTable + 0x1B8</summary>
+			/// <summary>SkyrimSE.exe + 0x21A4B0 (VID 17034)<br/>VTable + 0x1B8</summary>
 			static public System.IntPtr Activate { get { return _activate; } }
 		}
 	}

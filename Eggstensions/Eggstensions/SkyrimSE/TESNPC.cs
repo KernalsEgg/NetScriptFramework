@@ -1,21 +1,21 @@
 ﻿namespace Eggstensions.SkyrimSE
 {
-	public enum ActorBaseFlags : System.UInt32
-	{
-		None =		0u,
-		Female =	1u << 0
-	}
-
-
-
 	static public class TESNPC
 	{
+		public enum Flags : System.UInt32
+		{
+			None =		0u,
+			Female =	1u << 0
+		}
+
+
+
 		/// <param name = "npc">TESNPC</param>
-		static public ActorBaseFlags GetActorBaseFlags(System.IntPtr npc)
+		static public TESNPC.Flags GetActorBaseFlags(System.IntPtr npc)
 		{
 			if (npc == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException(nameof(npc)); }
 			
-			return (ActorBaseFlags)NetScriptFramework.Memory.ReadUInt32(npc + 0x38);
+			return (TESNPC.Flags)NetScriptFramework.Memory.ReadUInt32(npc + 0x38);
 		}
 
 		/// <param name = "npc">TESNPC</param>
@@ -30,7 +30,7 @@
 			return race;
 		}
 
-		/// <summary>SkyrimSE.exe + 0x363000 (VID24221)</summary>
+		/// <summary>SkyrimSE.exe + 0x363000 (VID 24221)</summary>
 		/// <param name = "npc">TESNPC</param>
 		/// <returns>TESObjectARMO</returns>
 		static public System.IntPtr GetSkin(System.IntPtr npc)
@@ -47,7 +47,7 @@
 		}
 
 		/// <param name = "npc">TESNPC</param>
-		static public System.Boolean HasActorBaseFlags(System.IntPtr npc, ActorBaseFlags actorBaseFlags)
+		static public System.Boolean HasActorBaseFlags(System.IntPtr npc, TESNPC.Flags actorBaseFlags)
 		{
 			if (npc == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException(nameof(npc)); }
 			// actorBaseFlags

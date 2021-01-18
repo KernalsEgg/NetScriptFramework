@@ -82,7 +82,7 @@ namespace Eggstensions.SkyrimSE
 
 		/// <param name = "reference">TESObjectREFR</param>
 		/// <returns>BSExtraData, System.IntPtr.Zero</returns>
-		static public System.IntPtr GetExtraData(System.IntPtr reference, ExtraDataTypes extraDataType)
+		static public System.IntPtr GetExtraData(System.IntPtr reference, BSExtraData.ExtraDataTypes extraDataType)
 		{
 			if (reference == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException(nameof(reference)); }
 
@@ -99,12 +99,12 @@ namespace Eggstensions.SkyrimSE
 		}
 
 		/// <param name="reference">TESObjectREFR</param>
-		/// <returns>FormTypes</returns>
-		static public FormTypes GetFormType(System.IntPtr reference)
+		/// <returns>TESForm.FormTypes</returns>
+		static public TESForm.FormTypes GetFormType(System.IntPtr reference)
 		{
 			if (reference == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException(nameof(reference)); }
 
-			return (FormTypes)VirtualObject.InvokeVTableThisCall(reference, 0xA8).ToUInt8();
+			return (TESForm.FormTypes)VirtualObject.InvokeVTableThisCall(reference, 0xA8).ToUInt8();
 		}
 
 		/// <param name="reference">TESObjectREFR</param>
@@ -116,7 +116,7 @@ namespace Eggstensions.SkyrimSE
 			return reference + 0x20;
 		}
 
-		/// <summary>SkyrimSE.exe + 0x28E8D0 (VID19283)</summary>
+		/// <summary>SkyrimSE.exe + 0x28E8D0 (VID 19283)</summary>
 		/// <param name = "reference">TESObjectREFR</param>
 		static public (System.Single x, System.Single y, System.Single z) GetLookAtPosition(System.IntPtr reference)
 		{
@@ -135,7 +135,7 @@ namespace Eggstensions.SkyrimSE
 			}
 		}
 
-		/// <summary>SkyrimSE.exe + 0x2948D0 (VID19328)</summary>
+		/// <summary>SkyrimSE.exe + 0x2948D0 (VID 19328)</summary>
 		/// <param name = "reference">TESObjectREFR</param>
 		static public (System.Single x, System.Single y, System.Single z) GetMaximumBounds(System.IntPtr reference)
 		{
@@ -154,7 +154,7 @@ namespace Eggstensions.SkyrimSE
 			}
 		}
 
-		/// <summary>SkyrimSE.exe + 0x2947D0 (VID19327)</summary>
+		/// <summary>SkyrimSE.exe + 0x2947D0 (VID 19327)</summary>
 		/// <param name = "reference">TESObjectREFR</param>
 		static public (System.Single x, System.Single y, System.Single z) GetMinimumBounds(System.IntPtr reference)
 		{
@@ -282,15 +282,20 @@ namespace Eggstensions.SkyrimSE
 			return NetScriptFramework.Memory.ReadFloat(reference + 0x50);
 		}
 
-		/// <summary>SkyrimSE.exe + 0x994540 (VID55660)</summary>
+		/// <summary>SkyrimSE.exe + 0x994540 (VID 55660)</summary>
 		/// <param name = "reference">TESObjectREFR</param>
 		static public System.Boolean IsActivationBlocked(System.IntPtr reference)
 		{
 			if (reference == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException(nameof(reference)); }
 
-			var extraData = TESObjectREFR.GetExtraData(reference, ExtraDataTypes.Flags);
-			
-			return extraData != System.IntPtr.Zero && ExtraFlags.IsActivationBlocked(extraData);
+			var extraData = TESObjectREFR.GetExtraData(reference, BSExtraData.ExtraDataTypes.Flags);
+
+			if (extraData != System.IntPtr.Zero)
+			{
+				return ExtraFlags.IsActivationBlocked(extraData);
+			}
+
+			return false;
 		}
 
 		/// <param name = "reference">TESObjectREFR</param>
@@ -298,7 +303,7 @@ namespace Eggstensions.SkyrimSE
 		{
 			if (reference == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException(nameof(reference)); }
 
-			return TESForm.HasFormType(reference, FormTypes.Character);
+			return TESForm.HasFormType(reference, TESForm.FormTypes.Character);
 		}
 		
 		/// <param name = "reference">TESObjectREFR</param>
@@ -334,33 +339,33 @@ namespace Eggstensions.SkyrimSE
 		}
 
 		/// <param name="reference">TESObjectREFR</param>
-		static public System.Boolean IsHitAlong(System.IntPtr reference, (System.Single x, System.Single y, System.Single z) origin, (System.Single x, System.Single y, System.Single z) ray, CollisionLayers collisionLayer)
+		static public System.Boolean IsHitAlong(System.IntPtr reference, (System.Single x, System.Single y, System.Single z) origin, (System.Single x, System.Single y, System.Single z) ray, BGSCollisionLayer.CollisionLayerTypes collisionLayerType)
 		{
 			if (reference == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException(nameof(reference)); }
 			// origin
 			// ray
-			// collisionLayer
+			// collisionLayerType
 
 			var parentCell = TESObjectREFR.GetParentCell(reference);
 			if (parentCell == System.IntPtr.Zero) { return false; }
 
-			return TESObjectCELL.IsHitAlong(parentCell, origin, ray, collisionLayer, reference);
+			return TESObjectCELL.IsHitAlong(parentCell, origin, ray, collisionLayerType, reference);
 		}
 
 		/// <param name="reference">TESObjectREFR</param>
 		/// <param name="target">TESObjectREFR</param>
-		static public System.Boolean IsHitBetween(System.IntPtr reference, System.IntPtr target, (System.Single x, System.Single y, System.Single z) from, (System.Single x, System.Single y, System.Single z) to, CollisionLayers collisionLayer)
+		static public System.Boolean IsHitBetween(System.IntPtr reference, System.IntPtr target, (System.Single x, System.Single y, System.Single z) from, (System.Single x, System.Single y, System.Single z) to, BGSCollisionLayer.CollisionLayerTypes collisionLayerType)
 		{
 			if (reference == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException(nameof(reference)); }
 			if (target == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException(nameof(target)); }
 			// from
 			// to
-			// collisionLayer
+			// collisionLayerType
 
 			var parentCell = TESObjectREFR.GetParentCell(reference);
 			if (parentCell == System.IntPtr.Zero) { return false; }
 
-			return TESObjectCELL.IsHitBetween(parentCell, from, to, collisionLayer, reference, target);
+			return TESObjectCELL.IsHitBetween(parentCell, from, to, collisionLayerType, reference, target);
 		}
 		/*
 		/// <param name="reference">TESObjectREFR</param>

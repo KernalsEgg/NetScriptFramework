@@ -48,7 +48,7 @@
 
 		/// <param name = "cell">TESObjectCELL</param>
 		/// <returns>System.Collections.Generic.HashSet&lt;TESObjectREFR&gt;</returns>
-		static public System.Collections.Generic.HashSet<System.IntPtr> GetReferences(System.IntPtr cell, FormTypes formType)
+		static public System.Collections.Generic.HashSet<System.IntPtr> GetReferences(System.IntPtr cell, TESForm.FormTypes formType)
 		{
 			if (cell == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException(nameof(cell)); }
 			// formType
@@ -71,7 +71,7 @@
 
 		/// <param name = "cell">TESObjectCELL</param>
 		/// <returns>System.Collections.Generic.HashSet&lt;TESObjectREFR&gt;</returns>
-		static public (System.Collections.Generic.HashSet<System.IntPtr> references1, System.Collections.Generic.HashSet<System.IntPtr> references2) GetReferences(System.IntPtr cell, FormTypes formType1, FormTypes formType2)
+		static public (System.Collections.Generic.HashSet<System.IntPtr> references1, System.Collections.Generic.HashSet<System.IntPtr> references2) GetReferences(System.IntPtr cell, TESForm.FormTypes formType1, TESForm.FormTypes formType2)
 		{
 			if (cell == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException(nameof(cell)); }
 			// formType1
@@ -139,34 +139,34 @@
 
 		/// <param name="cell">TESObjectCELL</param>
 		/// <param name="references">TESObjectREFR[]</param>
-		static public System.Boolean IsHitAlong(System.IntPtr cell, (System.Single x, System.Single y, System.Single z) origin, (System.Single x, System.Single y, System.Single z) ray, CollisionLayers collisionLayer, params System.IntPtr[] references)
+		static public System.Boolean IsHitAlong(System.IntPtr cell, (System.Single x, System.Single y, System.Single z) origin, (System.Single x, System.Single y, System.Single z) ray, BGSCollisionLayer.CollisionLayerTypes collisionLayerType, params System.IntPtr[] references)
 		{
 			if (cell == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException(nameof(cell)); }
 			// origin
 			// ray
-			// collisionLayer
+			// collisionLayerType
 			// references
 
 			var havokWorld = TESObjectCELL.GetHavokWorld(cell);
 			if (havokWorld == System.IntPtr.Zero) { return false; }
 
-			return bhkWorldM.IsHitAlong(havokWorld, origin, ray, collisionLayer, references);
+			return bhkWorldM.IsHitAlong(havokWorld, origin, ray, collisionLayerType, references);
 		}
 
 		/// <param name="cell">TESObjectCELL</param>
 		/// <param name="references">TESObjectREFR[]</param>
-		static public System.Boolean IsHitBetween(System.IntPtr cell, (System.Single x, System.Single y, System.Single z) from, (System.Single x, System.Single y, System.Single z) to, CollisionLayers collisionLayer, params System.IntPtr[] references)
+		static public System.Boolean IsHitBetween(System.IntPtr cell, (System.Single x, System.Single y, System.Single z) from, (System.Single x, System.Single y, System.Single z) to, BGSCollisionLayer.CollisionLayerTypes collisionLayerType, params System.IntPtr[] references)
 		{
 			if (cell == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException(nameof(cell)); }
 			// from
 			// to
-			// collisionLayer
+			// collisionLayerType
 			// references
 
 			var havokWorld = TESObjectCELL.GetHavokWorld(cell);
 			if (havokWorld == System.IntPtr.Zero) { return false; }
 
-			return bhkWorldM.IsHitBetween(havokWorld, from, to, collisionLayer, references);
+			return bhkWorldM.IsHitBetween(havokWorld, from, to, collisionLayerType, references);
 		}
 	}
 }
