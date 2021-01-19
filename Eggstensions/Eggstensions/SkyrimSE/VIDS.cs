@@ -631,29 +631,17 @@
 		{
 			static PlayerCharacter()
 			{
-				_activateDistance =		NetScriptFramework.Main.GameInfo.GetAddressOf(502527);
-				_commandDistance =		NetScriptFramework.Main.GameInfo.GetAddressOf(502841);
 				_hasLineOfSight =		NetScriptFramework.Main.GameInfo.GetAddressOf(39444);
 				_instance =				NetScriptFramework.Main.GameInfo.GetAddressOf(517014);
 			}
 
 
 
-			readonly static private System.IntPtr _activateDistance;
-
-			readonly static private System.IntPtr _commandDistance;
-
 			readonly static private System.IntPtr _hasLineOfSight;
 
 			readonly static private System.IntPtr _instance;
 
 
-
-			/// <summary>SkyrimSE.exe + 0x1DD7E88 (VID 502527)</summary>
-			static public System.IntPtr ActivateDistance	{ get { return _activateDistance; } }
-
-			/// <summary>SkyrimSE.exe + 0x1DD8FB0 (VID 502841)</summary>
-			static public System.IntPtr CommandDistance		{ get { return _commandDistance; } }
 
 			/// <summary>SkyrimSE.exe + 0x6A4A00 (VID 39444)</summary>
 			static public System.IntPtr HasLineOfSight		{ get { return _hasLineOfSight; } }
@@ -734,6 +722,7 @@
 					_autoAimBasedOnDistance =			NetScriptFramework.Main.GameInfo.GetAddressOf(504543);
 					_autoAimMaxDistance =				NetScriptFramework.Main.GameInfo.GetAddressOf(504545);
 					_autoAimScreenPercentage =			NetScriptFramework.Main.GameInfo.GetAddressOf(504547);
+					_favorRequestPickDistance =			NetScriptFramework.Main.GameInfo.GetAddressOf(502840);
 					_horseMaxUpwardPitch =				NetScriptFramework.Main.GameInfo.GetAddressOf(509845);
 					_mountedMaxLookingDown =			NetScriptFramework.Main.GameInfo.GetAddressOf(503103);
 					_overShoulderRangedMountedAddY =	NetScriptFramework.Main.GameInfo.GetAddressOf(509841);
@@ -748,6 +737,8 @@
 				readonly static private System.IntPtr _autoAimMaxDistance;
 
 				readonly static private System.IntPtr _autoAimScreenPercentage;
+
+				readonly static private System.IntPtr _favorRequestPickDistance;
 
 				readonly static private System.IntPtr _horseMaxUpwardPitch;
 
@@ -770,6 +761,9 @@
 				/// <summary>SkyrimSE.exe + 0x1DDECA0 (VID 504547)</summary>
 				static public System.IntPtr AutoAimScreenPercentage			{ get { return _autoAimScreenPercentage; } }
 
+				/// <summary>SkyrimSE.exe + 0x1DD8FA8 (VID 502840)</summary>
+				static public System.IntPtr FavorRequestPickDistance		{ get { return _favorRequestPickDistance; } }
+
 				/// <summary>SkyrimSE.exe + 0x1DF3650 (VID 509845)</summary>
 				static public System.IntPtr HorseMaxUpwardPitch				{ get { return _horseMaxUpwardPitch; } }
 
@@ -788,37 +782,68 @@
 
 			static public class INISettingCollection
 			{
-				static INISettingCollection()
+				static public class Interface
 				{
-					_gridsToLoad =				NetScriptFramework.Main.GameInfo.GetAddressOf(501244);
-					_overShoulderHorseAddY =	NetScriptFramework.Main.GameInfo.GetAddressOf(509835);
-					_overShoulderHorsePosX =	NetScriptFramework.Main.GameInfo.GetAddressOf(509831);
-					_overShoulderHorsePosZ =	NetScriptFramework.Main.GameInfo.GetAddressOf(509833);
+					static Interface()
+					{
+						_activatePickLength = NetScriptFramework.Main.GameInfo.GetAddressOf(502526);
+					}
+
+
+
+					readonly static private System.IntPtr _activatePickLength;
+
+
+
+					/// <summary>SkyrimSE.exe + 0x1DD7E80 (VID 502526)</summary>
+					static public System.IntPtr ActivatePickLength { get { return _activatePickLength; } } // Interface
 				}
 
-
-
-				readonly static private System.IntPtr _gridsToLoad;
-
-				readonly static private System.IntPtr _overShoulderHorseAddY;
-
-				readonly static private System.IntPtr _overShoulderHorsePosX;
-
-				readonly static private System.IntPtr _overShoulderHorsePosZ;
+				static public class General
+				{
+					static General()
+					{
+						_gridsToLoad = NetScriptFramework.Main.GameInfo.GetAddressOf(501244);
+					}
 
 
 
-				/// <summary>SkyrimSE.exe + 0x1DB3E28 (VID 501244)</summary>
-				static public System.IntPtr GridsToLoad				{ get { return _gridsToLoad; } }
+					readonly static private System.IntPtr _gridsToLoad;
 
-				/// <summary>SkyrimSE.exe + 0x1DF35D8 (VID 509835)</summary>
-				static public System.IntPtr OverShoulderHorseAddY	{ get { return _overShoulderHorseAddY; } }
 
-				/// <summary>SkyrimSE.exe + 0x1DF35A8 (VID 509831)</summary>
-				static public System.IntPtr OverShoulderHorsePosX	{ get { return _overShoulderHorsePosX; } }
 
-				/// <summary>SkyrimSE.exe + 0x1DF35C0 (VID 509833)</summary>
-				static public System.IntPtr OverShoulderHorsePosZ	{ get { return _overShoulderHorsePosZ; } }
+					/// <summary>SkyrimSE.exe + 0x1DB3E28 (VID 501244)</summary>
+					static public System.IntPtr GridsToLoad { get { return _gridsToLoad; } } // General
+				}
+
+				static public class Camera
+				{
+					static Camera()
+					{
+						_overShoulderHorseAddY = NetScriptFramework.Main.GameInfo.GetAddressOf(509835);
+						_overShoulderHorsePosX = NetScriptFramework.Main.GameInfo.GetAddressOf(509831);
+						_overShoulderHorsePosZ = NetScriptFramework.Main.GameInfo.GetAddressOf(509833);
+					}
+
+
+
+					readonly static private System.IntPtr _overShoulderHorseAddY;
+
+					readonly static private System.IntPtr _overShoulderHorsePosX;
+
+					readonly static private System.IntPtr _overShoulderHorsePosZ;
+
+
+
+					/// <summary>SkyrimSE.exe + 0x1DF35D8 (VID 509835)</summary>
+					static public System.IntPtr OverShoulderHorseAddY { get { return _overShoulderHorseAddY; } }
+
+					/// <summary>SkyrimSE.exe + 0x1DF35A8 (VID 509831)</summary>
+					static public System.IntPtr OverShoulderHorsePosX { get { return _overShoulderHorsePosX; } }
+
+					/// <summary>SkyrimSE.exe + 0x1DF35C0 (VID 509833)</summary>
+					static public System.IntPtr OverShoulderHorsePosZ { get { return _overShoulderHorsePosZ; } }
+				}
 			}
 		}
 

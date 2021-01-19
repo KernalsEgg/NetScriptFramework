@@ -382,7 +382,7 @@ namespace HorsingAround
 		{
 			var playerCharacter = PlayerCharacter.Instance;
 
-			return (Actor.IsOnMount(playerCharacter) && !Actor.IsOnFlyingMount(playerCharacter)) ? Plugin._settings.ActivateDistance : PlayerCharacter.ActivateDistance;
+			return (Actor.IsOnMount(playerCharacter) && !Actor.IsOnFlyingMount(playerCharacter)) ? Plugin._settings.ActivateDistance : SettingT.INISettingCollection.Interface.ActivatePickLength;
 		}
 
 		static private void SetOrigin(NetScriptFramework.CPURegisters cpuRegisters)

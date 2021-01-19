@@ -28,6 +28,14 @@
 				}
 			}
 
+			static public System.Single FavorRequestPickDistance
+			{
+				get
+				{
+					return Setting.GetSingle(VIDS.SettingT.GameSettingCollection.FavorRequestPickDistance);
+				}
+			}
+
 			static public System.Single HorseMaxUpwardPitch
 			{
 				get
@@ -71,35 +79,52 @@
 
 		static public class INISettingCollection
 		{
-			static public System.UInt32 GridsToLoad
+			static public class Camera
 			{
-				get
+				static public System.Single OverShoulderHorseAddY // Weapon sheathed
 				{
-					return Setting.GetUInt32(VIDS.SettingT.INISettingCollection.GridsToLoad);
+					get
+					{
+						return Setting.GetSingle(VIDS.SettingT.INISettingCollection.Camera.OverShoulderHorseAddY);
+					}
+				}
+
+				static public System.Single OverShoulderHorsePosX
+				{
+					get
+					{
+						return Setting.GetSingle(VIDS.SettingT.INISettingCollection.Camera.OverShoulderHorsePosX);
+					}
+				}
+
+				static public System.Single OverShoulderHorsePosZ
+				{
+					get
+					{
+						return Setting.GetSingle(VIDS.SettingT.INISettingCollection.Camera.OverShoulderHorsePosZ);
+					}
 				}
 			}
 
-			static public System.Single OverShoulderHorseAddY // Weapon sheathed
+			static public class General
 			{
-				get
+				static public System.UInt32 GridsToLoad
 				{
-					return Setting.GetSingle(VIDS.SettingT.INISettingCollection.OverShoulderHorseAddY);
+					get
+					{
+						return Setting.GetUInt32(VIDS.SettingT.INISettingCollection.General.GridsToLoad);
+					}
 				}
 			}
 
-			static public System.Single OverShoulderHorsePosX
+			static public class Interface
 			{
-				get
+				static public System.Single ActivatePickLength
 				{
-					return Setting.GetSingle(VIDS.SettingT.INISettingCollection.OverShoulderHorsePosX);
-				}
-			}
-
-			static public System.Single OverShoulderHorsePosZ
-			{
-				get
-				{
-					return Setting.GetSingle(VIDS.SettingT.INISettingCollection.OverShoulderHorsePosZ);
+					get
+					{
+						return Setting.GetSingle(VIDS.SettingT.INISettingCollection.Interface.ActivatePickLength);
+					}
 				}
 			}
 		}

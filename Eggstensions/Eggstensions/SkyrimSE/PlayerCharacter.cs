@@ -6,22 +6,6 @@ namespace Eggstensions.SkyrimSE
 {
 	static public class PlayerCharacter
 	{
-		static public System.Single ActivateDistance
-		{
-			get
-			{
-				return NetScriptFramework.Memory.ReadFloat(VIDS.PlayerCharacter.ActivateDistance);
-			}
-		}
-
-		static public System.Single CommandDistance
-		{
-			get
-			{
-				return NetScriptFramework.Memory.ReadFloat(VIDS.PlayerCharacter.CommandDistance);
-			}
-		}
-		
 		/// <returns>PlayerCharacter</returns>
 		static public System.IntPtr Instance
 		{
