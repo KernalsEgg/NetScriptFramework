@@ -29,12 +29,12 @@ namespace Eggstensions.SkyrimSE
 
 		/// <param name="actor">Actor</param>
 		/// <param name="spellItem">SpellItem</param>
-		static public void CastSpellPerkEntryPoint(System.IntPtr actor, System.IntPtr spellItem)
+		static public void AddSpellHandler(System.IntPtr actor, System.IntPtr spellItem)
 		{
 			if (actor == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException(nameof(actor)); }
 			if (spellItem == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException(nameof(spellItem)); }
 
-			NetScriptFramework.Memory.InvokeCdecl(VIDS.Actor.CastSpellPerkEntryPoint, actor, spellItem);
+			NetScriptFramework.Memory.InvokeCdecl(VIDS.Actor.AddSpellHandler, actor, spellItem);
 		}
 
 		/// <param name="actor">Actor</param>

@@ -25,6 +25,8 @@ namespace ShelterFramework
 			Plugin._settings = new Settings();
 			Plugin._settings.Load();
 
+			Plugin._lock = new System.Object();
+
 			Events.GetIsCreatureTypeEvent.Register(OnGetIsCreatureType);
 
 			return true;
@@ -44,6 +46,8 @@ namespace ShelterFramework
 		
 		static private System.Collections.Generic.Dictionary<System.IntPtr, (System.Single lastUpdate, System.Boolean isSheltered)> _isShelteredCache =
 			new System.Collections.Generic.Dictionary<System.IntPtr, (System.Single, System.Boolean)>();
+
+		static private System.Object _lock;
 
 
 
@@ -76,7 +80,7 @@ namespace ShelterFramework
 			switch (TESForm.GetFormType(reference))
 			{
 				case TESForm.FormTypes.Character:
-					return Plugin.IsShelteredActor(reference);
+					return Plugin.IsShelteredCharacter(reference);
 				case TESForm.FormTypes.TESObjectREFR:
 					return Plugin.IsShelteredReference(reference);
 				default:
@@ -85,22 +89,25 @@ namespace ShelterFramework
 		}
 
 		/// <param name="character">Character</param>
-		static private System.Boolean IsShelteredActor(System.IntPtr character)
+		static private System.Boolean IsShelteredCharacter(System.IntPtr character)
 		{
 			if (character == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException(nameof(character)); }
 
-			var lastUpdate = Actor.GetLastUpdate(character);
-
-			if (!Plugin._isShelteredCache.TryGetValue(character, out var isShelteredCache) || lastUpdate != isShelteredCache.lastUpdate)
+			lock (Plugin._lock)
 			{
-				isShelteredCache = (lastUpdate, Actor.IsHitAlong(character, TESObjectREFR.GetLookAtPosition(character), Plugin.GetRay(), Plugin._collisionLayer));
-				Plugin._isShelteredCache[character] = isShelteredCache;
+				var lastUpdate = Actor.GetLastUpdate(character);
 
-				return isShelteredCache.isSheltered;
-			}
-			else
-			{
-				return isShelteredCache.isSheltered;
+				if (!Plugin._isShelteredCache.TryGetValue(character, out var isShelteredCache) || lastUpdate != isShelteredCache.lastUpdate)
+				{
+					isShelteredCache = (lastUpdate, Actor.IsHitAlong(character, TESObjectREFR.GetLookAtPosition(character), Plugin.GetRay(), Plugin._collisionLayer));
+					Plugin._isShelteredCache[character] = isShelteredCache;
+
+					return isShelteredCache.isSheltered;
+				}
+				else
+				{
+					return isShelteredCache.isSheltered;
+				}
 			}
 		}
 

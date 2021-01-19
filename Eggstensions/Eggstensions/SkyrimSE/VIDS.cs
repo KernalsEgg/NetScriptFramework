@@ -6,23 +6,23 @@
 		{
 			static Actor()
 			{
-				_castSpellPerkEntryPoint =	NetScriptFramework.Main.GameInfo.GetAddressOf(37817);
-				_getCollisionFilter =		NetScriptFramework.Main.GameInfo.GetAddressOf(36559);
-				_getEyeLevel =				NetScriptFramework.Main.GameInfo.GetAddressOf(36478);
-				_getMount =					NetScriptFramework.Main.GameInfo.GetAddressOf(37757);
-				_getMountInteraction =		NetScriptFramework.Main.GameInfo.GetAddressOf(19223);
-				_getRider =					NetScriptFramework.Main.GameInfo.GetAddressOf(37758);
-				_isBeingRidden =			NetScriptFramework.Main.GameInfo.GetAddressOf(21343);
-				_isBeingRiddenBy =			NetScriptFramework.Main.GameInfo.GetAddressOf(36878);
-				_isHostileToActor =			NetScriptFramework.Main.GameInfo.GetAddressOf(36537);
-				_isOnFlyingMount =			NetScriptFramework.Main.GameInfo.GetAddressOf(36877);
-				_isOnMount =				NetScriptFramework.Main.GameInfo.GetAddressOf(17570);
-				_update3DModel =			NetScriptFramework.Main.GameInfo.GetAddressOf(38404);
+				_addSpellHandler =		NetScriptFramework.Main.GameInfo.GetAddressOf(37817);
+				_getCollisionFilter =	NetScriptFramework.Main.GameInfo.GetAddressOf(36559);
+				_getEyeLevel =			NetScriptFramework.Main.GameInfo.GetAddressOf(36478);
+				_getMount =				NetScriptFramework.Main.GameInfo.GetAddressOf(37757);
+				_getMountInteraction =	NetScriptFramework.Main.GameInfo.GetAddressOf(19223);
+				_getRider =				NetScriptFramework.Main.GameInfo.GetAddressOf(37758);
+				_isBeingRidden =		NetScriptFramework.Main.GameInfo.GetAddressOf(21343);
+				_isBeingRiddenBy =		NetScriptFramework.Main.GameInfo.GetAddressOf(36878);
+				_isHostileToActor =		NetScriptFramework.Main.GameInfo.GetAddressOf(36537);
+				_isOnFlyingMount =		NetScriptFramework.Main.GameInfo.GetAddressOf(36877);
+				_isOnMount =			NetScriptFramework.Main.GameInfo.GetAddressOf(17570);
+				_update3DModel =		NetScriptFramework.Main.GameInfo.GetAddressOf(38404);
 			}
 
 
 
-			readonly static private System.IntPtr _castSpellPerkEntryPoint;
+			readonly static private System.IntPtr _addSpellHandler;
 
 			readonly static private System.IntPtr _getCollisionFilter;
 
@@ -49,40 +49,40 @@
 
 
 			/// <summary>SkyrimSE.exe + 0x632180 (VID 37817)</summary>
-			static public System.IntPtr CastSpellPerkEntryPoint	{ get { return _castSpellPerkEntryPoint; } }
+			static public System.IntPtr AddSpellHandler		{ get { return _addSpellHandler; } }
 
 			/// <summary>SkyrimSE.exe + 0x5EBD90 (VID 36559)</summary>
-			static public System.IntPtr GetCollisionFilter		{ get { return _getCollisionFilter; } }
+			static public System.IntPtr GetCollisionFilter	{ get { return _getCollisionFilter; } }
 
 			/// <summary>SkyrimSE.exe + 0x5E2BB0 (VID 36478)</summary>
-			static public System.IntPtr GetEyeLevel				{ get { return _getEyeLevel; } }
+			static public System.IntPtr GetEyeLevel			{ get { return _getEyeLevel; } }
 
 			/// <summary>SkyrimSE.exe + 0x62EBC0 (VID 37757)</summary>
-			static public System.IntPtr GetMount				{ get { return _getMount; } }
+			static public System.IntPtr GetMount			{ get { return _getMount; } }
 
 			/// <summary>SkyrimSE.exe + 0x28C520 (VID 19223)</summary>
-			static public System.IntPtr GetMountInteraction		{ get { return _getMountInteraction; } }
+			static public System.IntPtr GetMountInteraction	{ get { return _getMountInteraction; } }
 
 			/// <summary>SkyrimSE.exe + 0x62ECD0 (VID 37758)</summary>
-			static public System.IntPtr GetRider				{ get { return _getRider; } }
+			static public System.IntPtr GetRider			{ get { return _getRider; } }
 
 			/// <summary>SkyrimSE.exe + 0x2E4310 (VID 21343)</summary>
-			static public System.IntPtr IsBeingRidden			{ get { return _isBeingRidden; } }
+			static public System.IntPtr IsBeingRidden		{ get { return _isBeingRidden; } }
 
 			/// <summary>SkyrimSE.exe + 0x605840 (VID 36878)</summary>
-			static public System.IntPtr IsBeingRiddenBy			{ get { return _isBeingRiddenBy; } }
+			static public System.IntPtr IsBeingRiddenBy		{ get { return _isBeingRiddenBy; } }
 
 			/// <summary>SkyrimSE.exe + 0x5E7E40 (VID 36537)</summary>
-			static public System.IntPtr IsHostileToActor		{ get { return _isHostileToActor; } }
+			static public System.IntPtr IsHostileToActor	{ get { return _isHostileToActor; } }
 
 			/// <summary>SkyrimSE.exe + 0x6057C0 (VID 36877)</summary>
-			static public System.IntPtr IsOnFlyingMount			{ get { return _isOnFlyingMount; } }
+			static public System.IntPtr IsOnFlyingMount		{ get { return _isOnFlyingMount; } }
 
 			/// <summary>SkyrimSE.exe + 0x22F320 (VID 17570)</summary>
-			static public System.IntPtr IsOnMount				{ get { return _isOnMount; } }
+			static public System.IntPtr IsOnMount			{ get { return _isOnMount; } }
 
 			/// <summary>SkyrimSE.exe + 0x650DF0 (VID 38404)</summary>
-			static public System.IntPtr Update3DModel			{ get { return _update3DModel; } }
+			static public System.IntPtr Update3DModel		{ get { return _update3DModel; } }
 		}
 
 		static public class BGSCollisionLayer

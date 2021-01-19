@@ -1,4 +1,3 @@
-C:\SkyrimSE\ApplySpellPatch\ApplySpellPatch\obj\Release\ApplySpellPatch.csproj.CoreCompileInputs.cache
 C:\SkyrimSE\ApplySpellPatch\ApplySpellPatch\bin\Release\ApplySpellPatch.dll
 C:\SkyrimSE\ApplySpellPatch\ApplySpellPatch\bin\Release\ApplySpellPatch.pdb
 C:\SkyrimSE\ApplySpellPatch\ApplySpellPatch\bin\Release\NetScriptFramework.dll
@@ -7,7 +6,7 @@ C:\SkyrimSE\ApplySpellPatch\ApplySpellPatch\bin\Release\NetScriptFramework.pdb
 C:\SkyrimSE\ApplySpellPatch\ApplySpellPatch\bin\Release\NetScriptFramework.xml
 C:\SkyrimSE\ApplySpellPatch\ApplySpellPatch\bin\Release\NetScriptFramework.SkyrimSE.pdb
 C:\SkyrimSE\ApplySpellPatch\ApplySpellPatch\bin\Release\NetScriptFramework.SkyrimSE.xml
+C:\SkyrimSE\ApplySpellPatch\ApplySpellPatch\obj\Release\ApplySpellPatch.csproj.CoreCompileInputs.cache
 C:\SkyrimSE\ApplySpellPatch\ApplySpellPatch\obj\Release\ApplySpellPatch.csproj.CopyComplete
 C:\SkyrimSE\ApplySpellPatch\ApplySpellPatch\obj\Release\ApplySpellPatch.dll
 C:\SkyrimSE\ApplySpellPatch\ApplySpellPatch\obj\Release\ApplySpellPatch.pdb
-C:\SkyrimSE\ApplySpellPatch\ApplySpellPatch\obj\Release\ApplySpellPatch.csprojAssemblyReference.cache

@@ -117,13 +117,13 @@ namespace QuickHarvest
 					}
 					else
 					{
-						if (loadedIngredient != ingredient) { continue; } // The loaded ingredient must be included
+						if (loadedIngredient != ingredient) { continue; } // The loaded ingredient is included
 					}
 
 					if (TESObjectREFR.IsHarvested(loadedFlora)) { continue; }
 					if (TESObjectREFR.GetDistanceBetween(loadedFlora, activator) > Settings.MaximumDistance) { continue; }
 					if (TESObjectREFR.IsCrimeToActivate(loadedFlora) != stealing) { continue; }
-					if (!Plugin.Visibility(activator, loadedFlora)) { continue; }
+					if (!Plugin.IsVisible(activator, loadedFlora)) { continue; }
 
 					TESObjectREFR.Activate(loadedFlora, activator);
 				}
@@ -142,13 +142,13 @@ namespace QuickHarvest
 					}
 					else
 					{
-						if (loadedIngredient != ingredient) { continue; } // The loaded ingredient must be included
+						if (loadedIngredient != ingredient) { continue; } // The loaded ingredient is included
 					}
 
 					if (TESObjectREFR.IsHarvested(loadedTree)) { continue; }
 					if (TESObjectREFR.GetDistanceBetween(loadedTree, activator) > Settings.MaximumDistance) { continue; }
 					if (TESObjectREFR.IsCrimeToActivate(loadedTree) != stealing) { continue; }
-					if (!Plugin.Visibility(activator, loadedTree)) { continue; }
+					if (!Plugin.IsVisible(activator, loadedTree)) { continue; }
 
 					TESObjectREFR.Activate(loadedTree, activator);
 				}
@@ -157,7 +157,7 @@ namespace QuickHarvest
 
 		/// <param name="viewer">PlayerCharacter</param>
 		/// <param name="target">TESObjectREFR</param>
-		static private System.Boolean Visibility(System.IntPtr viewer, System.IntPtr target)
+		static private System.Boolean IsVisible(System.IntPtr viewer, System.IntPtr target)
 		{
 			if (viewer == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException(nameof(viewer)); }
 			if (target == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException(nameof(target)); }

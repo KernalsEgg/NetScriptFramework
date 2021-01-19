@@ -37,24 +37,24 @@ namespace ApplySpellPatch
 
 		static Plugin()
 		{
-			Plugin._applyBashingSpell =					NetScriptFramework.Main.GameInfo.GetAddressOf(37673); // <SkyrimSE.exe> + 0x628C20
-			Plugin._applyCombatHitSpellMelee =			NetScriptFramework.Main.GameInfo.GetAddressOf(37799); // <SkyrimSE.exe> + 0x6310A0
-			Plugin._applyCombatHitSpellProjectile =		NetScriptFramework.Main.GameInfo.GetAddressOf(42547); // <SkyrimSE.exe> + 0x732400
-			Plugin._applyReanimateSpell =				NetScriptFramework.Main.GameInfo.GetAddressOf(37865); // <SkyrimSE.exe> + 0x634BF0
-			Plugin._applySneakingSpell =				NetScriptFramework.Main.GameInfo.GetAddressOf(36926); // <SkyrimSE.exe> + 0x6089E0
-			Plugin._applyWeaponSwingSpell =				NetScriptFramework.Main.GameInfo.GetAddressOf(37628); // <SkyrimSE.exe> + 0x6260F0 Actor::WeaponSwingCallBack
-			Plugin._setSpellPerkEntryPoint =			NetScriptFramework.Main.GameInfo.GetAddressOf(23089); // <SkyrimSE.exe> + 0x32FA00 Actor::SetSpellPerkEntryPoint
+			Plugin._applyBashingSpell =						NetScriptFramework.Main.GameInfo.GetAddressOf(37673); // SkyrimSE.exe + 0x628C20
+			Plugin._applyCombatHitSpellArrowProjectile =	NetScriptFramework.Main.GameInfo.GetAddressOf(42547); // SkyrimSE.exe + 0x732400
+			Plugin._applyCombatHitSpellMelee =				NetScriptFramework.Main.GameInfo.GetAddressOf(37799); // SkyrimSE.exe + 0x6310A0
+			Plugin._applyReanimateSpell =					NetScriptFramework.Main.GameInfo.GetAddressOf(37865); // SkyrimSE.exe + 0x634BF0
+			Plugin._applySneakingSpell =					NetScriptFramework.Main.GameInfo.GetAddressOf(36926); // SkyrimSE.exe + 0x6089E0
+			Plugin._applyWeaponSwingSpell =					NetScriptFramework.Main.GameInfo.GetAddressOf(37628); // SkyrimSE.exe + 0x6260F0
+			Plugin._setSpellItem =							NetScriptFramework.Main.GameInfo.GetAddressOf(23089); // SkyrimSE.exe + 0x32FA00
 		}
 
 
 
 		readonly static private System.IntPtr _applyBashingSpell;
+		readonly static private System.IntPtr _applyCombatHitSpellArrowProjectile;
 		readonly static private System.IntPtr _applyCombatHitSpellMelee;
-		readonly static private System.IntPtr _applyCombatHitSpellProjectile;
 		readonly static private System.IntPtr _applyReanimateSpell;
 		readonly static private System.IntPtr _applySneakingSpell;
 		readonly static private System.IntPtr _applyWeaponSwingSpell;
-		readonly static private System.IntPtr _setSpellPerkEntryPoint;
+		readonly static private System.IntPtr _setSpellItem;
 
 		readonly static private System.String _messageBox =
 			"Apply Spell Patch has thrown an exception." +
@@ -68,22 +68,33 @@ namespace ApplySpellPatch
 		
 		static private void WriteHooks()
 		{
+			// RCX: HandleEntryPointVisitor->*SpellItem, RAX: SpellItem, RBX: BGSEntryPointFunctionDataSpellItem
 			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters()
 			{
-				Address = Plugin._setSpellPerkEntryPoint + 0x53,
+				Address = Plugin._setSpellItem + 0x53,
 				Pattern = "48 8B 43 08" + "48 89 01",
 				ReplaceLength = 7,
 				IncludeLength = 7,
-				After = cpuRegisters => Plugin.SetSpellPerkEntryPoint(cpuRegisters.CX, cpuRegisters.AX), // RCX: HandleEntryPointVisitor->*SpellItem, RAX: SpellItem, RBX: BGSEntryPointFunctionDataSpellItem
+				After = cpuRegisters => Plugin.SetSpellItem(cpuRegisters.CX, cpuRegisters.AX),
 			});
 
+			// RCX: Actor, RDX: SpellItem
 			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters()
 			{
 				Address = Plugin._applyBashingSpell + 0x429,
 				Pattern = "E8 ?? ?? ?? ??",
 				ReplaceLength = 5,
-				IncludeLength = 0,
-				Before = cpuRegisters => Plugin.CastSpellPerkEntryPoint(cpuRegisters.SP + 0x118, cpuRegisters.CX),
+				IncludeLength = 5,
+				Before = cpuRegisters => Plugin.AddSpellItems(cpuRegisters.SP + 0x118, cpuRegisters.CX, cpuRegisters.Skip),
+			});
+
+			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters()
+			{
+				Address = Plugin._applyCombatHitSpellArrowProjectile + 0x2A7,
+				Pattern = "E8 ?? ?? ?? ??",
+				ReplaceLength = 5,
+				IncludeLength = 5,
+				Before = cpuRegisters => Plugin.AddSpellItems(cpuRegisters.SP + 0x50, cpuRegisters.CX, cpuRegisters.Skip),
 			});
 
 			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters()
@@ -91,17 +102,8 @@ namespace ApplySpellPatch
 				Address = Plugin._applyCombatHitSpellMelee + 0x79,
 				Pattern = "E8 ?? ?? ?? ??",
 				ReplaceLength = 5,
-				IncludeLength = 0,
-				Before = cpuRegisters => Plugin.CastSpellPerkEntryPoint(cpuRegisters.SP + 0x78, cpuRegisters.CX),
-			});
-
-			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters()
-			{
-				Address = Plugin._applyCombatHitSpellProjectile + 0x2A7,
-				Pattern = "E8 ?? ?? ?? ??",
-				ReplaceLength = 5,
-				IncludeLength = 0,
-				Before = cpuRegisters => Plugin.CastSpellPerkEntryPoint(cpuRegisters.SP + 0x50, cpuRegisters.CX),
+				IncludeLength = 5,
+				Before = cpuRegisters => Plugin.AddSpellItems(cpuRegisters.SP + 0x78, cpuRegisters.CX, cpuRegisters.Skip),
 			});
 
 			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters()
@@ -109,8 +111,8 @@ namespace ApplySpellPatch
 				Address = Plugin._applyReanimateSpell + 0xD2,
 				Pattern = "E8 ?? ?? ?? ??",
 				ReplaceLength = 5,
-				IncludeLength = 0,
-				Before = cpuRegisters => Plugin.CastSpellPerkEntryPoint(cpuRegisters.SP + 0x50, cpuRegisters.CX),
+				IncludeLength = 5,
+				Before = cpuRegisters => Plugin.AddSpellItems(cpuRegisters.SP + 0x50, cpuRegisters.CX, cpuRegisters.Skip),
 			});
 
 			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters()
@@ -118,8 +120,8 @@ namespace ApplySpellPatch
 				Address = Plugin._applySneakingSpell + 0xCE,
 				Pattern = "E8 ?? ?? ?? ??",
 				ReplaceLength = 5,
-				IncludeLength = 0,
-				Before = cpuRegisters => Plugin.CastSpellPerkEntryPoint(cpuRegisters.SP + 0x40, cpuRegisters.CX),
+				IncludeLength = 5,
+				Before = cpuRegisters => Plugin.AddSpellItems(cpuRegisters.SP + 0x40, cpuRegisters.CX, cpuRegisters.Skip),
 			});
 
 			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters()
@@ -127,13 +129,13 @@ namespace ApplySpellPatch
 				Address = Plugin._applyWeaponSwingSpell + 0xC3,
 				Pattern = "E8 ?? ?? ?? ??",
 				ReplaceLength = 5,
-				IncludeLength = 0,
-				Before = cpuRegisters => Plugin.CastSpellPerkEntryPoint(cpuRegisters.SP + 0x70, cpuRegisters.CX),
+				IncludeLength = 5,
+				Before = cpuRegisters => Plugin.AddSpellItems(cpuRegisters.SP + 0x70, cpuRegisters.CX, cpuRegisters.Skip),
 			});
 		}
 
 		/// <param name="spellItem">SpellItem</param>
-		static private void SetSpellPerkEntryPoint(System.IntPtr address, System.IntPtr spellItem)
+		static private void SetSpellItem(System.IntPtr address, System.IntPtr spellItem)
 		{
 			if (address == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException(nameof(address)); }
 			if (spellItem == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException(nameof(spellItem)); }
@@ -154,10 +156,11 @@ namespace ApplySpellPatch
 		}
 
 		/// <param name="target">Actor</param>
-		static private void CastSpellPerkEntryPoint(System.IntPtr address, System.IntPtr target)
+		static private void AddSpellItems(System.IntPtr address, System.IntPtr target, System.Action skip)
 		{
 			if (address == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException(nameof(address)); }
 			if (target == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException(nameof(target)); }
+			if (skip == null) { throw new Eggceptions.ArgumentNullException(nameof(skip)); }
 
 			lock (Plugin._lock)
 			{
@@ -169,8 +172,10 @@ namespace ApplySpellPatch
 
 						foreach (var spellItem in spellItems)
 						{
-							Actor.CastSpellPerkEntryPoint(target, spellItem);
+							Actor.AddSpellHandler(target, spellItem);
 						}
+
+						skip();
 					}
 					else
 					{

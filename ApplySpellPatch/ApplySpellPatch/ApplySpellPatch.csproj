@@ -52,7 +52,6 @@
     <Compile Include="Plugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settings.cs" />
-    <Compile Include="VIDS.cs" />
   </ItemGroup>
   <Import Project="..\..\Eggceptions\Eggceptions\Eggceptions.projitems" Label="Shared" />
   <Import Project="..\..\Eggstensions\Eggstensions\Eggstensions.projitems" Label="Shared" />
