@@ -32,7 +32,7 @@ namespace QuickHarvest
 
 
 
-		readonly static private BGSCollisionLayer.CollisionLayerTypes _collisionLayer = BGSCollisionLayer.CollisionLayerTypes.LOS;
+		readonly static private BGSCollisionLayer.CollisionLayerTypes _collisionLayerType = BGSCollisionLayer.CollisionLayerTypes.LOS;
 
 		readonly static private System.String _messageBox =
 			"Quick Harvest has thrown an exception." +
@@ -165,7 +165,7 @@ namespace QuickHarvest
 			switch (Settings.Visibility)
 			{
 				case Settings.Flags.Visibility.Viewshed:
-					return Actor.IsReferenceInViewshed(viewer, target, PlayerCamera.GetPosition(PlayerCamera.Instance), Plugin._collisionLayer);
+					return Actor.IsReferenceInViewshed(viewer, target, PlayerCamera.GetPosition(PlayerCamera.Instance), Plugin._collisionLayerType);
 				case Settings.Flags.Visibility.LineOfSight:
 					return PlayerCharacter.HasLineOfSight(viewer, target).lineOfSight;
 				default:

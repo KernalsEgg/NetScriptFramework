@@ -3,7 +3,7 @@
 	public class Settings
 	{
 		[NetScriptFramework.Tools.ConfigValue("DismountBySneaking", "Dismount By Sneaking", "Dismount from horseback by releasing the sneak button instead of the activate button.", NetScriptFramework.Tools.ConfigEntryFlags.VeryShortComment)]
-		public System.Boolean DismountBySneaking { get; private set; } =				true; // false
+		public System.Boolean DismountBySneaking { get; private set; } =				true;
 
 		[NetScriptFramework.Tools.ConfigValue("ActivateDistance", "Activate Distance", "Maximum activation distance while on horseback.", NetScriptFramework.Tools.ConfigEntryFlags.VeryShortComment)]
 		public System.Single ActivateDistance { get; private set; } =					270.0f; // 180.0f

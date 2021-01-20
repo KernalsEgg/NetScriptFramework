@@ -150,19 +150,34 @@ namespace HorsingAround
 				IncludeLength = 0,
 				Before = cpuRegisters =>
 				{
-					cpuRegisters.XMM14f = Plugin.GetActivateDistance();
+					var playerCharacter = PlayerCharacter.Instance;
+
+					cpuRegisters.XMM14f = (Actor.IsOnMount(playerCharacter) && !Actor.IsOnFlyingMount(playerCharacter)) ? Plugin._settings.ActivateDistance : SettingT.INISettingCollection.Interface.ActivatePickLength;
 				}
 			});
 
-			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters() // Set the maximum activation distance while on horseback
+			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters() // Set the maximum activation distance while on horseback (compatible with Better Telekinesis)
 			{
-				Address = VIDS.CrosshairPickData.Pick + 0xC41,
-				Pattern = "F3 0F10 05 ?? ?? ?? ??",
-				ReplaceLength = 8,
+				Address = VIDS.CrosshairPickData.Pick + 0xC49,
+				Pattern = "44 0F 2F D0" + "76 78",
+				ReplaceLength = 6,
 				IncludeLength = 0,
 				Before = cpuRegisters =>
 				{
-					cpuRegisters.XMM0f = Plugin.GetActivateDistance();
+					if (cpuRegisters.AX == System.IntPtr.Zero)
+					{
+						var playerCharacter = PlayerCharacter.Instance;
+
+						if (Actor.IsOnMount(playerCharacter) && !Actor.IsOnFlyingMount(playerCharacter))
+						{
+							cpuRegisters.XMM0f = Plugin._settings.ActivateDistance;
+						}
+					}
+
+					if (cpuRegisters.XMM10f <= cpuRegisters.XMM0f)
+					{
+						cpuRegisters.IP += 0x78;
+					}
 				}
 			});
 		}
@@ -377,13 +392,6 @@ namespace HorsingAround
 		}
 
 
-
-		static public System.Single GetActivateDistance()
-		{
-			var playerCharacter = PlayerCharacter.Instance;
-
-			return (Actor.IsOnMount(playerCharacter) && !Actor.IsOnFlyingMount(playerCharacter)) ? Plugin._settings.ActivateDistance : SettingT.INISettingCollection.Interface.ActivatePickLength;
-		}
 
 		static private void SetOrigin(NetScriptFramework.CPURegisters cpuRegisters)
 		{

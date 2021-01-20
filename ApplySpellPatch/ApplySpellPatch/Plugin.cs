@@ -60,8 +60,12 @@ namespace ApplySpellPatch
 			"Apply Spell Patch has thrown an exception." +
 			"\nLogs are written to Data\\NetScriptFramework\\NetScriptFramework.log.txt.";
 
+
+
 		static private Settings _settings;
+
 		static private System.Collections.Generic.Dictionary<System.IntPtr, System.Collections.Generic.HashSet<System.IntPtr>> _spellItems;
+
 		static private System.Object _lock;
 
 
@@ -75,7 +79,7 @@ namespace ApplySpellPatch
 				Pattern = "48 8B 43 08" + "48 89 01",
 				ReplaceLength = 7,
 				IncludeLength = 7,
-				After = cpuRegisters => Plugin.SetSpellItem(cpuRegisters.CX, cpuRegisters.AX),
+				After = cpuRegisters => Plugin.SetSpell(cpuRegisters.CX, cpuRegisters.AX),
 			});
 
 			// RCX: Actor, RDX: SpellItem
@@ -85,7 +89,7 @@ namespace ApplySpellPatch
 				Pattern = "E8 ?? ?? ?? ??",
 				ReplaceLength = 5,
 				IncludeLength = 5,
-				Before = cpuRegisters => Plugin.AddSpellItems(cpuRegisters.SP + 0x118, cpuRegisters.CX, cpuRegisters.Skip),
+				Before = cpuRegisters => Plugin.AddSpells(cpuRegisters.SP + 0x118, cpuRegisters.CX, cpuRegisters.Skip),
 			});
 
 			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters()
@@ -94,7 +98,7 @@ namespace ApplySpellPatch
 				Pattern = "E8 ?? ?? ?? ??",
 				ReplaceLength = 5,
 				IncludeLength = 5,
-				Before = cpuRegisters => Plugin.AddSpellItems(cpuRegisters.SP + 0x50, cpuRegisters.CX, cpuRegisters.Skip),
+				Before = cpuRegisters => Plugin.AddSpells(cpuRegisters.SP + 0x50, cpuRegisters.CX, cpuRegisters.Skip),
 			});
 
 			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters()
@@ -103,7 +107,7 @@ namespace ApplySpellPatch
 				Pattern = "E8 ?? ?? ?? ??",
 				ReplaceLength = 5,
 				IncludeLength = 5,
-				Before = cpuRegisters => Plugin.AddSpellItems(cpuRegisters.SP + 0x78, cpuRegisters.CX, cpuRegisters.Skip),
+				Before = cpuRegisters => Plugin.AddSpells(cpuRegisters.SP + 0x78, cpuRegisters.CX, cpuRegisters.Skip),
 			});
 
 			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters()
@@ -112,7 +116,7 @@ namespace ApplySpellPatch
 				Pattern = "E8 ?? ?? ?? ??",
 				ReplaceLength = 5,
 				IncludeLength = 5,
-				Before = cpuRegisters => Plugin.AddSpellItems(cpuRegisters.SP + 0x50, cpuRegisters.CX, cpuRegisters.Skip),
+				Before = cpuRegisters => Plugin.AddSpells(cpuRegisters.SP + 0x50, cpuRegisters.CX, cpuRegisters.Skip),
 			});
 
 			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters()
@@ -121,7 +125,7 @@ namespace ApplySpellPatch
 				Pattern = "E8 ?? ?? ?? ??",
 				ReplaceLength = 5,
 				IncludeLength = 5,
-				Before = cpuRegisters => Plugin.AddSpellItems(cpuRegisters.SP + 0x40, cpuRegisters.CX, cpuRegisters.Skip),
+				Before = cpuRegisters => Plugin.AddSpells(cpuRegisters.SP + 0x40, cpuRegisters.CX, cpuRegisters.Skip),
 			});
 
 			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters()
@@ -130,12 +134,12 @@ namespace ApplySpellPatch
 				Pattern = "E8 ?? ?? ?? ??",
 				ReplaceLength = 5,
 				IncludeLength = 5,
-				Before = cpuRegisters => Plugin.AddSpellItems(cpuRegisters.SP + 0x70, cpuRegisters.CX, cpuRegisters.Skip),
+				Before = cpuRegisters => Plugin.AddSpells(cpuRegisters.SP + 0x70, cpuRegisters.CX, cpuRegisters.Skip),
 			});
 		}
 
 		/// <param name="spellItem">SpellItem</param>
-		static private void SetSpellItem(System.IntPtr address, System.IntPtr spellItem)
+		static private void SetSpell(System.IntPtr address, System.IntPtr spellItem)
 		{
 			if (address == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException(nameof(address)); }
 			if (spellItem == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException(nameof(spellItem)); }
@@ -156,7 +160,7 @@ namespace ApplySpellPatch
 		}
 
 		/// <param name="target">Actor</param>
-		static private void AddSpellItems(System.IntPtr address, System.IntPtr target, System.Action skip)
+		static private void AddSpells(System.IntPtr address, System.IntPtr target, System.Action skip)
 		{
 			if (address == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException(nameof(address)); }
 			if (target == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException(nameof(target)); }

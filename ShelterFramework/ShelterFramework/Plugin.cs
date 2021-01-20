@@ -34,7 +34,7 @@ namespace ShelterFramework
 
 
 
-		readonly static private BGSCollisionLayer.CollisionLayerTypes _collisionLayer = BGSCollisionLayer.CollisionLayerTypes.LOS;
+		readonly static private BGSCollisionLayer.CollisionLayerTypes _collisionLayerType = BGSCollisionLayer.CollisionLayerTypes.LOS;
 
 		readonly static private System.String _messageBox =
 			"Shelter Framework has thrown an exception." +
@@ -99,7 +99,7 @@ namespace ShelterFramework
 
 				if (!Plugin._isShelteredCache.TryGetValue(character, out var isShelteredCache) || lastUpdate != isShelteredCache.lastUpdate)
 				{
-					isShelteredCache = (lastUpdate, Actor.IsHitAlong(character, TESObjectREFR.GetLookAtPosition(character), Plugin.GetRay(), Plugin._collisionLayer));
+					isShelteredCache = (lastUpdate, Actor.IsHitAlong(character, TESObjectREFR.GetLookAtPosition(character), Plugin.GetRay(), Plugin._collisionLayerType));
 					Plugin._isShelteredCache[character] = isShelteredCache;
 
 					return isShelteredCache.isSheltered;
@@ -116,7 +116,7 @@ namespace ShelterFramework
 		{
 			if (reference == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException(nameof(reference)); }
 
-			return TESObjectREFR.IsHitAlong(reference, TESObjectREFR.GetLookAtPosition(reference), Plugin.GetRay(), Plugin._collisionLayer);
+			return TESObjectREFR.IsHitAlong(reference, TESObjectREFR.GetLookAtPosition(reference), Plugin.GetRay(), Plugin._collisionLayerType);
 		}
 
 		static private (System.Single x, System.Single y, System.Single z) GetRay()
@@ -151,7 +151,7 @@ namespace ShelterFramework
 			// vector
 			// length
 
-			var multiplier = (float)System.Math.Sqrt((length * length) / ((vector.x * vector.x) + (vector.y * vector.y) + (vector.z * vector.z)));
+			var multiplier = (System.Single)System.Math.Sqrt((length * length) / ((vector.x * vector.x) + (vector.y * vector.y) + (vector.z * vector.z)));
 
 			return (vector.x * multiplier, vector.y * multiplier, vector.z * multiplier);
 		}
