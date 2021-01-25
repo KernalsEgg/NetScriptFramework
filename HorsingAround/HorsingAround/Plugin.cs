@@ -159,12 +159,14 @@ namespace HorsingAround
 			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters() // Set the maximum activation distance while on horseback (compatible with Better Telekinesis)
 			{
 				Address = VIDS.CrosshairPickData.Pick + 0xC49,
-				Pattern = "44 0F 2F D0" + "76 78",
+				Pattern = "44 0F2F D0" + "76 78",
 				ReplaceLength = 6,
 				IncludeLength = 0,
 				Before = cpuRegisters =>
 				{
-					if (cpuRegisters.AX == System.IntPtr.Zero)
+					var isCommanding = cpuRegisters.AX != System.IntPtr.Zero;
+
+					if (!isCommanding)
 					{
 						var playerCharacter = PlayerCharacter.Instance;
 
@@ -174,7 +176,10 @@ namespace HorsingAround
 						}
 					}
 
-					if (cpuRegisters.XMM10f <= cpuRegisters.XMM0f)
+					var targetDistance = cpuRegisters.XMM10f;
+					var activateDistance = cpuRegisters.XMM0f;
+
+					if (targetDistance <= activateDistance)
 					{
 						cpuRegisters.IP += 0x78;
 					}
@@ -209,7 +214,7 @@ namespace HorsingAround
 
 		static private void SetCameraRotation()
 		{
-			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters() // Set the minimum and maximum rotation of the Player's horse about the x-axis when the Player has their weapon drawn
+			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters() // Set the minimum and maximum rotation of the Player's horse about the x-axis while the Player has drawn their weapon
 			{
 				Address = VIDS.Actor.SetRotationX + 0x79,
 				Pattern = "F3 0F10 35 ?? ?? ?? ??" + "F3 0F59 35 ?? ?? ?? ??",
@@ -234,7 +239,7 @@ namespace HorsingAround
 				}
 			});
 
-			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters() // Set the minimum and maximum rotation of the Player's horse about the x-axis when the Player has their weapon sheathed
+			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters() // Set the minimum and maximum rotation of the Player's horse about the x-axis while the Player has sheathed their weapon
 			{
 				Address = VIDS.Actor.SetRotationX + 0x89,
 				Pattern = "F3 0F10 3D ?? ?? ?? ??" + "F3 0F59 3D ?? ?? ?? ??",
@@ -263,13 +268,15 @@ namespace HorsingAround
 				Pattern = "E8 ?? ?? ?? ??",
 				ReplaceLength = 5,
 				IncludeLength = 5,
-				After = cpuReigsters =>
+				After = cpuRegisters =>
 				{
-					if (cpuReigsters.AX != System.IntPtr.Zero)
+					var isCameraTarget = cpuRegisters.AX != System.IntPtr.Zero;
+					
+					if (isCameraTarget)
 					{
-						var horseCameraState = cpuReigsters.BX;
-						var lookInput = cpuReigsters.DI;
-						var cameraTarget = NetScriptFramework.Memory.ReadPointer(cpuReigsters.SP + 0x40);
+						var horseCameraState = cpuRegisters.BX;
+						var lookInput = cpuRegisters.DI;
+						var cameraTarget = NetScriptFramework.Memory.ReadPointer(cpuRegisters.SP + 0x40);
 
 						var freeRotationX = ThirdPersonState.GetFreeRotationX(horseCameraState);
 						var frameTimeRealTime = TimeManager.GetFrameTimeRealTime(TimeManager.Instance);
@@ -299,7 +306,7 @@ namespace HorsingAround
 							ThirdPersonState.SetPitchZoomOffset(horseCameraState, (freeRotationY / (-90.0f * degreesToRadians)) * pitchZoomOutMaxDist);
 						}
 
-						cpuReigsters.AX = System.IntPtr.Zero;
+						cpuRegisters.AX = System.IntPtr.Zero;
 					}
 				}
 			});
