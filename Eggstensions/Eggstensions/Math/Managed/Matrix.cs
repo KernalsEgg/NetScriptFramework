@@ -17,9 +17,21 @@ namespace Eggstensions.Math.Managed
 
 		public System.Single[,] Elements { get; }
 
-		public System.Int32 Rows { get { return Elements.Rows(); } }
+		public System.Int32 Rows
+		{
+			get
+			{
+				return Elements.Rows();
+			}
+		}
 
-		public System.Int32 Columns { get { return Elements.Columns(); } }
+		public System.Int32 Columns
+		{
+			get
+			{
+				return Elements.Columns();
+			}
+		}
 
 
 

@@ -6,15 +6,15 @@ namespace HorsingAround
 {
     public class Plugin : NetScriptFramework.Plugin
     {
-		override public System.Int32 RequiredLibraryVersion	{ get { return 10; } }
+		override public System.Int32 RequiredLibraryVersion	{ get; } = 10;
 
-		override public System.Int32 Version				{ get { return 1; } }
+		override public System.Int32 Version				{ get; } = 1;
 
-		override public System.String Author				{ get { return "meh321 and KernalsEgg"; } }
+		override public System.String Author				{ get; } = "meh321 and KernalsEgg";
 
-		override public System.String Key					{ get { return "HorsingAround"; } }
+		override public System.String Key					{ get; } = "HorsingAround";
 
-		override public System.String Name					{ get { return "Horsing Around"; } }
+		override public System.String Name					{ get; } = "Horsing Around";
 
 
 
@@ -50,7 +50,7 @@ namespace HorsingAround
 
 		static private void AccurateFollowerCommands()
 		{
-			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters() // Allow the player to command followers standing behind them while in third-person, and more easily command followers standing among hostiles
+			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters() // Allow the Player to command followers standing behind them while in third-person, and more easily command followers standing among hostiles
 			{
 				Address = VIDS.ActivateHandler.ProcessButton + 0x7F,
 				Pattern = "E8 ?? ?? ?? ??",
@@ -73,7 +73,7 @@ namespace HorsingAround
 
 		static private void BlockFurnitureActivation()
 		{
-			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters() // Block the player from activating furniture while mounted
+			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters() // Block the Player from activating furniture while mounted
 			{
 				Address = VIDS.TESFurniture.Activate + 0x25,
 				Pattern = "48 8B E9" + "4D 85 C0",
@@ -209,59 +209,98 @@ namespace HorsingAround
 
 		static private void SetCameraRotation()
 		{
-			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters() // Set the minimum and maximum camera rotation while on horseback
+			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters() // Set the minimum and maximum rotation of the Player's horse about the x-axis when the Player has their weapon drawn
 			{
-				Address = VIDS.HorseCameraState.HandleLookInput + 0x8A,
-				Pattern = "F3 0F11 A3 D8000000",
-				ReplaceLength = 8,
-				IncludeLength = 8,
-				After = cpuReigsters =>
+				Address = VIDS.Actor.SetRotationX + 0x79,
+				Pattern = "F3 0F10 35 ?? ?? ?? ??" + "F3 0F59 35 ?? ?? ?? ??",
+				ReplaceLength = 8 + 8,
+				IncludeLength = 0,
+				Before = cpuRegisters =>
 				{
-					var horseCameraState = cpuReigsters.BX;
-					var playerCamera = TESCameraState.GetCamera(horseCameraState);
-					var weaponSheathed = PlayerCamera.GetWeaponSheathed(playerCamera);
-
+					var rider = cpuRegisters.AX;
 					var degreesToRadians = (System.Single)(System.Math.PI / 180.0d);
-					var freeRotationY = ThirdPersonState.GetFreeRotationY(horseCameraState);
 
-					if (weaponSheathed)
+					if (rider == PlayerCharacter.Instance)
 					{
-						var weaponSheathedRotationBackwards = Plugin._settings.WeaponSheathedRotationBackwards * degreesToRadians;
+						cpuRegisters.XMM6f = Plugin._settings.WeaponDrawnRotationForwards * degreesToRadians;
+						cpuRegisters.XMM7f = -Plugin._settings.WeaponDrawnRotationBackwards * degreesToRadians;
 
-						if (freeRotationY > weaponSheathedRotationBackwards)
-						{
-							ThirdPersonState.SetFreeRotationY(horseCameraState, weaponSheathedRotationBackwards);
-						}
-						else
-						{
-							var weaponSheathedRotationForwards = -Plugin._settings.WeaponSheathedRotationForwards * degreesToRadians;
-
-							if (freeRotationY < weaponSheathedRotationForwards)
-							{
-								ThirdPersonState.SetFreeRotationY(horseCameraState, weaponSheathedRotationForwards);
-							}
-						}
+						cpuRegisters.IP += 8 + 8;
 					}
 					else
 					{
-						var weaponDrawnRotationBackwards = Plugin._settings.WeaponDrawnRotationBackwards * degreesToRadians;
-
-						if (freeRotationY > weaponDrawnRotationBackwards)
-						{
-							ThirdPersonState.SetFreeRotationY(horseCameraState, weaponDrawnRotationBackwards);
-						}
-						else
-						{
-							var weaponDrawnRotationForwards = -Plugin._settings.WeaponDrawnRotationForwards * degreesToRadians;
-
-							if (freeRotationY < weaponDrawnRotationForwards)
-							{
-								ThirdPersonState.SetFreeRotationY(horseCameraState, weaponDrawnRotationForwards);
-							}
-						}
+						cpuRegisters.XMM6f = SettingT.GameSettingCollection.MountedMaxLookingDown * degreesToRadians;
 					}
+				}
+			});
 
-					cpuReigsters.IP += 0xDD - (0x8A + 0x8);
+			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters() // Set the minimum and maximum rotation of the Player's horse about the x-axis when the Player has their weapon sheathed
+			{
+				Address = VIDS.Actor.SetRotationX + 0x89,
+				Pattern = "F3 0F10 3D ?? ?? ?? ??" + "F3 0F59 3D ?? ?? ?? ??",
+				ReplaceLength = 8 + 8,
+				IncludeLength = 0,
+				Before = cpuRegisters =>
+				{
+					var rider = cpuRegisters.AX;
+					var degreesToRadians = (System.Single)(System.Math.PI / 180.0d);
+
+					if (rider == PlayerCharacter.Instance)
+					{
+						cpuRegisters.XMM6f = Plugin._settings.WeaponSheathedRotationForwards * degreesToRadians;
+						cpuRegisters.XMM7f = -Plugin._settings.WeaponSheathedRotationBackwards * degreesToRadians;
+					}
+					else
+					{
+						cpuRegisters.XMM7f = -SettingT.GameSettingCollection.HorseMaxUpwardPitch * degreesToRadians;
+					}
+				}
+			});
+
+			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters() // Handle look input while on horseback
+			{
+				Address = VIDS.HorseCameraState.HandleLookInput + 0x2C,
+				Pattern = "E8 ?? ?? ?? ??",
+				ReplaceLength = 5,
+				IncludeLength = 5,
+				After = cpuReigsters =>
+				{
+					if (cpuReigsters.AX != System.IntPtr.Zero)
+					{
+						var horseCameraState = cpuReigsters.BX;
+						var lookInput = cpuReigsters.DI;
+						var cameraTarget = NetScriptFramework.Memory.ReadPointer(cpuReigsters.SP + 0x40);
+
+						var freeRotationX = ThirdPersonState.GetFreeRotationX(horseCameraState);
+						var frameTimeRealTime = TimeManager.GetFrameTimeRealTime(TimeManager.Instance);
+						var freeRotationSpeed = SettingT.INISettingCollection.Camera.FreeRotationSpeed;
+
+						freeRotationX += frameTimeRealTime * freeRotationSpeed * NetScriptFramework.Memory.ReadFloat(lookInput);
+						ThirdPersonState.SetFreeRotationX(horseCameraState, freeRotationX);
+
+						var freeRotationY = -TESObjectREFR.GetRotationX(cameraTarget);
+						var degreesToRadians = (System.Single)(System.Math.PI / 180.0d);
+
+						if (freeRotationY > 90.0f * degreesToRadians)
+						{
+							freeRotationY = 90.0f * degreesToRadians;
+						}
+						else if (freeRotationY < -90.0f * degreesToRadians)
+						{
+							freeRotationY = -90.0f * degreesToRadians;
+						}
+
+						ThirdPersonState.SetFreeRotationY(horseCameraState, freeRotationY);
+
+						if (freeRotationY < 0.0f)
+						{
+							var pitchZoomOutMaxDist = SettingT.INISettingCollection.Camera.PitchZoomOutMaxDist;
+
+							ThirdPersonState.SetPitchZoomOffset(horseCameraState, (freeRotationY / (-90.0f * degreesToRadians)) * pitchZoomOutMaxDist);
+						}
+
+						cpuReigsters.AX = System.IntPtr.Zero;
+					}
 				}
 			});
 		}
@@ -352,7 +391,7 @@ namespace HorsingAround
 
 		static private void SkipCrosshairPick()
 		{
-			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters() // Skip picking both the player and the mount they may be riding
+			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters() // Skip picking both the Player and the mount they may be riding
 			{
 				Address = VIDS.CrosshairPickData.Pick + 0x408,
 				Pattern = "48 3B 05 ?? ?? ?? ??",

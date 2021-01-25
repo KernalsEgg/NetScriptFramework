@@ -74,6 +74,14 @@
 		}
 
 		/// <param name="thirdPersonState">ThirdPersonState</param>
+		static public System.Single GetPitchZoomOffset(System.IntPtr thirdPersonState)
+		{
+			if (thirdPersonState == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException(nameof(thirdPersonState)); }
+
+			return NetScriptFramework.Memory.ReadFloat(thirdPersonState + 0x88);
+		}
+
+		/// <param name="thirdPersonState">ThirdPersonState</param>
 		static public (System.Single x, System.Single y, System.Single z) GetTargetOffsets(System.IntPtr thirdPersonState)
 		{
 			if (thirdPersonState == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException(nameof(thirdPersonState)); }
@@ -111,7 +119,7 @@
 		}
 
 		/// <param name="thirdPersonState">ThirdPersonState</param>
-		static public void GetFreeRotations(System.IntPtr thirdPersonState, (System.Single x, System.Single y) freeRotations)
+		static public void SetFreeRotation(System.IntPtr thirdPersonState, (System.Single x, System.Single y) freeRotations)
 		{
 			if (thirdPersonState == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException(nameof(thirdPersonState)); }
 
@@ -135,6 +143,15 @@
 			// freeRotationY
 
 			NetScriptFramework.Memory.WriteFloat(thirdPersonState + 0xD8, freeRotationY);
+		}
+
+		/// <param name="thirdPersonState">ThirdPersonState</param>
+		static public void SetPitchZoomOffset(System.IntPtr thirdPersonState, System.Single pitchZoomOffset)
+		{
+			if (thirdPersonState == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException(nameof(thirdPersonState)); }
+			// pitchZoomOffset
+
+			NetScriptFramework.Memory.WriteFloat(thirdPersonState + 0x88, pitchZoomOffset);
 		}
 
 		/// <param name="thirdPersonState">ThirdPersonState</param>

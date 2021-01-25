@@ -81,6 +81,14 @@
 		{
 			static public class Camera
 			{
+				static public System.Single FreeRotationSpeed
+				{
+					get
+					{
+						return Setting.GetSingle(VIDS.SettingT.INISettingCollection.Camera.FreeRotationSpeed);
+					}
+				}
+
 				static public System.Single OverShoulderHorseAddY // Weapon sheathed
 				{
 					get
@@ -102,6 +110,14 @@
 					get
 					{
 						return Setting.GetSingle(VIDS.SettingT.INISettingCollection.Camera.OverShoulderHorsePosZ);
+					}
+				}
+
+				static public System.Single PitchZoomOutMaxDist
+				{
+					get
+					{
+						return Setting.GetSingle(VIDS.SettingT.INISettingCollection.Camera.PitchZoomOutMaxDist);
 					}
 				}
 			}

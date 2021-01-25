@@ -6,15 +6,15 @@ namespace ShelterFramework
 {
     public class Plugin : NetScriptFramework.Plugin
 	{
-		override public System.Int32 RequiredLibraryVersion	{ get { return 10; } }
+		override public System.Int32 RequiredLibraryVersion	{ get; } = 10;
 
-		override public System.Int32 Version				{ get { return 1; } }
+		override public System.Int32 Version				{ get; } = 1;
 
-		override public System.String Author				{ get { return "meh321 and KernalsEgg"; } }
+		override public System.String Author				{ get; } = "meh321 and KernalsEgg";
 
-		override public System.String Key					{ get { return "ShelterFramework"; } }
+		override public System.String Key					{ get; } = "ShelterFramework";
 
-		override public System.String Name					{ get { return "Shelter Framework"; } }
+		override public System.String Name					{ get; } = "Shelter Framework";
 
 
 
@@ -25,6 +25,7 @@ namespace ShelterFramework
 			Plugin._settings = new Settings();
 			Plugin._settings.Load();
 
+			Plugin._isShelteredCache = new System.Collections.Generic.Dictionary<System.IntPtr, (System.Single, System.Boolean)>();
 			Plugin._lock = new System.Object();
 
 			Events.GetIsCreatureTypeEvent.Register(OnGetIsCreatureType);
@@ -44,8 +45,7 @@ namespace ShelterFramework
 
 		static private Settings _settings;
 		
-		static private System.Collections.Generic.Dictionary<System.IntPtr, (System.Single lastUpdate, System.Boolean isSheltered)> _isShelteredCache =
-			new System.Collections.Generic.Dictionary<System.IntPtr, (System.Single, System.Boolean)>();
+		static private System.Collections.Generic.Dictionary<System.IntPtr, (System.Single lastUpdate, System.Boolean isSheltered)> _isShelteredCache;
 
 		static private System.Object _lock;
 

@@ -153,7 +153,7 @@ namespace Eggstensions.SkyrimSE
 
 
 
-			static private NetScriptFramework.Event<Events.ActivateFloraEventArguments> _activateFloraEvent;
+			readonly static private NetScriptFramework.Event<Events.ActivateFloraEventArguments> _activateFloraEvent;
 
 
 
@@ -186,7 +186,7 @@ namespace Eggstensions.SkyrimSE
 
 
 
-			static private NetScriptFramework.Event<Events.ActivateTreeEventArguments> _activateTreeEvent;
+			readonly static private NetScriptFramework.Event<Events.ActivateTreeEventArguments> _activateTreeEvent;
 
 
 
@@ -219,7 +219,7 @@ namespace Eggstensions.SkyrimSE
 
 
 
-			static private NetScriptFramework.Event<Events.AttachPrecipitationObjectEventArguments> _attachPrecipitationObject;
+			readonly static private NetScriptFramework.Event<Events.AttachPrecipitationObjectEventArguments> _attachPrecipitationObject;
 
 
 
@@ -279,7 +279,7 @@ namespace Eggstensions.SkyrimSE
 
 
 
-			static private NetScriptFramework.Event<Events.DetachPrecipitationObjectEventArguments> _detachPrecipitationObject;
+			readonly static private NetScriptFramework.Event<Events.DetachPrecipitationObjectEventArguments> _detachPrecipitationObject;
 
 
 
@@ -334,10 +334,10 @@ namespace Eggstensions.SkyrimSE
 					throw new Eggceptions.FormatException(System.String.Join(", ", nameof(address), nameof(hookOffset1)));
 				}
 
-				NetScriptFramework.Memory.WriteBytes(address + hookOffset1, new System.Byte[] { 0x8B, 0x05 }, true); // mov eax, [rip + ????????]
+				NetScriptFramework.Memory.WriteBytes(address + hookOffset1, new System.Byte[] { 0x8B, 0x05 }, true); // mov eax, [rip + ?? ?? ?? ??]
 				hookOffset1 += 0x6;
 
-				NetScriptFramework.Memory.WriteBytes(address + hookOffset1, new System.Byte[] { 0x65, 0x4C, 0x8B, 0x04, 0x25 }, true); // mov r8, gs:[????????]
+				NetScriptFramework.Memory.WriteBytes(address + hookOffset1, new System.Byte[] { 0x65, 0x4C, 0x8B, 0x04, 0x25 }, true); // mov r8, gs:[?? ?? ?? ??]
 				hookOffset1 += 0x9;
 
 				/*
@@ -409,7 +409,7 @@ namespace Eggstensions.SkyrimSE
 
 
 
-			static private NetScriptFramework.Event<Events.GetIsCreatureTypeEventArguments> _getIsCreatureTypeEvent;
+			readonly static private NetScriptFramework.Event<Events.GetIsCreatureTypeEventArguments> _getIsCreatureTypeEvent;
 
 
 
@@ -451,7 +451,7 @@ namespace Eggstensions.SkyrimSE
 
 
 
-			static private NetScriptFramework.Event<Events.PlayHarvestSoundEventArguments> _playHarvestSound;
+			readonly static private NetScriptFramework.Event<Events.PlayHarvestSoundEventArguments> _playHarvestSound;
 
 
 
@@ -493,7 +493,7 @@ namespace Eggstensions.SkyrimSE
 
 
 
-			static private NetScriptFramework.Event<Events.ShowHarvestNotificationEventArguments> _showHarvestNotification;
+			readonly static private NetScriptFramework.Event<Events.ShowHarvestNotificationEventArguments> _showHarvestNotification;
 
 
 

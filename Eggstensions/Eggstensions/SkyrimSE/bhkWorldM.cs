@@ -10,21 +10,17 @@ namespace Eggstensions.SkyrimSE
 
 
 
-		static public System.Single Scale
+		static bhkWorldM()
 		{
-			get
-			{
-				return NetScriptFramework.Memory.ReadFloat(VIDS.bhkWorldM.Scale);
-			}
+			Scale =			NetScriptFramework.Memory.ReadFloat(VIDS.bhkWorldM.Scale);
+			ScaleInverse =	NetScriptFramework.Memory.ReadFloat(VIDS.bhkWorldM.ScaleInverse);
 		}
 
-		static public System.Single ScaleInverse
-		{
-			get
-			{
-				return NetScriptFramework.Memory.ReadFloat(VIDS.bhkWorldM.ScaleInverse);
-			}
-		}
+
+
+		static public System.Single Scale { get; }
+
+		static public System.Single ScaleInverse { get; }
 
 
 

@@ -1,5 +1,35 @@
 ﻿namespace Eggstensions.SkyrimSE
 {
+	static public class PlayerControlsData
+	{
+		static public (System.Single x, System.Single y) GetLookInput(System.IntPtr playerControlsData)
+		{
+			if (playerControlsData == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException(nameof(playerControlsData)); }
+
+			return
+			(
+				PlayerControlsData.GetLookInputX(playerControlsData),
+				PlayerControlsData.GetLookInputY(playerControlsData)
+			);
+		}
+
+		/// <param name="playerControlsData">PlayerControlsData</param>
+		static public System.Single GetLookInputX(System.IntPtr playerControlsData)
+		{
+			if (playerControlsData == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException(nameof(playerControlsData)); }
+
+			return NetScriptFramework.Memory.ReadFloat(playerControlsData + 0x8);
+		}
+
+		/// <param name="playerControlsData">PlayerControlsData</param>
+		static public System.Single GetLookInputY(System.IntPtr playerControlsData)
+		{
+			if (playerControlsData == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException(nameof(playerControlsData)); }
+
+			return NetScriptFramework.Memory.ReadFloat(playerControlsData + 0xC);
+		}
+	}
+	
 	static public class PlayerControls
 	{
 		/// <summary>PlayerControls</summary>
@@ -86,6 +116,13 @@
 			if (movementHandler == System.IntPtr.Zero) { throw new Eggceptions.NullException(nameof(movementHandler)); }
 
 			return movementHandler;
+		}
+
+		static public System.IntPtr GetData(System.IntPtr playerControls)
+		{
+			if (playerControls == System.IntPtr.Zero) { throw new Eggceptions.ArgumentNullException(nameof(playerControls)); }
+
+			return playerControls + 0x24;
 		}
 
 		/// <param name="playerControls">PlayerControls</param>

@@ -6,15 +6,15 @@ namespace ApplySpellPatch
 {
     public class Plugin : NetScriptFramework.Plugin
 	{
-		override public System.Int32 RequiredLibraryVersion	{ get { return 10; } }
+		override public System.Int32 RequiredLibraryVersion	{ get; } = 10;
 
-		override public System.Int32 Version				{ get { return 1; } }
+		override public System.Int32 Version				{ get; } = 1;
 
-		override public System.String Author				{ get { return "meh321 and KernalsEgg"; } }
+		override public System.String Author				{ get; } = "meh321 and KernalsEgg";
 
-		override public System.String Key					{ get { return "ApplySpellPatch"; } }
+		override public System.String Key					{ get; } = "ApplySpellPatch";
 
-		override public System.String Name					{ get { return "Apply Spell Patch"; } }
+		override public System.String Name					{ get; } = "Apply Spell Patch";
 
 
 

@@ -2,6 +2,15 @@
 {
 	public class RaycastHit
 	{
+		public RaycastHit(System.IntPtr havokObject, System.Single fraction, (System.Single x, System.Single y, System.Single z) normal)
+		{
+			HavokObject = havokObject;
+			Fraction = fraction;
+			Normal = normal;
+		}
+
+
+
 		/// <summary>The fraction along the ray travelled at which the havok object was hit.</summary>
 		public System.Single Fraction { get; }
 
@@ -10,15 +19,6 @@
 
 		/// <summary>The normal of the rays collision with the havok object.</summary>
 		public (System.Single x, System.Single y, System.Single z) Normal { get; }
-
-
-
-		public RaycastHit(System.IntPtr havokObject, System.Single fraction, (System.Single x, System.Single y, System.Single z) normal)
-		{
-			HavokObject = havokObject;
-			Fraction = fraction;
-			Normal = normal;
-		}
 	}
 
 

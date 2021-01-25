@@ -6,6 +6,7 @@ C:\SkyrimSE\ShelterFramework\ShelterFramework\bin\Release\NetScriptFramework.pdb
 C:\SkyrimSE\ShelterFramework\ShelterFramework\bin\Release\NetScriptFramework.xml
 C:\SkyrimSE\ShelterFramework\ShelterFramework\bin\Release\NetScriptFramework.SkyrimSE.pdb
 C:\SkyrimSE\ShelterFramework\ShelterFramework\bin\Release\NetScriptFramework.SkyrimSE.xml
+C:\SkyrimSE\ShelterFramework\ShelterFramework\obj\Release\ShelterFramework.csprojAssemblyReference.cache
 C:\SkyrimSE\ShelterFramework\ShelterFramework\obj\Release\ShelterFramework.csproj.CoreCompileInputs.cache
 C:\SkyrimSE\ShelterFramework\ShelterFramework\obj\Release\ShelterFramework.csproj.CopyComplete
 C:\SkyrimSE\ShelterFramework\ShelterFramework\obj\Release\ShelterFramework.dll
