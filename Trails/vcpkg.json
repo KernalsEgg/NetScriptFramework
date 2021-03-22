@@ -1,0 +1,14 @@
+{
+	"name": "trails",
+	"version-string": "1.0.0",
+	"description": "Leave a trail of footprints behind you.",
+	"homepage": "https://github.com/Ryan-rsm-McKenzie/ExamplePlugin-CommonLibSSE",
+	"license": "MIT",
+	"dependencies": [
+		"boost-atomic",
+		"boost-stl-interfaces",
+		"nlohmann-json",
+		"span-lite",
+		"spdlog"
+	]
+}
