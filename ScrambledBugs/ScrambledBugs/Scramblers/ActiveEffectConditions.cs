@@ -1,23 +1,23 @@
 ﻿namespace ScrambledBugs
 {
-	internal class ActiveEffectDurations
+	internal class ActiveEffectConditions
 	{
-		internal ActiveEffectDurations()
+		internal ActiveEffectConditions()
 		{
 			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters()
 			{
-				Address = ActiveEffectDurations._updateActiveEffectConditions + 0xDD,
+				Address = ActiveEffectConditions._updateActiveEffectConditions + 0xDD,
 				Pattern = "F3 0F 10 4F 70",
 				ReplaceLength = 5,
 				IncludeLength = 0,
-				Before = cpuRegisters => cpuRegisters.XMM1f = ActiveEffectDurations.GetElapsedSecondsModulus(cpuRegisters.DI, cpuRegisters.XMM6f),
+				Before = cpuRegisters => cpuRegisters.XMM1f = ActiveEffectConditions.GetElapsedSecondsModulus(cpuRegisters.DI, cpuRegisters.XMM6f),
 			});
 		}
 
-		static ActiveEffectDurations()
+		static ActiveEffectConditions()
 		{
-			ActiveEffectDurations._activeEffectConditionUpdateFrequency = NetScriptFramework.Main.GameInfo.GetAddressOf(516661);	// SkyrimSE.exe + 0x2F25CE8
-			ActiveEffectDurations._updateActiveEffectConditions = NetScriptFramework.Main.GameInfo.GetAddressOf(33287);				// SkyrimSE.exe + 0x53E3E0
+			ActiveEffectConditions._activeEffectConditionUpdateFrequency = NetScriptFramework.Main.GameInfo.GetAddressOf(516661);   // SkyrimSE.exe + 0x2F25CE8
+			ActiveEffectConditions._updateActiveEffectConditions = NetScriptFramework.Main.GameInfo.GetAddressOf(33287);			// SkyrimSE.exe + 0x53E3E0
 		}
 
 
@@ -30,8 +30,6 @@
 
 		static private System.Single GetElapsedSecondsModulus(System.IntPtr activeEffect, System.Single elapsedSecondsDelta)
 		{
-			NetScriptFramework.Main.Log.AppendLine("activeEffect = " + activeEffect.ToString("X8"));
-			
 			var elapsedSeconds = NetScriptFramework.Memory.ReadFloat(activeEffect + 0x70);
 			System.Single elapsedSecondsModulus;
 
@@ -42,7 +40,7 @@
 			}
 			else
 			{
-				elapsedSecondsModulus = NetScriptFramework.Memory.ReadFloat(activeEffect + 0x8C) % (1.0F / NetScriptFramework.Memory.ReadFloat(ActiveEffectDurations._activeEffectConditionUpdateFrequency));
+				elapsedSecondsModulus = NetScriptFramework.Memory.ReadFloat(activeEffect + 0x8C) % (1.0F / NetScriptFramework.Memory.ReadFloat(ActiveEffectConditions._activeEffectConditionUpdateFrequency));
 				NetScriptFramework.Memory.WriteFloat(activeEffect + 0x8C, elapsedSecondsModulus + elapsedSecondsDelta);
 			}
 

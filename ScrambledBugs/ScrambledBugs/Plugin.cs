@@ -27,22 +27,18 @@
 					new TerrainDecals();
 				}
 
-				if (settings.patches.activeEffectDurations)
+				if (settings.patches.activeEffectConditions)
 				{
-					new ActiveEffectDurations();
+					new ActiveEffectConditions();
 				}
 
 				if (settings.patches.applySpellPerkEntryPoints)
 				{
 					new ApplySpellPerkEntryPoints();
 				}
-
-				NetScriptFramework.Main.Log.AppendLine("\nterrainDecals: " + settings.fixes.terrainDecals + "\nactiveEffectDurations: " + settings.patches.activeEffectDurations + "\napplySpellPerkEntryPoints: " + settings.patches.applySpellPerkEntryPoints);
 			}
 
 			return true;
 		}
 	}
-
-	
 }

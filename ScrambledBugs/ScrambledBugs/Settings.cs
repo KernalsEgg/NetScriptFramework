@@ -9,7 +9,7 @@
 
 		public class Patches
 		{
-			public System.Boolean activeEffectDurations { get; set; }
+			public System.Boolean activeEffectConditions { get; set; }
 			public System.Boolean applySpellPerkEntryPoints { get; set; }
 		}
 
