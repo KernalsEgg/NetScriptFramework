@@ -54,9 +54,9 @@
   <ItemGroup>
     <Compile Include="Plugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Scramblers\ActiveEffectConditions.cs" />
-    <Compile Include="Scramblers\ApplySpellPerkEntryPoints.cs" />
-    <Compile Include="Scramblers\TerrainDecals.cs" />
+    <Compile Include="Fixes\ActiveEffectConditions.cs" />
+    <Compile Include="Patches\ApplySpellPerkEntryPoints.cs" />
+    <Compile Include="Fixes\TerrainDecals.cs" />
     <Compile Include="Settings.cs" />
   </ItemGroup>
   <ItemGroup>

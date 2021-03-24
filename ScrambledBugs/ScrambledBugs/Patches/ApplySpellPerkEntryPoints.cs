@@ -1,10 +1,10 @@
-﻿namespace ScrambledBugs
+﻿namespace ScrambledBugs.Patches
 {
 	internal class ApplySpellPerkEntryPoints
 	{
 		internal ApplySpellPerkEntryPoints()
 		{
-			// RCX: HandleEntryPointVisitor.SpellItem*, RAX: SpellItem, RBX: BGSEntryPointFunctionDataSpellItem
+			// RAX: SpellItem, RCX: HandleEntryPointVisitor.SpellItem*
 			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters()
 			{
 				Address = ApplySpellPerkEntryPoints._setSpell + 0x53,
@@ -14,7 +14,7 @@
 				After = cpuRegisters => ApplySpellPerkEntryPoints.SetSpell(cpuRegisters.AX, cpuRegisters.CX),
 			});
 
-			// RCX: Actor, RDX: SpellItem
+			// RCX: Character, RDX: SpellItem
 			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters()
 			{
 				Address = ApplySpellPerkEntryPoints._applyBashingSpell + 0x429,
@@ -111,11 +111,6 @@
 
 
 
-		static private void AddSpell(System.IntPtr target, System.IntPtr spellItem)
-		{
-			NetScriptFramework.Memory.InvokeCdecl(ApplySpellPerkEntryPoints._addSpell, target, spellItem);
-		}
-
 		static private System.Boolean AddSpells(System.IntPtr target, System.IntPtr spellItemPointer)
 		{
 			if (target == System.IntPtr.Zero) { return false; }
@@ -129,7 +124,7 @@
 
 					foreach (var spellItem in spellItems)
 					{
-						ApplySpellPerkEntryPoints.AddSpell(target, spellItem);
+						NetScriptFramework.Memory.InvokeCdecl(ApplySpellPerkEntryPoints._addSpell, target, spellItem);
 					}
 
 					return true;

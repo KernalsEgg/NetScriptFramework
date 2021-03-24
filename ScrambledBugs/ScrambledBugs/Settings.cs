@@ -4,12 +4,12 @@
 	{
 		public class Fixes
 		{
+			public System.Boolean activeEffectConditions { get; set; }
 			public System.Boolean terrainDecals { get; set; }
 		}
 
 		public class Patches
 		{
-			public System.Boolean activeEffectConditions { get; set; }
 			public System.Boolean applySpellPerkEntryPoints { get; set; }
 		}
 

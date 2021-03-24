@@ -1,11 +1,11 @@
 {
 	"fixes":
 	{
+		"activeEffectConditions": true,		/* Eliminate floating-point inaccuracy from the elapsed duration of active effects so that updates to their conditions will not be skipped. Disable this if Bug Fixes SSE is installed and FixAbilityConditionBug is enabled. */
 		"terrainDecals": true				/* Apply decals to the terrain of cells that have been partially unloaded. */
 	},
 	"patches":
 	{
-		"activeEffectConditions": true,		/* Eliminate floating-point inaccuracy from the elapsed duration of active effects so that updates to their conditions will not be skipped. Disable this if Bug Fixes SSE is installed and FixAbilityConditionBug is enabled. */
 		"applySpellPerkEntryPoints": true	/* Apply more than a single spell at once using perk entry points. */
 	}
 }

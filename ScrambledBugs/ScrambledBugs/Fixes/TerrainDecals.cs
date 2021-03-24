@@ -1,4 +1,4 @@
-﻿namespace ScrambledBugs
+﻿namespace ScrambledBugs.Fixes
 {
 	internal class TerrainDecals
 	{
