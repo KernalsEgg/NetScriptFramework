@@ -16,7 +16,7 @@
 
 		static ActiveEffectConditions()
 		{
-			ActiveEffectConditions._activeEffectConditionUpdateFrequency = NetScriptFramework.Main.GameInfo.GetAddressOf(516661);   // SkyrimSE.exe + 0x2F25CE8
+			ActiveEffectConditions._activeEffectConditionUpdateFrequency = NetScriptFramework.Main.GameInfo.GetAddressOf(516661);	// SkyrimSE.exe + 0x2F25CE8
 			ActiveEffectConditions._updateActiveEffectConditions = NetScriptFramework.Main.GameInfo.GetAddressOf(33287);			// SkyrimSE.exe + 0x53E3E0
 		}
 
@@ -28,23 +28,33 @@
 
 
 
-		static private System.Single GetElapsedSecondsModulus(System.IntPtr activeEffect, System.Single elapsedSecondsDelta)
+		static private System.Single GetElapsedSecondsModulus(System.IntPtr activeEffect, System.Single delta)
 		{
 			var elapsedSeconds = NetScriptFramework.Memory.ReadFloat(activeEffect + 0x70);
-			System.Single elapsedSecondsModulus;
+			System.Single modulus;
 
 			if (elapsedSeconds == 0.0F)
 			{
-				elapsedSecondsModulus = 0.0F;
-				NetScriptFramework.Memory.WriteFloat(activeEffect + 0x8C, elapsedSecondsDelta);
+				modulus = 0.0F;
+				NetScriptFramework.Memory.WriteFloat(activeEffect + 0x8C, delta);
 			}
 			else
 			{
-				elapsedSecondsModulus = NetScriptFramework.Memory.ReadFloat(activeEffect + 0x8C) % (1.0F / NetScriptFramework.Memory.ReadFloat(ActiveEffectConditions._activeEffectConditionUpdateFrequency));
-				NetScriptFramework.Memory.WriteFloat(activeEffect + 0x8C, elapsedSecondsModulus + elapsedSecondsDelta);
+				modulus = NetScriptFramework.Memory.ReadFloat(activeEffect + 0x8C);
+
+				if (modulus <= 0.0F || System.Single.IsNaN(modulus) || System.Single.IsInfinity(modulus))
+				{
+					modulus = 0.0F;
+					NetScriptFramework.Memory.WriteFloat(activeEffect + 0x8C, delta);
+				}
+				else
+				{
+					modulus %= 1.0F / NetScriptFramework.Memory.ReadFloat(ActiveEffectConditions._activeEffectConditionUpdateFrequency);
+					NetScriptFramework.Memory.WriteFloat(activeEffect + 0x8C, modulus + delta);
+				}
 			}
 
-			return elapsedSecondsModulus;
+			return modulus;
 		}
 	}
 }
