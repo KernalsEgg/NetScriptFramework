@@ -26,40 +26,40 @@
 				Pattern = "F3 0F 10 4F 70",
 				ReplaceLength = 5,
 				IncludeLength = 0,
-				Before = cpuRegisters => cpuRegisters.XMM1f = ActiveEffectConditions.GetElapsedSecondsModulus(cpuRegisters.DI, cpuRegisters.XMM6f),
+				Before = cpuRegisters => cpuRegisters.XMM1f = ActiveEffectConditions.GetUpdateTime(cpuRegisters.DI, cpuRegisters.XMM6f),
 			});
 		}
 
 		
 
-		static private System.Single GetElapsedSecondsModulus(System.IntPtr activeEffect, System.Single delta)
+		static private System.Single GetUpdateTime(System.IntPtr activeEffect, System.Single frameTime)
 		{
-			System.Single modulus;
-			var elapsedSeconds = NetScriptFramework.Memory.ReadFloat(activeEffect + 0x70);
+			System.Single updateTime;
+			var elapsedTime = NetScriptFramework.Memory.ReadFloat(activeEffect + 0x70);
 
-			if (elapsedSeconds <= 0.0F)
+			if (elapsedTime <= 0.0F)
 			{
-				modulus = 0.0F;
-				NetScriptFramework.Memory.WriteFloat(activeEffect + 0x8C, delta);
+				updateTime = 0.0F;
+				NetScriptFramework.Memory.WriteFloat(activeEffect + 0x8C, frameTime);
 			}
 			else
 			{
-				modulus = NetScriptFramework.Memory.ReadFloat(activeEffect + 0x8C);
+				updateTime = NetScriptFramework.Memory.ReadFloat(activeEffect + 0x8C);
 				var updateInterval = 1.0F / NetScriptFramework.Memory.ReadFloat(ActiveEffectConditions.Offsets.ActiveEffectConditionUpdateFrequency);
 
-				if (modulus <= 0.0F || System.Single.IsNaN(modulus) || System.Single.IsInfinity(modulus))
+				if (updateTime <= 0.0F || System.Single.IsNaN(updateTime) || System.Single.IsInfinity(updateTime))
 				{
-					modulus = elapsedSeconds % updateInterval;
+					updateTime = elapsedTime % updateInterval;
 				}
 				else
 				{
-					modulus %= updateInterval;
+					updateTime %= updateInterval;
 				}
 
-				NetScriptFramework.Memory.WriteFloat(activeEffect + 0x8C, modulus + delta);
+				NetScriptFramework.Memory.WriteFloat(activeEffect + 0x8C, updateTime + frameTime);
 			}
 
-			return modulus;
+			return updateTime;
 		}
 	}
 }
