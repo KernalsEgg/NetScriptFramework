@@ -30,25 +30,14 @@
 			});
 		}
 
-
-
-		static ActiveEffectConditions()
-		{
-			random = new System.Random();
-		}
-
-
-
-		static private System.Random random;
-
 		
 
 		static private System.Single GetElapsedSecondsModulus(System.IntPtr activeEffect, System.Single delta)
 		{
-			var elapsedSeconds = NetScriptFramework.Memory.ReadFloat(activeEffect + 0x70);
 			System.Single modulus;
+			var elapsedSeconds = NetScriptFramework.Memory.ReadFloat(activeEffect + 0x70);
 
-			if (elapsedSeconds == 0.0F)
+			if (elapsedSeconds <= 0.0F)
 			{
 				modulus = 0.0F;
 				NetScriptFramework.Memory.WriteFloat(activeEffect + 0x8C, delta);
@@ -60,7 +49,7 @@
 
 				if (modulus <= 0.0F || System.Single.IsNaN(modulus) || System.Single.IsInfinity(modulus))
 				{
-					modulus = (System.Single)(updateInterval * random.NextDouble());
+					modulus = elapsedSeconds % updateInterval;
 				}
 				else
 				{
