@@ -30,6 +30,17 @@
 			});
 		}
 
+
+
+		static ActiveEffectConditions()
+		{
+			random = new System.Random();
+		}
+
+
+
+		static private System.Random random;
+
 		
 
 		static private System.Single GetElapsedSecondsModulus(System.IntPtr activeEffect, System.Single delta)
@@ -45,17 +56,18 @@
 			else
 			{
 				modulus = NetScriptFramework.Memory.ReadFloat(activeEffect + 0x8C);
+				var updateInterval = 1.0F / NetScriptFramework.Memory.ReadFloat(ActiveEffectConditions.Offsets.ActiveEffectConditionUpdateFrequency);
 
 				if (modulus <= 0.0F || System.Single.IsNaN(modulus) || System.Single.IsInfinity(modulus))
 				{
-					modulus = 0.0F;
-					NetScriptFramework.Memory.WriteFloat(activeEffect + 0x8C, delta);
+					modulus = (System.Single)(updateInterval * random.NextDouble());
 				}
 				else
 				{
-					modulus %= 1.0F / NetScriptFramework.Memory.ReadFloat(ActiveEffectConditions.Offsets.ActiveEffectConditionUpdateFrequency);
-					NetScriptFramework.Memory.WriteFloat(activeEffect + 0x8C, modulus + delta);
+					modulus %= updateInterval;
 				}
+
+				NetScriptFramework.Memory.WriteFloat(activeEffect + 0x8C, modulus + delta);
 			}
 
 			return modulus;
