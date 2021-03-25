@@ -2,11 +2,27 @@
 {
 	internal class ActiveEffectConditions
 	{
+		static internal class Offsets
+		{
+			static Offsets()
+			{
+				Offsets.ActiveEffectConditionUpdateFrequency = NetScriptFramework.Main.GameInfo.GetAddressOf(516661);	// SkyrimSE.exe + 0x2F25CE8
+				Offsets.UpdateActiveEffectConditions = NetScriptFramework.Main.GameInfo.GetAddressOf(33287);			// SkyrimSE.exe + 0x53E3E0
+			}
+
+
+
+			static internal System.IntPtr ActiveEffectConditionUpdateFrequency { get; }
+			static internal System.IntPtr UpdateActiveEffectConditions { get; }
+		}
+		
+		
+		
 		internal ActiveEffectConditions()
 		{
 			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters()
 			{
-				Address = ActiveEffectConditions._updateActiveEffectConditions + 0xDD,
+				Address = ActiveEffectConditions.Offsets.UpdateActiveEffectConditions + 0xDD,
 				Pattern = "F3 0F 10 4F 70",
 				ReplaceLength = 5,
 				IncludeLength = 0,
@@ -14,19 +30,7 @@
 			});
 		}
 
-		static ActiveEffectConditions()
-		{
-			ActiveEffectConditions._activeEffectConditionUpdateFrequency = NetScriptFramework.Main.GameInfo.GetAddressOf(516661);	// SkyrimSE.exe + 0x2F25CE8
-			ActiveEffectConditions._updateActiveEffectConditions = NetScriptFramework.Main.GameInfo.GetAddressOf(33287);			// SkyrimSE.exe + 0x53E3E0
-		}
-
-
-
-		readonly static private System.IntPtr _activeEffectConditionUpdateFrequency;
-
-		readonly static private System.IntPtr _updateActiveEffectConditions;
-
-
+		
 
 		static private System.Single GetElapsedSecondsModulus(System.IntPtr activeEffect, System.Single delta)
 		{
@@ -49,7 +53,7 @@
 				}
 				else
 				{
-					modulus %= 1.0F / NetScriptFramework.Memory.ReadFloat(ActiveEffectConditions._activeEffectConditionUpdateFrequency);
+					modulus %= 1.0F / NetScriptFramework.Memory.ReadFloat(ActiveEffectConditions.Offsets.ActiveEffectConditionUpdateFrequency);
 					NetScriptFramework.Memory.WriteFloat(activeEffect + 0x8C, modulus + delta);
 				}
 			}
