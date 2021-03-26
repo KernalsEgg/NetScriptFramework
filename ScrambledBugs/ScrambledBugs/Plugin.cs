@@ -36,6 +36,11 @@
 				{
 					new ScrambledBugs.Patches.ApplySpellPerkEntryPoints();
 				}
+
+				if (settings.patches.underfilledSoulGems)
+				{
+					new ScrambledBugs.Patches.UnderfilledSoulGems();
+				}
 			}
 
 			return true;

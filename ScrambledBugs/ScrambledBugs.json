@@ -6,6 +6,7 @@
 	},
 	"patches":
 	{
-		"applySpellPerkEntryPoints": true	/* Apply more than a single spell at once using perk entry points. */
+		"applySpellPerkEntryPoints": true,	/* Apply more than a single spell at once using perk entry points. */
+		"underfilledSoulGems": true			/* Only fill soul gems with souls of the same size. */
 	}
 }
