@@ -7,6 +7,7 @@
 	"patches":
 	{
 		"applySpellPerkEntryPoints": true,	/* Apply more than a single spell at once using perk entry points. */
-		"underfilledSoulGems": true			/* Only fill soul gems with souls of the same size. */
+		"lockpickingExperience": true,		/* Gain experience every time you pick a lock instead of only the first time. */
+		"underfilledSoulGems": false		/* Only fill soul gems with souls of the same size. Disable this if another mod that handles the underfilled soul gems problem is installed, such as Genuinely Intelligent Soul Trap or Acquisitive Soul Gems Multithreaded. */
 	}
 }

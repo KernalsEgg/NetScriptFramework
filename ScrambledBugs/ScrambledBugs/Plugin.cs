@@ -37,6 +37,11 @@
 					new ScrambledBugs.Patches.ApplySpellPerkEntryPoints();
 				}
 
+				if (settings.patches.lockpickingExperience)
+				{
+					new ScrambledBugs.Patches.LockpickingExperience();
+				}
+
 				if (settings.patches.underfilledSoulGems)
 				{
 					new ScrambledBugs.Patches.UnderfilledSoulGems();
