@@ -114,9 +114,9 @@
 
 		static private void AddSpells(System.IntPtr target, System.IntPtr spell, System.IntPtr spellPointer)
 		{
-			if (target == System.IntPtr.Zero) { return; }
-			if (spell == System.IntPtr.Zero) { return; }
-			if (spellPointer == System.IntPtr.Zero) { return; }
+			// target != System.IntPtr.Zero
+			// spell != System.IntPtr.Zero
+			// spellPointer != System.IntPtr.Zero
 			
 			lock (ApplySpellPerkEntryPoints.spellDictionaryLock)
 			{

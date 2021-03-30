@@ -22,9 +22,15 @@
 			{
 				var settings = Newtonsoft.Json.JsonConvert.DeserializeObject<ScrambledBugs.Settings>(System.IO.File.ReadAllText(path));
 
+				// Fixes
 				if (settings.fixes.activeEffectConditions)
 				{
 					new ScrambledBugs.Fixes.ActiveEffectConditions();
+				}
+
+				if (settings.fixes.harvestedFlags)
+				{
+					new ScrambledBugs.Fixes.HarvestedFlags();
 				}
 
 				if (settings.fixes.terrainDecals)
@@ -32,6 +38,7 @@
 					new ScrambledBugs.Fixes.TerrainDecals();
 				}
 
+				// Patches
 				if (settings.patches.applySpellPerkEntryPoints)
 				{
 					new ScrambledBugs.Patches.ApplySpellPerkEntryPoints();

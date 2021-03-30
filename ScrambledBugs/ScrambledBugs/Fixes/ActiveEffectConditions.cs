@@ -34,6 +34,8 @@
 
 		static private System.Single GetUpdateTime(System.IntPtr activeEffect, System.Single frameTime)
 		{
+			// activeEffect != System.IntPtr.Zero
+			
 			System.Single updateTime;
 			var elapsedTime = NetScriptFramework.Memory.ReadFloat(activeEffect + 0x70);
 
@@ -47,7 +49,7 @@
 				updateTime = NetScriptFramework.Memory.ReadFloat(activeEffect + 0x8C);
 				var updateInterval = 1.0F / NetScriptFramework.Memory.ReadFloat(ActiveEffectConditions.Offsets.ActiveEffectConditionUpdateFrequency);
 
-				if (updateTime <= 0.0F || System.Single.IsNaN(updateTime) || System.Single.IsInfinity(updateTime))
+				if (updateTime <= 0.0F || System.Single.IsNaN(updateTime) || System.Single.IsInfinity(updateTime)) // Account for garbage memory in existing saves
 				{
 					updateTime = elapsedTime % updateInterval;
 				}

@@ -2,12 +2,13 @@
 	"fixes":
 	{
 		"activeEffectConditions": true,		/* Eliminate floating-point error from the elapsed time of active effects so that updates to their conditions will not be skipped. Disable this if Bug Fixes SSE is installed and FixAbilityConditionBug is enabled. */
+		"harvestedFlags": true,				/* Flora and trees are correctly flagged as harvested when loading a save. This solves the same problem as the Flora Respawn Fix. */
 		"terrainDecals": true				/* Apply decals to the terrain of cells that have been partially unloaded. */
 	},
 	"patches":
 	{
 		"applySpellPerkEntryPoints": true,	/* Apply more than a single spell at once using perk entry points. */
-		"lockpickingExperience": true,		/* Gain experience every time you pick a lock instead of only the first time. */
+		"lockpickingExperience": true,		/* Gain experience every time you pick a lock instead of only the first time. This solves the same problem as the Lockpicking XP Fix. */
 		"underfilledSoulGems": false		/* Only fill soul gems with souls of the same size. Disable this if another mod that handles the underfilled soul gems problem is installed, such as Genuinely Intelligent Soul Trap or Acquisitive Soul Gems Multithreaded. */
 	}
 }
