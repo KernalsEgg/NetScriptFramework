@@ -2,15 +2,16 @@
 {
 	internal class TerrainDecals
 	{
-		static internal class Offsets
+		static protected class Offsets
 		{
 			static Offsets()
 			{
-				Offsets.UnloadHavokData = NetScriptFramework.Main.GameInfo.GetAddressOf(18711, 0xE7, 0, "E9 ?? ?? ?? ??"); // SkyrimSE.exe + 0x271BE0
+				Offsets.UnloadHavokData = NetScriptFramework.Main.GameInfo.GetAddressOf(18711, 0xE7, 0, "E9 ?? ?? ?? ??");
 			}
 
 
 
+			/// <summary> SkyrimSE.exe + 0x271BE0 </summary>
 			static internal System.IntPtr UnloadHavokData { get; }
 		}
 		

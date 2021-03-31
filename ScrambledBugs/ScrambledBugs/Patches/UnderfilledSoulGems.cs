@@ -2,15 +2,16 @@
 {
 	internal class UnderfilledSoulGems
 	{
-		static internal class Offsets
+		static protected class Offsets
 		{
 			static Offsets()
 			{
-				Offsets.FindBestSoulGem = NetScriptFramework.Main.GameInfo.GetAddressOf(15854, 0xE6, 0, "72 2E"); // SkyrimSE.exe + 0x1E5050
+				Offsets.FindBestSoulGem = NetScriptFramework.Main.GameInfo.GetAddressOf(15854, 0xE6, 0, "72 2E");
 			}
 
 
 
+			/// <summary> SkyrimSE.exe + 0x1E5050 </summary>
 			static internal System.IntPtr FindBestSoulGem { get; }
 		}
 

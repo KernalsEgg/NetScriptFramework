@@ -6,6 +6,7 @@
 		{
 			public System.Boolean activeEffectConditions { get; set; }
 			public System.Boolean harvestedFlags { get; set; }
+			public System.Boolean modArmorWeightPerkEntryPoints { get; set; }
 			public System.Boolean terrainDecals { get; set; }
 		}
 

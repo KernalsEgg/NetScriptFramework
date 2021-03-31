@@ -53,6 +53,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Fixes\HarvestedFlags.cs" />
+    <Compile Include="Fixes\ModArmorWeightPerkEntryPoints.cs" />
     <Compile Include="Patches\LockpickingExperience.cs" />
     <Compile Include="Patches\UnderfilledSoulGems.cs" />
     <Compile Include="Plugin.cs" />

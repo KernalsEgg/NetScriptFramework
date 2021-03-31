@@ -2,17 +2,20 @@
 {
 	internal class ActiveEffectConditions
 	{
-		static internal class Offsets
+		static protected class Offsets
 		{
 			static Offsets()
 			{
-				Offsets.ActiveEffectConditionUpdateFrequency = NetScriptFramework.Main.GameInfo.GetAddressOf(516661);	// SkyrimSE.exe + 0x2F25CE8
-				Offsets.UpdateActiveEffectConditions = NetScriptFramework.Main.GameInfo.GetAddressOf(33287);			// SkyrimSE.exe + 0x53E3E0
+				Offsets.ActiveEffectConditionUpdateFrequency =	NetScriptFramework.Main.GameInfo.GetAddressOf(516661);
+				Offsets.UpdateActiveEffectConditions =			NetScriptFramework.Main.GameInfo.GetAddressOf(33287);
 			}
 
 
 
+			/// <summary> SkyrimSE.exe + 0x2F25CE8 </summary>
 			static internal System.IntPtr ActiveEffectConditionUpdateFrequency { get; }
+
+			/// <summary> SkyrimSE.exe + 0x53E3E0 </summary>
 			static internal System.IntPtr UpdateActiveEffectConditions { get; }
 		}
 		

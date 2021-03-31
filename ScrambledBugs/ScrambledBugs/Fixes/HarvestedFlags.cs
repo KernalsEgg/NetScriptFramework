@@ -2,15 +2,16 @@
 {
 	internal class HarvestedFlags
 	{
-		static internal class Offsets
+		static protected class Offsets
 		{
 			static Offsets()
 			{
-				Offsets.Respawn = NetScriptFramework.Main.GameInfo.GetAddressOf(18843); // SkyrimSE.exe + 0x278920
+				Offsets.Respawn = NetScriptFramework.Main.GameInfo.GetAddressOf(18843);
 			}
 
 
 
+			/// <summary> SkyrimSE.exe + 0x278920 </summary>
 			static internal System.IntPtr Respawn { get; }
 		}
 

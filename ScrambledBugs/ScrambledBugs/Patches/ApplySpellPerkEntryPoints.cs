@@ -2,29 +2,44 @@
 {
 	internal class ApplySpellPerkEntryPoints
 	{
-		static internal class Offsets
+		static protected class Offsets
 		{
 			static Offsets()
 			{
-				Offsets.AddSpell = NetScriptFramework.Main.GameInfo.GetAddressOf(37817);							// SkyrimSE.exe + 0x632180
-				Offsets.ApplyBashingSpell = NetScriptFramework.Main.GameInfo.GetAddressOf(37673);					// SkyrimSE.exe + 0x628C20
-				Offsets.ApplyCombatHitSpell = NetScriptFramework.Main.GameInfo.GetAddressOf(37799);					// SkyrimSE.exe + 0x6310A0
-				Offsets.ApplyCombatHitSpellArrowProjectile = NetScriptFramework.Main.GameInfo.GetAddressOf(42547);	// SkyrimSE.exe + 0x732400
-				Offsets.ApplyReanimateSpell = NetScriptFramework.Main.GameInfo.GetAddressOf(37865);					// SkyrimSE.exe + 0x634BF0
-				Offsets.ApplySneakingSpell = NetScriptFramework.Main.GameInfo.GetAddressOf(36926);					// SkyrimSE.exe + 0x6089E0
-				Offsets.ApplyWeaponSwingSpell = NetScriptFramework.Main.GameInfo.GetAddressOf(37628);				// SkyrimSE.exe + 0x6260F0
-				Offsets.SetSpell = NetScriptFramework.Main.GameInfo.GetAddressOf(23089);							// SkyrimSE.exe + 0x32FA00
+				Offsets.AddSpell =								NetScriptFramework.Main.GameInfo.GetAddressOf(37817);
+				Offsets.ApplyBashingSpell =						NetScriptFramework.Main.GameInfo.GetAddressOf(37673);
+				Offsets.ApplyCombatHitSpell =					NetScriptFramework.Main.GameInfo.GetAddressOf(37799);
+				Offsets.ApplyCombatHitSpellArrowProjectile =	NetScriptFramework.Main.GameInfo.GetAddressOf(42547);
+				Offsets.ApplyReanimateSpell =					NetScriptFramework.Main.GameInfo.GetAddressOf(37865);
+				Offsets.ApplySneakingSpell =					NetScriptFramework.Main.GameInfo.GetAddressOf(36926);
+				Offsets.ApplyWeaponSwingSpell =					NetScriptFramework.Main.GameInfo.GetAddressOf(37628);
+				Offsets.SetSpell =								NetScriptFramework.Main.GameInfo.GetAddressOf(23089);
 			}
 
 
 
+			/// <summary> SkyrimSE.exe + 0x632180 </summary>
 			static internal System.IntPtr AddSpell { get; }
+
+			/// <summary> SkyrimSE.exe + 0x628C20 </summary>
 			static internal System.IntPtr ApplyBashingSpell { get; }
+
+			/// <summary> SkyrimSE.exe + 0x6310A0 </summary>
 			static internal System.IntPtr ApplyCombatHitSpell { get; }
+
+			/// <summary> SkyrimSE.exe + 0x732400 </summary>
 			static internal System.IntPtr ApplyCombatHitSpellArrowProjectile { get; }
+
+			/// <summary> SkyrimSE.exe + 0x634BF0 </summary>
 			static internal System.IntPtr ApplyReanimateSpell { get; }
+
+			/// <summary> SkyrimSE.exe + 0x6089E0 </summary>
 			static internal System.IntPtr ApplySneakingSpell { get; }
+
+			/// <summary> SkyrimSE.exe + 0x6260F0 </summary>
 			static internal System.IntPtr ApplyWeaponSwingSpell { get; }
+
+			/// <summary> SkyrimSE.exe + 0x32FA00 </summary>
 			static internal System.IntPtr SetSpell { get; }
 		}
 		
