@@ -8,6 +8,7 @@
 			public System.Boolean harvestedFlags { get; set; }
 			public System.Boolean modArmorWeightPerkEntryPoint { get; set; }
 			public System.Boolean terrainDecals { get; set; }
+			public System.Boolean trainingMenuText { get; set; }
 		}
 
 		public class Patches

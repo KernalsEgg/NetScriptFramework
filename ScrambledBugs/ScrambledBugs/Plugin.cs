@@ -43,6 +43,11 @@
 					new ScrambledBugs.Fixes.TerrainDecals();
 				}
 
+				if (settings.fixes.trainingMenuText)
+				{
+					new ScrambledBugs.Fixes.TrainingMenuText();
+				}
+
 				// Patches
 				if (settings.patches.applySpellPerkEntryPoints)
 				{
