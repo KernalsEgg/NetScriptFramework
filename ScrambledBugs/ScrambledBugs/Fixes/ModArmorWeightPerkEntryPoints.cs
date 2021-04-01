@@ -1,4 +1,8 @@
-﻿namespace ScrambledBugs.Fixes
+﻿using static NetScriptFramework._IntPtrExtensions;
+
+
+
+namespace ScrambledBugs.Fixes
 {
 	internal class ModArmorWeightPerkEntryPoints
 	{
@@ -90,7 +94,7 @@
 
 								if (formType == ModArmorWeightPerkEntryPoints.TESForm.FormTypes.TESObjectARMO)
 								{
-									var itemCount = cpuRegisters.DX.ToInt32() + cpuRegisters.AX.ToInt32(); // inventoryChangesItemCount + containerItemCount
+									var itemCount = cpuRegisters.DX.ToInt32Safe() + cpuRegisters.AX.ToInt32Safe(); // inventoryChangesItemCount + containerItemCount
 
 									if (itemCount > 0)
 									{
