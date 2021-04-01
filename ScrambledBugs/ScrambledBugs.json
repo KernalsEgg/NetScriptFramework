@@ -3,7 +3,7 @@
 	{
 		"activeEffectConditions": true,			/* Eliminate floating-point error from the elapsed time of active effects so that updates to their conditions will not be skipped. Disable this if Bug Fixes SSE is installed and FixAbilityConditionBug is enabled. */
 		"harvestedFlags": true,					/* Flora and trees that have respawned will be saved correctly. This solves the same problem as the Flora Respawn Fix and Brutal Flora Harvest Fix. */
-		"modArmorWeightPerkEntryPoints": true,	/* Modify the weight of only worn armor using perk entry points. */
+		"modArmorWeightPerkEntryPoint": true,	/* Modify the weight of only worn armor using a perk entry point. */
 		"terrainDecals": true					/* Apply decals to the terrain of cells that have been partially unloaded. */
 	},
 	"patches":

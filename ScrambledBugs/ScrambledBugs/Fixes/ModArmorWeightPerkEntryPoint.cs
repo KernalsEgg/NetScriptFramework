@@ -4,7 +4,7 @@
 
 namespace ScrambledBugs.Fixes
 {
-	internal class ModArmorWeightPerkEntryPoints
+	internal class ModArmorWeightPerkEntryPoint
 	{
 		static protected class BGSEntryPoint
 		{
@@ -23,7 +23,7 @@ namespace ScrambledBugs.Fixes
 			
 			static internal System.Boolean IsWorn(System.IntPtr inventoryEntryData)
 			{
-				return NetScriptFramework.Memory.InvokeCdecl(ModArmorWeightPerkEntryPoints.Offsets.IsWorn, inventoryEntryData).ToBool();
+				return NetScriptFramework.Memory.InvokeCdecl(ModArmorWeightPerkEntryPoint.Offsets.IsWorn, inventoryEntryData).ToBool();
 			}
 		}
 
@@ -65,12 +65,12 @@ namespace ScrambledBugs.Fixes
 
 
 
-		internal ModArmorWeightPerkEntryPoints()
+		internal ModArmorWeightPerkEntryPoint()
 		{
 			// Modify the weight of worn armor in TESContainer
 			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters()
 			{
-				Address = ModArmorWeightPerkEntryPoints.Offsets.GetTotalItemWeight + 0x159,
+				Address = ModArmorWeightPerkEntryPoint.Offsets.GetTotalItemWeight + 0x159,
 				Pattern = "8B 55 10" + "8B 00",
 				ReplaceLength = 3 + 2, // 5
 				IncludeLength = 3 + 2, // 5
@@ -79,7 +79,7 @@ namespace ScrambledBugs.Fixes
 					// inventoryEntryData != System.IntPtr.Zero
 
 					var inventoryEntryData = cpuRegisters.BP;
-					var item = ModArmorWeightPerkEntryPoints.InventoryEntryData.GetItem(inventoryEntryData);
+					var item = ModArmorWeightPerkEntryPoint.InventoryEntryData.GetItem(inventoryEntryData);
 
 					if (item != System.IntPtr.Zero)
 					{
@@ -91,17 +91,17 @@ namespace ScrambledBugs.Fixes
 
 							if (actor != System.IntPtr.Zero)
 							{
-								var formType = ModArmorWeightPerkEntryPoints.TESForm.GetFormType(item);
+								var formType = ModArmorWeightPerkEntryPoint.TESForm.GetFormType(item);
 
-								if (formType == ModArmorWeightPerkEntryPoints.TESForm.FormTypes.TESObjectARMO)
+								if (formType == ModArmorWeightPerkEntryPoint.TESForm.FormTypes.TESObjectARMO)
 								{
 									var itemCount = cpuRegisters.DX.ToInt32Safe() + cpuRegisters.AX.ToInt32Safe(); // inventoryChangesItemCount + containerItemCount
 
 									if (itemCount > 0)
 									{
-										if (ModArmorWeightPerkEntryPoints.InventoryEntryData.IsWorn(inventoryEntryData))
+										if (ModArmorWeightPerkEntryPoint.InventoryEntryData.IsWorn(inventoryEntryData))
 										{
-											NetScriptFramework.Memory.InvokeCdecl(ModArmorWeightPerkEntryPoints.Offsets.ApplyPerkEntryPoints, (System.UInt32)ModArmorWeightPerkEntryPoints.BGSEntryPoint.EntryPoints.ModArmorWeight, actor, item, itemWeight);
+											NetScriptFramework.Memory.InvokeCdecl(ModArmorWeightPerkEntryPoint.Offsets.ApplyPerkEntryPoints, (System.UInt32)ModArmorWeightPerkEntryPoint.BGSEntryPoint.EntryPoints.ModArmorWeight, actor, item, itemWeight);
 
 											cpuRegisters.XMM7f += NetScriptFramework.Memory.ReadFloat(itemWeight); // totalItemWeight
 											cpuRegisters.DX -= 1; // inventoryChangesItemCount
@@ -117,7 +117,7 @@ namespace ScrambledBugs.Fixes
 			// Modify the weight of worn armor in InventoryChanges
 			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters()
 			{
-				Address = ModArmorWeightPerkEntryPoints.Offsets.GetTotalItemWeight + 0x29F,
+				Address = ModArmorWeightPerkEntryPoint.Offsets.GetTotalItemWeight + 0x29F,
 				Pattern = "E8 ?? ?? ?? ??" + "F3 0F10 8C 24 B0000000" + "F3 0F58 F1",
 				ReplaceLength = 5 + 9 + 4, // 18
 				IncludeLength = 0,
@@ -133,7 +133,7 @@ namespace ScrambledBugs.Fixes
 					var itemWeight = cpuRegisters.R9;
 					
 					cpuRegisters.XMM1f = NetScriptFramework.Memory.ReadFloat(itemWeight); // itemWeight
-					NetScriptFramework.Memory.InvokeCdecl(ModArmorWeightPerkEntryPoints.Offsets.ApplyPerkEntryPoints, entryPoint, actor, item, itemWeight);
+					NetScriptFramework.Memory.InvokeCdecl(ModArmorWeightPerkEntryPoint.Offsets.ApplyPerkEntryPoints, entryPoint, actor, item, itemWeight);
 					cpuRegisters.XMM6f += NetScriptFramework.Memory.ReadFloat(itemWeight); // totalModifiedItemWeight
 				}
 			});

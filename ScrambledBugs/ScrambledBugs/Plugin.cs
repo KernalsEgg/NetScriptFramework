@@ -33,9 +33,9 @@
 					new ScrambledBugs.Fixes.HarvestedFlags();
 				}
 
-				if (settings.fixes.modArmorWeightPerkEntryPoints)
+				if (settings.fixes.modArmorWeightPerkEntryPoint)
 				{
-					new ScrambledBugs.Fixes.ModArmorWeightPerkEntryPoints();
+					new ScrambledBugs.Fixes.ModArmorWeightPerkEntryPoint();
 				}
 
 				if (settings.fixes.terrainDecals)
