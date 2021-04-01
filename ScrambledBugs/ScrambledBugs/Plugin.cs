@@ -4,7 +4,7 @@
     {
 		override public System.Int32 RequiredLibraryVersion { get; } = 10;
 
-		override public System.Int32 Version { get; } = 2;
+		override public System.Int32 Version { get; } = 3;
 
 		override public System.String Author { get; } = "meh321 and KernalsEgg";
 
