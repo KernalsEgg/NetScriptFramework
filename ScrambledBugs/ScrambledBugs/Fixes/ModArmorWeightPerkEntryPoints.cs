@@ -23,9 +23,10 @@ namespace ScrambledBugs.Fixes
 			
 			static internal System.Boolean IsWorn(System.IntPtr inventoryEntryData)
 			{
-				return NetScriptFramework.Memory.InvokeCdecl(ModArmorWeightPerkEntryPoints.Offsets.IsWorn, inventoryEntryData) != System.IntPtr.Zero;
+				return NetScriptFramework.Memory.InvokeCdecl(ModArmorWeightPerkEntryPoints.Offsets.IsWorn, inventoryEntryData).ToBool();
 			}
 		}
+
 		static protected class Offsets
 		{
 			static Offsets()
