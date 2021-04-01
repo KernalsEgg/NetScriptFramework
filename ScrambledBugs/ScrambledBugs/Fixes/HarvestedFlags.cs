@@ -15,7 +15,7 @@
 			static internal System.IntPtr Respawn { get; }
 		}
 
-		static internal class TESForm
+		static protected class TESForm
 		{
 			internal enum FormTypes : System.Byte
 			{
@@ -46,7 +46,7 @@
 			}
 		}
 
-		static internal class TESObjectREFR
+		static protected class TESObjectREFR
 		{
 			internal enum Changes : System.UInt32
 			{

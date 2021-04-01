@@ -107,8 +107,8 @@
 			{
 				Address = ApplySpellPerkEntryPoints.Offsets.SetSpell + 0x53,
 				Pattern = "48 8B 43 08" + "48 89 01",
-				ReplaceLength = 7,
-				IncludeLength = 7,
+				ReplaceLength = 4 + 3, // 7
+				IncludeLength = 4 + 3, // 7
 				After = cpuRegisters => ApplySpellPerkEntryPoints.SetSpell(cpuRegisters.AX, cpuRegisters.CX),
 			});
 		}
