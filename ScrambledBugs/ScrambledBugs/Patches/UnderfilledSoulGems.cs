@@ -6,7 +6,7 @@
 		{
 			static Offsets()
 			{
-				Offsets.FindBestSoulGem = NetScriptFramework.Main.GameInfo.GetAddressOf(15854, 0xE6, 0, "72 2E");
+				Offsets.FindBestSoulGem = NetScriptFramework.Main.GameInfo.GetAddressOf(15854, 0xE6, 0, "72 2E"); // 2
 			}
 
 

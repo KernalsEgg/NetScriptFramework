@@ -6,7 +6,7 @@
 		{
 			static Offsets()
 			{
-				Offsets.UnloadHavokData = NetScriptFramework.Main.GameInfo.GetAddressOf(18711, 0xE7, 0, "E9 ?? ?? ?? ??");
+				Offsets.UnloadHavokData = NetScriptFramework.Main.GameInfo.GetAddressOf(18711, 0xE7, 0, "E9 ?? ?? ?? ??"); // 5
 			}
 
 

@@ -115,15 +115,15 @@
 
 		static ApplySpellPerkEntryPoints()
 		{
-			ApplySpellPerkEntryPoints.spellDictionary = new System.Collections.Generic.Dictionary<System.IntPtr, System.Collections.Generic.List<System.IntPtr>>();
-			ApplySpellPerkEntryPoints.spellDictionaryLock = new System.Object();
+			ApplySpellPerkEntryPoints.SpellDictionary = new System.Collections.Generic.Dictionary<System.IntPtr, System.Collections.Generic.List<System.IntPtr>>();
+			ApplySpellPerkEntryPoints.SpellDictionaryLock = new System.Object();
 		}
 
 
 
-		static private System.Collections.Generic.Dictionary<System.IntPtr, System.Collections.Generic.List<System.IntPtr>> spellDictionary;
+		static private System.Collections.Generic.Dictionary<System.IntPtr, System.Collections.Generic.List<System.IntPtr>> SpellDictionary;
 
-		static private System.Object spellDictionaryLock;
+		static private System.Object SpellDictionaryLock;
 
 
 
@@ -133,11 +133,11 @@
 			// spell != System.IntPtr.Zero
 			// spellPointer != System.IntPtr.Zero
 			
-			lock (ApplySpellPerkEntryPoints.spellDictionaryLock)
+			lock (ApplySpellPerkEntryPoints.SpellDictionaryLock)
 			{
-				if (ApplySpellPerkEntryPoints.spellDictionary.TryGetValue(spellPointer, out var spellList))
+				if (ApplySpellPerkEntryPoints.SpellDictionary.TryGetValue(spellPointer, out var spellList))
 				{
-					ApplySpellPerkEntryPoints.spellDictionary.Remove(spellPointer);
+					ApplySpellPerkEntryPoints.SpellDictionary.Remove(spellPointer);
 					spellList.Remove(spell);
 
 					foreach (var spellItem in spellList)
@@ -153,9 +153,9 @@
 			if (spell == System.IntPtr.Zero) { return; }
 			if (spellPointer == System.IntPtr.Zero) { return; }
 			
-			lock (ApplySpellPerkEntryPoints.spellDictionaryLock)
+			lock (ApplySpellPerkEntryPoints.SpellDictionaryLock)
 			{
-				if (ApplySpellPerkEntryPoints.spellDictionary.TryGetValue(spellPointer, out var spellList))
+				if (ApplySpellPerkEntryPoints.SpellDictionary.TryGetValue(spellPointer, out var spellList))
 				{
 					spellList.Add(spell);
 				}
@@ -163,7 +163,7 @@
 				{
 					spellList = new System.Collections.Generic.List<System.IntPtr>();
 					spellList.Add(spell);
-					ApplySpellPerkEntryPoints.spellDictionary[spellPointer] = spellList;
+					ApplySpellPerkEntryPoints.SpellDictionary[spellPointer] = spellList;
 				}
 			}
 		}

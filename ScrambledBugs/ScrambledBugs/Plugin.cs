@@ -4,7 +4,7 @@
     {
 		override public System.Int32 RequiredLibraryVersion { get; } = 10;
 
-		override public System.Int32 Version { get; } = 3;
+		override public System.Int32 Version { get; } = 4;
 
 		override public System.String Author { get; } = "meh321 and KernalsEgg";
 
@@ -36,6 +36,11 @@
 				if (settings.fixes.modArmorWeightPerkEntryPoint)
 				{
 					new ScrambledBugs.Fixes.ModArmorWeightPerkEntryPoint();
+				}
+
+				if (settings.fixes.speedMultUpdates)
+				{
+					new ScrambledBugs.Fixes.SpeedMultUpdates();
 				}
 
 				if (settings.fixes.terrainDecals)

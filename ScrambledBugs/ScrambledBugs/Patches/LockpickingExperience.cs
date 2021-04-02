@@ -6,7 +6,7 @@
 		{
 			static Offsets()
 			{
-				Offsets.HasBeenUnlocked = NetScriptFramework.Main.GameInfo.GetAddressOf(51088, 0x2C, 0, "75 50");
+				Offsets.HasBeenUnlocked = NetScriptFramework.Main.GameInfo.GetAddressOf(51088, 0x2C, 0, "75 50"); // 2
 			}
 
 

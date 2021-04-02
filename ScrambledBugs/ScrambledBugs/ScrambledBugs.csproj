@@ -56,6 +56,7 @@
     <Compile Include="Fixes\ModArmorWeightPerkEntryPoint.cs" />
     <Compile Include="Fixes\TrainingMenuText.cs" />
     <Compile Include="Patches\LockpickingExperience.cs" />
+    <Compile Include="Fixes\SpeedMultUpdates.cs" />
     <Compile Include="Patches\UnderfilledSoulGems.cs" />
     <Compile Include="Plugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
