@@ -32,7 +32,7 @@
 
 			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters()
 			{
-				Address = EquipBestAmmo.Offsets.GetWorstAmmo + 0x64,
+				Address = EquipBestAmmo.Offsets.GetWorstAmmo + 0x5F,
 				Pattern = "F3 0F10 35 ?? ?? ?? ??",
 				ReplaceLength = 8,
 				IncludeLength = 0,

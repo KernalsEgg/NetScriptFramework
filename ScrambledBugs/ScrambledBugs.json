@@ -10,7 +10,7 @@
 	"patches":
 	{
 		"applySpellPerkEntryPoints": false,		/* Apply more than a single spell at once using perk entry points. */
-		"equipBestAmmo": true,					/* Automatically equip your best arrows or bolts when you equip a bow or crossbow respectively. */
+		"equipBestAmmo": false,					/* Automatically equip your best arrows or bolts when you equip a bow or crossbow respectively. */
 		"lockpickingExperience": true,			/* Earn experience every time you pick a lock instead of only the first time. */
 		"underfilledSoulGems": false			/* Trap only souls of the appropriate size in soul gems. Disable this if another mod that handles the underfilled soul gems problem is installed, such as Genuinely Intelligent Soul Trap or Acquisitive Soul Gems Multithreaded. */
 	}
