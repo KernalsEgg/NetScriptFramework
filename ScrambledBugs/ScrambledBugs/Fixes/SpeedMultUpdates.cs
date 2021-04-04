@@ -2,7 +2,7 @@
 {
 	internal class SpeedMultUpdates
 	{
-		internal enum ActorValues : System.Byte
+		protected enum ActorValues : System.UInt32
 		{
 			SpeedMult = 30
 		}
@@ -13,10 +13,10 @@
 		{
 			static Offsets()
 			{
-				Offsets.AddActorValueUpdateListeners = NetScriptFramework.Main.GameInfo.GetAddressOf(5998);
-				Offsets.UpdateMovementSpeed = NetScriptFramework.Main.GameInfo.GetAddressOf(36916);
-				Offsets.RemoveMovementFlags = NetScriptFramework.Main.GameInfo.GetAddressOf(36585);
-				Offsets.SaveStateManager = NetScriptFramework.Main.GameInfo.GetAddressOf(516851);
+				Offsets.AddActorValueUpdateListeners =	NetScriptFramework.Main.GameInfo.GetAddressOf(5998);
+				Offsets.UpdateMovementSpeed =			NetScriptFramework.Main.GameInfo.GetAddressOf(36916);
+				Offsets.RemoveMovementFlags =			NetScriptFramework.Main.GameInfo.GetAddressOf(36585);
+				Offsets.SaveStateManager =				NetScriptFramework.Main.GameInfo.GetAddressOf(516851);
 			}
 
 
@@ -46,7 +46,7 @@
 				IncludeLength = 5,
 				After = cpuRegisters =>
 				{
-					var speedMultUpdateListenerAddress = NetScriptFramework.Main.GameInfo.GetAddressOf(517376, 0x8 * (System.Byte)SpeedMultUpdates.ActorValues.SpeedMult, 0, "00 00 00 00 00 00 00 00"); // SkyrimSE.exe + 0x2F39A40
+					var speedMultUpdateListenerAddress = NetScriptFramework.Main.GameInfo.GetAddressOf(517376, (System.Int32)(0x8 * (System.UInt32)SpeedMultUpdates.ActorValues.SpeedMult), 0, "00 00 00 00 00 00 00 00"); // SkyrimSE.exe + 0x2F39A40
 					NetScriptFramework.Memory.WritePointer(speedMultUpdateListenerAddress, SpeedMultUpdateListenerAllocation.Address);
 				},
 			});

@@ -59,6 +59,11 @@
 					new ScrambledBugs.Patches.ApplySpellPerkEntryPoints();
 				}
 
+				if (settings.patches.equipBestAmmo)
+				{
+					new ScrambledBugs.Patches.EquipBestAmmo();
+				}
+
 				if (settings.patches.lockpickingExperience)
 				{
 					new ScrambledBugs.Patches.LockpickingExperience();

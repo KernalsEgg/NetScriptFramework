@@ -2,16 +2,16 @@
 	"fixes":
 	{
 		"activeEffectConditions": true,			/* Eliminate floating-point error from the elapsed time of active effects so that updates to their conditions will not be skipped. Disable this if Bug Fixes SSE is installed and FixAbilityConditionBug is enabled. */
-		"harvestedFlags": true,					/* Flora and trees that have respawned will be saved correctly. This solves the same problem as the Flora Respawn Fix and Brutal Flora Harvest Fix. */
+		"harvestedFlags": true,					/* Flora and trees that have respawned will be saved correctly. */
 		"modArmorWeightPerkEntryPoint": true,	/* Modify the weight of only worn armor using a perk entry point. */
-		"speedMultUpdates": true,				/* Update the movement speed of actors when their SpeedMult actor value changes. */
 		"terrainDecals": true,					/* Apply decals to the terrain of cells that have been partially unloaded. */
-		"trainingMenuText": true				/* Display the correct cost of the lesson in the training menu when the relevant skill is being buffed or debuffed. */
+		"trainingMenuText": true				/* Display the correct cost of a lesson in the training menu when the relevant skill is buffed or debuffed. */
 	},
 	"patches":
 	{
 		"applySpellPerkEntryPoints": false,		/* Apply more than a single spell at once using perk entry points. */
-		"lockpickingExperience": true,			/* Gain experience every time you pick a lock instead of only the first time. This solves the same problem as the Lockpicking XP Fix. */
-		"underfilledSoulGems": false			/* Only fill soul gems with souls of the same size. Disable this if another mod that handles the underfilled soul gems problem is installed, such as Genuinely Intelligent Soul Trap or Acquisitive Soul Gems Multithreaded. */
+		"equipBestAmmo": true,					/* Automatically equip your best arrows or bolts when you equip a bow or crossbow respectively. */
+		"lockpickingExperience": true,			/* Earn experience every time you pick a lock instead of only the first time. */
+		"underfilledSoulGems": false			/* Trap only souls of the appropriate size in soul gems. Disable this if another mod that handles the underfilled soul gems problem is installed, such as Genuinely Intelligent Soul Trap or Acquisitive Soul Gems Multithreaded. */
 	}
 }
