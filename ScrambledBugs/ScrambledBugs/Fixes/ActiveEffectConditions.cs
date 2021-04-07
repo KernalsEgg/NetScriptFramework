@@ -26,7 +26,7 @@
 			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters()
 			{
 				Address = ActiveEffectConditions.Offsets.UpdateActiveEffectConditions + 0xDD,
-				Pattern = "F3 0F 10 4F 70",
+				Pattern = "F3 0F10 4F 70",
 				ReplaceLength = 5,
 				IncludeLength = 0,
 				Before = cpuRegisters => cpuRegisters.XMM1f = ActiveEffectConditions.GetUpdateTime(cpuRegisters.DI, cpuRegisters.XMM6f),

@@ -4,7 +4,7 @@
     {
 		override public System.Int32 RequiredLibraryVersion { get; } = 10;
 
-		override public System.Int32 Version { get; } = 4;
+		override public System.Int32 Version { get; } = 5;
 
 		override public System.String Author { get; } = "meh321 and KernalsEgg";
 
@@ -67,6 +67,11 @@
 				if (settings.patches.lockpickingExperience)
 				{
 					new ScrambledBugs.Patches.LockpickingExperience();
+				}
+
+				if (settings.patches.multipleEnchantmentEffects)
+				{
+					new ScrambledBugs.Patches.MultipleEnchantmentEffects();
 				}
 
 				if (settings.patches.underfilledSoulGems)
