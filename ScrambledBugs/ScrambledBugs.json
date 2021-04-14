@@ -2,17 +2,16 @@
 	"fixes":
 	{
 		"activeEffectConditions": true,			/* Eliminate floating-point error from the elapsed time of active effects so that updates to their conditions will not be skipped. Disable this if Bug Fixes SSE is installed and FixAbilityConditionBug is enabled. */
-		"harvestedFlags": true,					/* Flora and trees that have respawned will be saved correctly. */
+		"harvestedFlags": true,					/* Flora and trees will be saved when they respawn. */
 		"modArmorWeightPerkEntryPoint": true,	/* Modify the weight of only worn armor using a perk entry point. */
-		"terrainDecals": true,					/* Apply decals to the terrain of cells that have been partially unloaded. */
+		"terrainDecals": true,					/* Apply decals to terrain in cells that have been partially unloaded. */
 		"trainingMenuText": true				/* Display the correct cost of a lesson in the training menu when the relevant skill is buffed or debuffed. */
 	},
 	"patches":
 	{
-		"applySpellPerkEntryPoints": false,		/* Apply more than a single spell at once using perk entry points. */
-		"equipBestAmmo": false,					/* Automatically equip your best arrows or bolts when you equip a bow or crossbow respectively. */
-		"lockpickingExperience": true,			/* Earn experience every time you pick a lock instead of only the first time. */
-		"multipleEnchantmentEffects": true,		/* Skill in Enchanting improves each of an enchantments effects. */
+		"applySpellPerkEntryPoints": false,		/* Apply any number of spells at once using perk entry points. */
+		"equipBestAmmo": false,					/* Automatically equip your best arrows or bolts when you equip a bow or crossbow. */
+		"lockpickingExperience": true,			/* Earn experience each time you pick a lock. */
 		"underfilledSoulGems": false			/* Trap only souls of the appropriate size in soul gems. */
 	}
 }

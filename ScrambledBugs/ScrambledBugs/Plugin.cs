@@ -4,7 +4,7 @@
     {
 		override public System.Int32 RequiredLibraryVersion { get; } = 10;
 
-		override public System.Int32 Version { get; } = 5;
+		override public System.Int32 Version { get; } = 6;
 
 		override public System.String Author { get; } = "meh321 and KernalsEgg";
 
@@ -57,6 +57,11 @@
 				if (settings.patches.applySpellPerkEntryPoints)
 				{
 					new ScrambledBugs.Patches.ApplySpellPerkEntryPoints();
+				}
+
+				if (settings.patches.enchantmentValueMultiplier)
+				{
+					new ScrambledBugs.Patches.EnchantmentValueMultiplier();
 				}
 
 				if (settings.patches.equipBestAmmo)

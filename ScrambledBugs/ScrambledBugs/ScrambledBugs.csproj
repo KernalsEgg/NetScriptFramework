@@ -55,6 +55,7 @@
     <Compile Include="Fixes\HarvestedFlags.cs" />
     <Compile Include="Fixes\ModArmorWeightPerkEntryPoint.cs" />
     <Compile Include="Fixes\TrainingMenuText.cs" />
+    <Compile Include="Patches\EnchantmentValueMultiplier.cs" />
     <Compile Include="Patches\EquipBestAmmo.cs" />
     <Compile Include="Patches\LockpickingExperience.cs" />
     <Compile Include="Fixes\SpeedMultUpdates.cs" />
