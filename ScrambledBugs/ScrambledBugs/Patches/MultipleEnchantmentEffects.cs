@@ -30,9 +30,18 @@
 				Address = MultipleEnchantmentEffects.Offsets.ImproveEffect + 0x126,
 				Pattern = "48 85 C0" + "74 4E",
 				ReplaceLength = 3 + 2,
-				IncludeLength = 3 + 2,
+				IncludeLength = 0,
 				Before = cpuRegisters =>
 				{
+					var enchantmentEntry = cpuRegisters.AX;
+
+					if (enchantmentEntry == System.IntPtr.Zero)
+					{
+						cpuRegisters.IP += 0x4E;
+
+						return;
+					}
+
 					var effect = cpuRegisters.BX;
 					var costliestEffect = NetScriptFramework.Memory.ReadPointer(cpuRegisters.DI + 0x28);
 
@@ -41,7 +50,7 @@
 						cpuRegisters.XMM1f = cpuRegisters.XMM2f; // power = maximumPower
 						cpuRegisters.IP += 0x4E;
 
-						cpuRegisters.Skip();
+						return;
 					}
 				},
 			});

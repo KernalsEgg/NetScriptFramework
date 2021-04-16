@@ -38,7 +38,7 @@
 				Pattern = "E8 ?? ?? ?? ??",
 				ReplaceLength = 5,
 				IncludeLength = 5,
-				After = cpuRegisters => cpuRegisters.XMM0f *= System.Math.Max(EnchantmentValueMultiplier.Setting.GetFloat(EnchantmentValueMultiplier.Offsets.EnchantmentGoldMult), 0.0F),
+				After = cpuRegisters => cpuRegisters.XMM0f *= EnchantmentValueMultiplier.Setting.GetFloat(EnchantmentValueMultiplier.Offsets.EnchantmentGoldMult),
 			});
 
 			// Weapon
@@ -50,7 +50,7 @@
 				IncludeLength = 5,
 				Before = cpuRegisters =>
 				{
-					var enchantmentGoldMult = System.Math.Max(EnchantmentValueMultiplier.Setting.GetFloat(EnchantmentValueMultiplier.Offsets.EnchantmentGoldMult), 0.0F);
+					var enchantmentGoldMult = EnchantmentValueMultiplier.Setting.GetFloat(EnchantmentValueMultiplier.Offsets.EnchantmentGoldMult);
 					
 					cpuRegisters.XMM1f *= enchantmentGoldMult;
 					cpuRegisters.XMM2f *= enchantmentGoldMult;

@@ -12,3 +12,4 @@ C:\SkyrimSE\ScrambledBugs\ScrambledBugs\obj\Release\ScrambledBugs.csproj.CoreCom
 C:\SkyrimSE\ScrambledBugs\ScrambledBugs\obj\Release\ScrambledBugs.csproj.CopyComplete
 C:\SkyrimSE\ScrambledBugs\ScrambledBugs\obj\Release\ScrambledBugs.dll
 C:\SkyrimSE\ScrambledBugs\ScrambledBugs\obj\Release\ScrambledBugs.pdb
+C:\SkyrimSE\ScrambledBugs\ScrambledBugs\obj\Release\ScrambledBugs.csprojAssemblyReference.cache

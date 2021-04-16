@@ -12,7 +12,7 @@
 		"applySpellPerkEntryPoints": false,		/* Apply any number of spells at once using perk entry points. */
 		"equipBestAmmo": false,					/* Automatically equip your best arrows or bolts when you equip a bow or crossbow. */
 		"lockpickingExperience": true,			/* Earn experience each time you pick a lock. */
-		"multipleEnchantmentEffects": true,		/* Each of an enchantments effects are improved by skill in enchanting. */
+		"multipleEnchantmentEffects": true,		/* Your skill in enchanting improves each of an enchantments effects. */
 		"underfilledSoulGems": false			/* Trap only souls of the appropriate size in soul gems. */
 	}
 }
