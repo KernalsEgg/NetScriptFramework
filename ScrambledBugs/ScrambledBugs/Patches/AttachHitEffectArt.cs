@@ -6,19 +6,19 @@
 		{
 			static Offsets()
 			{
+				Offsets.AddNoHitEffectArtFlag				= NetScriptFramework.Main.GameInfo.GetAddressOf(37804, 0x6F, 0, "24 F9" + "0C 01"); // 4
 				Offsets.Attach								= NetScriptFramework.Main.GameInfo.GetAddressOf(33872);
-				Offsets.RemoveAttachHitEffectArtFlag		= NetScriptFramework.Main.GameInfo.GetAddressOf(37804, 0x6F, 0, "24 F9" + "0C 01"); // 4
 				Offsets.UpdatePositionOfPlayer				= NetScriptFramework.Main.GameInfo.GetAddressOf(33862, 0x7C, 0, "75 3B"); // 2
 				Offsets.UpdatePositionOnPerspectiveChange	= NetScriptFramework.Main.GameInfo.GetAddressOf(33862, 0x9A, 0, "74 08"); // 2
 			}
 
 
 
+			/// <summary> SkyrimSE.exe + 0x6314F0 </summary>
+			static internal System.IntPtr AddNoHitEffectArtFlag { get; }
+
 			/// <summary> SkyrimSE.exe + 0x558F20 </summary>
 			static internal System.IntPtr Attach { get; }
-
-			/// <summary> SkyrimSE.exe + 0x6314F0 </summary>
-			static internal System.IntPtr RemoveAttachHitEffectArtFlag { get; }
 
 			/// <summary> SkyrimSE.exe + 0x558220 </summary>
 			static internal System.IntPtr UpdatePositionOfPlayer { get; }
@@ -90,7 +90,7 @@
 
 		internal AttachHitEffectArt()
 		{
-			NetScriptFramework.Memory.WriteBytes(AttachHitEffectArt.Offsets.RemoveAttachHitEffectArtFlag, new System.Byte[] { 0x24, 0xF8, 0x90, 0x90 }, true);
+			NetScriptFramework.Memory.WriteBytes(AttachHitEffectArt.Offsets.AddNoHitEffectArtFlag, new System.Byte[] { 0x24, 0xF8, 0x90, 0x90 }, true);
 
 			NetScriptFramework.Memory.WriteNop(AttachHitEffectArt.Offsets.UpdatePositionOfPlayer, 2);
 			NetScriptFramework.Memory.WriteNop(AttachHitEffectArt.Offsets.UpdatePositionOnPerspectiveChange, 2);
@@ -99,7 +99,7 @@
 			{
 				Address = AttachHitEffectArt.Offsets.Attach + 0x2B,
 				Pattern = "48 3B 05 ?? ?? ?? ??" + "75 55",
-				ReplaceLength = 7 + 2,
+				ReplaceLength = 7 + 2, // 9
 				IncludeLength = 0,
 				After = cpuRegisters =>
 				{
