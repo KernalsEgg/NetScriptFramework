@@ -6,6 +6,29 @@ namespace ScrambledBugs.Fixes
 {
 	internal class ModArmorWeightPerkEntryPoint
 	{
+		static protected class Offsets
+		{
+			static Offsets()
+			{
+				Offsets.ApplyPerkEntryPoints = NetScriptFramework.Main.GameInfo.GetAddressOf(23073);
+				Offsets.GetTotalItemWeight = NetScriptFramework.Main.GameInfo.GetAddressOf(15883);
+				Offsets.IsWorn = NetScriptFramework.Main.GameInfo.GetAddressOf(15763);
+			}
+
+
+
+			/// <summary> SkyrimSE.exe + 0x32ECE0 </summary>
+			static internal System.IntPtr ApplyPerkEntryPoints { get; }
+
+			/// <summary> SkyrimSE.exe + 0x1E9130 </summary>
+			static internal System.IntPtr GetTotalItemWeight { get; }
+
+			/// <summary> SkyrimSE.exe + 0x1D6A40 </summary>
+			static internal System.IntPtr IsWorn { get; }
+		}
+
+
+
 		static protected class BGSEntryPoint
 		{
 			internal enum EntryPoints : System.UInt32
@@ -25,27 +48,6 @@ namespace ScrambledBugs.Fixes
 			{
 				return NetScriptFramework.Memory.InvokeCdecl(ModArmorWeightPerkEntryPoint.Offsets.IsWorn, inventoryEntryData).ToBool();
 			}
-		}
-
-		static protected class Offsets
-		{
-			static Offsets()
-			{
-				Offsets.ApplyPerkEntryPoints =	NetScriptFramework.Main.GameInfo.GetAddressOf(23073);
-				Offsets.GetTotalItemWeight =	NetScriptFramework.Main.GameInfo.GetAddressOf(15883);
-				Offsets.IsWorn =				NetScriptFramework.Main.GameInfo.GetAddressOf(15763);
-			}
-
-
-
-			/// <summary> SkyrimSE.exe + 0x32ECE0 </summary>
-			static internal System.IntPtr ApplyPerkEntryPoints { get; }
-
-			/// <summary> SkyrimSE.exe + 0x1E9130 </summary>
-			static internal System.IntPtr GetTotalItemWeight { get; }
-
-			/// <summary> SkyrimSE.exe + 0x1D6A40 </summary>
-			static internal System.IntPtr IsWorn { get; }
 		}
 
 		static protected class TESForm

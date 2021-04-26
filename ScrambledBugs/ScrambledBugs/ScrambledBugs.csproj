@@ -53,13 +53,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Fixes\HarvestedFlags.cs" />
+    <Compile Include="Patches\AttachHitEffectArt.cs" />
     <Compile Include="Fixes\ModArmorWeightPerkEntryPoint.cs" />
     <Compile Include="Fixes\TrainingMenuText.cs" />
-    <Compile Include="Patches\EnchantmentValueMultiplier.cs" />
     <Compile Include="Patches\EquipBestAmmo.cs" />
     <Compile Include="Patches\LockpickingExperience.cs" />
     <Compile Include="Fixes\SpeedMultUpdates.cs" />
-    <Compile Include="Patches\MultipleEnchantmentEffects.cs" />
     <Compile Include="Patches\UnderfilledSoulGems.cs" />
     <Compile Include="Plugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -4,7 +4,7 @@
     {
 		override public System.Int32 RequiredLibraryVersion { get; } = 10;
 
-		override public System.Int32 Version { get; } = 6;
+		override public System.Int32 Version { get; } = 7;
 
 		override public System.String Author { get; } = "meh321 and KernalsEgg";
 
@@ -59,9 +59,9 @@
 					new ScrambledBugs.Patches.ApplySpellPerkEntryPoints();
 				}
 
-				if (settings.patches.enchantmentValueMultiplier)
+				if (settings.patches.attachHitEffectArt)
 				{
-					new ScrambledBugs.Patches.EnchantmentValueMultiplier();
+					new ScrambledBugs.Patches.AttachHitEffectArt();
 				}
 
 				if (settings.patches.equipBestAmmo)
@@ -72,11 +72,6 @@
 				if (settings.patches.lockpickingExperience)
 				{
 					new ScrambledBugs.Patches.LockpickingExperience();
-				}
-
-				if (settings.patches.multipleEnchantmentEffects)
-				{
-					new ScrambledBugs.Patches.MultipleEnchantmentEffects();
 				}
 
 				if (settings.patches.underfilledSoulGems)

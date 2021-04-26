@@ -15,10 +15,9 @@
 		public class Patches
 		{
 			public System.Boolean applySpellPerkEntryPoints { get; set; }
-			public System.Boolean enchantmentValueMultiplier { get; set; }
+			public System.Boolean attachHitEffectArt { get; set; }
 			public System.Boolean equipBestAmmo { get; set; }
 			public System.Boolean lockpickingExperience { get; set; }
-			public System.Boolean multipleEnchantmentEffects { get; set; }
 			public System.Boolean underfilledSoulGems { get; set; }
 		}
 

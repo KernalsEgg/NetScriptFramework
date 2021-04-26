@@ -15,6 +15,8 @@
 			static internal System.IntPtr Respawn { get; }
 		}
 
+
+
 		static protected class TESForm
 		{
 			internal enum FormTypes : System.Byte
