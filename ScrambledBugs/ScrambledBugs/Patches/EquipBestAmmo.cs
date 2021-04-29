@@ -6,9 +6,9 @@
 		{
 			static Offsets()
 			{
-				Offsets.CompareDamageContainer =		NetScriptFramework.Main.GameInfo.GetAddressOf(15846, 0x11A, 0, "73 06"); // 2
-				Offsets.CompareDamageInventoryChanges =	NetScriptFramework.Main.GameInfo.GetAddressOf(15846, 0x1E1, 0, "73 10"); // 2
-				Offsets.GetWorstAmmo =					NetScriptFramework.Main.GameInfo.GetAddressOf(15846);
+				Offsets.CompareDamageContainer			= NetScriptFramework.Main.GameInfo.GetAddressOf(15846, 0x11A, 0, "73 06"); // 2
+				Offsets.CompareDamageInventoryChanges	= NetScriptFramework.Main.GameInfo.GetAddressOf(15846, 0x1E1, 0, "73 10"); // 2
+				Offsets.GetWorstAmmo					= NetScriptFramework.Main.GameInfo.GetAddressOf(15846);
 			}
 
 

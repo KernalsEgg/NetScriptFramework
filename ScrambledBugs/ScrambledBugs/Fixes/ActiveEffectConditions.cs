@@ -6,8 +6,8 @@
 		{
 			static Offsets()
 			{
-				Offsets.ActiveEffectConditionUpdateFrequency =	NetScriptFramework.Main.GameInfo.GetAddressOf(516661);
-				Offsets.UpdateActiveEffectConditions =			NetScriptFramework.Main.GameInfo.GetAddressOf(33287);
+				Offsets.ActiveEffectConditionUpdateFrequency	= NetScriptFramework.Main.GameInfo.GetAddressOf(516661);
+				Offsets.UpdateActiveEffectConditions			= NetScriptFramework.Main.GameInfo.GetAddressOf(33287);
 			}
 
 

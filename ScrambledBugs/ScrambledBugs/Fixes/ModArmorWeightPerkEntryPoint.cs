@@ -10,9 +10,9 @@ namespace ScrambledBugs.Fixes
 		{
 			static Offsets()
 			{
-				Offsets.ApplyPerkEntryPoints = NetScriptFramework.Main.GameInfo.GetAddressOf(23073);
-				Offsets.GetTotalItemWeight = NetScriptFramework.Main.GameInfo.GetAddressOf(15883);
-				Offsets.IsWorn = NetScriptFramework.Main.GameInfo.GetAddressOf(15763);
+				Offsets.ApplyPerkEntryPoints	= NetScriptFramework.Main.GameInfo.GetAddressOf(23073);
+				Offsets.GetTotalItemWeight		= NetScriptFramework.Main.GameInfo.GetAddressOf(15883);
+				Offsets.IsWorn					= NetScriptFramework.Main.GameInfo.GetAddressOf(15763);
 			}
 
 

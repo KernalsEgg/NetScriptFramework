@@ -6,7 +6,7 @@
 		{
 			static Offsets()
 			{
-				Offsets.AddNoHitEffectArtFlag				= NetScriptFramework.Main.GameInfo.GetAddressOf(37804, 0x6F, 0, "24 F9" + "0C 01"); // 4
+				Offsets.AddNoHitEffectArtFlag				= NetScriptFramework.Main.GameInfo.GetAddressOf(37804, 0x6F, 0, "24 F9" + "0C 01"); // 2 + 2
 				Offsets.Attach								= NetScriptFramework.Main.GameInfo.GetAddressOf(33872);
 				Offsets.UpdatePositionOfPlayer				= NetScriptFramework.Main.GameInfo.GetAddressOf(33862, 0x7C, 0, "75 3B"); // 2
 				Offsets.UpdatePositionOnPerspectiveChange	= NetScriptFramework.Main.GameInfo.GetAddressOf(33862, 0x9A, 0, "74 08"); // 2
@@ -15,7 +15,7 @@
 
 
 			/// <summary> SkyrimSE.exe + 0x6314F0 </summary>
-			static internal System.IntPtr AddNoHitEffectArtFlag { get; }
+			static internal System.IntPtr AddNoHitEffectArtFlag { get; } // 1 << 2 (NoHitEffectArt), 1 << 4 (NoInitialFlare)
 
 			/// <summary> SkyrimSE.exe + 0x558F20 </summary>
 			static internal System.IntPtr Attach { get; }
@@ -103,10 +103,10 @@
 				IncludeLength = 0,
 				After = cpuRegisters =>
 				{
-					// target != System.IntPtr.Zero, formType == 0x3E
-					// modelReferenceEffect != System.IntPtr.Zero
-					// controller != System.IntPtr.Zero
-					
+					// target != System.IntPtr.Zero (Character*)
+					// modelReferenceEffect != System.IntPtr.Zero (ModelReferenceEffect*)
+					// controller != System.IntPtr.Zero (ActiveEffectReferenceEffectController*)
+
 					var target = cpuRegisters.BX;
 
 					if (target != System.IntPtr.Zero)

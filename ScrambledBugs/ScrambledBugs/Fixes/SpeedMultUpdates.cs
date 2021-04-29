@@ -13,10 +13,10 @@
 		{
 			static Offsets()
 			{
-				Offsets.AddActorValueUpdateListeners =	NetScriptFramework.Main.GameInfo.GetAddressOf(5998);
-				Offsets.UpdateMovementSpeed =			NetScriptFramework.Main.GameInfo.GetAddressOf(36916);
-				Offsets.RemoveMovementFlags =			NetScriptFramework.Main.GameInfo.GetAddressOf(36585);
-				Offsets.SaveStateManager =				NetScriptFramework.Main.GameInfo.GetAddressOf(516851);
+				Offsets.AddActorValueUpdateListeners	= NetScriptFramework.Main.GameInfo.GetAddressOf(5998);
+				Offsets.UpdateMovementSpeed				= NetScriptFramework.Main.GameInfo.GetAddressOf(36916);
+				Offsets.RemoveMovementFlags				= NetScriptFramework.Main.GameInfo.GetAddressOf(36585);
+				Offsets.SaveStateManager				= NetScriptFramework.Main.GameInfo.GetAddressOf(516851);
 			}
 
 
