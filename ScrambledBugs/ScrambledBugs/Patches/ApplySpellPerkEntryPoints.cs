@@ -101,12 +101,17 @@ namespace ScrambledBugs.Patches
 
 		static protected class MagicCaster
 		{
-			static internal void Cast(System.IntPtr magicCaster, System.IntPtr spell, System.Boolean noHitEffectArt, System.IntPtr target, System.Single unknownArgument1, System.Boolean unknownArgument2, System.Single unknownArgument3, System.Single magnitudeOverride)
+			/// <summary>SkyrimSE.exe + 0x54C5F0 (VID 33626)</summary>
+			/// <param name="noHitEffectArt">SkyrimSE.exe + 0x551980 (VID 33683)</param>
+			/// <param name="dualCastingMultiplier">SkyrimSE.exe + 0x540360 (VID 33320)</param>
+			/// <param name="noDualCasting">SkyrimSE.exe + 0x53DEB0 (VID 33277)</param>
+			/// <param name="magnitudeOverride">SkyrimSE.exe + 0x54C5F0 (VID 33626)</param>
+			static internal void Cast(System.IntPtr magicCaster, System.IntPtr spell, System.Boolean noHitEffectArt, System.IntPtr target, System.Single dualCastingMultiplier, System.Boolean noDualCasting, System.Single magnitudeOverride, System.IntPtr unknownPointer)
 			{
 				var virtualFunctionTable = NetScriptFramework.Memory.ReadPointer(magicCaster);
 				var cast = NetScriptFramework.Memory.ReadPointer(virtualFunctionTable + 0x8);
 
-				NetScriptFramework.Memory.InvokeThisCall(magicCaster, cast, spell, noHitEffectArt, target, unknownArgument1, unknownArgument2, unknownArgument3, magnitudeOverride);
+				NetScriptFramework.Memory.InvokeThisCall(magicCaster, cast, spell, noHitEffectArt, target, dualCastingMultiplier, noDualCasting, magnitudeOverride, unknownPointer);
 			}
 		}
 
@@ -155,6 +160,11 @@ namespace ScrambledBugs.Patches
 
 		internal ApplySpellPerkEntryPoints()
 		{
+			// Character* source
+			// Character* target
+			// SpellItem* spell
+			// TESObjectWEAP* weapon
+			
 			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters()
 			{
 				Address = ApplySpellPerkEntryPoints.Offsets.ApplyBashingSpell + 0x40E,
@@ -247,7 +257,7 @@ namespace ScrambledBugs.Patches
 
 
 
-		// SpellItem* spell, Character* source, Character* target
+		/// <summary>SkyrimSE.exe + 0x632180 (VID 37817)</summary>
 		static private void Cast(System.IntPtr spell, System.IntPtr source, System.IntPtr target)
 		{
 			if (spell != System.IntPtr.Zero)
@@ -262,7 +272,7 @@ namespace ScrambledBugs.Patches
 				{
 					var magicCaster = ApplySpellPerkEntryPoints.Actor.GetMagicCaster(source, ApplySpellPerkEntryPoints.SpellItem.CastingSource.Instant);
 
-					ApplySpellPerkEntryPoints.MagicCaster.Cast(magicCaster, spell, false, target, 1.0F, false, 0.0F, 0.0F);
+					ApplySpellPerkEntryPoints.MagicCaster.Cast(magicCaster, spell, false, target, 1.0F, false, 0.0F, System.IntPtr.Zero);
 				}
 			}
 		}

@@ -59,7 +59,7 @@
 			NetScriptFramework.Memory.WriteNop(SpeedMultUpdates.SpeedMultUpdateListenerAllocation.Address, 0x20);
 			NetScriptFramework.Memory.WriteBytes(SpeedMultUpdates.SpeedMultUpdateListenerAllocation.Address + 13, new System.Byte[] { 0xC3 });
 
-			// RCX: Actor, RDX: ActorValues.SpeedMult, XMM2f: ActorValue (previous), XMM3f: ActorValue (delta)
+			// RCX: Character*, RDX: ActorValues.SpeedMult, XMM2f: ActorValue (previous), XMM3f: ActorValue (delta)
 			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters()
 			{
 				Address = SpeedMultUpdates.SpeedMultUpdateListenerAllocation.Address,
