@@ -52,7 +52,7 @@ namespace ScrambledBugs.Patches
 				return NetScriptFramework.Memory.InvokeCdecl(ApplySpellPerkEntryPoints.Offsets.AddSpell, actor, spell).ToBool();
 			}
 
-			static internal System.IntPtr GetMagicCaster(System.IntPtr actor, ApplySpellPerkEntryPoints.SpellItem.CastingSource castingSource)
+			static internal System.IntPtr GetMagicCaster(System.IntPtr actor, ApplySpellPerkEntryPoints.SpellItem.CastingSources castingSource)
 			{
 				var virtualFunctionTable = NetScriptFramework.Memory.ReadPointer(actor);
 				var getMagicCaster = NetScriptFramework.Memory.ReadPointer(virtualFunctionTable + 0x2E0);
@@ -115,9 +115,20 @@ namespace ScrambledBugs.Patches
 			}
 		}
 
+		static protected class MagicItem
+		{
+			static internal SpellItem.SpellTypes GetSpellType(System.IntPtr spell)
+			{
+				var virtualFunctionTable = NetScriptFramework.Memory.ReadPointer(spell);
+				var getSpellType = NetScriptFramework.Memory.ReadPointer(virtualFunctionTable + 0x298);
+
+				return (SpellItem.SpellTypes)NetScriptFramework.Memory.InvokeThisCall(spell, getSpellType).ToInt32Safe();
+			}
+		}
+
 		static protected class SpellItem
 		{
-			internal enum CastingSource : System.Int32
+			internal enum CastingSources : System.Int32
 			{
 				LeftHand	= 0,
 				RightHand	= 1,
@@ -125,7 +136,7 @@ namespace ScrambledBugs.Patches
 				Instant		= 3
 			}
 			
-			internal enum SpellType : System.Int32
+			internal enum SpellTypes : System.Int32
 			{
 				Spell				= 0,
 				Disease				= 1,
@@ -143,16 +154,6 @@ namespace ScrambledBugs.Patches
 				Scroll				= 13,
 
 				AddSpell = (1 << Disease) | (1 << Ability) | (1 << Addiction)
-			}
-			
-
-
-			static internal SpellItem.SpellType GetSpellType(System.IntPtr spell)
-			{
-				var virtualFunctionTable = NetScriptFramework.Memory.ReadPointer(spell);
-				var getSpellType = NetScriptFramework.Memory.ReadPointer(virtualFunctionTable + 0x298);
-
-				return (SpellItem.SpellType)NetScriptFramework.Memory.InvokeThisCall(spell, getSpellType).ToInt32Safe();
 			}
 		}
 
@@ -262,15 +263,15 @@ namespace ScrambledBugs.Patches
 		{
 			if (spell != System.IntPtr.Zero)
 			{
-				var spellType = ApplySpellPerkEntryPoints.SpellItem.GetSpellType(spell);
+				var spellType = ApplySpellPerkEntryPoints.MagicItem.GetSpellType(spell);
 
-				if (((1 << (System.Int32)spellType) & (System.Int32)ApplySpellPerkEntryPoints.SpellItem.SpellType.AddSpell) != 0)
+				if (((1 << (System.Int32)spellType) & (System.Int32)ApplySpellPerkEntryPoints.SpellItem.SpellTypes.AddSpell) != 0)
 				{
-					ApplySpellPerkEntryPoints.Actor.AddSpell(spell, target);
+					ApplySpellPerkEntryPoints.Actor.AddSpell(target, spell);
 				}
 				else
 				{
-					var magicCaster = ApplySpellPerkEntryPoints.Actor.GetMagicCaster(source, ApplySpellPerkEntryPoints.SpellItem.CastingSource.Instant);
+					var magicCaster = ApplySpellPerkEntryPoints.Actor.GetMagicCaster(source, ApplySpellPerkEntryPoints.SpellItem.CastingSources.Instant);
 
 					ApplySpellPerkEntryPoints.MagicCaster.Cast(magicCaster, spell, false, target, 1.0F, false, 0.0F, System.IntPtr.Zero);
 				}
