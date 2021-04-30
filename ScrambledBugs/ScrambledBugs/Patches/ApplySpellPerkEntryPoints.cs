@@ -104,14 +104,14 @@ namespace ScrambledBugs.Patches
 			/// <summary>SkyrimSE.exe + 0x54C5F0 (VID 33626)</summary>
 			/// <param name="noHitEffectArt">SkyrimSE.exe + 0x551980 (VID 33683)</param>
 			/// <param name="dualCastingMultiplier">SkyrimSE.exe + 0x540360 (VID 33320)</param>
-			/// <param name="noDualCasting">SkyrimSE.exe + 0x53DEB0 (VID 33277)</param>
+			/// <param name="hostileDualCastingMultiplierOnly">SkyrimSE.exe + 0x53DEB0 (VID 33277)</param>
 			/// <param name="magnitudeOverride">SkyrimSE.exe + 0x54C5F0 (VID 33626)</param>
-			static internal void Cast(System.IntPtr magicCaster, System.IntPtr spell, System.Boolean noHitEffectArt, System.IntPtr target, System.Single dualCastingMultiplier, System.Boolean noDualCasting, System.Single magnitudeOverride, System.IntPtr unknownPointer)
+			static internal void Cast(System.IntPtr magicCaster, System.IntPtr spell, System.Boolean noHitEffectArt, System.IntPtr target, System.Single dualCastingMultiplier, System.Boolean hostileDualCastingMultiplierOnly, System.Single magnitudeOverride, System.IntPtr unknownPointer)
 			{
 				var virtualFunctionTable = NetScriptFramework.Memory.ReadPointer(magicCaster);
 				var cast = NetScriptFramework.Memory.ReadPointer(virtualFunctionTable + 0x8);
 
-				NetScriptFramework.Memory.InvokeThisCall(magicCaster, cast, spell, noHitEffectArt, target, dualCastingMultiplier, noDualCasting, magnitudeOverride, unknownPointer);
+				NetScriptFramework.Memory.InvokeThisCall(magicCaster, cast, spell, noHitEffectArt, target, dualCastingMultiplier, hostileDualCastingMultiplierOnly, magnitudeOverride, unknownPointer);
 			}
 		}
 
