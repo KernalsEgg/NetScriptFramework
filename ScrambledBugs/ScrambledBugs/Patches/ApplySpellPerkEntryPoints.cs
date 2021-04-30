@@ -1,4 +1,8 @@
-﻿namespace ScrambledBugs.Patches
+﻿using static NetScriptFramework._IntPtrExtensions;
+
+
+
+namespace ScrambledBugs.Patches
 {
 	internal class ApplySpellPerkEntryPoints
 	{
@@ -6,19 +10,18 @@
 		{
 			static Offsets()
 			{
-				Offsets.AddSpell							= NetScriptFramework.Main.GameInfo.GetAddressOf(37817);
+				Offsets.AddSpell							= NetScriptFramework.Main.GameInfo.GetAddressOf(37771);
 				Offsets.ApplyBashingSpell					= NetScriptFramework.Main.GameInfo.GetAddressOf(37673);
 				Offsets.ApplyCombatHitSpell					= NetScriptFramework.Main.GameInfo.GetAddressOf(37799);
 				Offsets.ApplyCombatHitSpellArrowProjectile	= NetScriptFramework.Main.GameInfo.GetAddressOf(42547);
 				Offsets.ApplyReanimateSpell					= NetScriptFramework.Main.GameInfo.GetAddressOf(37865);
-				Offsets.ApplySneakingSpell					= NetScriptFramework.Main.GameInfo.GetAddressOf(36926);
 				Offsets.ApplyWeaponSwingSpell				= NetScriptFramework.Main.GameInfo.GetAddressOf(37628);
-				Offsets.SelectSpell							= NetScriptFramework.Main.GameInfo.GetAddressOf(23089);
+				Offsets.HandleEntryPoint					= NetScriptFramework.Main.GameInfo.GetAddressOf(23073);
 			}
 
 
 
-			/// <summary> SkyrimSE.exe + 0x632180 </summary>
+			/// <summary> SkyrimSE.exe + 0x62F560 </summary>
 			static internal System.IntPtr AddSpell { get; }
 
 			/// <summary> SkyrimSE.exe + 0x628C20 </summary>
@@ -33,137 +36,233 @@
 			/// <summary> SkyrimSE.exe + 0x634BF0 </summary>
 			static internal System.IntPtr ApplyReanimateSpell { get; }
 
-			/// <summary> SkyrimSE.exe + 0x6089E0 </summary>
-			static internal System.IntPtr ApplySneakingSpell { get; }
-
 			/// <summary> SkyrimSE.exe + 0x6260F0 </summary>
 			static internal System.IntPtr ApplyWeaponSwingSpell { get; }
 
-			/// <summary> SkyrimSE.exe + 0x32FA00 </summary>
-			static internal System.IntPtr SelectSpell { get; }
-		}
-		
-		
-		
-		internal ApplySpellPerkEntryPoints()
-		{
-			// RCX: Character, RDX: SpellItem
-			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters()
-			{
-				Address = ApplySpellPerkEntryPoints.Offsets.ApplyBashingSpell + 0x429,
-				Pattern = "E8 ?? ?? ?? ??",
-				ReplaceLength = 5,
-				IncludeLength = 5,
-				Before = cpuRegisters => ApplySpellPerkEntryPoints.AddSpells(cpuRegisters.CX, cpuRegisters.DX, cpuRegisters.SP + 0x118),
-			});
-
-			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters()
-			{
-				Address = ApplySpellPerkEntryPoints.Offsets.ApplyCombatHitSpell + 0x79,
-				Pattern = "E8 ?? ?? ?? ??",
-				ReplaceLength = 5,
-				IncludeLength = 5,
-				Before = cpuRegisters => ApplySpellPerkEntryPoints.AddSpells(cpuRegisters.CX, cpuRegisters.DX, cpuRegisters.SP + 0x78),
-			});
-
-			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters()
-			{
-				Address = ApplySpellPerkEntryPoints.Offsets.ApplyCombatHitSpellArrowProjectile + 0x2A7,
-				Pattern = "E8 ?? ?? ?? ??",
-				ReplaceLength = 5,
-				IncludeLength = 5,
-				Before = cpuRegisters => ApplySpellPerkEntryPoints.AddSpells(cpuRegisters.CX, cpuRegisters.DX, cpuRegisters.SP + 0x50),
-			});
-
-			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters()
-			{
-				Address = ApplySpellPerkEntryPoints.Offsets.ApplyReanimateSpell + 0xD2,
-				Pattern = "E8 ?? ?? ?? ??",
-				ReplaceLength = 5,
-				IncludeLength = 5,
-				Before = cpuRegisters => ApplySpellPerkEntryPoints.AddSpells(cpuRegisters.CX, cpuRegisters.DX, cpuRegisters.SP + 0x50),
-			});
-
-			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters()
-			{
-				Address = ApplySpellPerkEntryPoints.Offsets.ApplySneakingSpell + 0xCE,
-				Pattern = "E8 ?? ?? ?? ??",
-				ReplaceLength = 5,
-				IncludeLength = 5,
-				Before = cpuRegisters => ApplySpellPerkEntryPoints.AddSpells(cpuRegisters.CX, cpuRegisters.DX, cpuRegisters.SP + 0x40),
-			});
-
-			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters()
-			{
-				Address = ApplySpellPerkEntryPoints.Offsets.ApplyWeaponSwingSpell + 0xC3,
-				Pattern = "E8 ?? ?? ?? ??",
-				ReplaceLength = 5,
-				IncludeLength = 5,
-				Before = cpuRegisters => ApplySpellPerkEntryPoints.AddSpells(cpuRegisters.CX, cpuRegisters.DX, cpuRegisters.SP + 0x70),
-			});
-
-			// RAX: SpellItem, RCX: HandleEntryPointVisitor.SpellItem*
-			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters()
-			{
-				Address = ApplySpellPerkEntryPoints.Offsets.SelectSpell + 0x53,
-				Pattern = "48 8B 43 08" + "48 89 01",
-				ReplaceLength = 4 + 3, // 7
-				IncludeLength = 4 + 3, // 7
-				After = cpuRegisters => ApplySpellPerkEntryPoints.SelectSpell(cpuRegisters.AX, cpuRegisters.CX),
-			});
-		}
-
-		static ApplySpellPerkEntryPoints()
-		{
-			ApplySpellPerkEntryPoints.SpellDictionary = new System.Collections.Generic.Dictionary<System.IntPtr, System.Collections.Generic.List<System.IntPtr>>();
-			ApplySpellPerkEntryPoints.SpellDictionaryLock = new System.Object();
+			/// <summary> SkyrimSE.exe + 0x32ECE0 </summary>
+			static internal System.IntPtr HandleEntryPoint { get; }
 		}
 
 
 
-		static private System.Collections.Generic.Dictionary<System.IntPtr, System.Collections.Generic.List<System.IntPtr>> SpellDictionary;
-
-		static private System.Object SpellDictionaryLock;
-
-
-
-		static private void AddSpells(System.IntPtr target, System.IntPtr spell, System.IntPtr spellPointer)
+		static protected class Actor
 		{
-			// target != System.IntPtr.Zero
-			// spell != System.IntPtr.Zero
-			// spellPointer != System.IntPtr.Zero
-			
-			lock (ApplySpellPerkEntryPoints.SpellDictionaryLock)
+			static internal System.Boolean AddSpell(System.IntPtr actor, System.IntPtr spell)
 			{
-				if (ApplySpellPerkEntryPoints.SpellDictionary.TryGetValue(spellPointer, out var spellList))
+				return NetScriptFramework.Memory.InvokeCdecl(ApplySpellPerkEntryPoints.Offsets.AddSpell, actor, spell).ToBool();
+			}
+
+			static internal System.IntPtr GetMagicCaster(System.IntPtr actor, ApplySpellPerkEntryPoints.SpellItem.CastingSource castingSource)
+			{
+				var virtualFunctionTable = NetScriptFramework.Memory.ReadPointer(actor);
+				var getMagicCaster = NetScriptFramework.Memory.ReadPointer(virtualFunctionTable + 0x2E0);
+
+				return NetScriptFramework.Memory.InvokeThisCall(actor, getMagicCaster, (System.Int32)castingSource);
+			}
+		}
+
+		static protected class BGSPerkEntry
+		{
+			internal enum EntryPoints : System.Int32
+			{
+				ApplyCombatHitSpell		= 51,
+				ApplyBashingSpell		= 52,
+				ApplyReanimateSpell		= 53,
+				ApplyWeaponSwingSpell	= 67,
+				ApplySneakingSpell		= 69
+			}
+
+
+
+			// EntryPoints entryPoint, Character* perkOwner, void* argument1, void* argument2
+			static internal System.IntPtr HandleEntryPoint(BGSPerkEntry.EntryPoints entryPoint, System.IntPtr perkOwner, System.IntPtr argument1)
+			{
+				using (var result = NetScriptFramework.Memory.Allocate(0x8))
 				{
-					ApplySpellPerkEntryPoints.SpellDictionary.Remove(spellPointer);
-					spellList.Remove(spell);
+					result.Zero();
+					NetScriptFramework.Memory.InvokeCdecl(ApplySpellPerkEntryPoints.Offsets.HandleEntryPoint, (System.Int32)entryPoint, perkOwner, argument1, result.Address);
 
-					foreach (var spellItem in spellList)
-					{
-						NetScriptFramework.Memory.InvokeCdecl(ApplySpellPerkEntryPoints.Offsets.AddSpell, target, spellItem);
-					}
+					return NetScriptFramework.Memory.ReadPointer(result.Address);
+				}
+			}
+
+			// EntryPoints entryPoint, Character* perkOwner, void* argument1, void* argument2, void* argument3
+			static internal System.IntPtr HandleEntryPoint(BGSPerkEntry.EntryPoints entryPoint, System.IntPtr perkOwner, System.IntPtr argument1, System.IntPtr argument2)
+			{
+				using (var result = NetScriptFramework.Memory.Allocate(0x8))
+				{
+					result.Zero();
+					NetScriptFramework.Memory.InvokeCdecl(ApplySpellPerkEntryPoints.Offsets.HandleEntryPoint, (System.Int32)entryPoint, perkOwner, argument1, argument2, result.Address);
+
+					return NetScriptFramework.Memory.ReadPointer(result.Address);
 				}
 			}
 		}
 
-		static private void SelectSpell(System.IntPtr spell, System.IntPtr spellPointer)
+		static protected class MagicCaster
 		{
-			if (spell == System.IntPtr.Zero) { return; }
-			if (spellPointer == System.IntPtr.Zero) { return; }
-			
-			lock (ApplySpellPerkEntryPoints.SpellDictionaryLock)
+			static internal void Cast(System.IntPtr magicCaster, System.IntPtr spell, System.Boolean noHitEffectArt, System.IntPtr target, System.Single unknownArgument1, System.Boolean unknownArgument2, System.Single unknownArgument3, System.Single magnitudeOverride)
 			{
-				if (ApplySpellPerkEntryPoints.SpellDictionary.TryGetValue(spellPointer, out var spellList))
+				var virtualFunctionTable = NetScriptFramework.Memory.ReadPointer(magicCaster);
+				var cast = NetScriptFramework.Memory.ReadPointer(virtualFunctionTable + 0x8);
+
+				NetScriptFramework.Memory.InvokeThisCall(magicCaster, cast, spell, noHitEffectArt, target, unknownArgument1, unknownArgument2, unknownArgument3, magnitudeOverride);
+			}
+		}
+
+		static protected class SpellItem
+		{
+			internal enum CastingSource : System.Int32
+			{
+				LeftHand	= 0,
+				RightHand	= 1,
+				Other		= 2,
+				Instant		= 3
+			}
+			
+			internal enum SpellType : System.Int32
+			{
+				Spell				= 0,
+				Disease				= 1,
+				Power				= 2,
+				LesserPower			= 3,
+				Ability				= 4,
+				Poison				= 5,
+				Enchantment			= 6,
+				Potion				= 7,
+				Ingredient			= 8,
+				LeveledSpell		= 9,
+				Addiction			= 10,
+				VoicePower			= 11,
+				StaffEnchantment	= 12,
+				Scroll				= 13,
+
+				AddSpell = (1 << Disease) | (1 << Ability) | (1 << Addiction)
+			}
+			
+
+
+			static internal SpellItem.SpellType GetSpellType(System.IntPtr spell)
+			{
+				var virtualFunctionTable = NetScriptFramework.Memory.ReadPointer(spell);
+				var getSpellType = NetScriptFramework.Memory.ReadPointer(virtualFunctionTable + 0x298);
+
+				return (SpellItem.SpellType)NetScriptFramework.Memory.InvokeThisCall(spell, getSpellType).ToInt32Safe();
+			}
+		}
+
+
+
+		internal ApplySpellPerkEntryPoints()
+		{
+			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters()
+			{
+				Address = ApplySpellPerkEntryPoints.Offsets.ApplyBashingSpell + 0x40E,
+				Pattern = "E8 ?? ?? ?? ??",
+				ReplaceLength = 5,
+				IncludeLength = 0,
+				Before = cpuRegisters =>
 				{
-					spellList.Add(spell);
+					var entryPoint = (ApplySpellPerkEntryPoints.BGSPerkEntry.EntryPoints)cpuRegisters.CX.ToInt32Safe();
+					var source = cpuRegisters.DX;
+					var target = cpuRegisters.R8;
+					var spell = ApplySpellPerkEntryPoints.BGSPerkEntry.HandleEntryPoint(entryPoint, source, target);
+
+					ApplySpellPerkEntryPoints.Cast(spell, source, target);
+				},
+			});
+
+			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters()
+			{
+				Address = ApplySpellPerkEntryPoints.Offsets.ApplyCombatHitSpell + 0x61,
+				Pattern = "E8 ?? ?? ?? ??",
+				ReplaceLength = 5,
+				IncludeLength = 0,
+				Before = cpuRegisters =>
+				{
+					var entryPoint = (ApplySpellPerkEntryPoints.BGSPerkEntry.EntryPoints)cpuRegisters.CX.ToInt32Safe();
+					var source = cpuRegisters.DX;
+					var weapon = cpuRegisters.R8;
+					var target = cpuRegisters.R9;
+					var spell = ApplySpellPerkEntryPoints.BGSPerkEntry.HandleEntryPoint(entryPoint, source, weapon, target);
+
+					ApplySpellPerkEntryPoints.Cast(spell, source, target);
+				},
+			});
+
+			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters()
+			{
+				Address = ApplySpellPerkEntryPoints.Offsets.ApplyCombatHitSpellArrowProjectile + 0x28B,
+				Pattern = "E8 ?? ?? ?? ??",
+				ReplaceLength = 5,
+				IncludeLength = 0,
+				Before = cpuRegisters =>
+				{
+					var entryPoint = (ApplySpellPerkEntryPoints.BGSPerkEntry.EntryPoints)cpuRegisters.CX.ToInt32Safe();
+					var source = cpuRegisters.DX;
+					var weapon = cpuRegisters.R8;
+					var target = cpuRegisters.R9;
+					var spell = ApplySpellPerkEntryPoints.BGSPerkEntry.HandleEntryPoint(entryPoint, source, weapon, target);
+
+					ApplySpellPerkEntryPoints.Cast(spell, source, target);
+				},
+			});
+
+			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters()
+			{
+				Address = ApplySpellPerkEntryPoints.Offsets.ApplyReanimateSpell + 0xBA,
+				Pattern = "E8 ?? ?? ?? ??",
+				ReplaceLength = 5,
+				IncludeLength = 0,
+				Before = cpuRegisters =>
+				{
+					var entryPoint = (ApplySpellPerkEntryPoints.BGSPerkEntry.EntryPoints)cpuRegisters.CX.ToInt32Safe();
+					var source = cpuRegisters.DX;
+					var weapon = cpuRegisters.R8;
+					var target = cpuRegisters.R9;
+					var spell = ApplySpellPerkEntryPoints.BGSPerkEntry.HandleEntryPoint(entryPoint, source, weapon, target);
+
+					ApplySpellPerkEntryPoints.Cast(spell, source, target);
+				},
+			});
+
+			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters()
+			{
+				Address = ApplySpellPerkEntryPoints.Offsets.ApplyWeaponSwingSpell + 0xAB,
+				Pattern = "E8 ?? ?? ?? ??",
+				ReplaceLength = 5,
+				IncludeLength = 0,
+				Before = cpuRegisters =>
+				{
+					var entryPoint = (ApplySpellPerkEntryPoints.BGSPerkEntry.EntryPoints)cpuRegisters.CX.ToInt32Safe();
+					var target = cpuRegisters.DX;
+					var source = cpuRegisters.R8;
+					var weapon = cpuRegisters.R9;
+					var spell = ApplySpellPerkEntryPoints.BGSPerkEntry.HandleEntryPoint(entryPoint, target, source, weapon);
+
+					ApplySpellPerkEntryPoints.Cast(spell, source, target);
+				},
+			});
+		}
+
+
+
+		// SpellItem* spell, Character* source, Character* target
+		static private void Cast(System.IntPtr spell, System.IntPtr source, System.IntPtr target)
+		{
+			if (spell != System.IntPtr.Zero)
+			{
+				var spellType = ApplySpellPerkEntryPoints.SpellItem.GetSpellType(spell);
+
+				if (((1 << (System.Int32)spellType) & (System.Int32)ApplySpellPerkEntryPoints.SpellItem.SpellType.AddSpell) != 0)
+				{
+					ApplySpellPerkEntryPoints.Actor.AddSpell(spell, target);
 				}
 				else
 				{
-					spellList = new System.Collections.Generic.List<System.IntPtr>();
-					spellList.Add(spell);
-					ApplySpellPerkEntryPoints.SpellDictionary[spellPointer] = spellList;
+					var magicCaster = ApplySpellPerkEntryPoints.Actor.GetMagicCaster(source, ApplySpellPerkEntryPoints.SpellItem.CastingSource.Instant);
+
+					ApplySpellPerkEntryPoints.MagicCaster.Cast(magicCaster, spell, false, target, 1.0F, false, 0.0F, 0.0F);
 				}
 			}
 		}

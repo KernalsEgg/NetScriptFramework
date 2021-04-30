@@ -9,7 +9,7 @@
 	},
 	"patches":
 	{
-		"applySpellPerkEntryPoints": false,		/* Apply any number of spells at once using perk entry points. */
+		"applySpellPerkEntryPoints": true,		/* Spells applied using perk entry points are cast by the source on the target. */
 		"attachHitEffectArt": true,				/* Hit effect art is attached when an actor is loaded. */
 		"equipBestAmmo": false,					/* Automatically equip your best arrows or bolts when you equip a bow or crossbow. */
 		"lockpickingExperience": true,			/* Earn experience each time you pick a lock. */

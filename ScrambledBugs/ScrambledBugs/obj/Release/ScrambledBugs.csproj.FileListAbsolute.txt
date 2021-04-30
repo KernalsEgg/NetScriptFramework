@@ -8,7 +8,6 @@ C:\SkyrimSE\ScrambledBugs\ScrambledBugs\bin\Release\NetScriptFramework.xml
 C:\SkyrimSE\ScrambledBugs\ScrambledBugs\bin\Release\NetScriptFramework.SkyrimSE.pdb
 C:\SkyrimSE\ScrambledBugs\ScrambledBugs\bin\Release\NetScriptFramework.SkyrimSE.xml
 C:\SkyrimSE\ScrambledBugs\ScrambledBugs\bin\Release\Newtonsoft.Json.xml
-C:\SkyrimSE\ScrambledBugs\ScrambledBugs\obj\Release\ScrambledBugs.csprojAssemblyReference.cache
 C:\SkyrimSE\ScrambledBugs\ScrambledBugs\obj\Release\ScrambledBugs.csproj.CoreCompileInputs.cache
 C:\SkyrimSE\ScrambledBugs\ScrambledBugs\obj\Release\ScrambledBugs.csproj.CopyComplete
 C:\SkyrimSE\ScrambledBugs\ScrambledBugs\obj\Release\ScrambledBugs.dll

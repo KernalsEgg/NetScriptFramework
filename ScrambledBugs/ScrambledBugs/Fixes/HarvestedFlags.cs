@@ -21,8 +21,8 @@
 		{
 			internal enum FormTypes : System.Byte
 			{
-				TESObjectTREE =	0x26,
-				TESFlora =		0x27
+				TESObjectTREE	= 0x26,
+				TESFlora		= 0x27
 			}
 
 
@@ -66,11 +66,11 @@
 			{
 				// reference != System.IntPtr.Zero
 				
-				var baseObject = HarvestedFlags.TESObjectREFR.GetBaseObject(reference);
+				var baseObject = TESObjectREFR.GetBaseObject(reference);
 
 				if (HarvestedFlags.TESForm.IsHarvestable(baseObject))
 				{
-					HarvestedFlags.TESForm.RemoveChange(reference, (System.UInt32)HarvestedFlags.TESObjectREFR.Changes.Empty);
+					HarvestedFlags.TESForm.RemoveChange(reference, (System.UInt32)TESObjectREFR.Changes.Empty);
 				}
 			}
 		}

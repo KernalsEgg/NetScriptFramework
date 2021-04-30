@@ -10,18 +10,18 @@ namespace ScrambledBugs.Fixes
 		{
 			static Offsets()
 			{
-				Offsets.ApplyPerkEntryPoints	= NetScriptFramework.Main.GameInfo.GetAddressOf(23073);
-				Offsets.GetTotalItemWeight		= NetScriptFramework.Main.GameInfo.GetAddressOf(15883);
-				Offsets.IsWorn					= NetScriptFramework.Main.GameInfo.GetAddressOf(15763);
+				Offsets.GetTotalItemWeight	= NetScriptFramework.Main.GameInfo.GetAddressOf(15883);
+				Offsets.HandleEntryPoint	= NetScriptFramework.Main.GameInfo.GetAddressOf(23073);
+				Offsets.IsWorn				= NetScriptFramework.Main.GameInfo.GetAddressOf(15763);
 			}
 
 
 
-			/// <summary> SkyrimSE.exe + 0x32ECE0 </summary>
-			static internal System.IntPtr ApplyPerkEntryPoints { get; }
-
 			/// <summary> SkyrimSE.exe + 0x1E9130 </summary>
 			static internal System.IntPtr GetTotalItemWeight { get; }
+
+			/// <summary> SkyrimSE.exe + 0x32ECE0 </summary>
+			static internal System.IntPtr HandleEntryPoint { get; }
 
 			/// <summary> SkyrimSE.exe + 0x1D6A40 </summary>
 			static internal System.IntPtr IsWorn { get; }
@@ -29,11 +29,19 @@ namespace ScrambledBugs.Fixes
 
 
 
-		static protected class BGSEntryPoint
+		static protected class BGSPerkEntry
 		{
-			internal enum EntryPoints : System.UInt32
+			internal enum EntryPoints : System.Int32
 			{
 				ModArmorWeight = 32
+			}
+
+
+
+			// EntryPoints entryPoint, Character* perkOwner, void* argument1, void* argument2
+			static internal void HandleEntryPoint(BGSPerkEntry.EntryPoints entryPoint, System.IntPtr perkOwner, System.IntPtr argument1, System.IntPtr argument2)
+			{
+				NetScriptFramework.Memory.InvokeCdecl(ModArmorWeightPerkEntryPoint.Offsets.HandleEntryPoint, (System.Int32)entryPoint, perkOwner, argument1, argument2);
 			}
 		}
 
@@ -103,7 +111,7 @@ namespace ScrambledBugs.Fixes
 									{
 										if (ModArmorWeightPerkEntryPoint.InventoryEntryData.IsWorn(inventoryEntryData))
 										{
-											NetScriptFramework.Memory.InvokeCdecl(ModArmorWeightPerkEntryPoint.Offsets.ApplyPerkEntryPoints, (System.UInt32)ModArmorWeightPerkEntryPoint.BGSEntryPoint.EntryPoints.ModArmorWeight, actor, item, itemWeight);
+											ModArmorWeightPerkEntryPoint.BGSPerkEntry.HandleEntryPoint(ModArmorWeightPerkEntryPoint.BGSPerkEntry.EntryPoints.ModArmorWeight, actor, item, itemWeight);
 
 											cpuRegisters.XMM7f += NetScriptFramework.Memory.ReadFloat(itemWeight); // totalItemWeight
 											cpuRegisters.DX -= 1; // inventoryChangesItemCount
@@ -129,13 +137,13 @@ namespace ScrambledBugs.Fixes
 					// item != System.IntPtr.Zero
 					// itemWeight != System.IntPtr.Zero
 
-					var entryPoint = cpuRegisters.CX;
+					var entryPoint = (ModArmorWeightPerkEntryPoint.BGSPerkEntry.EntryPoints)cpuRegisters.CX.ToInt32Safe();
 					var actor = cpuRegisters.DX;
 					var item = cpuRegisters.R8;
 					var itemWeight = cpuRegisters.R9;
 					
 					cpuRegisters.XMM1f = NetScriptFramework.Memory.ReadFloat(itemWeight); // itemWeight
-					NetScriptFramework.Memory.InvokeCdecl(ModArmorWeightPerkEntryPoint.Offsets.ApplyPerkEntryPoints, entryPoint, actor, item, itemWeight);
+					ModArmorWeightPerkEntryPoint.BGSPerkEntry.HandleEntryPoint(entryPoint, actor, item, itemWeight);
 					cpuRegisters.XMM6f += NetScriptFramework.Memory.ReadFloat(itemWeight); // totalModifiedItemWeight
 				}
 			});
