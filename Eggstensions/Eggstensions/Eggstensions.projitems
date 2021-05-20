@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects Condition="'$(MSBuildVersion)' == '' Or '$(MSBuildVersion)' &lt; '16.0'">$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>740eff05-9743-47ce-b6ea-09584eaf1edf</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>Eggstensions</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)A\ActiveEffect.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)A\Actor.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)A\AIProcess.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)A\ArrowProjectile.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)B\BGSPerkEntry.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)B\bhkWorld.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)B\BSAttachTechniques.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)B\BSFixedString.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)B\BSTEventSource.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Delegates.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethods.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)I\InventoryEntryData.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)M\MagicCaster.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)M\MagicItem.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)M\MissileProjectile.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)M\ModelReferenceEffect.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)NativeObject.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)N\NiAVObject.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)N\NiNode.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)N\NiObject.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Offsets.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)P\Projectile.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)R\RefAttachTechniqueInput.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)R\ReferenceEffect.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)R\ReferenceEffectController.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)S\ScriptEventSourceHolder.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)S\SpellItem.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)T\TESBoundObject.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)T\TESDataHandler.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)T\TESForm.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)T\TESObjectREFR.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)T\TESObjectWEAP.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)T\TESRace.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)VirtualObject.cs" />
+  </ItemGroup>
+</Project>
