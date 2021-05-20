@@ -1,0 +1,503 @@
+ImageRuntimeVersion: v4.0.30319
+Assembly Eggstensions.Interoperability, Version=1.0.*, Culture=Invariant Language (Invariant Country): 
+	hash=SHA1, flags=PublicKey
+Assembly mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089: 
+	hash=None, flags=None
+Assembly NetScriptFramework, Version=1.0.*, Culture=Invariant Language (Invariant Country): 
+	hash=None, flags=None
+Assembly NetScriptFramework.SkyrimSE, Version=1.0.*, Culture=Invariant Language (Invariant Country): 
+	hash=None, flags=None
+Assembly System.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089: 
+	hash=None, flags=None
+Assembly System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089: 
+	hash=None, flags=None
+Assembly System.Xml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089: 
+	hash=None, flags=None
+Struct Eggstensions.Interoperability.BSEventNotifyControl: AutoLayout, AnsiClass, Class, Public, Sealed, BeforeFieldInit
+  :System.Enum
+  Fields:
+    Int32 value__ : Public, SpecialName, RTSpecialName
+    Eggstensions.Interoperability.BSEventNotifyControl Continue = 0 : Public, Static, Literal, HasDefault
+    Eggstensions.Interoperability.BSEventNotifyControl Stop = 1 : Public, Static, Literal, HasDefault
+Class Eggstensions.Interoperability.Events.AddActorValueEventSinks: AutoLayout, AnsiClass, Class, Public
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Events:
+    System.EventHandler`1[System.EventArgs] Handler: SpecialName
+  Methods:
+    add_Handler(EventHandler`1): PrivateScope, Public, Static, HideBySig, SpecialName
+    remove_Handler(EventHandler`1): PrivateScope, Public, Static, HideBySig, SpecialName
+Class Eggstensions.Interoperability.Events.AddHitEventSink: AutoLayout, AnsiClass, Class, Public
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Events:
+    System.EventHandler`1[System.EventArgs] Handler: SpecialName
+  Methods:
+    add_Handler(EventHandler`1): PrivateScope, Public, Static, HideBySig, SpecialName
+    remove_Handler(EventHandler`1): PrivateScope, Public, Static, HideBySig, SpecialName
+Struct Eggstensions.Interoperability.Unmanaged.Memory: AutoLayout, AnsiClass, Class, Public, SequentialLayout, Sealed, BeforeFieldInit
+  :System.ValueType
+Class Eggstensions.Interoperability.Managed.Memory: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Properties:
+    Byte Ret   'get ' : 
+    Byte Nop   'get ' : 
+    Byte Int3  'get ' : 
+  Methods:
+    SafeWriteInt32Array(IntPtr, Int32[]): PrivateScope, Public, Static, HideBySig
+    SafeWriteInt64Array(IntPtr, Int64[]): PrivateScope, Public, Static, HideBySig
+    SafeWriteIntPtrArray(IntPtr, IntPtr[]): PrivateScope, Public, Static, HideBySig
+    SafeWriteNopArray(IntPtr, Int32): PrivateScope, Public, Static, HideBySig
+    SafeWriteSingleArray(IntPtr, Single[]): PrivateScope, Public, Static, HideBySig
+    Write<bool>(IntPtr, Boolean(HasFieldMarshal)): PrivateScope, Public, Static, HideBySig
+    Write<unsigned char>(IntPtr, Byte): PrivateScope, Public, Static, HideBySig
+    Write<double>(IntPtr, Double): PrivateScope, Public, Static, HideBySig
+    Write<short>(IntPtr, Int16): PrivateScope, Public, Static, HideBySig
+    Write<int>(IntPtr, Int32): PrivateScope, Public, Static, HideBySig
+    Write<__int64>(IntPtr, Int64): PrivateScope, Public, Static, HideBySig
+    Write<System::IntPtr>(IntPtr, IntPtr): PrivateScope, Public, Static, HideBySig
+    Write<signed char>(IntPtr, SByte): PrivateScope, Public, Static, HideBySig
+    Write<float>(IntPtr, Single): PrivateScope, Public, Static, HideBySig
+    Write<unsigned short>(IntPtr, UInt16): PrivateScope, Public, Static, HideBySig
+    Write<unsigned int>(IntPtr, UInt32): PrivateScope, Public, Static, HideBySig
+    Write<unsigned __int64>(IntPtr, UInt64): PrivateScope, Public, Static, HideBySig
+    WriteBoolean(IntPtr, Int32, Boolean(HasFieldMarshal)): PrivateScope, Public, Static, HideBySig
+    WriteBoolean(IntPtr, Boolean(HasFieldMarshal)): PrivateScope, Public, Static, HideBySig
+    WriteByte(IntPtr, Int32, Byte): PrivateScope, Public, Static, HideBySig
+    WriteByte(IntPtr, Byte): PrivateScope, Public, Static, HideBySig
+    WriteDouble(IntPtr, Int32, Double): PrivateScope, Public, Static, HideBySig
+    WriteDouble(IntPtr, Double): PrivateScope, Public, Static, HideBySig
+    WriteInt16(IntPtr, Int32, Int16): PrivateScope, Public, Static, HideBySig
+    WriteInt16(IntPtr, Int16): PrivateScope, Public, Static, HideBySig
+    WriteInt32(IntPtr, Int32, Int32): PrivateScope, Public, Static, HideBySig
+    WriteInt32(IntPtr, Int32): PrivateScope, Public, Static, HideBySig
+    WriteInt64(IntPtr, Int32, Int64): PrivateScope, Public, Static, HideBySig
+    WriteInt64(IntPtr, Int64): PrivateScope, Public, Static, HideBySig
+    WriteIntPtr(IntPtr, Int32, IntPtr): PrivateScope, Public, Static, HideBySig
+    WriteIntPtr(IntPtr, IntPtr): PrivateScope, Public, Static, HideBySig
+    WriteSByte(IntPtr, Int32, SByte): PrivateScope, Public, Static, HideBySig
+    WriteSByte(IntPtr, SByte): PrivateScope, Public, Static, HideBySig
+    WriteSingle(IntPtr, Int32, Single): PrivateScope, Public, Static, HideBySig
+    WriteSingle(IntPtr, Single): PrivateScope, Public, Static, HideBySig
+    WriteUInt16(IntPtr, Int32, UInt16): PrivateScope, Public, Static, HideBySig
+    WriteUInt16(IntPtr, UInt16): PrivateScope, Public, Static, HideBySig
+    WriteUInt32(IntPtr, Int32, UInt32): PrivateScope, Public, Static, HideBySig
+    WriteUInt32(IntPtr, UInt32): PrivateScope, Public, Static, HideBySig
+    WriteUInt64(IntPtr, Int32, UInt64): PrivateScope, Public, Static, HideBySig
+    WriteUInt64(IntPtr, UInt64): PrivateScope, Public, Static, HideBySig
+    get_Int3(): PrivateScope, Public, Static, HideBySig, SpecialName
+    get_Nop(): PrivateScope, Public, Static, HideBySig, SpecialName
+    get_Ret(): PrivateScope, Public, Static, HideBySig, SpecialName
+    Initialize<bool>(Boolean(HasFieldMarshal)): PrivateScope, Public, Static, HideBySig
+    Initialize<unsigned char>(Byte): PrivateScope, Public, Static, HideBySig
+    Initialize<double>(Double): PrivateScope, Public, Static, HideBySig
+    Initialize<short>(Int16): PrivateScope, Public, Static, HideBySig
+    Initialize<int>(Int32): PrivateScope, Public, Static, HideBySig
+    Initialize<__int64>(Int64): PrivateScope, Public, Static, HideBySig
+    Initialize<System::IntPtr>(IntPtr): PrivateScope, Public, Static, HideBySig
+    Initialize<signed char>(SByte): PrivateScope, Public, Static, HideBySig
+    Initialize<float>(Single): PrivateScope, Public, Static, HideBySig
+    Initialize<unsigned short>(UInt16): PrivateScope, Public, Static, HideBySig
+    Initialize<unsigned int>(UInt32): PrivateScope, Public, Static, HideBySig
+    Initialize<unsigned __int64>(UInt64): PrivateScope, Public, Static, HideBySig
+    InitializeBoolean(Boolean(HasFieldMarshal)): PrivateScope, Public, Static, HideBySig
+    InitializeBoolean(): PrivateScope, Public, Static, HideBySig
+    InitializeByte(Byte): PrivateScope, Public, Static, HideBySig
+    InitializeByte(): PrivateScope, Public, Static, HideBySig
+    InitializeDouble(Double): PrivateScope, Public, Static, HideBySig
+    InitializeDouble(): PrivateScope, Public, Static, HideBySig
+    InitializeInt16(Int16): PrivateScope, Public, Static, HideBySig
+    InitializeInt16(): PrivateScope, Public, Static, HideBySig
+    InitializeInt32(Int32): PrivateScope, Public, Static, HideBySig
+    InitializeInt32(): PrivateScope, Public, Static, HideBySig
+    InitializeInt64(Int64): PrivateScope, Public, Static, HideBySig
+    InitializeInt64(): PrivateScope, Public, Static, HideBySig
+    InitializeIntPtr(IntPtr): PrivateScope, Public, Static, HideBySig
+    InitializeIntPtr(): PrivateScope, Public, Static, HideBySig
+    InitializeSByte(SByte): PrivateScope, Public, Static, HideBySig
+    InitializeSByte(): PrivateScope, Public, Static, HideBySig
+    InitializeSingle(Single): PrivateScope, Public, Static, HideBySig
+    InitializeSingle(): PrivateScope, Public, Static, HideBySig
+    InitializeUInt16(UInt16): PrivateScope, Public, Static, HideBySig
+    InitializeUInt16(): PrivateScope, Public, Static, HideBySig
+    InitializeUInt32(UInt32): PrivateScope, Public, Static, HideBySig
+    InitializeUInt32(): PrivateScope, Public, Static, HideBySig
+    InitializeUInt64(UInt64): PrivateScope, Public, Static, HideBySig
+    InitializeUInt64(): PrivateScope, Public, Static, HideBySig
+    Read<bool>(IntPtr): PrivateScope, Public, Static, HideBySig
+    Read<unsigned char>(IntPtr): PrivateScope, Public, Static, HideBySig
+    Read<double>(IntPtr): PrivateScope, Public, Static, HideBySig
+    Read<short>(IntPtr): PrivateScope, Public, Static, HideBySig
+    Read<int>(IntPtr): PrivateScope, Public, Static, HideBySig
+    Read<__int64>(IntPtr): PrivateScope, Public, Static, HideBySig
+    Read<System::IntPtr>(IntPtr): PrivateScope, Public, Static, HideBySig
+    Read<signed char>(IntPtr): PrivateScope, Public, Static, HideBySig
+    Read<float>(IntPtr): PrivateScope, Public, Static, HideBySig
+    Read<unsigned short>(IntPtr): PrivateScope, Public, Static, HideBySig
+    Read<unsigned int>(IntPtr): PrivateScope, Public, Static, HideBySig
+    Read<unsigned __int64>(IntPtr): PrivateScope, Public, Static, HideBySig
+    ReadBoolean(IntPtr, Int32): PrivateScope, Public, Static, HideBySig
+    ReadBoolean(IntPtr): PrivateScope, Public, Static, HideBySig
+    ReadByte(IntPtr, Int32): PrivateScope, Public, Static, HideBySig
+    ReadByte(IntPtr): PrivateScope, Public, Static, HideBySig
+    ReadDouble(IntPtr, Int32): PrivateScope, Public, Static, HideBySig
+    ReadDouble(IntPtr): PrivateScope, Public, Static, HideBySig
+    ReadInt16(IntPtr, Int32): PrivateScope, Public, Static, HideBySig
+    ReadInt16(IntPtr): PrivateScope, Public, Static, HideBySig
+    ReadInt32(IntPtr, Int32): PrivateScope, Public, Static, HideBySig
+    ReadInt32(IntPtr): PrivateScope, Public, Static, HideBySig
+    ReadInt64(IntPtr, Int32): PrivateScope, Public, Static, HideBySig
+    ReadInt64(IntPtr): PrivateScope, Public, Static, HideBySig
+    ReadIntPtr(IntPtr, Int32): PrivateScope, Public, Static, HideBySig
+    ReadIntPtr(IntPtr): PrivateScope, Public, Static, HideBySig
+    ReadSByte(IntPtr, Int32): PrivateScope, Public, Static, HideBySig
+    ReadSByte(IntPtr): PrivateScope, Public, Static, HideBySig
+    ReadSingle(IntPtr, Int32): PrivateScope, Public, Static, HideBySig
+    ReadSingle(IntPtr): PrivateScope, Public, Static, HideBySig
+    ReadUInt16(IntPtr, Int32): PrivateScope, Public, Static, HideBySig
+    ReadUInt16(IntPtr): PrivateScope, Public, Static, HideBySig
+    ReadUInt32(IntPtr, Int32): PrivateScope, Public, Static, HideBySig
+    ReadUInt32(IntPtr): PrivateScope, Public, Static, HideBySig
+    ReadUInt64(IntPtr, Int32): PrivateScope, Public, Static, HideBySig
+    ReadUInt64(IntPtr): PrivateScope, Public, Static, HideBySig
+    SafeWriteArray<unsigned char>(IntPtr, Byte[]): PrivateScope, Public, Static, HideBySig
+    SafeWriteArray<double>(IntPtr, Double[]): PrivateScope, Public, Static, HideBySig
+    SafeWriteArray<short>(IntPtr, Int16[]): PrivateScope, Public, Static, HideBySig
+    SafeWriteArray<int>(IntPtr, Int32[]): PrivateScope, Public, Static, HideBySig
+    SafeWriteArray<__int64>(IntPtr, Int64[]): PrivateScope, Public, Static, HideBySig
+    SafeWriteArray<System::IntPtr>(IntPtr, IntPtr[]): PrivateScope, Public, Static, HideBySig
+    SafeWriteArray<float>(IntPtr, Single[]): PrivateScope, Public, Static, HideBySig
+    SafeWriteByteArray(IntPtr, Byte[]): PrivateScope, Public, Static, HideBySig
+    SafeWriteDoubleArray(IntPtr, Double[]): PrivateScope, Public, Static, HideBySig
+    SafeWriteInt16Array(IntPtr, Int16[]): PrivateScope, Public, Static, HideBySig
+Class Eggstensions.Interoperability.Managed.UnownedNativeObject<bool>: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+    Void .ctor(Boolean*): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Properties:
+    Boolean* NativeObject 'get ' : 
+    IntPtr Address 'get ' : 
+  Methods:
+    get_Address(): PrivateScope, Public, HideBySig, SpecialName
+    get_NativeObject(): PrivateScope, Public, HideBySig, SpecialName
+Class Eggstensions.Interoperability.Managed.OwnedNativeObject<bool>: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+  :Eggstensions.Interoperability.Managed.UnownedNativeObject<bool>
+    Void .ctor(Boolean*): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Interfaces:
+    System.IDisposable
+  Methods:
+    Dispose(): PrivateScope, Public, Final, Virtual, HideBySig
+Class Eggstensions.Interoperability.Managed.ValueType<bool>: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+  :Eggstensions.Interoperability.Managed.OwnedNativeObject<bool>
+    Void .ctor(Boolean): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Properties:
+    Boolean Value 'get set' : 
+  Methods:
+    get_Value(): PrivateScope, Public, HideBySig, SpecialName
+    set_Value(Boolean(HasFieldMarshal)): PrivateScope, Public, HideBySig, SpecialName
+Class Eggstensions.Interoperability.Managed.UnownedNativeObject<unsigned char>: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+    Void .ctor(Byte*): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Properties:
+    Byte* NativeObject 'get ' : 
+    IntPtr Address 'get ' : 
+  Methods:
+    get_Address(): PrivateScope, Public, HideBySig, SpecialName
+    get_NativeObject(): PrivateScope, Public, HideBySig, SpecialName
+Class Eggstensions.Interoperability.Managed.OwnedNativeObject<unsigned char>: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+  :Eggstensions.Interoperability.Managed.UnownedNativeObject<unsigned char>
+    Void .ctor(Byte*): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Interfaces:
+    System.IDisposable
+  Methods:
+    Dispose(): PrivateScope, Public, Final, Virtual, HideBySig
+Class Eggstensions.Interoperability.Managed.ValueType<unsigned char>: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+  :Eggstensions.Interoperability.Managed.OwnedNativeObject<unsigned char>
+    Void .ctor(Byte): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Properties:
+    Byte Value 'get set' : 
+  Methods:
+    get_Value(): PrivateScope, Public, HideBySig, SpecialName
+    set_Value(Byte): PrivateScope, Public, HideBySig, SpecialName
+Class Eggstensions.Interoperability.Managed.UnownedNativeObject<double>: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+    Void .ctor(Double*): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Properties:
+    Double* NativeObject 'get ' : 
+    IntPtr Address 'get ' : 
+  Methods:
+    get_Address(): PrivateScope, Public, HideBySig, SpecialName
+    get_NativeObject(): PrivateScope, Public, HideBySig, SpecialName
+Class Eggstensions.Interoperability.Managed.OwnedNativeObject<double>: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+  :Eggstensions.Interoperability.Managed.UnownedNativeObject<double>
+    Void .ctor(Double*): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Interfaces:
+    System.IDisposable
+  Methods:
+    Dispose(): PrivateScope, Public, Final, Virtual, HideBySig
+Class Eggstensions.Interoperability.Managed.ValueType<double>: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+  :Eggstensions.Interoperability.Managed.OwnedNativeObject<double>
+    Void .ctor(Double): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Properties:
+    Double Value 'get set' : 
+  Methods:
+    get_Value(): PrivateScope, Public, HideBySig, SpecialName
+    set_Value(Double): PrivateScope, Public, HideBySig, SpecialName
+Class Eggstensions.Interoperability.Managed.UnownedNativeObject<short>: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+    Void .ctor(Int16*): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Properties:
+    Int16* NativeObject 'get ' : 
+    IntPtr Address 'get ' : 
+  Methods:
+    get_Address(): PrivateScope, Public, HideBySig, SpecialName
+    get_NativeObject(): PrivateScope, Public, HideBySig, SpecialName
+Class Eggstensions.Interoperability.Managed.OwnedNativeObject<short>: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+  :Eggstensions.Interoperability.Managed.UnownedNativeObject<short>
+    Void .ctor(Int16*): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Interfaces:
+    System.IDisposable
+  Methods:
+    Dispose(): PrivateScope, Public, Final, Virtual, HideBySig
+Class Eggstensions.Interoperability.Managed.ValueType<short>: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+  :Eggstensions.Interoperability.Managed.OwnedNativeObject<short>
+    Void .ctor(Int16): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Properties:
+    Int16 Value 'get set' : 
+  Methods:
+    get_Value(): PrivateScope, Public, HideBySig, SpecialName
+    set_Value(Int16): PrivateScope, Public, HideBySig, SpecialName
+Class Eggstensions.Interoperability.Managed.UnownedNativeObject<int>: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+    Void .ctor(Int32*): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Properties:
+    Int32* NativeObject 'get ' : 
+    IntPtr Address 'get ' : 
+  Methods:
+    get_Address(): PrivateScope, Public, HideBySig, SpecialName
+    get_NativeObject(): PrivateScope, Public, HideBySig, SpecialName
+Class Eggstensions.Interoperability.Managed.OwnedNativeObject<int>: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+  :Eggstensions.Interoperability.Managed.UnownedNativeObject<int>
+    Void .ctor(Int32*): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Interfaces:
+    System.IDisposable
+  Methods:
+    Dispose(): PrivateScope, Public, Final, Virtual, HideBySig
+Class Eggstensions.Interoperability.Managed.ValueType<int>: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+  :Eggstensions.Interoperability.Managed.OwnedNativeObject<int>
+    Void .ctor(Int32): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Properties:
+    Int32 Value 'get set' : 
+  Methods:
+    get_Value(): PrivateScope, Public, HideBySig, SpecialName
+    set_Value(Int32): PrivateScope, Public, HideBySig, SpecialName
+Class Eggstensions.Interoperability.Managed.UnownedNativeObject<__int64>: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+    Void .ctor(Int64*): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Properties:
+    Int64* NativeObject 'get ' : 
+    IntPtr Address 'get ' : 
+  Methods:
+    get_Address(): PrivateScope, Public, HideBySig, SpecialName
+    get_NativeObject(): PrivateScope, Public, HideBySig, SpecialName
+Class Eggstensions.Interoperability.Managed.OwnedNativeObject<__int64>: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+  :Eggstensions.Interoperability.Managed.UnownedNativeObject<__int64>
+    Void .ctor(Int64*): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Interfaces:
+    System.IDisposable
+  Methods:
+    Dispose(): PrivateScope, Public, Final, Virtual, HideBySig
+Class Eggstensions.Interoperability.Managed.ValueType<__int64>: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+  :Eggstensions.Interoperability.Managed.OwnedNativeObject<__int64>
+    Void .ctor(Int64): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Properties:
+    Int64 Value 'get set' : 
+  Methods:
+    get_Value(): PrivateScope, Public, HideBySig, SpecialName
+    set_Value(Int64): PrivateScope, Public, HideBySig, SpecialName
+Class Eggstensions.Interoperability.Managed.UnownedNativeObject<System::IntPtr>: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+    Void .ctor(IntPtr*): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Properties:
+    IntPtr* NativeObject 'get ' : 
+    IntPtr Address 'get ' : 
+  Methods:
+    get_Address(): PrivateScope, Public, HideBySig, SpecialName
+    get_NativeObject(): PrivateScope, Public, HideBySig, SpecialName
+Class Eggstensions.Interoperability.Managed.OwnedNativeObject<System::IntPtr>: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+  :Eggstensions.Interoperability.Managed.UnownedNativeObject<System::IntPtr>
+    Void .ctor(IntPtr*): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Interfaces:
+    System.IDisposable
+  Methods:
+    Dispose(): PrivateScope, Public, Final, Virtual, HideBySig
+Class Eggstensions.Interoperability.Managed.ValueType<System::IntPtr>: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+  :Eggstensions.Interoperability.Managed.OwnedNativeObject<System::IntPtr>
+    Void .ctor(IntPtr): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Properties:
+    IntPtr Value 'get set' : 
+  Methods:
+    get_Value(): PrivateScope, Public, HideBySig, SpecialName
+    set_Value(IntPtr): PrivateScope, Public, HideBySig, SpecialName
+Class Eggstensions.Interoperability.Managed.UnownedNativeObject<signed char>: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+    Void .ctor(SByte*): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Properties:
+    SByte* NativeObject 'get ' : 
+    IntPtr Address 'get ' : 
+  Methods:
+    get_Address(): PrivateScope, Public, HideBySig, SpecialName
+    get_NativeObject(): PrivateScope, Public, HideBySig, SpecialName
+Class Eggstensions.Interoperability.Managed.OwnedNativeObject<signed char>: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+  :Eggstensions.Interoperability.Managed.UnownedNativeObject<signed char>
+    Void .ctor(SByte*): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Interfaces:
+    System.IDisposable
+  Methods:
+    Dispose(): PrivateScope, Public, Final, Virtual, HideBySig
+Class Eggstensions.Interoperability.Managed.ValueType<signed char>: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+  :Eggstensions.Interoperability.Managed.OwnedNativeObject<signed char>
+    Void .ctor(SByte): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Properties:
+    SByte Value 'get set' : 
+  Methods:
+    get_Value(): PrivateScope, Public, HideBySig, SpecialName
+    set_Value(SByte): PrivateScope, Public, HideBySig, SpecialName
+Class Eggstensions.Interoperability.Managed.UnownedNativeObject<float>: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+    Void .ctor(Single*): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Properties:
+    Single* NativeObject 'get ' : 
+    IntPtr Address 'get ' : 
+  Methods:
+    get_Address(): PrivateScope, Public, HideBySig, SpecialName
+    get_NativeObject(): PrivateScope, Public, HideBySig, SpecialName
+Class Eggstensions.Interoperability.Managed.OwnedNativeObject<float>: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+  :Eggstensions.Interoperability.Managed.UnownedNativeObject<float>
+    Void .ctor(Single*): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Interfaces:
+    System.IDisposable
+  Methods:
+    Dispose(): PrivateScope, Public, Final, Virtual, HideBySig
+Class Eggstensions.Interoperability.Managed.ValueType<float>: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+  :Eggstensions.Interoperability.Managed.OwnedNativeObject<float>
+    Void .ctor(Single): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Properties:
+    Single Value 'get set' : 
+  Methods:
+    get_Value(): PrivateScope, Public, HideBySig, SpecialName
+    set_Value(Single): PrivateScope, Public, HideBySig, SpecialName
+Class Eggstensions.Interoperability.Managed.UnownedNativeObject<unsigned short>: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+    Void .ctor(UInt16*): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Properties:
+    UInt16* NativeObject 'get ' : 
+    IntPtr Address 'get ' : 
+  Methods:
+    get_Address(): PrivateScope, Public, HideBySig, SpecialName
+    get_NativeObject(): PrivateScope, Public, HideBySig, SpecialName
+Class Eggstensions.Interoperability.Managed.OwnedNativeObject<unsigned short>: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+  :Eggstensions.Interoperability.Managed.UnownedNativeObject<unsigned short>
+    Void .ctor(UInt16*): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Interfaces:
+    System.IDisposable
+  Methods:
+    Dispose(): PrivateScope, Public, Final, Virtual, HideBySig
+Class Eggstensions.Interoperability.Managed.ValueType<unsigned short>: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+  :Eggstensions.Interoperability.Managed.OwnedNativeObject<unsigned short>
+    Void .ctor(UInt16): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Properties:
+    UInt16 Value 'get set' : 
+  Methods:
+    get_Value(): PrivateScope, Public, HideBySig, SpecialName
+    set_Value(UInt16): PrivateScope, Public, HideBySig, SpecialName
+Class Eggstensions.Interoperability.Managed.UnownedNativeObject<unsigned int>: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+    Void .ctor(UInt32*): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Properties:
+    UInt32* NativeObject 'get ' : 
+    IntPtr Address 'get ' : 
+  Methods:
+    get_Address(): PrivateScope, Public, HideBySig, SpecialName
+    get_NativeObject(): PrivateScope, Public, HideBySig, SpecialName
+Class Eggstensions.Interoperability.Managed.OwnedNativeObject<unsigned int>: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+  :Eggstensions.Interoperability.Managed.UnownedNativeObject<unsigned int>
+    Void .ctor(UInt32*): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Interfaces:
+    System.IDisposable
+  Methods:
+    Dispose(): PrivateScope, Public, Final, Virtual, HideBySig
+Class Eggstensions.Interoperability.Managed.ValueType<unsigned int>: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+  :Eggstensions.Interoperability.Managed.OwnedNativeObject<unsigned int>
+    Void .ctor(UInt32): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Properties:
+    UInt32 Value 'get set' : 
+  Methods:
+    get_Value(): PrivateScope, Public, HideBySig, SpecialName
+    set_Value(UInt32): PrivateScope, Public, HideBySig, SpecialName
+Class Eggstensions.Interoperability.Managed.UnownedNativeObject<unsigned __int64>: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+    Void .ctor(UInt64*): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Properties:
+    UInt64* NativeObject 'get ' : 
+    IntPtr Address 'get ' : 
+  Methods:
+    get_Address(): PrivateScope, Public, HideBySig, SpecialName
+    get_NativeObject(): PrivateScope, Public, HideBySig, SpecialName
+Class Eggstensions.Interoperability.Managed.OwnedNativeObject<unsigned __int64>: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+  :Eggstensions.Interoperability.Managed.UnownedNativeObject<unsigned __int64>
+    Void .ctor(UInt64*): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Interfaces:
+    System.IDisposable
+  Methods:
+    Dispose(): PrivateScope, Public, Final, Virtual, HideBySig
+Class Eggstensions.Interoperability.Managed.ValueType<unsigned __int64>: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+  :Eggstensions.Interoperability.Managed.OwnedNativeObject<unsigned __int64>
+    Void .ctor(UInt64): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Properties:
+    UInt64 Value 'get set' : 
+  Methods:
+    get_Value(): PrivateScope, Public, HideBySig, SpecialName
+    set_Value(UInt64): PrivateScope, Public, HideBySig, SpecialName
+Struct Eggstensions.Interoperability.Unmanaged.TESHitEvent: AutoLayout, AnsiClass, Class, Public, SequentialLayout, Sealed, BeforeFieldInit
+  :System.ValueType
+Class Eggstensions.Interoperability.Managed.UnownedNativeObject<Eggstensions::Interoperability::Unmanaged::TESHitEvent>: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+    Void .ctor(Eggstensions.Interoperability.Unmanaged.TESHitEvent*): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Properties:
+    Eggstensions.Interoperability.Unmanaged.TESHitEvent* NativeObject 'get ' : 
+    IntPtr Address 'get ' : 
+  Methods:
+    get_Address(): PrivateScope, Public, HideBySig, SpecialName
+    get_NativeObject(): PrivateScope, Public, HideBySig, SpecialName
+Class Eggstensions.Interoperability.Managed.TESHitEvent: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+  :Eggstensions.Interoperability.Managed.UnownedNativeObject<Eggstensions::Interoperability::Unmanaged::TESHitEvent>
+    Void .ctor(Eggstensions.Interoperability.Unmanaged.TESHitEvent*): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Properties:
+    Eggstensions.Interoperability.TESHitEventFlags Flags 'get ' : 
+    UInt32 Projectile 'get ' : 
+    UInt32 Source 'get ' : 
+    IntPtr Cause 'get ' : 
+    IntPtr Target 'get ' : 
+  Methods:
+    get_Target(): PrivateScope, Public, HideBySig, SpecialName
+    get_Cause(): PrivateScope, Public, HideBySig, SpecialName
+    get_Source(): PrivateScope, Public, HideBySig, SpecialName
+    get_Projectile(): PrivateScope, Public, HideBySig, SpecialName
+    get_Flags(): PrivateScope, Public, HideBySig, SpecialName
+Struct Eggstensions.Interoperability.TESHitEventFlags: AutoLayout, AnsiClass, Class, Public, Sealed, BeforeFieldInit
+  :System.Enum
+  Fields:
+    Byte value__ : Public, SpecialName, RTSpecialName
+    Eggstensions.Interoperability.TESHitEventFlags None = 0 : Public, Static, Literal, HasDefault
+    Eggstensions.Interoperability.TESHitEventFlags PowerAttack = 1 : Public, Static, Literal, HasDefault
+    Eggstensions.Interoperability.TESHitEventFlags SneakAttack = 2 : Public, Static, Literal, HasDefault
+    Eggstensions.Interoperability.TESHitEventFlags BashAttack = 4 : Public, Static, Literal, HasDefault
+    Eggstensions.Interoperability.TESHitEventFlags HitBlocked = 8 : Public, Static, Literal, HasDefault
+Class Eggstensions.Interoperability.Managed.UnownedNativeObject<Eggstensions::Interoperability::Unmanaged::BSTEventSink<Eggstensions::Interoperability::Managed::TESHitEvent\,Eggstensions::Interoperability::Unmanaged::TESHitEvent> >: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+    Void .ctor(Eggstensions.Interoperability.Unmanaged.BSTEventSink<Eggstensions::Interoperability::Managed::TESHitEvent\,Eggstensions::Interoperability::Unmanaged::TESHitEvent>*): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Properties:
+    Eggstensions.Interoperability.Unmanaged.BSTEventSink<Eggstensions::Interoperability::Managed::TESHitEvent\,Eggstensions::Interoperability::Unmanaged::TESHitEvent>* NativeObject 'get ' : 
+    IntPtr Address 'get ' : 
+  Methods:
+    get_Address(): PrivateScope, Public, HideBySig, SpecialName
+    get_NativeObject(): PrivateScope, Public, HideBySig, SpecialName
+Class Eggstensions.Interoperability.Managed.OwnedNativeObject<Eggstensions::Interoperability::Unmanaged::BSTEventSink<Eggstensions::Interoperability::Managed::TESHitEvent\,Eggstensions::Interoperability::Unmanaged::TESHitEvent> >: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+  :Eggstensions.Interoperability.Managed.UnownedNativeObject<Eggstensions::Interoperability::Unmanaged::BSTEventSink<Eggstensions::Interoperability::Managed::TESHitEvent\,Eggstensions::Interoperability::Unmanaged::TESHitEvent> >
+    Void .ctor(Eggstensions.Interoperability.Unmanaged.BSTEventSink<Eggstensions::Interoperability::Managed::TESHitEvent\,Eggstensions::Interoperability::Unmanaged::TESHitEvent>*): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Interfaces:
+    System.IDisposable
+  Methods:
+    Dispose(): PrivateScope, Public, Final, Virtual, HideBySig
+Class Eggstensions.Interoperability.Managed.BSTEventSink<Eggstensions::Interoperability::Managed::TESHitEvent\,Eggstensions::Interoperability::Unmanaged::TESHitEvent>: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+  :Eggstensions.Interoperability.Managed.OwnedNativeObject<Eggstensions::Interoperability::Unmanaged::BSTEventSink<Eggstensions::Interoperability::Managed::TESHitEvent\,Eggstensions::Interoperability::Unmanaged::TESHitEvent> >
+    Void .ctor(System.Func`3[Eggstensions.Interoperability.Managed.TESHitEvent,System.IntPtr,Eggstensions.Interoperability.BSEventNotifyControl]): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+Class Eggstensions.Interoperability.Managed.TESHitEventSink: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+  :Eggstensions.Interoperability.Managed.BSTEventSink<Eggstensions::Interoperability::Managed::TESHitEvent\,Eggstensions::Interoperability::Unmanaged::TESHitEvent>
+    Void .ctor(System.Func`3[Eggstensions.Interoperability.Managed.TESHitEvent,System.IntPtr,Eggstensions.Interoperability.BSEventNotifyControl]): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+Struct Eggstensions.Interoperability.Unmanaged.BSTEventSink<Eggstensions::Interoperability::Managed::TESHitEvent\,Eggstensions::Interoperability::Unmanaged::TESHitEvent>: AutoLayout, AnsiClass, Class, Public, SequentialLayout, Sealed, BeforeFieldInit
+  :System.ValueType

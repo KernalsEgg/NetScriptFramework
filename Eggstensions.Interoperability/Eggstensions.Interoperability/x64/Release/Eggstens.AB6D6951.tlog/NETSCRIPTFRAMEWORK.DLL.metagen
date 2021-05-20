@@ -1,0 +1,1704 @@
+ImageRuntimeVersion: v4.0.30319
+Assembly NetScriptFramework, Version=1.0.*, Culture=Invariant Language (Invariant Country): 
+	hash=SHA1, flags=PublicKey
+Assembly mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089: 
+	hash=None, flags=None
+Assembly System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089: 
+	hash=None, flags=None
+Assembly System.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089: 
+	hash=None, flags=None
+Assembly System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089: 
+	hash=None, flags=None
+Class NetScriptFramework.CrashLogEventArgs: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+  :System.EventArgs
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Properties:
+    NetScriptFramework.CrashLog Log 'get set' : 
+    System.Text.StringBuilder Output 'get set' : 
+    Boolean Skip 'get set' : 
+    Boolean Handled 'get set' : 
+  Methods:
+    get_Log(): PrivateScope, Public, HideBySig, SpecialName
+    get_Output(): PrivateScope, Public, HideBySig, SpecialName
+    get_Skip(): PrivateScope, Public, HideBySig, SpecialName
+    set_Skip(Boolean): PrivateScope, Public, HideBySig, SpecialName
+    get_Handled(): PrivateScope, Public, HideBySig, SpecialName
+    set_Handled(Boolean): PrivateScope, Public, HideBySig, SpecialName
+Class NetScriptFramework.CrashLog: AutoLayout, AnsiClass, Class, Public, Abstract, BeforeFieldInit
+  Interfaces:
+    NetScriptFramework.Tools.IArgument
+  Fields:
+    NetScriptFramework.Event`1[NetScriptFramework.CrashLogEventArgs] OnBeforeWrite : Public, Static, InitOnly
+    NetScriptFramework.Event`1[NetScriptFramework.CrashLogEventArgs] OnAfterWrite : Public, Static, InitOnly
+  Properties:
+    System.Diagnostics.ProcessModuleCollection Modules 'get set' : 
+    System.Diagnostics.ProcessModule MainModule 'get set' : 
+    System.Globalization.CultureInfo Culture 'get set' : 
+  Methods:
+    get_Modules(): PrivateScope, Public, HideBySig, SpecialName
+    get_MainModule(): PrivateScope, Public, HideBySig, SpecialName
+    get_Culture(): PrivateScope, Public, HideBySig, SpecialName
+    GetAddressInModule(IntPtr, ProcessModuleCollection, String): PrivateScope, Public, Static, HideBySig
+    ParseArgument(String, Message, Parser): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask
+    ParseVariable(String, Message, Parser): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask
+    ParseFunction(String, String[], Message, Parser): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask
+Class NetScriptFramework.NativeCrashLog: AutoLayout, AnsiClass, Class, Public, Sealed, BeforeFieldInit
+  :NetScriptFramework.CrashLog
+  Fields:
+    NetScriptFramework.CPURegisters Context : Public, InitOnly
+  Properties:
+    System.Collections.Generic.IReadOnlyList`1[System.IntPtr] FullStack 'get set' : 
+    System.Collections.Generic.IReadOnlyList`1[System.IntPtr] CallStack 'get set' : 
+  Methods:
+    get_FullStack(): PrivateScope, Public, HideBySig, SpecialName
+    get_CallStack(): PrivateScope, Public, HideBySig, SpecialName
+    ParseArgument(String, Message, Parser): PrivateScope, Public, Virtual, HideBySig
+    ParseVariable(String, Message, Parser): PrivateScope, Public, Virtual, HideBySig
+    ParseFunction(String, String[], Message, Parser): PrivateScope, Public, Virtual, HideBySig
+    GetFunctionAddressInfo(IntPtr, Boolean): PrivateScope, Public, Static, HideBySig
+    GuessValueTypes(IntPtr, GameTypeInfo&, String&): PrivateScope, Public, Static, HideBySig
+    GetValueInfo(IntPtr): PrivateScope, Public, Static, HideBySig
+    GetCallStack(IntPtr, Int32, List`1): PrivateScope, Public, Static, HideBySig
+Class NetScriptFramework.ManagedCrashLog: AutoLayout, AnsiClass, Class, Public, Sealed, BeforeFieldInit
+  :NetScriptFramework.CrashLog
+  Fields:
+    System.Exception OriginalException : Public, InitOnly
+  Methods:
+    ParseArgument(String, Message, Parser): PrivateScope, Public, Virtual, HideBySig
+    ParseVariable(String, Message, Parser): PrivateScope, Public, Virtual, HideBySig
+    ParseFunction(String, String[], Message, Parser): PrivateScope, Public, Virtual, HideBySig
+Class NetScriptFramework.InterestingCrashLogObjects: AutoLayout, AnsiClass, Class, Public, Sealed, BeforeFieldInit
+  Methods:
+    Add(IMemoryObject): PrivateScope, Public, HideBySig
+    GetSortedObjects(Int32(Optional, HasDefault)): PrivateScope, Public, HideBySig
+Class NetScriptFramework.DebugMessageListener: AutoLayout, AnsiClass, Class, Public, Abstract, BeforeFieldInit
+  Methods:
+    OnMessage(Plugin, String): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract
+Class NetScriptFramework.GameInfo: AutoLayout, AnsiClass, Class, Public, Sealed, BeforeFieldInit
+  Fields:
+    UInt64 BaseOffset : Public, InitOnly
+  Properties:
+    UInt64 LibraryBaseOffset 'get set' : 
+    System.Collections.Generic.IReadOnlyList`1[NetScriptFramework.GameInfo+GameTypeInfo] Types 'get ' : 
+    System.Collections.Generic.IReadOnlyList`1[NetScriptFramework.GameInfo+GameGlobalInfo] Globals 'get ' : 
+    System.Collections.Generic.IReadOnlyList`1[NetScriptFramework.GameInfo+GameFunctionInfo] Functions 'get ' : 
+    System.Collections.Generic.IReadOnlyList`1[System.Nullable`1[System.Int32]] CachedValues 'get ' : 
+  Methods:
+    get_LibraryBaseOffset(): PrivateScope, Public, HideBySig, SpecialName
+    get_Types(): PrivateScope, Public, HideBySig, SpecialName
+    get_Globals(): PrivateScope, Public, HideBySig, SpecialName
+    get_Functions(): PrivateScope, Public, HideBySig, SpecialName
+    get_CachedValues(): PrivateScope, Public, HideBySig, SpecialName
+    DumpVids(FileInfo): PrivateScope, Public, HideBySig
+    GetTypeInfo(IntPtr, Boolean): PrivateScope, Public, HideBySig
+    GetFunctionInfo(IntPtr, Boolean): PrivateScope, Public, HideBySig
+    GetFunctionInfo(UInt64): PrivateScope, Public, HideBySig
+    GetGlobalInfo(UInt64): PrivateScope, Public, HideBySig
+    GetTypeInfo(UInt64): PrivateScope, Public, HideBySig
+    GetTypeInstanceInfos(UInt32): PrivateScope, Public, HideBySig
+    GetAddressOf(UInt64, Int32(Optional, HasDefault), Int32(Optional, HasDefault), String(Optional, HasDefault)): PrivateScope, Public, HideBySig
+    TryGetAddressOf(UInt64, Int32(Optional, HasDefault), Int32(Optional, HasDefault), String(Optional, HasDefault)): PrivateScope, Public, HideBySig
+Struct NetScriptFramework.EventRegistrationFlags: AutoLayout, AnsiClass, Class, Public, Sealed
+  :System.Enum
+  Fields:
+    UInt32 value__ : Public, SpecialName, RTSpecialName
+    NetScriptFramework.EventRegistrationFlags None = 0 : Public, Static, Literal, HasDefault
+    NetScriptFramework.EventRegistrationFlags Distinct = 1 : Public, Static, Literal, HasDefault
+Class NetScriptFramework.EventBase: AutoLayout, AnsiClass, Class, Public, Abstract, BeforeFieldInit
+  Fields:
+    System.String Key : Public, InitOnly
+Class NetScriptFramework.Event`1[T]: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+  Type parameter: T, System.EventArgs
+  :NetScriptFramework.EventBase
+    Void .ctor(System.String): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Methods:
+    Register(EventHandler, Int32(Optional, HasDefault), Int32(Optional, HasDefault), EventRegistrationFlags(Optional, HasDefault)): PrivateScope, Public, HideBySig
+    Unregister(Int64): PrivateScope, Public, HideBySig
+    Raise(Func`1): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask
+Class NetScriptFramework.HookedEventArgs: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+  :System.EventArgs
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Properties:
+    NetScriptFramework.CPURegisters Context 'get set' : 
+  Methods:
+    get_Context(): PrivateScope, Public, HideBySig, SpecialName
+Class NetScriptFramework.EventHookParameters`1[T]: AutoLayout, AnsiClass, Class, Public, Sealed, BeforeFieldInit
+  Type parameter: T, NetScriptFramework.HookedEventArgs
+    Void .ctor(IntPtr, Int32, Int32, System.String, System.Func`2[NetScriptFramework.CPURegisters,T], System.Action`2[NetScriptFramework.CPURegisters,T]): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Properties:
+    IntPtr Address 'get set' : 
+    Int32 ReplaceLength 'get set' : 
+    Int32 IncludeLength 'get set' : 
+    System.String Pattern 'get set' : 
+    System.Func`2[NetScriptFramework.CPURegisters,T] ArgFunc 'get set' : 
+    System.Action`2[NetScriptFramework.CPURegisters,T] AfterFunc 'get set' : 
+  Methods:
+    get_Address(): PrivateScope, Public, HideBySig, SpecialName
+    get_ReplaceLength(): PrivateScope, Public, HideBySig, SpecialName
+    get_IncludeLength(): PrivateScope, Public, HideBySig, SpecialName
+    get_Pattern(): PrivateScope, Public, HideBySig, SpecialName
+    get_ArgFunc(): PrivateScope, Public, HideBySig, SpecialName
+    get_AfterFunc(): PrivateScope, Public, HideBySig, SpecialName
+Struct NetScriptFramework.EventHookFlags: AutoLayout, AnsiClass, Class, Public, Sealed
+  :System.Enum
+  Fields:
+    UInt32 value__ : Public, SpecialName, RTSpecialName
+    NetScriptFramework.EventHookFlags None = 0 : Public, Static, Literal, HasDefault
+    NetScriptFramework.EventHookFlags AlwaysRun = 1 : Public, Static, Literal, HasDefault
+Class NetScriptFramework.EventHook`1[T]: AutoLayout, AnsiClass, Class, Public, Sealed, BeforeFieldInit
+  Type parameter: T, NetScriptFramework.HookedEventArgs
+  :NetScriptFramework.Event`1[T]
+    Void .ctor(NetScriptFramework.EventHookFlags, System.String, NetScriptFramework.EventHookParameters`1[T][]): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Methods:
+    Raise(Func`1): PrivateScope, Public, Virtual, HideBySig
+Class NetScriptFramework.Game: AutoLayout, AnsiClass, Class, Public, Abstract, BeforeFieldInit
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Properties:
+    System.String ShortName 'get ' : 
+    System.String FullName 'get ' : 
+    System.String ExecutableName 'get ' : 
+    System.String ModuleName 'get ' : 
+    UInt64 VersionLibraryHash 'get ' : 
+    System.Collections.Generic.IReadOnlyList`1[System.Int32] GameVersion 'get ' : 
+    Int32 LibraryVersion 'get ' : 
+    Boolean IsValidVersion 'get ' : 
+  Methods:
+    get_ShortName(): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract, SpecialName
+    get_FullName(): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract, SpecialName
+    get_ExecutableName(): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract, SpecialName
+    get_ModuleName(): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract, SpecialName
+    get_VersionLibraryHash(): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract, SpecialName
+    get_GameVersion(): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract, SpecialName
+    get_LibraryVersion(): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract, SpecialName
+    get_IsValidVersion(): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract, SpecialName
+    GetInterfaceById(UInt64): PrivateScope, Public, HideBySig
+    GetModuleVersion(FileVersionInfo): PrivateScope, Public, Static, HideBySig
+    ParseVersion(String, Int32, Int32, Int32, Int32): PrivateScope, Public, Static, HideBySig
+Interface NetScriptFramework.IValueGenericArgument: AutoLayout, AnsiClass, Class, Public, ClassSemanticsMask, Abstract
+  Properties:
+    System.Object BaseValue 'get ' : 
+  Methods:
+    get_BaseValue(): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract, SpecialName
+Interface NetScriptFramework.IBoolValueGenericArgument: AutoLayout, AnsiClass, Class, Public, ClassSemanticsMask, Abstract
+  Interfaces:
+    NetScriptFramework.IValueGenericArgument
+  Properties:
+    Boolean Value 'get ' : 
+  Methods:
+    get_Value(): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract, SpecialName
+Interface NetScriptFramework.ICharValueGenericArgument: AutoLayout, AnsiClass, Class, Public, ClassSemanticsMask, Abstract
+  Interfaces:
+    NetScriptFramework.IValueGenericArgument
+  Properties:
+    Char Value 'get ' : 
+  Methods:
+    get_Value(): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract, SpecialName
+Interface NetScriptFramework.IInt8ValueGenericArgument: AutoLayout, AnsiClass, Class, Public, ClassSemanticsMask, Abstract
+  Interfaces:
+    NetScriptFramework.IValueGenericArgument
+  Properties:
+    SByte Value 'get ' : 
+  Methods:
+    get_Value(): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract, SpecialName
+Interface NetScriptFramework.IUInt8ValueGenericArgument: AutoLayout, AnsiClass, Class, Public, ClassSemanticsMask, Abstract
+  Interfaces:
+    NetScriptFramework.IValueGenericArgument
+  Properties:
+    Byte Value 'get ' : 
+  Methods:
+    get_Value(): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract, SpecialName
+Interface NetScriptFramework.IInt16ValueGenericArgument: AutoLayout, AnsiClass, Class, Public, ClassSemanticsMask, Abstract
+  Interfaces:
+    NetScriptFramework.IValueGenericArgument
+  Properties:
+    Int16 Value 'get ' : 
+  Methods:
+    get_Value(): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract, SpecialName
+Interface NetScriptFramework.IUInt16ValueGenericArgument: AutoLayout, AnsiClass, Class, Public, ClassSemanticsMask, Abstract
+  Interfaces:
+    NetScriptFramework.IValueGenericArgument
+  Properties:
+    UInt16 Value 'get ' : 
+  Methods:
+    get_Value(): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract, SpecialName
+Interface NetScriptFramework.IInt32ValueGenericArgument: AutoLayout, AnsiClass, Class, Public, ClassSemanticsMask, Abstract
+  Interfaces:
+    NetScriptFramework.IValueGenericArgument
+  Properties:
+    Int32 Value 'get ' : 
+  Methods:
+    get_Value(): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract, SpecialName
+Interface NetScriptFramework.IUInt32ValueGenericArgument: AutoLayout, AnsiClass, Class, Public, ClassSemanticsMask, Abstract
+  Interfaces:
+    NetScriptFramework.IValueGenericArgument
+  Properties:
+    UInt32 Value 'get ' : 
+  Methods:
+    get_Value(): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract, SpecialName
+Interface NetScriptFramework.IInt64ValueGenericArgument: AutoLayout, AnsiClass, Class, Public, ClassSemanticsMask, Abstract
+  Interfaces:
+    NetScriptFramework.IValueGenericArgument
+  Properties:
+    Int64 Value 'get ' : 
+  Methods:
+    get_Value(): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract, SpecialName
+Interface NetScriptFramework.IUInt64ValueGenericArgument: AutoLayout, AnsiClass, Class, Public, ClassSemanticsMask, Abstract
+  Interfaces:
+    NetScriptFramework.IValueGenericArgument
+  Properties:
+    UInt64 Value 'get ' : 
+  Methods:
+    get_Value(): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract, SpecialName
+Interface NetScriptFramework.IFloatValueGenericArgument: AutoLayout, AnsiClass, Class, Public, ClassSemanticsMask, Abstract
+  Interfaces:
+    NetScriptFramework.IValueGenericArgument
+  Properties:
+    Single Value 'get ' : 
+  Methods:
+    get_Value(): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract, SpecialName
+Interface NetScriptFramework.IDoubleValueGenericArgument: AutoLayout, AnsiClass, Class, Public, ClassSemanticsMask, Abstract
+  Interfaces:
+    NetScriptFramework.IValueGenericArgument
+  Properties:
+    Double Value 'get ' : 
+  Methods:
+    get_Value(): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract, SpecialName
+Interface NetScriptFramework.IIntPtrValueGenericArgument: AutoLayout, AnsiClass, Class, Public, ClassSemanticsMask, Abstract
+  Interfaces:
+    NetScriptFramework.IValueGenericArgument
+  Properties:
+    IntPtr Value 'get ' : 
+  Methods:
+    get_Value(): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract, SpecialName
+Interface NetScriptFramework.IUnknownValueGenericArgument: AutoLayout, AnsiClass, Class, Public, ClassSemanticsMask, Abstract
+  Interfaces:
+    NetScriptFramework.IValueGenericArgument
+Struct NetScriptFramework.CachedVid: AutoLayout, AnsiClass, Class, Public, SequentialLayout, Sealed, BeforeFieldInit
+  :System.ValueType
+  Properties:
+    IntPtr Value 'get ' : 
+  Methods:
+    get_Value(): PrivateScope, Public, HideBySig, SpecialName
+    TryGetValue(): PrivateScope, Public, HideBySig
+    Initialize(UInt64, Int32(Optional, HasDefault), Int32(Optional, HasDefault), String(Optional, HasDefault)): PrivateScope, Public, Static, HideBySig
+    TryInitialize(UInt64, Int32(Optional, HasDefault), Int32(Optional, HasDefault), String(Optional, HasDefault)): PrivateScope, Public, Static, HideBySig
+Struct NetScriptFramework.CachedFid: AutoLayout, AnsiClass, Class, Public, SequentialLayout, Sealed, BeforeFieldInit
+  :System.ValueType
+  Properties:
+    Int32 Value 'get ' : 
+  Methods:
+    get_Value(): PrivateScope, Public, HideBySig, SpecialName
+    TryGetValue(): PrivateScope, Public, HideBySig
+    Initialize(UInt64, UInt32): PrivateScope, Public, Static, HideBySig
+    TryInitialize(UInt64, UInt32): PrivateScope, Public, Static, HideBySig
+Struct NetScriptFramework.CachedLibValue: AutoLayout, AnsiClass, Class, Public, SequentialLayout, Sealed, BeforeFieldInit
+  :System.ValueType
+    Void .ctor(System.Nullable`1[System.Int32]): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Properties:
+    Int32 Value 'get ' : 
+    System.Nullable`1[System.Int32] ValueSafe 'get ' : 
+  Methods:
+    get_Value(): PrivateScope, Public, HideBySig, SpecialName
+    get_ValueSafe(): PrivateScope, Public, HideBySig, SpecialName
+Class NetScriptFramework.Loader: AutoLayout, AnsiClass, Class, Public, Abstract, Sealed, BeforeFieldInit
+  Methods:
+    Load(FileInfo, Assembly&): PrivateScope, Public, Static, HideBySig
+    TryLoadAssembly(String): PrivateScope, Public, Static, HideBySig
+Class NetScriptFramework.Memory: AutoLayout, AnsiClass, Class, Public, Abstract, Sealed, BeforeFieldInit
+  Methods:
+    ExploreRTTI(IntPtr, IntPtr&, List`1&): PrivateScope, Public, Static, HideBySig
+    GetCurrentNativeThreadId(): PrivateScope, Public, Static, HideBySig
+    SuspendAllThreadsExcentCurrent(): PrivateScope, Public, Static, HideBySig
+    ResumeAllThreadsExceptCurrent(): PrivateScope, Public, Static, HideBySig
+    SuspendAllThreadsExceptCurrentAndSpecified(Int32[]): PrivateScope, Public, Static, HideBySig
+    ResumeAllThreadsExceptCurrentAndSpecified(Int32[]): PrivateScope, Public, Static, HideBySig
+    WriteNop(IntPtr, Int32): PrivateScope, Public, Static, HideBySig
+    WriteHook(HookParameters): PrivateScope, Public, Static, HideBySig
+    GetRegionInfo(IntPtr, IntPtr&, Int64&, AllocationProtectFlags&): PrivateScope, Public, Static, HideBySig
+    IsValidRegion(AllocationProtectFlags, Boolean, Boolean, Boolean, Boolean(Optional, HasDefault)): PrivateScope, Public, Static, HideBySig
+    IsValidRegion(IntPtr, Int32, Boolean, Boolean, Boolean, Boolean(Optional, HasDefault)): PrivateScope, Public, Static, HideBySig
+    ReadUInt8(IntPtr, Boolean(Optional, HasDefault)): PrivateScope, Public, Static, HideBySig
+    ReadInt8(IntPtr, Boolean(Optional, HasDefault)): PrivateScope, Public, Static, HideBySig
+    ReadChar(IntPtr, Boolean(Optional, HasDefault)): PrivateScope, Public, Static, HideBySig
+    ReadInt16(IntPtr, Boolean(Optional, HasDefault)): PrivateScope, Public, Static, HideBySig
+    ReadUInt16(IntPtr, Boolean(Optional, HasDefault)): PrivateScope, Public, Static, HideBySig
+    ReadInt32(IntPtr, Boolean(Optional, HasDefault)): PrivateScope, Public, Static, HideBySig
+    ReadInterlockedInt32(IntPtr, Boolean(Optional, HasDefault)): PrivateScope, Public, Static, HideBySig
+    ReadUInt32(IntPtr, Boolean(Optional, HasDefault)): PrivateScope, Public, Static, HideBySig
+    ReadInterlockedUInt32(IntPtr, Boolean(Optional, HasDefault)): PrivateScope, Public, Static, HideBySig
+    ReadInt64(IntPtr, Boolean(Optional, HasDefault)): PrivateScope, Public, Static, HideBySig
+    ReadInterlockedInt64(IntPtr, Boolean(Optional, HasDefault)): PrivateScope, Public, Static, HideBySig
+    ReadUInt64(IntPtr, Boolean(Optional, HasDefault)): PrivateScope, Public, Static, HideBySig
+    ReadInterlockedUInt64(IntPtr, Boolean(Optional, HasDefault)): PrivateScope, Public, Static, HideBySig
+    ReadFloat(IntPtr, Boolean(Optional, HasDefault)): PrivateScope, Public, Static, HideBySig
+    ReadDouble(IntPtr, Boolean(Optional, HasDefault)): PrivateScope, Public, Static, HideBySig
+    ReadDouble128(IntPtr, Boolean(Optional, HasDefault)): PrivateScope, Public, Static, HideBySig
+    ReadFloat128(IntPtr, Boolean(Optional, HasDefault)): PrivateScope, Public, Static, HideBySig
+    ReadPointer(IntPtr, Boolean(Optional, HasDefault)): PrivateScope, Public, Static, HideBySig
+    TryReadPointer(IntPtr, IntPtr&, Boolean(Optional, HasDefault)): PrivateScope, Public, Static, HideBySig
+    ReadString(IntPtr, Boolean, Boolean(Optional, HasDefault)): PrivateScope, Public, Static, HideBySig
+    ReadBytes(IntPtr, Int32, Boolean(Optional, HasDefault)): PrivateScope, Public, Static, HideBySig
+    VerifyBytes(IntPtr, String, Boolean(Optional, HasDefault)): PrivateScope, Public, Static, HideBySig
+    TryReadBytes(IntPtr, Int32, Byte[]&, Boolean(Optional, HasDefault)): PrivateScope, Public, Static, HideBySig
+    WriteInt8(IntPtr, SByte, Boolean(Optional, HasDefault)): PrivateScope, Public, Static, HideBySig
+    WriteUInt8(IntPtr, Byte, Boolean(Optional, HasDefault)): PrivateScope, Public, Static, HideBySig
+    WriteInt16(IntPtr, Int16, Boolean(Optional, HasDefault)): PrivateScope, Public, Static, HideBySig
+    WriteUInt16(IntPtr, UInt16, Boolean(Optional, HasDefault)): PrivateScope, Public, Static, HideBySig
+    WriteInt32(IntPtr, Int32, Boolean(Optional, HasDefault)): PrivateScope, Public, Static, HideBySig
+    WriteInterlockedInt32(IntPtr, Int32, Boolean(Optional, HasDefault)): PrivateScope, Public, Static, HideBySig
+    WriteUInt32(IntPtr, UInt32, Boolean(Optional, HasDefault)): PrivateScope, Public, Static, HideBySig
+    WriteInterlockedUInt32(IntPtr, UInt32, Boolean(Optional, HasDefault)): PrivateScope, Public, Static, HideBySig
+    WriteInt64(IntPtr, Int64, Boolean(Optional, HasDefault)): PrivateScope, Public, Static, HideBySig
+    WriteInterlockedInt64(IntPtr, Int64, Boolean(Optional, HasDefault)): PrivateScope, Public, Static, HideBySig
+    WriteUInt64(IntPtr, UInt64, Boolean(Optional, HasDefault)): PrivateScope, Public, Static, HideBySig
+    WriteInterlockedUInt64(IntPtr, UInt64, Boolean(Optional, HasDefault)): PrivateScope, Public, Static, HideBySig
+    WriteFloat(IntPtr, Single, Boolean(Optional, HasDefault)): PrivateScope, Public, Static, HideBySig
+    WriteDouble(IntPtr, Double, Boolean(Optional, HasDefault)): PrivateScope, Public, Static, HideBySig
+    WriteDouble128(IntPtr, Double, Boolean(Optional, HasDefault)): PrivateScope, Public, Static, HideBySig
+    WriteFloat128(IntPtr, Single, Boolean(Optional, HasDefault)): PrivateScope, Public, Static, HideBySig
+    WritePointer(IntPtr, IntPtr, Boolean(Optional, HasDefault)): PrivateScope, Public, Static, HideBySig
+    WriteString(IntPtr, String, Boolean, Boolean(Optional, HasDefault)): PrivateScope, Public, Static, HideBySig
+    WriteBytes(IntPtr, Byte[], Boolean(Optional, HasDefault)): PrivateScope, Public, Static, HideBySig
+    WriteBytes(IntPtr, Byte[], Int32, Int32, Boolean(Optional, HasDefault)): PrivateScope, Public, Static, HideBySig
+    WriteZero(IntPtr, Int32, Boolean(Optional, HasDefault)): PrivateScope, Public, Static, HideBySig
+    Copy(IntPtr, IntPtr, Int32, Boolean(Optional, HasDefault), Boolean(Optional, HasDefault)): PrivateScope, Public, Static, HideBySig
+    InterlockedIncrement32(IntPtr, Boolean(Optional, HasDefault)): PrivateScope, Public, Static, HideBySig
+    InterlockedDecrement32(IntPtr, Boolean(Optional, HasDefault)): PrivateScope, Public, Static, HideBySig
+    InterlockedIncrement64(IntPtr, Boolean(Optional, HasDefault)): PrivateScope, Public, Static, HideBySig
+    InterlockedDecrement64(IntPtr, Boolean(Optional, HasDefault)): PrivateScope, Public, Static, HideBySig
+    FindCodeCave(IntPtr, Int32, IntPtr&): PrivateScope, Public, Static, HideBySig
+    FindAllCodeCaves(IntPtr, Int32): PrivateScope, Public, Static, HideBySig
+    WriteNativeCode(IntPtr, Int32, Int32, Byte[], Boolean(Optional, HasDefault)): PrivateScope, Public, Static, HideBySig
+    GetMainModuleVersion(): PrivateScope, Public, Static, HideBySig
+    InvokeThisCall(IntPtr, IntPtr, InvokeArgument[]): PrivateScope, Public, Static, HideBySig
+    InvokeThisCallF(IntPtr, IntPtr, InvokeArgument[]): PrivateScope, Public, Static, HideBySig
+    InvokeThisCallD(IntPtr, IntPtr, InvokeArgument[]): PrivateScope, Public, Static, HideBySig
+    InvokeStdCall(IntPtr, InvokeArgument[]): PrivateScope, Public, Static, HideBySig
+    InvokeStdCallF(IntPtr, InvokeArgument[]): PrivateScope, Public, Static, HideBySig
+    InvokeStdCallD(IntPtr, InvokeArgument[]): PrivateScope, Public, Static, HideBySig
+    InvokeCdecl(IntPtr, InvokeArgument[]): PrivateScope, Public, Static, HideBySig
+    InvokeCdeclF(IntPtr, InvokeArgument[]): PrivateScope, Public, Static, HideBySig
+    InvokeCdeclD(IntPtr, InvokeArgument[]): PrivateScope, Public, Static, HideBySig
+    Allocate(Int32, Int32(Optional, HasDefault), Boolean(Optional, HasDefault)): PrivateScope, Public, Static, HideBySig
+    AllocateStruct(Int32): PrivateScope, Public, Static, HideBySig
+    AllocateString(String, Boolean): PrivateScope, Public, Static, HideBySig
+Class NetScriptFramework.MemoryAllocation: AutoLayout, AnsiClass, Class, Public, Sealed, BeforeFieldInit
+  :NetScriptFramework.TemporaryObject
+  Fields:
+    IntPtr Address : Public, InitOnly
+    Int32 Size : Public, InitOnly
+    Int32 Align : Public, InitOnly
+    MemoryAllocationTypes Type : Public, InitOnly
+  Methods:
+    Zero(): PrivateScope, Public, HideBySig
+Class NetScriptFramework.InvokeArgument: AutoLayout, AnsiClass, Class, Public, Sealed, BeforeFieldInit
+  Methods:
+    op_Implicit(IntPtr): PrivateScope, Public, Static, HideBySig, SpecialName
+    op_Implicit(Int32): PrivateScope, Public, Static, HideBySig, SpecialName
+    op_Implicit(Int64): PrivateScope, Public, Static, HideBySig, SpecialName
+    op_Implicit(UInt32): PrivateScope, Public, Static, HideBySig, SpecialName
+    op_Implicit(UInt64): PrivateScope, Public, Static, HideBySig, SpecialName
+    op_Implicit(Int16): PrivateScope, Public, Static, HideBySig, SpecialName
+    op_Implicit(UInt16): PrivateScope, Public, Static, HideBySig, SpecialName
+    op_Implicit(Byte): PrivateScope, Public, Static, HideBySig, SpecialName
+    op_Implicit(SByte): PrivateScope, Public, Static, HideBySig, SpecialName
+    op_Implicit(Boolean): PrivateScope, Public, Static, HideBySig, SpecialName
+    op_Implicit(Double): PrivateScope, Public, Static, HideBySig, SpecialName
+    op_Implicit(Single): PrivateScope, Public, Static, HideBySig, SpecialName
+Class NetScriptFramework.VTableHookParameters: AutoLayout, AnsiClass, Class, Public, Sealed, BeforeFieldInit
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Properties:
+    IntPtr Address 'get set' : 
+    Boolean SkipDefaultImplementation 'get set' : 
+    System.Action`1[NetScriptFramework.CPURegisters] Before 'get set' : 
+    System.Action`1[NetScriptFramework.CPURegisters] After 'get set' : 
+  Methods:
+    get_Address(): PrivateScope, Public, HideBySig, SpecialName
+    set_Address(IntPtr): PrivateScope, Public, HideBySig, SpecialName
+    get_SkipDefaultImplementation(): PrivateScope, Public, HideBySig, SpecialName
+    set_SkipDefaultImplementation(Boolean): PrivateScope, Public, HideBySig, SpecialName
+    get_Before(): PrivateScope, Public, HideBySig, SpecialName
+    set_Before(Action`1): PrivateScope, Public, HideBySig, SpecialName
+    get_After(): PrivateScope, Public, HideBySig, SpecialName
+    set_After(Action`1): PrivateScope, Public, HideBySig, SpecialName
+Class NetScriptFramework.HookParameters: AutoLayout, AnsiClass, Class, Public, Sealed, BeforeFieldInit
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Properties:
+    IntPtr Address 'get set' : 
+    Int32 ReplaceLength 'get set' : 
+    Int32 IncludeLength 'get set' : 
+    System.String Pattern 'get set' : 
+    System.Action`1[NetScriptFramework.CPURegisters] Before 'get set' : 
+    System.Action`1[NetScriptFramework.CPURegisters] After 'get set' : 
+    Boolean ForceLongJump 'get set' : 
+  Methods:
+    get_Address(): PrivateScope, Public, HideBySig, SpecialName
+    set_Address(IntPtr): PrivateScope, Public, HideBySig, SpecialName
+    get_ReplaceLength(): PrivateScope, Public, HideBySig, SpecialName
+    set_ReplaceLength(Int32): PrivateScope, Public, HideBySig, SpecialName
+    get_IncludeLength(): PrivateScope, Public, HideBySig, SpecialName
+    set_IncludeLength(Int32): PrivateScope, Public, HideBySig, SpecialName
+    get_Pattern(): PrivateScope, Public, HideBySig, SpecialName
+    set_Pattern(String): PrivateScope, Public, HideBySig, SpecialName
+    get_Before(): PrivateScope, Public, HideBySig, SpecialName
+    set_Before(Action`1): PrivateScope, Public, HideBySig, SpecialName
+    get_After(): PrivateScope, Public, HideBySig, SpecialName
+    set_After(Action`1): PrivateScope, Public, HideBySig, SpecialName
+    get_ForceLongJump(): PrivateScope, Public, HideBySig, SpecialName
+    set_ForceLongJump(Boolean): PrivateScope, Public, HideBySig, SpecialName
+Class NetScriptFramework.CPURegisters: AutoLayout, AnsiClass, Class, Public, Sealed, BeforeFieldInit
+  Properties:
+    IntPtr AX  'get set' : 
+    IntPtr BX  'get set' : 
+    IntPtr CX  'get set' : 
+    IntPtr DX  'get set' : 
+    IntPtr DI  'get set' : 
+    IntPtr SI  'get set' : 
+    IntPtr BP  'get set' : 
+    IntPtr SP  'get set' : 
+    IntPtr FLAGS 'get set' : 
+    IntPtr IP  'get set' : 
+    IntPtr Hook 'get set' : 
+    Int32 Depth 'get ' : 
+    Double XMM0 'get set' : 
+    Double XMM1 'get set' : 
+    Double XMM2 'get set' : 
+    Double XMM3 'get set' : 
+    Double XMM4 'get set' : 
+    Double XMM5 'get set' : 
+    Double XMM6 'get set' : 
+    Double XMM7 'get set' : 
+    Double XMM8 'get set' : 
+    Double XMM9 'get set' : 
+    Double XMM10 'get set' : 
+    Double XMM11 'get set' : 
+    Double XMM12 'get set' : 
+    Double XMM13 'get set' : 
+    Double XMM14 'get set' : 
+    Double XMM15 'get set' : 
+    Single XMM0f 'get set' : 
+    Single XMM1f 'get set' : 
+    Single XMM2f 'get set' : 
+    Single XMM3f 'get set' : 
+    Single XMM4f 'get set' : 
+    Single XMM5f 'get set' : 
+    Single XMM6f 'get set' : 
+    Single XMM7f 'get set' : 
+    Single XMM8f 'get set' : 
+    Single XMM9f 'get set' : 
+    Single XMM10f 'get set' : 
+    Single XMM11f 'get set' : 
+    Single XMM12f 'get set' : 
+    Single XMM13f 'get set' : 
+    Single XMM14f 'get set' : 
+    Single XMM15f 'get set' : 
+    IntPtr R8  'get set' : 
+    IntPtr R9  'get set' : 
+    IntPtr R10 'get set' : 
+    IntPtr R11 'get set' : 
+    IntPtr R12 'get set' : 
+    IntPtr R13 'get set' : 
+    IntPtr R14 'get set' : 
+    IntPtr R15 'get set' : 
+    Double ST0 'get set' : 
+    Double ST1 'get set' : 
+    Double ST2 'get set' : 
+    Double ST3 'get set' : 
+    Double ST4 'get set' : 
+    Double ST5 'get set' : 
+    Double ST6 'get set' : 
+    Double ST7 'get set' : 
+    Int32 STCount 'get ' : 
+  Methods:
+    set_XMM10f(Single): PrivateScope, Public, HideBySig, SpecialName
+    get_XMM11f(): PrivateScope, Public, HideBySig, SpecialName
+    set_XMM11f(Single): PrivateScope, Public, HideBySig, SpecialName
+    get_XMM12f(): PrivateScope, Public, HideBySig, SpecialName
+    set_XMM12f(Single): PrivateScope, Public, HideBySig, SpecialName
+    get_XMM13f(): PrivateScope, Public, HideBySig, SpecialName
+    set_XMM13f(Single): PrivateScope, Public, HideBySig, SpecialName
+    get_XMM14f(): PrivateScope, Public, HideBySig, SpecialName
+    set_XMM14f(Single): PrivateScope, Public, HideBySig, SpecialName
+    get_XMM15f(): PrivateScope, Public, HideBySig, SpecialName
+    set_XMM15f(Single): PrivateScope, Public, HideBySig, SpecialName
+    get_R8(): PrivateScope, Public, HideBySig, SpecialName
+    set_R8(IntPtr): PrivateScope, Public, HideBySig, SpecialName
+    get_R9(): PrivateScope, Public, HideBySig, SpecialName
+    set_R9(IntPtr): PrivateScope, Public, HideBySig, SpecialName
+    get_R10(): PrivateScope, Public, HideBySig, SpecialName
+    set_R10(IntPtr): PrivateScope, Public, HideBySig, SpecialName
+    get_R11(): PrivateScope, Public, HideBySig, SpecialName
+    set_R11(IntPtr): PrivateScope, Public, HideBySig, SpecialName
+    get_R12(): PrivateScope, Public, HideBySig, SpecialName
+    set_R12(IntPtr): PrivateScope, Public, HideBySig, SpecialName
+    get_R13(): PrivateScope, Public, HideBySig, SpecialName
+    set_R13(IntPtr): PrivateScope, Public, HideBySig, SpecialName
+    get_R14(): PrivateScope, Public, HideBySig, SpecialName
+    set_R14(IntPtr): PrivateScope, Public, HideBySig, SpecialName
+    get_R15(): PrivateScope, Public, HideBySig, SpecialName
+    set_R15(IntPtr): PrivateScope, Public, HideBySig, SpecialName
+    get_ST0(): PrivateScope, Public, HideBySig, SpecialName
+    set_ST0(Double): PrivateScope, Public, HideBySig, SpecialName
+    get_ST1(): PrivateScope, Public, HideBySig, SpecialName
+    set_ST1(Double): PrivateScope, Public, HideBySig, SpecialName
+    get_ST2(): PrivateScope, Public, HideBySig, SpecialName
+    set_ST2(Double): PrivateScope, Public, HideBySig, SpecialName
+    get_ST3(): PrivateScope, Public, HideBySig, SpecialName
+    set_ST3(Double): PrivateScope, Public, HideBySig, SpecialName
+    get_ST4(): PrivateScope, Public, HideBySig, SpecialName
+    set_ST4(Double): PrivateScope, Public, HideBySig, SpecialName
+    get_ST5(): PrivateScope, Public, HideBySig, SpecialName
+    set_ST5(Double): PrivateScope, Public, HideBySig, SpecialName
+    get_ST6(): PrivateScope, Public, HideBySig, SpecialName
+    set_ST6(Double): PrivateScope, Public, HideBySig, SpecialName
+    get_ST7(): PrivateScope, Public, HideBySig, SpecialName
+    set_ST7(Double): PrivateScope, Public, HideBySig, SpecialName
+    get_STCount(): PrivateScope, Public, HideBySig, SpecialName
+    get_AX(): PrivateScope, Public, HideBySig, SpecialName
+    set_AX(IntPtr): PrivateScope, Public, HideBySig, SpecialName
+    get_BX(): PrivateScope, Public, HideBySig, SpecialName
+    set_BX(IntPtr): PrivateScope, Public, HideBySig, SpecialName
+    get_CX(): PrivateScope, Public, HideBySig, SpecialName
+    set_CX(IntPtr): PrivateScope, Public, HideBySig, SpecialName
+    get_DX(): PrivateScope, Public, HideBySig, SpecialName
+    set_DX(IntPtr): PrivateScope, Public, HideBySig, SpecialName
+    get_DI(): PrivateScope, Public, HideBySig, SpecialName
+    set_DI(IntPtr): PrivateScope, Public, HideBySig, SpecialName
+    get_SI(): PrivateScope, Public, HideBySig, SpecialName
+    set_SI(IntPtr): PrivateScope, Public, HideBySig, SpecialName
+    get_BP(): PrivateScope, Public, HideBySig, SpecialName
+    set_BP(IntPtr): PrivateScope, Public, HideBySig, SpecialName
+    get_SP(): PrivateScope, Public, HideBySig, SpecialName
+    set_SP(IntPtr): PrivateScope, Public, HideBySig, SpecialName
+    get_FLAGS(): PrivateScope, Public, HideBySig, SpecialName
+    set_FLAGS(IntPtr): PrivateScope, Public, HideBySig, SpecialName
+    get_IP(): PrivateScope, Public, HideBySig, SpecialName
+    set_IP(IntPtr): PrivateScope, Public, HideBySig, SpecialName
+    get_Hook(): PrivateScope, Public, HideBySig, SpecialName
+    Skip(): PrivateScope, Public, HideBySig
+    get_Depth(): PrivateScope, Public, HideBySig, SpecialName
+    get_XMM0(): PrivateScope, Public, HideBySig, SpecialName
+    set_XMM0(Double): PrivateScope, Public, HideBySig, SpecialName
+    get_XMM1(): PrivateScope, Public, HideBySig, SpecialName
+    set_XMM1(Double): PrivateScope, Public, HideBySig, SpecialName
+    get_XMM2(): PrivateScope, Public, HideBySig, SpecialName
+    set_XMM2(Double): PrivateScope, Public, HideBySig, SpecialName
+    get_XMM3(): PrivateScope, Public, HideBySig, SpecialName
+    set_XMM3(Double): PrivateScope, Public, HideBySig, SpecialName
+    get_XMM4(): PrivateScope, Public, HideBySig, SpecialName
+    set_XMM4(Double): PrivateScope, Public, HideBySig, SpecialName
+    get_XMM5(): PrivateScope, Public, HideBySig, SpecialName
+    set_XMM5(Double): PrivateScope, Public, HideBySig, SpecialName
+    get_XMM6(): PrivateScope, Public, HideBySig, SpecialName
+    set_XMM6(Double): PrivateScope, Public, HideBySig, SpecialName
+    get_XMM7(): PrivateScope, Public, HideBySig, SpecialName
+    set_XMM7(Double): PrivateScope, Public, HideBySig, SpecialName
+    get_XMM8(): PrivateScope, Public, HideBySig, SpecialName
+    set_XMM8(Double): PrivateScope, Public, HideBySig, SpecialName
+    get_XMM9(): PrivateScope, Public, HideBySig, SpecialName
+    set_XMM9(Double): PrivateScope, Public, HideBySig, SpecialName
+    get_XMM10(): PrivateScope, Public, HideBySig, SpecialName
+    set_XMM10(Double): PrivateScope, Public, HideBySig, SpecialName
+    get_XMM11(): PrivateScope, Public, HideBySig, SpecialName
+    set_XMM11(Double): PrivateScope, Public, HideBySig, SpecialName
+    get_XMM12(): PrivateScope, Public, HideBySig, SpecialName
+    set_XMM12(Double): PrivateScope, Public, HideBySig, SpecialName
+    get_XMM13(): PrivateScope, Public, HideBySig, SpecialName
+    set_XMM13(Double): PrivateScope, Public, HideBySig, SpecialName
+    get_XMM14(): PrivateScope, Public, HideBySig, SpecialName
+    set_XMM14(Double): PrivateScope, Public, HideBySig, SpecialName
+    get_XMM15(): PrivateScope, Public, HideBySig, SpecialName
+    set_XMM15(Double): PrivateScope, Public, HideBySig, SpecialName
+    get_XMM0f(): PrivateScope, Public, HideBySig, SpecialName
+    set_XMM0f(Single): PrivateScope, Public, HideBySig, SpecialName
+    get_XMM1f(): PrivateScope, Public, HideBySig, SpecialName
+    set_XMM1f(Single): PrivateScope, Public, HideBySig, SpecialName
+    get_XMM2f(): PrivateScope, Public, HideBySig, SpecialName
+    set_XMM2f(Single): PrivateScope, Public, HideBySig, SpecialName
+    get_XMM3f(): PrivateScope, Public, HideBySig, SpecialName
+    set_XMM3f(Single): PrivateScope, Public, HideBySig, SpecialName
+    get_XMM4f(): PrivateScope, Public, HideBySig, SpecialName
+    set_XMM4f(Single): PrivateScope, Public, HideBySig, SpecialName
+    get_XMM5f(): PrivateScope, Public, HideBySig, SpecialName
+    set_XMM5f(Single): PrivateScope, Public, HideBySig, SpecialName
+    get_XMM6f(): PrivateScope, Public, HideBySig, SpecialName
+    set_XMM6f(Single): PrivateScope, Public, HideBySig, SpecialName
+    get_XMM7f(): PrivateScope, Public, HideBySig, SpecialName
+    set_XMM7f(Single): PrivateScope, Public, HideBySig, SpecialName
+    get_XMM8f(): PrivateScope, Public, HideBySig, SpecialName
+    set_XMM8f(Single): PrivateScope, Public, HideBySig, SpecialName
+    get_XMM9f(): PrivateScope, Public, HideBySig, SpecialName
+    set_XMM9f(Single): PrivateScope, Public, HideBySig, SpecialName
+    get_XMM10f(): PrivateScope, Public, HideBySig, SpecialName
+Class NetScriptFramework._IntPtrExtensions: AutoLayout, AnsiClass, Class, Public, Abstract, Sealed, BeforeFieldInit
+  Methods:
+    ToHexString(IntPtr): PrivateScope, Public, Static, HideBySig
+    ToBool(IntPtr): PrivateScope, Public, Static, HideBySig
+    ToUInt8(IntPtr): PrivateScope, Public, Static, HideBySig
+    ToInt8(IntPtr): PrivateScope, Public, Static, HideBySig
+    ToChar(IntPtr): PrivateScope, Public, Static, HideBySig
+    ToInt16(IntPtr): PrivateScope, Public, Static, HideBySig
+    ToUInt16(IntPtr): PrivateScope, Public, Static, HideBySig
+    ToUInt32(IntPtr): PrivateScope, Public, Static, HideBySig
+    ToInt32Safe(IntPtr): PrivateScope, Public, Static, HideBySig
+    ToUInt64(IntPtr): PrivateScope, Public, Static, HideBySig
+    ToSingle(IntPtr): PrivateScope, Public, Static, HideBySig
+    ToDouble(IntPtr): PrivateScope, Public, Static, HideBySig
+    CompareTo(IntPtr, IntPtr): PrivateScope, Public, Static, HideBySig
+Class NetScriptFramework.MemoryAccessException: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+  :System.Exception
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+    Void .ctor(IntPtr): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+    Void .ctor(IntPtr, Int32): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+    Void .ctor(IntPtr, Int32, Boolean): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+    Void .ctor(IntPtr, Boolean): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+Class NetScriptFramework.MemoryArrayBase: AutoLayout, AnsiClass, Class, Public, Abstract, BeforeFieldInit
+  Properties:
+    IntPtr Address 'get set' : 
+    Int32 Length 'get ' : 
+  Methods:
+    get_Address(): PrivateScope, Public, HideBySig, SpecialName
+    get_Length(): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract, SpecialName
+    ToString(Int32): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract
+Class NetScriptFramework.MemoryArray`1[TValue]: AutoLayout, AnsiClass, Class, Public, Abstract, BeforeFieldInit
+  Type parameter: TValue
+  :NetScriptFramework.MemoryArrayBase
+  Interfaces:
+    System.Collections.Generic.IEnumerable`1[TValue]
+    System.Collections.IEnumerable
+  Properties:
+    NetScriptFramework.MemoryArrayTypeHandler`1[TValue] Handler 'get ' : 
+    TValue Item [Int32] 'get set' : 
+  Methods:
+    get_Handler(): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract, SpecialName
+    get_Item(Int32): PrivateScope, Public, HideBySig, SpecialName
+    set_Item(Int32, TValue): PrivateScope, Public, HideBySig, SpecialName
+    GetEnumerator(): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask
+    ToString(): PrivateScope, Public, Virtual, HideBySig
+    ToString(Int32): PrivateScope, Public, Virtual, HideBySig
+Class NetScriptFramework.FixedMemoryArray`1[TValue]: AutoLayout, AnsiClass, Class, Public, Sealed, BeforeFieldInit
+  Type parameter: TValue
+  :NetScriptFramework.MemoryArray`1[TValue]
+    Void .ctor(NetScriptFramework.MemoryArrayTypeHandler`1[TValue], IntPtr, Int32): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Properties:
+    NetScriptFramework.MemoryArrayTypeHandler`1[TValue] Handler 'get ' : 
+    Int32 Length 'get ' : 
+  Methods:
+    get_Handler(): PrivateScope, Public, Virtual, HideBySig, SpecialName
+    get_Length(): PrivateScope, Public, Virtual, HideBySig, SpecialName
+Class NetScriptFramework.MemoryArrayTypeHandlerBase: AutoLayout, AnsiClass, Class, Public, Abstract, BeforeFieldInit
+  Properties:
+    Int32 Stride 'get ' : 
+  Methods:
+    get_Stride(): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract, SpecialName
+Class NetScriptFramework.MemoryArrayTypeHandler`1[TValue]: AutoLayout, AnsiClass, Class, Public, Abstract, BeforeFieldInit
+  Type parameter: TValue
+  :NetScriptFramework.MemoryArrayTypeHandlerBase
+  Methods:
+    Read(IntPtr, Int32): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract
+    Write(IntPtr, Int32, TValue): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract
+    GetText(TValue): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract
+Class NetScriptFramework.MemoryObject: AutoLayout, AnsiClass, Class, Public, Abstract, BeforeFieldInit
+  Interfaces:
+    NetScriptFramework.IMemoryObject
+    System.IEquatable`1[NetScriptFramework.IMemoryObject]
+    NetScriptFramework.Tools.IArgument
+  Properties:
+    IntPtr Address 'get set' : 
+    Boolean IsValid 'get ' : 
+    GameTypeInstanceInfo TypeInfo 'get ' : 
+    UInt64 TypeId 'get ' : 
+    System.Collections.Generic.IReadOnlyList`1[NetScriptFramework.GameInfo+GameTypeInstanceInfo] TypeInfos 'get ' : 
+  Methods:
+    get_Address(): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask, SpecialName
+    get_IsValid(): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, SpecialName
+    get_TypeInfo(): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask, SpecialName
+    get_TypeId(): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask, SpecialName
+    get_TypeInfos(): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract, SpecialName
+    FromAddress(IntPtr): PrivateScope, Public, Static, HideBySig
+    FromAddress(Type, IntPtr): PrivateScope, Public, Static, HideBySig
+    FromAddress(UInt64, IntPtr): PrivateScope, Public, Static, HideBySig
+    Cast(): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract
+    VTable(): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask
+    GatherObjectsForCrashLog(InterestingCrashLogObjects): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask
+    GatherStringForCrashLog(): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask
+    GetHashCode(): PrivateScope, Public, Virtual, HideBySig
+    Equals(Object): PrivateScope, Public, Virtual, HideBySig
+    Equals(IMemoryObject): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask
+    ToString(): PrivateScope, Public, Virtual, HideBySig
+    ParseArgument(String, Message, Parser): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask
+    ParseVariable(String, Message, Parser): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask
+    ParseFunction(String, String[], Message, Parser): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask
+Interface NetScriptFramework.IMemoryObject: AutoLayout, AnsiClass, Class, Public, ClassSemanticsMask, Abstract
+  Interfaces:
+    System.IEquatable`1[NetScriptFramework.IMemoryObject]
+  Properties:
+    IntPtr Address 'get ' : 
+    Boolean IsValid 'get ' : 
+    GameTypeInstanceInfo TypeInfo 'get ' : 
+    UInt64 TypeId 'get ' : 
+    System.Collections.Generic.IReadOnlyList`1[NetScriptFramework.GameInfo+GameTypeInstanceInfo] TypeInfos 'get ' : 
+  Methods:
+    get_Address(): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract, SpecialName
+    get_IsValid(): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract, SpecialName
+    get_TypeInfo(): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract, SpecialName
+    get_TypeId(): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract, SpecialName
+    get_TypeInfos(): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract, SpecialName
+    Cast(): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract
+    VTable(): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract
+    GatherObjectsForCrashLog(InterestingCrashLogObjects): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract
+    GatherStringForCrashLog(): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract
+Interface NetScriptFramework.unknown: AutoLayout, AnsiClass, Class, Public, ClassSemanticsMask, Abstract
+  Interfaces:
+    NetScriptFramework.IMemoryObject
+    System.IEquatable`1[NetScriptFramework.IMemoryObject]
+Interface NetScriptFramework.VoidGenericArgument: AutoLayout, AnsiClass, Class, Public, ClassSemanticsMask, Abstract
+  Interfaces:
+    NetScriptFramework.IMemoryObject
+    System.IEquatable`1[NetScriptFramework.IMemoryObject]
+Class NetScriptFramework.MemoryParser: AutoLayout, AnsiClass, Class, Public, Sealed, BeforeFieldInit
+    Void .ctor(System.String): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Fields:
+    System.String Formula : Public, InitOnly
+  Methods:
+    Evaluate(CPURegisters): PrivateScope, Public, HideBySig
+Class NetScriptFramework.Plugin: AutoLayout, AnsiClass, Class, Public, Abstract, BeforeFieldInit
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Properties:
+    System.String Key 'get ' : 
+    System.String Name 'get ' : 
+    Int32 Version 'get ' : 
+    System.String Author 'get ' : 
+    System.String Website 'get ' : 
+    Int32 RequiredFrameworkVersion 'get ' : 
+    Int32 RequiredLibraryVersion 'get ' : 
+    Boolean IsInitialized 'get set' : 
+    System.Reflection.Assembly Assembly 'get set' : 
+  Methods:
+    get_Key(): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract, SpecialName
+    get_Name(): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract, SpecialName
+    get_Version(): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract, SpecialName
+    get_Author(): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, SpecialName
+    get_Website(): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, SpecialName
+    get_RequiredFrameworkVersion(): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, SpecialName
+    get_RequiredLibraryVersion(): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, SpecialName
+    get_IsInitialized(): PrivateScope, Public, HideBySig, SpecialName
+    get_Assembly(): PrivateScope, Public, HideBySig, SpecialName
+Class NetScriptFramework.PluginManager: AutoLayout, AnsiClass, Class, Public, Abstract, Sealed, BeforeFieldInit
+  Methods:
+    GetPlugin(String): PrivateScope, Public, Static, HideBySig
+    GetPlugin(): PrivateScope, Public, Static, HideBySig
+    GetPlugins(): PrivateScope, Public, Static, HideBySig
+Class NetScriptFramework.TemporaryObject: AutoLayout, AnsiClass, Class, Public, Abstract, BeforeFieldInit
+  Interfaces:
+    System.IDisposable
+  Methods:
+    Pin(): PrivateScope, Public, HideBySig
+    Unpin(): PrivateScope, Public, HideBySig
+    Dispose(): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask
+Class NetScriptFramework.VirtualObject: AutoLayout, AnsiClass, Class, Public, Abstract, BeforeFieldInit
+  :NetScriptFramework.MemoryObject
+  Interfaces:
+    NetScriptFramework.IVirtualObject
+  Methods:
+    InvokeVTableThisCall(Int32, InvokeArgument[]): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask
+    InvokeVTableThisCallF(Int32, InvokeArgument[]): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask
+    InvokeVTableThisCallD(Int32, InvokeArgument[]): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask
+    FromAddress(IntPtr): PrivateScope, Public, Static, HideBySig
+Interface NetScriptFramework.IVirtualObject: AutoLayout, AnsiClass, Class, Public, ClassSemanticsMask, Abstract
+  Interfaces:
+    NetScriptFramework.IMemoryObject
+    System.IEquatable`1[NetScriptFramework.IMemoryObject]
+  Methods:
+    InvokeVTableThisCall(Int32, InvokeArgument[]): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract
+    InvokeVTableThisCallF(Int32, InvokeArgument[]): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract
+    InvokeVTableThisCallD(Int32, InvokeArgument[]): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract
+Class NetScriptFramework.Main: AutoLayout, AnsiClass, Class, Public, Abstract, Sealed, BeforeFieldInit
+  Fields:
+    System.String FrameworkName : Public, Static, InitOnly
+    Int32 FrameworkVersion : Public, Static, InitOnly
+  Properties:
+    NetScriptFramework.Game Game 'get set' : 
+    NetScriptFramework.GameInfo GameInfo 'get set' : 
+    Boolean Is64Bit 'get ' : 
+    NetScriptFramework.Tools.ConfigFile Config 'get set' : 
+    NetScriptFramework.Tools.LogFile Log 'get set' : 
+    IntPtr TrashMemory 'get set' : 
+    System.String FrameworkPath 'get set' : 
+    Boolean IsShutdown 'get ' : 
+    Boolean IsInitializing 'get ' : 
+  Methods:
+    get_Game(): PrivateScope, Public, Static, HideBySig, SpecialName
+    get_GameInfo(): PrivateScope, Public, Static, HideBySig, SpecialName
+    get_Is64Bit(): PrivateScope, Public, Static, HideBySig, SpecialName
+    get_Config(): PrivateScope, Public, Static, HideBySig, SpecialName
+    get_Log(): PrivateScope, Public, Static, HideBySig, SpecialName
+    get_TrashMemory(): PrivateScope, Public, Static, HideBySig, SpecialName
+    CriticalException(Exception, Boolean): PrivateScope, Public, Static, HideBySig
+    CriticalException(String, Boolean): PrivateScope, Public, Static, HideBySig
+    GenerateGuid(): PrivateScope, Public, Static, HideBySig
+    get_FrameworkPath(): PrivateScope, Public, Static, HideBySig, SpecialName
+    get_IsShutdown(): PrivateScope, Public, Static, HideBySig, SpecialName
+    WriteNativeCrashLog(CPURegisters, Int32, String): PrivateScope, Public, Static, HideBySig
+    get_IsInitializing(): PrivateScope, Public, Static, HideBySig, SpecialName
+    AddDebugMessageListener(DebugMessageListener): PrivateScope, Public, Static, HideBySig
+    RemoveDebugMessageListener(DebugMessageListener): PrivateScope, Public, Static, HideBySig
+    WriteDebugMessage(String): PrivateScope, Public, Static, HideBySig
+    GetMainTargetedModule(): PrivateScope, Public, Static, HideBySig
+    GetTypeInfo(UInt64, Boolean(Optional, HasDefault)): PrivateScope, Public, Static, HideBySig
+Class NetScriptFramework.ArrayHandlers.MemoryArrayTypeHandler_Bool: AutoLayout, AnsiClass, Class, Public, Sealed, BeforeFieldInit
+  :NetScriptFramework.MemoryArrayTypeHandler`1[System.Boolean]
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Properties:
+    Int32 Stride 'get ' : 
+  Methods:
+    get_Stride(): PrivateScope, Public, Virtual, HideBySig, SpecialName
+    Read(IntPtr, Int32): PrivateScope, Public, Virtual, HideBySig
+    Write(IntPtr, Int32, Boolean): PrivateScope, Public, Virtual, HideBySig
+    GetText(Boolean): PrivateScope, Public, Virtual, HideBySig
+Class NetScriptFramework.ArrayHandlers.MemoryArrayTypeHandler_UInt8: AutoLayout, AnsiClass, Class, Public, Sealed, BeforeFieldInit
+  :NetScriptFramework.MemoryArrayTypeHandler`1[System.Byte]
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Properties:
+    Int32 Stride 'get ' : 
+  Methods:
+    get_Stride(): PrivateScope, Public, Virtual, HideBySig, SpecialName
+    Read(IntPtr, Int32): PrivateScope, Public, Virtual, HideBySig
+    Write(IntPtr, Int32, Byte): PrivateScope, Public, Virtual, HideBySig
+    GetText(Byte): PrivateScope, Public, Virtual, HideBySig
+Class NetScriptFramework.ArrayHandlers.MemoryArrayTypeHandler_Int8: AutoLayout, AnsiClass, Class, Public, Sealed, BeforeFieldInit
+  :NetScriptFramework.MemoryArrayTypeHandler`1[System.SByte]
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Properties:
+    Int32 Stride 'get ' : 
+  Methods:
+    get_Stride(): PrivateScope, Public, Virtual, HideBySig, SpecialName
+    Read(IntPtr, Int32): PrivateScope, Public, Virtual, HideBySig
+    Write(IntPtr, Int32, SByte): PrivateScope, Public, Virtual, HideBySig
+    GetText(SByte): PrivateScope, Public, Virtual, HideBySig
+Class NetScriptFramework.ArrayHandlers.MemoryArrayTypeHandler_UInt16: AutoLayout, AnsiClass, Class, Public, Sealed, BeforeFieldInit
+  :NetScriptFramework.MemoryArrayTypeHandler`1[System.UInt16]
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Properties:
+    Int32 Stride 'get ' : 
+  Methods:
+    get_Stride(): PrivateScope, Public, Virtual, HideBySig, SpecialName
+    Read(IntPtr, Int32): PrivateScope, Public, Virtual, HideBySig
+    Write(IntPtr, Int32, UInt16): PrivateScope, Public, Virtual, HideBySig
+    GetText(UInt16): PrivateScope, Public, Virtual, HideBySig
+Class NetScriptFramework.ArrayHandlers.MemoryArrayTypeHandler_Int16: AutoLayout, AnsiClass, Class, Public, Sealed, BeforeFieldInit
+  :NetScriptFramework.MemoryArrayTypeHandler`1[System.Int16]
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Properties:
+    Int32 Stride 'get ' : 
+  Methods:
+    get_Stride(): PrivateScope, Public, Virtual, HideBySig, SpecialName
+    Read(IntPtr, Int32): PrivateScope, Public, Virtual, HideBySig
+    Write(IntPtr, Int32, Int16): PrivateScope, Public, Virtual, HideBySig
+    GetText(Int16): PrivateScope, Public, Virtual, HideBySig
+Class NetScriptFramework.ArrayHandlers.MemoryArrayTypeHandler_UInt32: AutoLayout, AnsiClass, Class, Public, Sealed, BeforeFieldInit
+  :NetScriptFramework.MemoryArrayTypeHandler`1[System.UInt32]
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Properties:
+    Int32 Stride 'get ' : 
+  Methods:
+    get_Stride(): PrivateScope, Public, Virtual, HideBySig, SpecialName
+    Read(IntPtr, Int32): PrivateScope, Public, Virtual, HideBySig
+    Write(IntPtr, Int32, UInt32): PrivateScope, Public, Virtual, HideBySig
+    GetText(UInt32): PrivateScope, Public, Virtual, HideBySig
+Class NetScriptFramework.ArrayHandlers.MemoryArrayTypeHandler_Int32: AutoLayout, AnsiClass, Class, Public, Sealed, BeforeFieldInit
+  :NetScriptFramework.MemoryArrayTypeHandler`1[System.Int32]
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Properties:
+    Int32 Stride 'get ' : 
+  Methods:
+    get_Stride(): PrivateScope, Public, Virtual, HideBySig, SpecialName
+    Read(IntPtr, Int32): PrivateScope, Public, Virtual, HideBySig
+    Write(IntPtr, Int32, Int32): PrivateScope, Public, Virtual, HideBySig
+    GetText(Int32): PrivateScope, Public, Virtual, HideBySig
+Class NetScriptFramework.ArrayHandlers.MemoryArrayTypeHandler_UInt64: AutoLayout, AnsiClass, Class, Public, Sealed, BeforeFieldInit
+  :NetScriptFramework.MemoryArrayTypeHandler`1[System.UInt64]
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Properties:
+    Int32 Stride 'get ' : 
+  Methods:
+    get_Stride(): PrivateScope, Public, Virtual, HideBySig, SpecialName
+    Read(IntPtr, Int32): PrivateScope, Public, Virtual, HideBySig
+    Write(IntPtr, Int32, UInt64): PrivateScope, Public, Virtual, HideBySig
+    GetText(UInt64): PrivateScope, Public, Virtual, HideBySig
+Class NetScriptFramework.ArrayHandlers.MemoryArrayTypeHandler_Int64: AutoLayout, AnsiClass, Class, Public, Sealed, BeforeFieldInit
+  :NetScriptFramework.MemoryArrayTypeHandler`1[System.Int64]
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Properties:
+    Int32 Stride 'get ' : 
+  Methods:
+    get_Stride(): PrivateScope, Public, Virtual, HideBySig, SpecialName
+    Read(IntPtr, Int32): PrivateScope, Public, Virtual, HideBySig
+    Write(IntPtr, Int32, Int64): PrivateScope, Public, Virtual, HideBySig
+    GetText(Int64): PrivateScope, Public, Virtual, HideBySig
+Class NetScriptFramework.ArrayHandlers.MemoryArrayTypeHandler_Float: AutoLayout, AnsiClass, Class, Public, Sealed, BeforeFieldInit
+  :NetScriptFramework.MemoryArrayTypeHandler`1[System.Single]
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Properties:
+    Int32 Stride 'get ' : 
+  Methods:
+    get_Stride(): PrivateScope, Public, Virtual, HideBySig, SpecialName
+    Read(IntPtr, Int32): PrivateScope, Public, Virtual, HideBySig
+    Write(IntPtr, Int32, Single): PrivateScope, Public, Virtual, HideBySig
+    GetText(Single): PrivateScope, Public, Virtual, HideBySig
+Class NetScriptFramework.ArrayHandlers.MemoryArrayTypeHandler_Double: AutoLayout, AnsiClass, Class, Public, Sealed, BeforeFieldInit
+  :NetScriptFramework.MemoryArrayTypeHandler`1[System.Double]
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Properties:
+    Int32 Stride 'get ' : 
+  Methods:
+    get_Stride(): PrivateScope, Public, Virtual, HideBySig, SpecialName
+    Read(IntPtr, Int32): PrivateScope, Public, Virtual, HideBySig
+    Write(IntPtr, Int32, Double): PrivateScope, Public, Virtual, HideBySig
+    GetText(Double): PrivateScope, Public, Virtual, HideBySig
+Class NetScriptFramework.ArrayHandlers.MemoryArrayTypeHandler_Pointer: AutoLayout, AnsiClass, Class, Public, Sealed, BeforeFieldInit
+  :NetScriptFramework.MemoryArrayTypeHandler`1[System.IntPtr]
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Properties:
+    Int32 Stride 'get ' : 
+  Methods:
+    get_Stride(): PrivateScope, Public, Virtual, HideBySig, SpecialName
+    Read(IntPtr, Int32): PrivateScope, Public, Virtual, HideBySig
+    Write(IntPtr, Int32, IntPtr): PrivateScope, Public, Virtual, HideBySig
+    GetText(IntPtr): PrivateScope, Public, Virtual, HideBySig
+Class NetScriptFramework.ArrayHandlers.MemoryArrayTypeHandler_StringPointer: AutoLayout, AnsiClass, Class, Public, Sealed, BeforeFieldInit
+  :NetScriptFramework.MemoryArrayTypeHandler`1[System.String]
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Properties:
+    Int32 Stride 'get ' : 
+  Methods:
+    get_Stride(): PrivateScope, Public, Virtual, HideBySig, SpecialName
+    Read(IntPtr, Int32): PrivateScope, Public, Virtual, HideBySig
+    Write(IntPtr, Int32, String): PrivateScope, Public, Virtual, HideBySig
+    GetText(String): PrivateScope, Public, Virtual, HideBySig
+Class NetScriptFramework.ArrayHandlers.MemoryArrayTypeHandler_WStringPointer: AutoLayout, AnsiClass, Class, Public, Sealed, BeforeFieldInit
+  :NetScriptFramework.MemoryArrayTypeHandler`1[System.String]
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Properties:
+    Int32 Stride 'get ' : 
+  Methods:
+    get_Stride(): PrivateScope, Public, Virtual, HideBySig, SpecialName
+    Read(IntPtr, Int32): PrivateScope, Public, Virtual, HideBySig
+    Write(IntPtr, Int32, String): PrivateScope, Public, Virtual, HideBySig
+    GetText(String): PrivateScope, Public, Virtual, HideBySig
+Class NetScriptFramework.ArrayHandlers.MemoryArrayTypeHandler_Struct`1[TValue]: AutoLayout, AnsiClass, Class, Public, Sealed, BeforeFieldInit
+  Type parameter: TValue, NetScriptFramework.IMemoryObject
+  :NetScriptFramework.MemoryArrayTypeHandler`1[TValue]
+    Void .ctor(Int32): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Properties:
+    Int32 Stride 'get ' : 
+  Methods:
+    get_Stride(): PrivateScope, Public, Virtual, HideBySig, SpecialName
+    Read(IntPtr, Int32): PrivateScope, Public, Virtual, HideBySig
+    Write(IntPtr, Int32, TValue): PrivateScope, Public, Virtual, HideBySig
+    GetText(TValue): PrivateScope, Public, Virtual, HideBySig
+Class NetScriptFramework.ArrayHandlers.MemoryArrayTypeHandler_Reference`1[TValue]: AutoLayout, AnsiClass, Class, Public, Sealed, BeforeFieldInit
+  Type parameter: TValue, NetScriptFramework.IMemoryObject
+  :NetScriptFramework.MemoryArrayTypeHandler`1[TValue]
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Properties:
+    Int32 Stride 'get ' : 
+  Methods:
+    get_Stride(): PrivateScope, Public, Virtual, HideBySig, SpecialName
+    Read(IntPtr, Int32): PrivateScope, Public, Virtual, HideBySig
+    Write(IntPtr, Int32, TValue): PrivateScope, Public, Virtual, HideBySig
+    GetText(TValue): PrivateScope, Public, Virtual, HideBySig
+Class NetScriptFramework.Tools.ConfigEntry: AutoLayout, AnsiClass, Class, Public, Sealed, BeforeFieldInit
+  Fields:
+    System.String Keyword : Public, InitOnly
+    System.String Name : Public, InitOnly
+    System.String Description : Public, InitOnly
+    NetScriptFramework.Tools.ConfigEntryFlags Flags : Public, InitOnly
+  Properties:
+    NetScriptFramework.Tools.Value DefaultValue 'get set' : 
+    NetScriptFramework.Tools.Value CurrentValue 'get set' : 
+  Methods:
+    get_DefaultValue(): PrivateScope, Public, HideBySig, SpecialName
+    get_CurrentValue(): PrivateScope, Public, HideBySig, SpecialName
+    AddValidRange(Value, Value): PrivateScope, Public, HideBySig
+    AddValidValue(Value): PrivateScope, Public, HideBySig
+    ToString(): PrivateScope, Public, Virtual, HideBySig
+Struct NetScriptFramework.Tools.ConfigEntryFlags: AutoLayout, AnsiClass, Class, Public, Sealed
+  :System.Enum
+  Fields:
+    UInt64 value__ : Public, SpecialName, RTSpecialName
+    NetScriptFramework.Tools.ConfigEntryFlags None = 0 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.ConfigEntryFlags Custom = 1 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.ConfigEntryFlags Hidden = 2 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.ConfigEntryFlags NoSave = 4 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.ConfigEntryFlags PreferHex = 8 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.ConfigEntryFlags NoNewLineBefore = 16 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.ConfigEntryFlags VeryShortComment = 32 : Public, Static, Literal, HasDefault
+Class NetScriptFramework.Tools.ConfigFile: AutoLayout, AnsiClass, Class, Public, Sealed, BeforeFieldInit
+    Void .ctor(System.String): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Fields:
+    System.String Keyword : Public, InitOnly
+  Properties:
+    Boolean AutoSave 'get set' : 
+    Boolean AutoCreate 'get set' : 
+    Boolean IsLoadedFromFile 'get set' : 
+    Boolean IsModifiedSinceSave 'get set' : 
+  Methods:
+    get_AutoSave(): PrivateScope, Public, HideBySig, SpecialName
+    set_AutoSave(Boolean): PrivateScope, Public, HideBySig, SpecialName
+    get_AutoCreate(): PrivateScope, Public, HideBySig, SpecialName
+    set_AutoCreate(Boolean): PrivateScope, Public, HideBySig, SpecialName
+    LoadFrom(T, String, Boolean): PrivateScope, Public, Static, HideBySig
+    Load(): PrivateScope, Public, HideBySig
+    MarkAllAsModified(): PrivateScope, Public, HideBySig
+    Save(): PrivateScope, Public, HideBySig
+    Reset(): PrivateScope, Public, HideBySig
+    get_IsLoadedFromFile(): PrivateScope, Public, HideBySig, SpecialName
+    get_IsModifiedSinceSave(): PrivateScope, Public, HideBySig, SpecialName
+    AddSetting(String, Value, String(Optional, HasDefault), String(Optional, HasDefault), ConfigEntryFlags(Optional, HasDefault)): PrivateScope, Public, HideBySig
+    GetValue(String): PrivateScope, Public, HideBySig
+    GetDefaultValue(String): PrivateScope, Public, HideBySig
+    SetValue(String, String): PrivateScope, Public, HideBySig
+Class NetScriptFramework.Tools.ConfigValueAttribute: AutoLayout, AnsiClass, Class, Public, Sealed, BeforeFieldInit
+  :System.Attribute
+    Void .ctor(System.String, System.String, System.String, NetScriptFramework.Tools.ConfigEntryFlags): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Fields:
+    System.String Keyword : Public, InitOnly
+    System.String Name : Public, InitOnly
+    System.String Description : Public, InitOnly
+    NetScriptFramework.Tools.ConfigEntryFlags Flags : Public, InitOnly
+Class NetScriptFramework.Tools.Input: AutoLayout, AnsiClass, Class, Public, Abstract, Sealed, BeforeFieldInit
+  Methods:
+    IsPressed(VirtualKeys): PrivateScope, Public, Static, HideBySig
+    IsToggled(VirtualKeys): PrivateScope, Public, Static, HideBySig
+    GetPressed(): PrivateScope, Public, Static, HideBySig
+Struct NetScriptFramework.Tools.VirtualKeys: AutoLayout, AnsiClass, Class, Public, Sealed
+  :System.Enum
+  Fields:
+    Int32 value__ : Public, SpecialName, RTSpecialName
+    NetScriptFramework.Tools.VirtualKeys LeftButton = 1 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys RightButton = 2 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys Cancel = 3 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys MiddleButton = 4 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys ExtraButton1 = 5 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys ExtraButton2 = 6 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys Back = 8 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys Tab = 9 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys Clear = 12 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys Return = 13 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys Shift = 16 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys Control = 17 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys Menu = 18 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys Pause = 19 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys CapsLock = 20 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys Kana = 21 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys Hangeul = 21 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys Hangul = 21 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys Junja = 23 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys Final = 24 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys Hanja = 25 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys Kanji = 25 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys Escape = 27 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys Convert = 28 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys NonConvert = 29 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys Accept = 30 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys ModeChange = 31 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys Space = 32 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys Prior = 33 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys Next = 34 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys End = 35 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys Home = 36 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys Left = 37 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys Up = 38 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys Right = 39 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys Down = 40 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys Select = 41 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys Print = 42 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys Execute = 43 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys Snapshot = 44 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys Insert = 45 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys Delete = 46 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys Help = 47 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys N0 = 48 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys N1 = 49 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys N2 = 50 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys N3 = 51 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys N4 = 52 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys N5 = 53 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys N6 = 54 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys N7 = 55 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys N8 = 56 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys N9 = 57 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys A = 65 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys B = 66 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys C = 67 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys D = 68 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys E = 69 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys F = 70 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys G = 71 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys H = 72 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys I = 73 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys J = 74 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys K = 75 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys L = 76 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys M = 77 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys N = 78 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys O = 79 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys P = 80 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys Q = 81 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys R = 82 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys S = 83 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys T = 84 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys U = 85 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys V = 86 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys W = 87 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys X = 88 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys Y = 89 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys Z = 90 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys LeftWindows = 91 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys RightWindows = 92 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys Application = 93 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys Sleep = 95 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys Numpad0 = 96 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys Numpad1 = 97 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys Numpad2 = 98 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys Numpad3 = 99 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys Numpad4 = 100 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys Numpad5 = 101 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys Numpad6 = 102 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys Numpad7 = 103 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys Numpad8 = 104 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys Numpad9 = 105 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys Multiply = 106 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys Add = 107 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys Separator = 108 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys Subtract = 109 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys Decimal = 110 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys Divide = 111 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys F1 = 112 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys F2 = 113 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys F3 = 114 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys F4 = 115 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys F5 = 116 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys F6 = 117 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys F7 = 118 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys F8 = 119 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys F9 = 120 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys F10 = 121 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys F11 = 122 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys F12 = 123 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys F13 = 124 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys F14 = 125 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys F15 = 126 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys F16 = 127 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys F17 = 128 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys F18 = 129 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys F19 = 130 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys F20 = 131 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys F21 = 132 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys F22 = 133 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys F23 = 134 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys F24 = 135 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys NumLock = 144 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys ScrollLock = 145 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys NEC_Equal = 146 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys Fujitsu_Jisho = 146 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys Fujitsu_Masshou = 147 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys Fujitsu_Touroku = 148 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys Fujitsu_Loya = 149 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys Fujitsu_Roya = 150 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys LeftShift = 160 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys RightShift = 161 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys LeftControl = 162 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys RightControl = 163 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys LeftMenu = 164 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys RightMenu = 165 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys BrowserBack = 166 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys BrowserForward = 167 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys BrowserRefresh = 168 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys BrowserStop = 169 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys BrowserSearch = 170 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys BrowserFavorites = 171 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys BrowserHome = 172 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys VolumeMute = 173 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys VolumeDown = 174 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys VolumeUp = 175 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys MediaNextTrack = 176 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys MediaPrevTrack = 177 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys MediaStop = 178 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys MediaPlayPause = 179 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys LaunchMail = 180 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys LaunchMediaSelect = 181 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys LaunchApplication1 = 182 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys LaunchApplication2 = 183 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys OEM1 = 186 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys OEMPlus = 187 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys OEMComma = 188 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys OEMMinus = 189 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys OEMPeriod = 190 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys OEM2 = 191 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys OEM3 = 192 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys OEM4 = 219 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys OEM5 = 220 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys OEM6 = 221 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys OEM7 = 222 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys OEM8 = 223 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys OEMAX = 225 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys OEM102 = 226 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys ICOHelp = 227 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys ICO00 = 228 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys ProcessKey = 229 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys ICOClear = 230 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys Packet = 231 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys OEMReset = 233 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys OEMJump = 234 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys OEMPA1 = 235 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys OEMPA2 = 236 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys OEMPA3 = 237 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys OEMWSCtrl = 238 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys OEMCUSel = 239 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys OEMATTN = 240 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys OEMFinish = 241 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys OEMCopy = 242 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys OEMAuto = 243 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys OEMENLW = 244 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys OEMBackTab = 245 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys ATTN = 246 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys CRSel = 247 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys EXSel = 248 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys EREOF = 249 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys Play = 250 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys Zoom = 251 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys Noname = 252 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys PA1 = 253 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.VirtualKeys OEMClear = 254 : Public, Static, Literal, HasDefault
+Class NetScriptFramework.Tools.LogFile: AutoLayout, AnsiClass, Class, Public, Sealed, BeforeFieldInit
+    Void .ctor(System.String, NetScriptFramework.Tools.LogFileFlags): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Interfaces:
+    System.IDisposable
+  Fields:
+    System.String Keyword : Public, InitOnly
+    NetScriptFramework.Tools.LogFileFlags Flags : Public, InitOnly
+  Methods:
+    Close(): PrivateScope, Public, HideBySig
+    Append(String): PrivateScope, Public, HideBySig
+    Append(Exception): PrivateScope, Public, HideBySig
+    AppendLine(String): PrivateScope, Public, HideBySig
+    Dispose(): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask
+Class NetScriptFramework.Tools.DateTimeStringConverter: AutoLayout, AnsiClass, Class, Public, Abstract, Sealed, BeforeFieldInit
+  Methods:
+    ToLogTimestampString(DateTime, Boolean(Optional, HasDefault)): PrivateScope, Public, Static, HideBySig
+Struct NetScriptFramework.Tools.LogFileFlags: AutoLayout, AnsiClass, Class, Public, Sealed
+  :System.Enum
+  Fields:
+    UInt32 value__ : Public, SpecialName, RTSpecialName
+    NetScriptFramework.Tools.LogFileFlags None = 0 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.LogFileFlags IncludeTimestampInFileName = 1 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.LogFileFlags IncludeTimestampInLine = 2 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.LogFileFlags AppendFile = 4 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.LogFileFlags AutoFlush = 8 : Public, Static, Literal, HasDefault
+    NetScriptFramework.Tools.LogFileFlags DelayedOpen = 16 : Public, Static, Literal, HasDefault
+Class NetScriptFramework.Tools.MemoryStruct: AutoLayout, AnsiClass, Class, Public, Sealed, BeforeFieldInit
+  :NetScriptFramework.TemporaryObject
+  Properties:
+    IntPtr Address 'get ' : 
+    Int32 Size 'get set' : 
+    NetScriptFramework.Tools.MemoryStructField Item [Int32] 'get set' : 
+  Methods:
+    get_Address(): PrivateScope, Public, HideBySig, SpecialName
+    get_Size(): PrivateScope, Public, HideBySig, SpecialName
+    SetValue(Int32, MemoryStructField): PrivateScope, Public, HideBySig
+    SetValueSafe(Int32, MemoryStructField): PrivateScope, Public, HideBySig
+    GetValue(Int32): PrivateScope, Public, HideBySig
+    ClearValue(Int32): PrivateScope, Public, HideBySig
+    get_Item(Int32): PrivateScope, Public, HideBySig, SpecialName
+    set_Item(Int32, MemoryStructField): PrivateScope, Public, HideBySig, SpecialName
+Class NetScriptFramework.Tools.MemoryStructField: AutoLayout, AnsiClass, Class, Public, Sealed, BeforeFieldInit
+  Properties:
+    Int32 Size 'get set' : 
+    Int32 Offset 'get set' : 
+    FieldTypes Type 'get set' : 
+  Methods:
+    get_Size(): PrivateScope, Public, HideBySig, SpecialName
+    get_Offset(): PrivateScope, Public, HideBySig, SpecialName
+    get_Type(): PrivateScope, Public, HideBySig, SpecialName
+    op_Implicit(IntPtr): PrivateScope, Public, Static, HideBySig, SpecialName
+    TryToPointer(IntPtr&): PrivateScope, Public, HideBySig
+    op_Implicit(Single): PrivateScope, Public, Static, HideBySig, SpecialName
+    TryToFloat(Single&): PrivateScope, Public, HideBySig
+    op_Implicit(Double): PrivateScope, Public, Static, HideBySig, SpecialName
+    TryToDouble(Double&): PrivateScope, Public, HideBySig
+    op_Implicit(Byte): PrivateScope, Public, Static, HideBySig, SpecialName
+    TryToUInt8(Byte&): PrivateScope, Public, HideBySig
+    op_Implicit(SByte): PrivateScope, Public, Static, HideBySig, SpecialName
+    TryToInt8(SByte&): PrivateScope, Public, HideBySig
+    op_Implicit(UInt16): PrivateScope, Public, Static, HideBySig, SpecialName
+    TryToUInt16(UInt16&): PrivateScope, Public, HideBySig
+    op_Implicit(Int16): PrivateScope, Public, Static, HideBySig, SpecialName
+    TryToInt16(Int16&): PrivateScope, Public, HideBySig
+    op_Implicit(UInt32): PrivateScope, Public, Static, HideBySig, SpecialName
+    TryToUInt32(UInt32&): PrivateScope, Public, HideBySig
+    op_Implicit(Int32): PrivateScope, Public, Static, HideBySig, SpecialName
+    TryToInt32(Int32&): PrivateScope, Public, HideBySig
+    op_Implicit(UInt64): PrivateScope, Public, Static, HideBySig, SpecialName
+    TryToUInt64(UInt64&): PrivateScope, Public, HideBySig
+    op_Implicit(Int64): PrivateScope, Public, Static, HideBySig, SpecialName
+    TryToInt64(Int64&): PrivateScope, Public, HideBySig
+    op_Implicit(Byte[]): PrivateScope, Public, Static, HideBySig, SpecialName
+    TryToBytes(Byte[]&): PrivateScope, Public, HideBySig
+Interface NetScriptFramework.Tools.IArgument: AutoLayout, AnsiClass, Class, Public, ClassSemanticsMask, Abstract
+  Methods:
+    ParseArgument(String, Message, Parser): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract
+    ParseVariable(String, Message, Parser): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract
+    ParseFunction(String, String[], Message, Parser): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract
+Class NetScriptFramework.Tools.Message: AutoLayout, AnsiClass, Class, Public, Sealed, BeforeFieldInit
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+    Void .ctor(System.String): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+    Void .ctor(NetScriptFramework.Tools.Message): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Properties:
+    System.String Text 'get set' : 
+  Methods:
+    get_Text(): PrivateScope, Public, HideBySig, SpecialName
+    set_Text(String): PrivateScope, Public, HideBySig, SpecialName
+    Parse(Parser(Optional, HasDefault)): PrivateScope, Public, HideBySig
+    TryParse(String&(Out), Parser(Optional, HasDefault)): PrivateScope, Public, HideBySig
+Class NetScriptFramework.Tools.Parser: AutoLayout, AnsiClass, Class, Public
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Fields:
+    NetScriptFramework.Tools.SymbolList EscapeSymbol : Public, Static, InitOnly
+    NetScriptFramework.Tools.SymbolList VariableStartSymbol : Public, Static, InitOnly
+    NetScriptFramework.Tools.SymbolList VariableEndSymbol : Public, Static, InitOnly
+    NetScriptFramework.Tools.SymbolList VariableDelimiterSymbol : Public, Static, InitOnly
+    NetScriptFramework.Tools.SymbolList ArgumentStartSymbol : Public, Static, InitOnly
+    NetScriptFramework.Tools.SymbolList ArgumentEndSymbol : Public, Static, InitOnly
+    NetScriptFramework.Tools.SymbolList ArgumentDelimiterSymbol : Public, Static, InitOnly
+    NetScriptFramework.Tools.SymbolList LiteralStartSymbol : Public, Static, InitOnly
+    NetScriptFramework.Tools.SymbolList LiteralEndSymbol : Public, Static, InitOnly
+    NetScriptFramework.Tools.SymbolList IgnoreBlockSymbol : Public, Static, InitOnly
+    NetScriptFramework.Tools.SymbolList IgnoreAlwaysSymbol : Public, Static, InitOnly
+  Properties:
+    NetScriptFramework.Tools.IArgument Item [System.String] 'get set' : 
+  Methods:
+    ParseArgument(Message, String, IArgument): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask
+    ParseVariable(Message, String, IArgument): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask
+    ParseFunction(Message, String, String[], IArgument): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask
+    get_Item(String): PrivateScope, Public, HideBySig, SpecialName
+    set_Item(String, IArgument): PrivateScope, Public, HideBySig, SpecialName
+Struct NetScriptFramework.Tools.ParserFlags: AutoLayout, AnsiClass, Class, Public, Sealed
+  :System.Enum
+  Fields:
+    UInt64 value__ : Public, SpecialName, RTSpecialName
+    NetScriptFramework.Tools.ParserFlags None = 0 : Public, Static, Literal, HasDefault
+Class NetScriptFramework.Tools.SymbolList: AutoLayout, AnsiClass, Class, Public, Sealed, BeforeFieldInit
+  Properties:
+    Int32 Count 'get ' : 
+  Methods:
+    Add(String): PrivateScope, Public, HideBySig
+    Remove(String): PrivateScope, Public, HideBySig
+    Clear(): PrivateScope, Public, HideBySig
+    Test(String, Int32, Int32&): PrivateScope, Public, HideBySig
+    get_Count(): PrivateScope, Public, HideBySig, SpecialName
+    ToArray(): PrivateScope, Public, HideBySig
+Class NetScriptFramework.Tools.Randomizer: AutoLayout, AnsiClass, Class, Public, Abstract, Sealed, BeforeFieldInit
+  Methods:
+    NextDouble(): PrivateScope, Public, Static, HideBySig
+    NextInt(Int32, Int32): PrivateScope, Public, Static, HideBySig
+    Roll(Double): PrivateScope, Public, Static, HideBySig
+    NextEntry(IList`1, Boolean(Optional, HasDefault)): PrivateScope, Public, Static, HideBySig
+    NextEntry(IList`1, Boolean(Optional, HasDefault)): PrivateScope, Public, Static, HideBySig
+    NextEntry(IList`1, Double&, Boolean(Optional, HasDefault)): PrivateScope, Public, Static, HideBySig
+    NextEntry(IList`1, Func`2, Double&, Boolean(Optional, HasDefault)): PrivateScope, Public, Static, HideBySig
+Class NetScriptFramework.Tools.Timer: AutoLayout, AnsiClass, Class, Public, Sealed, BeforeFieldInit
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Properties:
+    Int64 Offset 'get set' : 
+    Int64 Time 'get ' : 
+    Boolean ManualUpdate 'get set' : 
+    Boolean IsRunning 'get ' : 
+  Methods:
+    get_Offset(): PrivateScope, Public, HideBySig, SpecialName
+    set_Offset(Int64): PrivateScope, Public, HideBySig, SpecialName
+    get_Time(): PrivateScope, Public, HideBySig, SpecialName
+    get_ManualUpdate(): PrivateScope, Public, HideBySig, SpecialName
+    set_ManualUpdate(Boolean): PrivateScope, Public, HideBySig, SpecialName
+    Update(): PrivateScope, Public, HideBySig
+    Start(): PrivateScope, Public, HideBySig
+    Stop(): PrivateScope, Public, HideBySig
+    get_IsRunning(): PrivateScope, Public, HideBySig, SpecialName
+    Reset(): PrivateScope, Public, HideBySig
+    Restart(): PrivateScope, Public, HideBySig
+Class NetScriptFramework.Tools.Value: AutoLayout, AnsiClass, Class, Public, Sealed, BeforeFieldInit
+    Void .ctor(Byte[], Int32, Int32, Int32 ByRef): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+    Void .ctor(NetScriptFramework.Tools.Value): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+    Void .ctor(System.IConvertible): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+    Void .ctor(Boolean): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+    Void .ctor(Char): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+    Void .ctor(SByte): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+    Void .ctor(Byte): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+    Void .ctor(Int16): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+    Void .ctor(UInt16): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+    Void .ctor(Int32): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+    Void .ctor(UInt32): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+    Void .ctor(Int64): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+    Void .ctor(UInt64): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+    Void .ctor(Single): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+    Void .ctor(Double): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+    Void .ctor(System.Decimal): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+    Void .ctor(System.String): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+    Void .ctor(System.DateTime): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Interfaces:
+    System.IComparable
+    System.IConvertible
+  Methods:
+    Parse(String, TypeCode): PrivateScope, Public, Static, HideBySig
+    TryParse(String, TypeCode, Value&(Out)): PrivateScope, Public, Static, HideBySig
+    ToString(): PrivateScope, Public, Virtual, HideBySig
+    ToString(IFormatProvider): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask
+    ToArray(): PrivateScope, Public, HideBySig
+    WriteToStream(BinaryWriter): PrivateScope, Public, HideBySig
+    ReadFromStream(BinaryReader): PrivateScope, Public, Static, HideBySig
+    Equals(Object): PrivateScope, Public, Virtual, HideBySig
+    GetHashCode(): PrivateScope, Public, Virtual, HideBySig
+    CompareTo(Object): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask
+    GetTypeCode(): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask
+    ToType(Type, IFormatProvider): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask
+    ToBoolean(IFormatProvider(Optional, HasDefault)): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask
+    TryToBoolean(Boolean&(Out)): PrivateScope, Public, HideBySig
+    ToByte(IFormatProvider(Optional, HasDefault)): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask
+    TryToByte(Byte&(Out)): PrivateScope, Public, HideBySig
+    ToSByte(IFormatProvider(Optional, HasDefault)): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask
+    TryToSByte(SByte&(Out)): PrivateScope, Public, HideBySig
+    ToChar(IFormatProvider(Optional, HasDefault)): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask
+    TryToChar(Char&(Out)): PrivateScope, Public, HideBySig
+    ToInt16(IFormatProvider(Optional, HasDefault)): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask
+    TryToInt16(Int16&(Out)): PrivateScope, Public, HideBySig
+    ToUInt16(IFormatProvider(Optional, HasDefault)): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask
+    TryToUInt16(UInt16&(Out)): PrivateScope, Public, HideBySig
+    ToInt32(IFormatProvider(Optional, HasDefault)): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask
+    TryToInt32(Int32&(Out)): PrivateScope, Public, HideBySig
+    ToUInt32(IFormatProvider(Optional, HasDefault)): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask
+    TryToUInt32(UInt32&(Out)): PrivateScope, Public, HideBySig
+    ToInt64(IFormatProvider(Optional, HasDefault)): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask
+    TryToInt64(Int64&(Out)): PrivateScope, Public, HideBySig
+    ToUInt64(IFormatProvider(Optional, HasDefault)): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask
+    TryToUInt64(UInt64&(Out)): PrivateScope, Public, HideBySig
+    ToSingle(IFormatProvider(Optional, HasDefault)): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask
+    TryToSingle(Single&(Out)): PrivateScope, Public, HideBySig
+    ToDouble(IFormatProvider(Optional, HasDefault)): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask
+    TryToDouble(Double&(Out)): PrivateScope, Public, HideBySig
+    ToDecimal(IFormatProvider(Optional, HasDefault)): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask
+    TryToDecimal(Decimal&(Out)): PrivateScope, Public, HideBySig
+    ToDateTime(IFormatProvider(Optional, HasDefault)): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask
+    TryToDateTime(DateTime&(Out)): PrivateScope, Public, HideBySig
+    op_Implicit(Boolean): PrivateScope, Public, Static, HideBySig, SpecialName
+    op_Implicit(Byte): PrivateScope, Public, Static, HideBySig, SpecialName
+    op_Implicit(SByte): PrivateScope, Public, Static, HideBySig, SpecialName
+    op_Implicit(Char): PrivateScope, Public, Static, HideBySig, SpecialName
+    op_Implicit(Int16): PrivateScope, Public, Static, HideBySig, SpecialName
+    op_Implicit(UInt16): PrivateScope, Public, Static, HideBySig, SpecialName
+    op_Implicit(Int32): PrivateScope, Public, Static, HideBySig, SpecialName
+    op_Implicit(UInt32): PrivateScope, Public, Static, HideBySig, SpecialName
+    op_Implicit(Int64): PrivateScope, Public, Static, HideBySig, SpecialName
+    op_Implicit(UInt64): PrivateScope, Public, Static, HideBySig, SpecialName
+    op_Implicit(Single): PrivateScope, Public, Static, HideBySig, SpecialName
+    op_Implicit(Double): PrivateScope, Public, Static, HideBySig, SpecialName
+    op_Implicit(Decimal): PrivateScope, Public, Static, HideBySig, SpecialName
+    op_Implicit(String): PrivateScope, Public, Static, HideBySig, SpecialName
+    op_Implicit(DateTime): PrivateScope, Public, Static, HideBySig, SpecialName
+    op_Explicit(Value): PrivateScope, Public, Static, HideBySig, SpecialName
+    op_Explicit(Value): PrivateScope, Public, Static, HideBySig, SpecialName
+    op_Explicit(Value): PrivateScope, Public, Static, HideBySig, SpecialName
+    op_Explicit(Value): PrivateScope, Public, Static, HideBySig, SpecialName
+    op_Explicit(Value): PrivateScope, Public, Static, HideBySig, SpecialName
+    op_Explicit(Value): PrivateScope, Public, Static, HideBySig, SpecialName
+    op_Explicit(Value): PrivateScope, Public, Static, HideBySig, SpecialName
+    op_Explicit(Value): PrivateScope, Public, Static, HideBySig, SpecialName
+    op_Explicit(Value): PrivateScope, Public, Static, HideBySig, SpecialName
+    op_Explicit(Value): PrivateScope, Public, Static, HideBySig, SpecialName
+    op_Explicit(Value): PrivateScope, Public, Static, HideBySig, SpecialName
+    op_Explicit(Value): PrivateScope, Public, Static, HideBySig, SpecialName
+    op_Explicit(Value): PrivateScope, Public, Static, HideBySig, SpecialName
+    op_Explicit(Value): PrivateScope, Public, Static, HideBySig, SpecialName
+    op_Explicit(Value): PrivateScope, Public, Static, HideBySig, SpecialName
+Class NetScriptFramework.Tools.ValueMap: AutoLayout, AnsiClass, Class, Public, Sealed, BeforeFieldInit
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+    Void .ctor(NetScriptFramework.Tools.ValueMap): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Interfaces:
+    System.Collections.Generic.IDictionary`2[System.String,NetScriptFramework.Tools.Value]
+    System.Collections.Generic.ICollection`1[System.Collections.Generic.KeyValuePair`2[System.String,NetScriptFramework.Tools.Value]]
+    System.Collections.Generic.IEnumerable`1[System.Collections.Generic.KeyValuePair`2[System.String,NetScriptFramework.Tools.Value]]
+    System.Collections.IEnumerable
+  Properties:
+    System.Collections.Generic.ICollection`1[System.String] Keys 'get ' : 
+    System.Collections.Generic.ICollection`1[NetScriptFramework.Tools.Value] Values 'get ' : 
+    NetScriptFramework.Tools.Value Item [System.String] 'get set' : 
+    Int32 Count 'get ' : 
+    Boolean IsReadOnly 'get ' : 
+  Methods:
+    Add(String, Value): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask
+    ContainsKey(String): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask
+    get_Keys(): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask, SpecialName
+    TryGetValue(String, Value&(Out)): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask
+    get_Values(): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask, SpecialName
+    get_Item(String): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask, SpecialName
+    set_Item(String, Value): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask, SpecialName
+    TryToBool(String, Boolean&(Out)): PrivateScope, Public, HideBySig
+    TryToByte(String, Byte&(Out)): PrivateScope, Public, HideBySig
+    TryToChar(String, Char&(Out)): PrivateScope, Public, HideBySig
+    TryToInt16(String, Int16&(Out)): PrivateScope, Public, HideBySig
+    TryToUInt16(String, UInt16&(Out)): PrivateScope, Public, HideBySig
+    TryToInt32(String, Int32&(Out)): PrivateScope, Public, HideBySig
+    TryToUInt32(String, UInt32&(Out)): PrivateScope, Public, HideBySig
+    TryToInt64(String, Int64&(Out)): PrivateScope, Public, HideBySig
+    TryToUInt64(String, UInt64&(Out)): PrivateScope, Public, HideBySig
+    TryToSingle(String, Single&(Out)): PrivateScope, Public, HideBySig
+    TryToDouble(String, Double&(Out)): PrivateScope, Public, HideBySig
+    TryToDecimal(String, Decimal&(Out)): PrivateScope, Public, HideBySig
+    TryToString(String, String&(Out)): PrivateScope, Public, HideBySig
+    TryToSByte(String, SByte&(Out)): PrivateScope, Public, HideBySig
+    TryToDateTime(String, DateTime&(Out)): PrivateScope, Public, HideBySig
+    ToBool(String, Boolean(Optional, HasDefault)): PrivateScope, Public, HideBySig
+    ToByte(String, Byte(Optional, HasDefault)): PrivateScope, Public, HideBySig
+    ToChar(String, Char(Optional, HasDefault)): PrivateScope, Public, HideBySig
+    ToInt16(String, Int16(Optional, HasDefault)): PrivateScope, Public, HideBySig
+    ToUInt16(String, UInt16(Optional, HasDefault)): PrivateScope, Public, HideBySig
+    ToInt32(String, Int32(Optional, HasDefault)): PrivateScope, Public, HideBySig
+    ToUInt32(String, UInt32(Optional, HasDefault)): PrivateScope, Public, HideBySig
+    ToInt64(String, Int64(Optional, HasDefault)): PrivateScope, Public, HideBySig
+    ToUInt64(String, UInt64(Optional, HasDefault)): PrivateScope, Public, HideBySig
+    ToSingle(String, Single(Optional, HasDefault)): PrivateScope, Public, HideBySig
+    ToDouble(String, Double(Optional, HasDefault)): PrivateScope, Public, HideBySig
+    ToDecimal(String, Decimal(Optional)): PrivateScope, Public, HideBySig
+    ToString(String, String(Optional, HasDefault)): PrivateScope, Public, HideBySig
+    ToSByte(String, SByte(Optional, HasDefault)): PrivateScope, Public, HideBySig
+    ToDateTime(String, DateTime(Optional, HasDefault)): PrivateScope, Public, HideBySig
+    Add(KeyValuePair`2): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask
+    Clear(): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask
+    Contains(KeyValuePair`2): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask
+    get_Count(): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask, SpecialName
+    get_IsReadOnly(): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask, SpecialName
+    Remove(KeyValuePair`2): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask
+    Remove(String): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask
+    CopyTo(KeyValuePair`2[], Int32): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask
+    GetEnumerator(): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask
+Class NetScriptFramework.Tools._Internal.RTHandler: AutoLayout, AnsiClass, Class, Public, Abstract, Sealed, BeforeFieldInit
+  Methods:
+    _Allocate(IntPtr): PrivateScope, Public, Static, HideBySig
+    _Free(CPURegisters): PrivateScope, Public, Static, HideBySig
+Class NetScriptFramework.GameInfo+GameTypeInstanceInfo: AutoLayout, AnsiClass, Class, NestedPublic, Sealed, BeforeFieldInit
+    Void .ctor(System.Nullable`1[System.Int32], System.Nullable`1[System.Int32], GameTypeInfo): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Fields:
+    System.Nullable`1[System.Int32] BeginOffset : Public, InitOnly
+    System.Nullable`1[System.Int32] EndOffset : Public, InitOnly
+    GameTypeInfo Info : Public, InitOnly
+Class NetScriptFramework.GameInfo+GameTypeInfo: AutoLayout, AnsiClass, Class, NestedPublic, Sealed, BeforeFieldInit
+    Void .ctor(UInt64, UInt64, System.String, System.Nullable`1[System.Int32], System.Collections.Generic.IReadOnlyList`1[NetScriptFramework.GameInfo+GameFieldInfo]): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Properties:
+    UInt64 Id  'get set' : 
+    UInt64 VTable 'get set' : 
+    System.String Name 'get set' : 
+    System.Nullable`1[System.Int32] Size 'get set' : 
+    System.Collections.Generic.IReadOnlyList`1[NetScriptFramework.GameInfo+GameFieldInfo] Fields 'get set' : 
+  Methods:
+    get_Id(): PrivateScope, Public, HideBySig, SpecialName
+    get_VTable(): PrivateScope, Public, HideBySig, SpecialName
+    get_Name(): PrivateScope, Public, HideBySig, SpecialName
+    get_Size(): PrivateScope, Public, HideBySig, SpecialName
+    get_Fields(): PrivateScope, Public, HideBySig, SpecialName
+Class NetScriptFramework.GameInfo+GameFieldInfo: AutoLayout, AnsiClass, Class, NestedPublic, Sealed, BeforeFieldInit
+    Void .ctor(UInt32, System.Nullable`1[System.Int32], System.String, System.String): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Properties:
+    UInt32 FieldId 'get set' : 
+    System.Nullable`1[System.Int32] Begin 'get set' : 
+    System.String ShortName 'get set' : 
+    System.String TypeName 'get set' : 
+  Methods:
+    get_FieldId(): PrivateScope, Public, HideBySig, SpecialName
+    get_Begin(): PrivateScope, Public, HideBySig, SpecialName
+    get_ShortName(): PrivateScope, Public, HideBySig, SpecialName
+    get_TypeName(): PrivateScope, Public, HideBySig, SpecialName
+Class NetScriptFramework.GameInfo+GameGlobalInfo: AutoLayout, AnsiClass, Class, NestedPublic, Sealed, BeforeFieldInit
+    Void .ctor(UInt64, UInt64, System.String, System.String): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Properties:
+    UInt64 Id  'get set' : 
+    UInt64 Begin 'get set' : 
+    System.String ShortName 'get set' : 
+    System.String TypeName 'get set' : 
+  Methods:
+    get_Id(): PrivateScope, Public, HideBySig, SpecialName
+    get_Begin(): PrivateScope, Public, HideBySig, SpecialName
+    get_ShortName(): PrivateScope, Public, HideBySig, SpecialName
+    get_TypeName(): PrivateScope, Public, HideBySig, SpecialName
+Class NetScriptFramework.GameInfo+GameFunctionInfo: AutoLayout, AnsiClass, Class, NestedPublic, Sealed, BeforeFieldInit
+    Void .ctor(UInt64, UInt64, UInt64, System.String, System.String): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Properties:
+    UInt64 Id  'get set' : 
+    UInt64 Begin 'get set' : 
+    UInt64 End 'get set' : 
+    System.String ShortName 'get set' : 
+    System.String FullName 'get set' : 
+  Methods:
+    get_Id(): PrivateScope, Public, HideBySig, SpecialName
+    get_Begin(): PrivateScope, Public, HideBySig, SpecialName
+    get_End(): PrivateScope, Public, HideBySig, SpecialName
+    get_ShortName(): PrivateScope, Public, HideBySig, SpecialName
+    get_FullName(): PrivateScope, Public, HideBySig, SpecialName
+    GetName(Boolean): PrivateScope, Public, HideBySig
+Class NetScriptFramework.Event`1+EventHandler[T]: AutoLayout, AnsiClass, Class, NestedPublic, Sealed
+  Type parameter: T, System.EventArgs
+  :System.MulticastDelegate
+    Void .ctor(System.Object, IntPtr): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Methods:
+    Invoke(T): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask
+    BeginInvoke(T, AsyncCallback, Object): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask
+    EndInvoke(IAsyncResult): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask
+Struct NetScriptFramework.Memory+AllocationProtectFlags: AutoLayout, AnsiClass, Class, NestedPublic, Sealed
+  :System.Enum
+  Fields:
+    UInt32 value__ : Public, SpecialName, RTSpecialName
+    AllocationProtectFlags None = 0 : Public, Static, Literal, HasDefault
+    AllocationProtectFlags PAGE_EXECUTE = 16 : Public, Static, Literal, HasDefault
+    AllocationProtectFlags PAGE_EXECUTE_READ = 32 : Public, Static, Literal, HasDefault
+    AllocationProtectFlags PAGE_EXECUTE_READWRITE = 64 : Public, Static, Literal, HasDefault
+    AllocationProtectFlags PAGE_EXECUTE_WRITECOPY = 128 : Public, Static, Literal, HasDefault
+    AllocationProtectFlags PAGE_NOACCESS = 1 : Public, Static, Literal, HasDefault
+    AllocationProtectFlags PAGE_READONLY = 2 : Public, Static, Literal, HasDefault
+    AllocationProtectFlags PAGE_READWRITE = 4 : Public, Static, Literal, HasDefault
+    AllocationProtectFlags PAGE_WRITECOPY = 8 : Public, Static, Literal, HasDefault
+    AllocationProtectFlags PAGE_GUARD = 256 : Public, Static, Literal, HasDefault
+    AllocationProtectFlags PAGE_NOCACHE = 512 : Public, Static, Literal, HasDefault
+    AllocationProtectFlags PAGE_WRITECOMBINE = 1024 : Public, Static, Literal, HasDefault
+Struct NetScriptFramework.MemoryAllocation+MemoryAllocationTypes: AutoLayout, AnsiClass, Class, NestedPublic, Sealed
+  :System.Enum
+  Fields:
+    Int32 value__ : Public, SpecialName, RTSpecialName
+    MemoryAllocationTypes Heap = 0 : Public, Static, Literal, HasDefault
+    MemoryAllocationTypes Code = 1 : Public, Static, Literal, HasDefault
+    MemoryAllocationTypes String = 2 : Public, Static, Literal, HasDefault
+Class NetScriptFramework.Main+FrameworkInitializationParameters: AutoLayout, AnsiClass, Class, NestedPublic, Sealed, BeforeFieldInit
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Properties:
+    System.String FrameworkPath 'get set' : 
+    Int32 DelayedInitialize 'get set' : 
+  Methods:
+    get_FrameworkPath(): PrivateScope, Public, HideBySig, SpecialName
+    set_FrameworkPath(String): PrivateScope, Public, HideBySig, SpecialName
+    get_DelayedInitialize(): PrivateScope, Public, HideBySig, SpecialName
+    set_DelayedInitialize(Int32): PrivateScope, Public, HideBySig, SpecialName
+Struct NetScriptFramework.Tools.MemoryStructField+FieldTypes: AutoLayout, AnsiClass, Class, NestedPublic, Sealed
+  :System.Enum
+  Fields:
+    Byte value__ : Public, SpecialName, RTSpecialName
+    FieldTypes None = 0 : Public, Static, Literal, HasDefault
+    FieldTypes Pointer = 1 : Public, Static, Literal, HasDefault
+    FieldTypes Float = 2 : Public, Static, Literal, HasDefault
+    FieldTypes Double = 3 : Public, Static, Literal, HasDefault
+    FieldTypes UInt8 = 4 : Public, Static, Literal, HasDefault
+    FieldTypes Int8 = 5 : Public, Static, Literal, HasDefault
+    FieldTypes UInt16 = 6 : Public, Static, Literal, HasDefault
+    FieldTypes Int16 = 7 : Public, Static, Literal, HasDefault
+    FieldTypes UInt32 = 8 : Public, Static, Literal, HasDefault
+    FieldTypes Int32 = 9 : Public, Static, Literal, HasDefault
+    FieldTypes UInt64 = 10 : Public, Static, Literal, HasDefault
+    FieldTypes Int64 = 11 : Public, Static, Literal, HasDefault
+    FieldTypes ByteArray = 12 : Public, Static, Literal, HasDefault
