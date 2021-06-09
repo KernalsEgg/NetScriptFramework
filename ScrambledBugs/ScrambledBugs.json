@@ -9,7 +9,11 @@
 	},
 	"patches":
 	{
-		"applySpellPerkEntryPoints": true,		/* Spells applied using perk entry points are cast by the source on the target. */
+		"applySpellPerkEntryPoints":			/* Spells are not applied using perk entry points when the kill camera simulates the trajectory of an arrow. */
+		{
+			"castSpells": true,					/* Spells applied using perk entry points are cast by the source on the target. */
+			"multipleSpells": false				/* Apply any number of spells at once using perk entry points. */
+		},
 		"attachHitEffectArt": false,			/* Hit effect art is attached when an actor is loaded. */
 		"equipBestAmmo": false,					/* Automatically equip your best arrows or bolts when you equip a bow or crossbow. */
 		"lockpickingExperience": true,			/* Earn experience each time you pick a lock. */

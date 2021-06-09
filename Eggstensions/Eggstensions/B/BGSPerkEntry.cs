@@ -1,10 +1,6 @@
-﻿using Eggstensions.Interoperability.Managed; // Memory
-
-
-
-namespace Eggstensions
+﻿namespace Eggstensions
 {
-	public enum PerkEntryPoint : System.Int32
+	public enum EntryPoint : System.Byte
 	{
 		ModArmorWeight			= 32,
 		ApplyCombatHitSpell		= 51,
@@ -13,49 +9,78 @@ namespace Eggstensions
 		ApplyWeaponSwingSpell	= 67,
 		ApplySneakingSpell		= 69
 	}
-	
 
-
-	static public class BGSPerkEntry
+	public enum EntryPointFunction : System.Byte
 	{
-		static public System.IntPtr HandleEntryPoint(PerkEntryPoint perkEntryPoint, Actor perkOwner, System.IntPtr argument1)
-		{
-			using (var result = Memory.InitializeIntPtr(argument1))
-			{
-				Delegates.Instances.BGSPerkEntry.HandleEntryPoint1((System.Int32)perkEntryPoint, perkOwner, result.Address);
+		SelectSpell = 10
+	}
 
-				return result.Value;
+	public enum EntryPointFunctionResult : System.Byte
+	{
+		Value					= 0,
+		LeveledList				= 1,
+		ActivateChoice			= 2,
+		// 3
+		SpellItem				= 4,
+		BooleanGraphVariable	= 5,
+		Text					= 6
+	}
+
+	public enum PerkEntryType : System.Byte
+	{
+		Quest		= 0,
+		Ability		= 1,
+		EntryPoint	= 2
+	}
+
+
+
+	public class BGSPerkEntry : VirtualObject
+	{
+		public BGSPerkEntry(System.IntPtr address) : base(address)
+		{
+		}
+
+
+
+		public System.Byte Rank
+		{
+			get
+			{
+				return Memory.Read<System.Byte>(this, 0x8);
 			}
 		}
 
-		static public System.IntPtr HandleEntryPoint(PerkEntryPoint perkEntryPoint, Actor perkOwner, System.IntPtr argument1, System.IntPtr argument2)
+		public System.Byte Priority
 		{
-			using (var result = Memory.InitializeIntPtr(argument2))
+			get
 			{
-				Delegates.Instances.BGSPerkEntry.HandleEntryPoint2((System.Int32)perkEntryPoint, perkOwner, argument1, result.Address);
-
-				return result.Value;
+				return Memory.Read<System.Byte>(this, 0x9);
 			}
 		}
 
-		static public System.Single HandleEntryPoint(PerkEntryPoint perkEntryPoint, Actor perkOwner, System.IntPtr argument1, System.Single argument2)
-		{
-			using (var result = Memory.InitializeSingle(argument2))
-			{
-				Delegates.Instances.BGSPerkEntry.HandleEntryPoint2((System.Int32)perkEntryPoint, perkOwner, argument1, result.Address);
 
-				return result.Value;
-			}
+
+		virtual public System.Boolean EvaluateConditions(System.Int32 argumentCount, System.IntPtr arguments)
+		{
+			var evaluateConditions = System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.BGSPerkEntry.EvaluateConditions>(this[0x0]);
+
+			return evaluateConditions(this, argumentCount, arguments) != 0;
 		}
 
-		static public System.IntPtr HandleEntryPoint(PerkEntryPoint perkEntryPoint, Actor perkOwner, System.IntPtr argument1, System.IntPtr argument2, System.IntPtr argument3)
+		virtual public EntryPointFunction GetFunction()
 		{
-			using (var result = Memory.InitializeIntPtr(argument3))
-			{
-				Delegates.Instances.BGSPerkEntry.HandleEntryPoint3((System.Int32)perkEntryPoint, perkOwner, argument1, argument2, result.Address);
+			var getFunction = System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.BGSPerkEntry.GetFunction>(this[0x1]);
 
-				return result.Value;
-			}
+			return (EntryPointFunction)getFunction(this);
+		}
+
+		/// <returns>BGSEntryPointFunctionData*</returns>
+		virtual public System.IntPtr GetFunctionData()
+		{
+			var getFunctionData = System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.BGSPerkEntry.GetFunctionData>(this[0x2]);
+
+			return getFunctionData(this);
 		}
 	}
 }

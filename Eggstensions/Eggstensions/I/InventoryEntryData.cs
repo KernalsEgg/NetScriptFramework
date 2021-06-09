@@ -1,8 +1,4 @@
-﻿using Eggstensions.Interoperability.Managed; // Memory
-
-
-
-namespace Eggstensions
+﻿namespace Eggstensions
 {
 	public class InventoryEntryData : NativeObject
 	{
@@ -16,7 +12,7 @@ namespace Eggstensions
 		{
 			get
 			{
-				return Memory.ReadIntPtr(this, 0x0);
+				return Memory.Read<System.IntPtr>(this, 0x0);
 			}
 		}
 
@@ -24,7 +20,7 @@ namespace Eggstensions
 
 		public System.Boolean IsWorn()
 		{
-			return Delegates.Instances.InventoryEntryData.IsWorn(this);
+			return Delegates.Instances.InventoryEntryData.IsWorn(this) != 0;
 		}
 
 

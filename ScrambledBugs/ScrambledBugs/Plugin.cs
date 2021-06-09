@@ -2,15 +2,15 @@
 {
 	public class Plugin : NetScriptFramework.Plugin
 	{
-		override public System.Int32 RequiredLibraryVersion { get; } = 10;
+		override public System.Int32 RequiredLibraryVersion { get; }	= 10;
 
-		override public System.Int32 Version { get; } = 9;
+		override public System.Int32 Version { get; }					= 10;
 
-		override public System.String Author { get; } = "meh321 and KernalsEgg";
+		override public System.String Author { get; }					= "meh321 and KernalsEgg";
 
-		override public System.String Key { get; } = "ScrambledBugs";
+		override public System.String Key { get; }						= "ScrambledBugs";
 
-		override public System.String Name { get; } = "Scrambled Bugs";
+		override public System.String Name { get; }						= "Scrambled Bugs";
 
 
 
@@ -54,9 +54,17 @@
 				}
 
 				// Patches
-				if (settings.patches.applySpellPerkEntryPoints)
+				if (settings.patches.applySpellPerkEntryPoints.castSpells && settings.patches.applySpellPerkEntryPoints.multipleSpells)
 				{
-					new ScrambledBugs.Patches.ApplySpellPerkEntryPoints();
+					new ScrambledBugs.Patches.ApplySpellPerkEntryPoints.MultipleSpells(true);
+				}
+				else if (settings.patches.applySpellPerkEntryPoints.castSpells)
+				{
+					new ScrambledBugs.Patches.ApplySpellPerkEntryPoints.CastSpells();
+				}
+				else if (settings.patches.applySpellPerkEntryPoints.multipleSpells)
+				{
+					new ScrambledBugs.Patches.ApplySpellPerkEntryPoints.MultipleSpells(false);
 				}
 
 				if (settings.patches.attachHitEffectArt)

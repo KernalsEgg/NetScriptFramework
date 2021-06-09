@@ -1,8 +1,4 @@
-﻿using Eggstensions.Interoperability.Managed; // Memory
-
-
-
-namespace Eggstensions
+﻿namespace Eggstensions
 {
 	public enum FormType : System.Byte
 	{
@@ -27,13 +23,13 @@ namespace Eggstensions
 		{
 			get
 			{
-				return (FormType)Memory.ReadByte(this, 0x1A);
+				return (FormType)Memory.Read<System.Byte>(this, 0x1A);
 			}
 		}
 
 
 
-		public void RemoveChanges(System.UInt32 changeFlags)
+		virtual public void RemoveChanges(System.UInt32 changeFlags)
 		{
 			var removeChanges = System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.TESForm.RemoveChanges>(this[0xB]);
 

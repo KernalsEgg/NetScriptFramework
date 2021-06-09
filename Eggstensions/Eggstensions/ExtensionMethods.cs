@@ -16,9 +16,7 @@
 
 			static public System.Double ToDouble(this System.IntPtr value)
 			{
-				var bytes = System.BitConverter.GetBytes(value.ToUInt64());
-
-				return System.BitConverter.ToDouble(bytes, 0);
+				return System.BitConverter.ToDouble(System.BitConverter.GetBytes(value.ToUInt64()), 0);
 			}
 
 			static public System.Int16 ToInt16(this System.IntPtr value)
@@ -38,9 +36,7 @@
 
 			static public System.Single ToSingle(this System.IntPtr value)
 			{
-				var bytes = System.BitConverter.GetBytes(value.ToUInt32());
-
-				return System.BitConverter.ToSingle(bytes, 0);
+				return System.BitConverter.ToSingle(System.BitConverter.GetBytes(value.ToUInt32()), 0);
 			}
 
 			static public System.UInt16 ToUInt16(this System.IntPtr value)

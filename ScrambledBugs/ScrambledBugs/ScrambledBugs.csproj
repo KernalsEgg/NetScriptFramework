@@ -31,16 +31,14 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <PlatformTarget>x64</PlatformTarget>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Eggstensions.Interoperability">
-      <HintPath>..\..\..\Program Files (x86)\Steam\steamapps\common\Skyrim Special Edition\Data\NetScriptFramework\Plugins\Lib\Eggstensions.Interoperability.dll</HintPath>
+    <Reference Include="Eggstensions.Events">
+      <HintPath>..\..\..\Program Files (x86)\Steam\steamapps\common\Skyrim Special Edition\Data\NetScriptFramework\Plugins\Lib\Eggstensions.Events.dll</HintPath>
     </Reference>
     <Reference Include="NetScriptFramework">
       <HintPath>..\..\..\Program Files (x86)\Steam\steamapps\common\Skyrim Special Edition\Data\NetScriptFramework\NetScriptFramework.dll</HintPath>
-    </Reference>
-    <Reference Include="NetScriptFramework.SkyrimSE">
-      <HintPath>..\..\..\Program Files (x86)\Steam\steamapps\common\Skyrim Special Edition\Data\NetScriptFramework\NetScriptFramework.SkyrimSE.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -55,7 +53,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Delegates.cs" />
     <Compile Include="Fixes\HarvestedFlags.cs" />
+    <Compile Include="Offsets.cs" />
+    <Compile Include="Patches\ApplySpellPerkEntryPoints\MultipleSpells.cs" />
     <Compile Include="Patches\AttachHitEffectArt.cs" />
     <Compile Include="Fixes\ModArmorWeightPerkEntryPoint.cs" />
     <Compile Include="Fixes\TrainingMenuText.cs" />
@@ -68,7 +69,7 @@
     <Compile Include="Plugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Fixes\ActiveEffectConditions.cs" />
-    <Compile Include="Patches\ApplySpellPerkEntryPoints.cs" />
+    <Compile Include="Patches\ApplySpellPerkEntryPoints\CastSpells.cs" />
     <Compile Include="Fixes\TerrainDecals.cs" />
     <Compile Include="Settings.cs" />
   </ItemGroup>

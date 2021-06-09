@@ -1,8 +1,4 @@
-﻿using Eggstensions.Interoperability.Managed; // Memory
-
-
-
-namespace Eggstensions
+﻿namespace Eggstensions
 {
 	public class NiAVObject : NiObject
 	{
@@ -14,7 +10,7 @@ namespace Eggstensions
 
 		public NiNode GetParent()
 		{
-			return Memory.ReadIntPtr(this, 0x30);
+			return Memory.Read<System.IntPtr>(this, 0x30);
 		}
 
 

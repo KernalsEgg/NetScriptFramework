@@ -1,8 +1,4 @@
-﻿using Eggstensions.Interoperability.Managed; // Memory
-
-
-
-namespace Eggstensions
+﻿namespace Eggstensions
 {
 	public class ActiveEffect : VirtualObject
 	{
@@ -16,7 +12,7 @@ namespace Eggstensions
 		{
 			get
 			{
-				return Memory.ReadSingle(Offsets.ActiveEffect.ConditionUpdateFrequency);
+				return Memory.Read<System.Single>(Offsets.ActiveEffect.ConditionUpdateFrequency);
 			}
 		}
 
@@ -26,8 +22,22 @@ namespace Eggstensions
 		{
 			get
 			{
-				return Memory.ReadSingle(this, 0x70);
+				return Memory.Read<System.Single>(this, 0x70);
 			}
+		}
+
+
+
+		public void Dispel(System.Boolean force)
+		{
+			Delegates.Instances.ActiveEffect.Dispel(this, (System.Byte)(force ? 1 : 0));
+		}
+		
+		/// <summary>0x4</summary>
+		public Mutable.Union<T> GetPadding8C<T>()
+			where T : unmanaged
+		{
+			return new Mutable.Union<T>(this, 0x8C);
 		}
 
 

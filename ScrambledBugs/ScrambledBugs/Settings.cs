@@ -14,7 +14,15 @@
 
 		public class Patches
 		{
-			public System.Boolean applySpellPerkEntryPoints { get; set; }
+			public class ApplySpellPerkEntryPoints
+			{
+				public System.Boolean castSpells { get; set; }
+				public System.Boolean multipleSpells { get; set; }
+			}
+
+
+
+			public Patches.ApplySpellPerkEntryPoints applySpellPerkEntryPoints { get; set; }
 			public System.Boolean attachHitEffectArt { get; set; }
 			public System.Boolean equipBestAmmo { get; set; }
 			public System.Boolean lockpickingExperience { get; set; }

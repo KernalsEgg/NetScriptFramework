@@ -1,8 +1,4 @@
-﻿using Eggstensions.Interoperability.Managed; // Memory
-
-
-
-namespace Eggstensions
+﻿namespace Eggstensions
 {
 	public class TESObjectWEAP : TESBoundObject
 	{
@@ -16,7 +12,7 @@ namespace Eggstensions
 		{
 			get
 			{
-				return Memory.ReadIntPtr(Offsets.TESObjectWEAP.Unarmed);
+				return Memory.Read<System.IntPtr>(Offsets.TESObjectWEAP.Unarmed);
 			}
 		}
 

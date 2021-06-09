@@ -8,7 +8,7 @@
 
 
 
-		/// <summary> SkyrimSE.exe + 0x632180 (VID 37817) </summary>
+		/// <summary>SkyrimSE.exe + 0x632180 (VID 37817)</summary>
 		public void Apply(Actor source, Actor target)
 		{
 			var spellType = this.GetSpellType();

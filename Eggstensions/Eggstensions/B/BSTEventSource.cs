@@ -8,9 +8,14 @@
 		
 		
 		
-		static public void AddEventSink(BSTEventSource eventSource, System.IntPtr eventSink)
+		public void AddEventSink(BSTEventSink eventSink)
 		{
-			Delegates.Instances.BSTEventSource.AddEventSink(eventSource, eventSink);
+			Delegates.Instances.BSTEventSource.AddEventSink(this, eventSink);
+		}
+
+		public void RemoveEventSink(BSTEventSink eventSink)
+		{
+			Delegates.Instances.BSTEventSource.RemoveEventSink(this, eventSink);
 		}
 
 

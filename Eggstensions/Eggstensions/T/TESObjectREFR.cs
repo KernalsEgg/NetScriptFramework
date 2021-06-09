@@ -1,8 +1,4 @@
-﻿using Eggstensions.Interoperability.Managed; // Memory
-
-
-
-namespace Eggstensions
+﻿namespace Eggstensions
 {
 	public class TESObjectREFR : TESForm
 	{
@@ -24,13 +20,13 @@ namespace Eggstensions
 		{
 			get
 			{
-				return Memory.ReadIntPtr(this, 0x40);
+				return Memory.Read<System.IntPtr>(this, 0x40);
 			}
 		}
 
 
 
-		public NiAVObject GetCurrent3D()
+		virtual public NiAVObject GetCurrent3D()
 		{
 			var getCurrent3D = System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.TESObjectREFR.GetCurrent3D>(this[0x8D]);
 

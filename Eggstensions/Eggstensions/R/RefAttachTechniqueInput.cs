@@ -1,8 +1,4 @@
-﻿using Eggstensions.Interoperability.Managed; // Memory
-
-
-
-namespace Eggstensions
+﻿namespace Eggstensions
 {
 	public class RefAttachTechniqueInput : BSAttachTechniques.AttachTechniqueInput
 	{
@@ -16,7 +12,7 @@ namespace Eggstensions
 		{
 			get
 			{
-				return Memory.ReadIntPtr(this, 0x28);
+				return Memory.Read<System.IntPtr>(this, 0x28);
 			}
 		}
 
@@ -24,7 +20,7 @@ namespace Eggstensions
 		{
 			get
 			{
-				return Memory.ReadIntPtr(this, 0x30);
+				return Memory.Read<System.IntPtr>(this, 0x30);
 			}
 		}
 

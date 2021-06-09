@@ -1,8 +1,4 @@
-﻿using Eggstensions.Interoperability.Managed; // Memory
-
-
-
-namespace Eggstensions
+﻿namespace Eggstensions
 {
 	[System.Flags]
 	public enum ProjectileFlags : System.UInt32
@@ -30,7 +26,7 @@ namespace Eggstensions
 		{
 			get
 			{
-				return Memory.ReadSingle(this, 0x198); // SkyrimSE.exe + 0x74A950 (VID 42920) + 0x332
+				return Memory.Read<System.Single>(this, 0x198); // SkyrimSE.exe + 0x74A950 (VID 42920) + 0x332
 			}
 		}
 
@@ -38,7 +34,7 @@ namespace Eggstensions
 		{
 			get
 			{
-				return (ProjectileFlags)Memory.ReadUInt32(this, 0x1CC);
+				return (ProjectileFlags)Memory.Read<System.UInt32>(this, 0x1CC);
 			}
 		}
 
@@ -46,7 +42,7 @@ namespace Eggstensions
 		{
 			get
 			{
-				return Memory.ReadBoolean(this, 0x1D0); // SkyrimSE.exe + 0x754DC0 (VID 43035) + 0x1CB
+				return Memory.Read<System.Byte>(this, 0x1D0) != 0; // SkyrimSE.exe + 0x754DC0 (VID 43035) + 0x1CB
 			}
 		}
 
@@ -54,7 +50,7 @@ namespace Eggstensions
 		{
 			get
 			{
-				return Memory.ReadBoolean(this, 0x1D1); // SkyrimSE.exe + 0x754FF0 (VID 43036) + 0x5
+				return Memory.Read<System.Byte>(this, 0x1D1) != 0; // SkyrimSE.exe + 0x754FF0 (VID 43036) + 0x5
 			}
 		}
 

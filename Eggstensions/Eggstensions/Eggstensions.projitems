@@ -13,14 +13,21 @@
     <Compile Include="$(MSBuildThisFileDirectory)A\Actor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)A\AIProcess.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)A\ArrowProjectile.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)B\BGSEntryPointFunctionData.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)B\BGSEntryPointFunctionDataSpellItem.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)B\BGSEntryPointPerkEntry.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)B\BGSPerkEntry.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)B\bhkWorld.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)B\BSAttachTechniques.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)B\BSFixedString.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)B\BSTArray.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)B\BSTEventSink.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)B\BSTEventSource.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Delegates.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethods.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)H\HandleEntryPointVisitor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)I\InventoryEntryData.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Memory.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)M\MagicCaster.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)M\MagicItem.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)M\MissileProjectile.cs" />
@@ -34,14 +41,24 @@
     <Compile Include="$(MSBuildThisFileDirectory)R\RefAttachTechniqueInput.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)R\ReferenceEffect.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)R\ReferenceEffectController.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SequentialArray.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)S\ScriptEventSourceHolder.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)S\Setting.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)S\SettingT.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)S\SpellItem.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)T\TESActorBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)T\TESBoundObject.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)T\TESDataHandler.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)T\TESForm.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)T\TESFullName.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)T\TESHitEvent.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)T\TESNPC.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)T\TESObjectREFR.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)T\TESObjectWEAP.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)T\TESQuest.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)T\TESRace.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Union.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)U\UI.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)VirtualObject.cs" />
   </ItemGroup>
 </Project>

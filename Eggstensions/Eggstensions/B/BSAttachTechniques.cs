@@ -1,8 +1,4 @@
-﻿using Eggstensions.Interoperability.Managed; // Memory
-
-
-
-namespace Eggstensions
+﻿namespace Eggstensions
 {
 	namespace BSAttachTechniques
 	{
@@ -18,7 +14,7 @@ namespace Eggstensions
 			{
 				get
 				{
-					return Memory.ReadIntPtr(this, 0x8);
+					return Memory.Read<System.IntPtr>(this, 0x8);
 				}
 			}
 
@@ -26,7 +22,7 @@ namespace Eggstensions
 			{
 				get
 				{
-					return Memory.ReadIntPtr(this, 0x10);
+					return Memory.Read<System.IntPtr>(this, 0x10);
 				}
 			}
 		}

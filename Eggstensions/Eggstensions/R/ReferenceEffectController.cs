@@ -8,7 +8,7 @@
 
 
 
-		public NiAVObject GetAttachRoot()
+		virtual public NiAVObject GetAttachRoot()
 		{
 			var getAttachRoot = System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.ReferenceEffectController.GetAttachRoot>(this[0xF]);
 

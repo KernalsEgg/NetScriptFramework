@@ -1,8 +1,4 @@
-﻿using Eggstensions.Interoperability.Managed; // Memory
-
-
-
-namespace Eggstensions
+﻿namespace Eggstensions
 {
 	public class VirtualObject : NativeObject
 	{
@@ -16,7 +12,7 @@ namespace Eggstensions
 		{
 			get
 			{
-				return Memory.ReadIntPtr(Memory.ReadIntPtr(this, 0x0), 0x8 * index);
+				return Memory.Read<System.IntPtr>(Memory.Read<System.IntPtr>(this, 0x0), Memory<System.IntPtr>.Size * index);
 			}
 		}
 	}

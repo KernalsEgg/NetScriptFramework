@@ -15,16 +15,18 @@
 
 
 
-		public System.Boolean AddSpell(SpellItem spell)
-		{
-			return Delegates.Instances.Actor.AddSpell(this, spell);
-		}
-
-		public MagicCaster GetMagicCaster(CastingSource castingSource)
+		virtual public MagicCaster GetMagicCaster(CastingSource castingSource)
 		{
 			var getMagicCaster = System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.Actor.GetMagicCaster>(this[0x5C]);
 
 			return getMagicCaster(this, (System.Int32)castingSource);
+		}
+
+
+
+		public System.Boolean AddSpell(SpellItem spell)
+		{
+			return Delegates.Instances.Actor.AddSpell(this, spell) != 0;
 		}
 
 

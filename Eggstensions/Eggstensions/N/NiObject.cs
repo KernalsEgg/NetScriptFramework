@@ -8,7 +8,7 @@
 
 
 
-		public NiNode AsNode()
+		virtual public NiNode AsNode()
 		{
 			var asNode = System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.NiObject.AsNode>(this[0x3]);
 

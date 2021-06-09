@@ -16,13 +16,11 @@
 			}
 		}
 
-
-
 		static public BSTEventSource TESHitEvent
 		{
 			get
 			{
-				return ScriptEventSourceHolder.Instance + 0x5D8;
+				return Instance + 0x5D8;
 			}
 		}
 
