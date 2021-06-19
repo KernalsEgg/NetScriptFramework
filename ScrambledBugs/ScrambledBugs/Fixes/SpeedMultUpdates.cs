@@ -1,5 +1,6 @@
 ﻿using Eggstensions;
-using Eggstensions.Events;
+
+using Events = Eggstensions.Events;
 
 
 
@@ -9,61 +10,40 @@ namespace ScrambledBugs.Fixes
 	{
 		public SpeedMultUpdates()
 		{
-			AddActorValueEventSinks.EventHandler -= SpeedMultUpdates.OnAddActorValueEventSinks;
-			AddActorValueEventSinks.EventHandler += SpeedMultUpdates.OnAddActorValueEventSinks;
+			Events.Initialize.After -= SpeedMultUpdates.OnInitialize;
+			Events.Initialize.After += SpeedMultUpdates.OnInitialize;
 		}
 
 
 
-		static public Delegates.Types.Fixes.SpeedMultUpdates.ActorValueSink SpeedMultSinkDelegate { get; } = SpeedMultUpdates.SpeedMultSink;
+		static public Delegates.Types.Fixes.SpeedMultUpdates.ActorValueSink NewSpeedMultSink { get; } = SpeedMultUpdates.SpeedMultSink;
 
-		static public System.IntPtr SaveManager
+
+
+		static public void OnInitialize(System.Object sender, System.EventArgs arguments)
 		{
-			get
-			{
-				return Memory.Read<System.IntPtr>(Offsets.Fixes.SpeedMultUpdates.SaveManager);
-			}
+			Events.Initialize.After -= SpeedMultUpdates.OnInitialize;
+
+			Memory.Write<System.IntPtr>(Offsets.Fixes.SpeedMultUpdates.ActorValueSinkFunctionTable + (System.Int32)ActorValue.SpeedMult * Memory<System.IntPtr>.Size, System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(SpeedMultUpdates.NewSpeedMultSink));
 		}
 
-
-
-		static public void OnAddActorValueEventSinks(System.Object sender, System.EventArgs arguments)
-		{
-			AddActorValueEventSinks.EventHandler -= SpeedMultUpdates.OnAddActorValueEventSinks;
-
-			var functionTableAddress	= NetScriptFramework.Main.GameInfo.GetAddressOf(517376, Memory<System.IntPtr>.Size * (System.Int32)ActorValue.SpeedMult, 0, "00 00 00 00 00 00 00 00"); // SkyrimSE.exe + 0x2F39A40
-			var functionAddress			= System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(SpeedMultUpdates.SpeedMultSinkDelegate);
-
-			Memory.Write<System.IntPtr>(functionTableAddress, functionAddress);
-		}
-
-		static public void RemoveMovementFlags(System.IntPtr actor)
-		{
-			Delegates.Instances.Fixes.SpeedMultUpdates.RemoveMovementFlags(actor);
-		}
-
-		/// <param name="actor">Actor*</param>
+		/// <param name="actorAddress">Actor</param>
 		/// <param name="actorValue">ActorValue</param>
-		static public void SpeedMultSink(System.IntPtr actor, System.Int32 actorValue, System.Single old, System.Single delta)
+		static public void SpeedMultSink(System.IntPtr actorAddress, System.Int32 actorValue, System.Single old, System.Single delta)
 		{
-			// actor != System.IntPtr.Zero
+			// actorAddress != System.IntPtr.Zero
 
-			SpeedMultUpdates.RemoveMovementFlags(actor);
+			Delegates.Instances.Fixes.SpeedMultUpdates.RemoveMovementFlags(actorAddress);
 
-			var saveManager = SpeedMultUpdates.SaveManager;
+			var saveManager = Memory.Read<System.IntPtr>(Offsets.Fixes.SpeedMultUpdates.SaveManager);
 
 			if (saveManager != System.IntPtr.Zero)
 			{
 				if (((Memory.Read<System.UInt32>(saveManager, 0x340) >> 1) & 1) == 0)
 				{
-					SpeedMultUpdates.UpdateMovementSpeed(actor);
+					Delegates.Instances.Fixes.SpeedMultUpdates.UpdateMovementSpeed(actorAddress);
 				}
 			}
-		}
-
-		static public void UpdateMovementSpeed(System.IntPtr actor)
-		{
-			Delegates.Instances.Fixes.SpeedMultUpdates.UpdateMovementSpeed(actor);
 		}
 	}
 }

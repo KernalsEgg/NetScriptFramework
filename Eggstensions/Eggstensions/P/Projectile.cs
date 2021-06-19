@@ -3,13 +3,14 @@
 	[System.Flags]
 	public enum ProjectileFlags : System.UInt32
 	{
-		IsHitscanHasNoTracers	= 1 << 1, // SkyrimSE.exe + 0x747910 (VID 42867) + 0xBF
-		IsHitscan				= 1 << 3, // SkyrimSE.exe + 0x747910 (VID 42867) + 0x88
-		HasTracers				= 1 << 4, // SkyrimSE.exe + 0x747910 (VID 42867) + 0x6D
-		IsHitscanHasTracers		= 1 << 5, // SkyrimSE.exe + 0x747910 (VID 42867) + 0xA7
-		HasGravity				= 1 << 6, // SkyrimSE.exe + 0x747910 (VID 42867) + 0xD8
-		Is3DLoaded				= 1 << 8, // SkyrimSE.exe + 0x754820 (VID 43030) + 0xD3
-		IsArrowQuiver3DHandled	= 1 << 26 // SkyrimSE.exe + 0x732390 (VID 42546) + 0x49
+		IsHitscan1				= 1U << 0, // SkyrimSE.exe + 0x747910 (VID 42867) + 0x81
+		IsHitscanHasNoTracers	= 1U << 1, // SkyrimSE.exe + 0x747910 (VID 42867) + 0xBF
+		IsHitscan2				= 1U << 3, // SkyrimSE.exe + 0x747910 (VID 42867) + 0x88
+		HasTracers				= 1U << 4, // SkyrimSE.exe + 0x747910 (VID 42867) + 0x6D
+		IsHitscanHasTracers		= 1U << 5, // SkyrimSE.exe + 0x747910 (VID 42867) + 0xA7
+		HasGravity				= 1U << 6, // SkyrimSE.exe + 0x747910 (VID 42867) + 0xD8
+		Is3DLoaded				= 1U << 8, // SkyrimSE.exe + 0x754820 (VID 43030) + 0xD3
+		IsArrowQuiver3DHandled	= 1U << 26 // SkyrimSE.exe + 0x732390 (VID 42546) + 0x49
 	}
 	
 	

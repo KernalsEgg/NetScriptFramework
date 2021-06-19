@@ -24,8 +24,10 @@
     <Compile Include="$(MSBuildThisFileDirectory)B\BSTEventSink.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)B\BSTEventSource.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Delegates.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Events.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethods.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)H\HandleEntryPointVisitor.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)I\InventoryChanges.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)I\InventoryEntryData.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Memory.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)M\MagicCaster.cs" />
@@ -37,6 +39,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)N\NiNode.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)N\NiObject.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Offsets.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)P\PlayerCharacter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)P\Projectile.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)R\RefAttachTechniqueInput.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)R\ReferenceEffect.cs" />

@@ -3,18 +3,18 @@
 	[System.Flags]
 	public enum MemoryProtectionFlags : System.UInt32
 	{
-		None					= 0,
-		PageNoAccess			= 1 << 0,
-		PageReadOnly			= 1 << 1,
-		PageReadWrite			= 1 << 2,
-		PageWriteCopy			= 1 << 3,
-		PageExecute				= 1 << 4,
-		PageExecuteRead			= 1 << 5,
-		PageExecuteReadWrite	= 1 << 6,
-		PageExecuteWriteCopy	= 1 << 7,
-		PageGuard				= 1 << 8,
-		PageNoCache				= 1 << 9,
-		PageWriteCombine		= 1 << 10
+		None					= 0U,
+		PageNoAccess			= 1U << 0,
+		PageReadOnly			= 1U << 1,
+		PageReadWrite			= 1U << 2,
+		PageWriteCopy			= 1U << 3,
+		PageExecute				= 1U << 4,
+		PageExecuteRead			= 1U << 5,
+		PageExecuteReadWrite	= 1U << 6,
+		PageExecuteWriteCopy	= 1U << 7,
+		PageGuard				= 1U << 8,
+		PageNoCache				= 1U << 9,
+		PageWriteCombine		= 1U << 10
 	}
 
 
@@ -29,9 +29,9 @@
 		static public System.Byte Int3 { get; }	= 0xCC;
 		static public System.Byte Nop { get; }	= 0x90;
 		static public System.Byte Ret { get; }	= 0xC3;
-		
-		
-		
+
+
+
 		unsafe static public T Read<T>(System.IntPtr address)
 			where T : unmanaged
 		{
@@ -151,6 +151,16 @@
 			where T : unmanaged
 		{
 			Memory.WriteArray<T>(address + offset, value);
+		}
+
+		static public T WriteVirtualFunction<T>(System.IntPtr address, System.Int32 index, T newVirtualFunction)
+			where T : System.Delegate
+		{
+			var virtualFunctionAddress = address + index * Memory<System.IntPtr>.Size;
+			var oldVirtualFunction = System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<T>(Memory.Read<System.IntPtr>(virtualFunctionAddress));
+			Memory.SafeWrite<System.IntPtr>(virtualFunctionAddress, System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(newVirtualFunction));
+
+			return oldVirtualFunction;
 		}
 	}
 

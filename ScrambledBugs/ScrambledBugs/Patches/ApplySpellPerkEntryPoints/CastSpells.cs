@@ -8,10 +8,6 @@ namespace ScrambledBugs.Patches.ApplySpellPerkEntryPoints
 	{
 		public CastSpells()
 		{
-			// spell	!= System.IntPtr.Zero
-			// source	!= System.IntPtr.Zero
-			// target	!= System.IntPtr.Zero
-
 			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters()
 			{
 				Address			= Offsets.Patches.ApplySpellPerkEntryPoints.MultipleSpells.ApplyBashingSpell + 0x429,
@@ -20,6 +16,10 @@ namespace ScrambledBugs.Patches.ApplySpellPerkEntryPoints
 				IncludeLength	= 0,
 				Before			= registers =>
 				{
+					// spell		!= System.IntPtr.Zero
+					// perkOwner	!= System.IntPtr.Zero
+					// target		!= System.IntPtr.Zero
+
 					SpellItem spell	= registers.DX;
 					Actor perkOwner	= registers.R8;
 					Actor target	= registers.CX;
@@ -36,6 +36,10 @@ namespace ScrambledBugs.Patches.ApplySpellPerkEntryPoints
 				IncludeLength	= 0,
 				Before			= registers =>
 				{
+					// spell		!= System.IntPtr.Zero
+					// perkOwner	!= System.IntPtr.Zero
+					// target		!= System.IntPtr.Zero
+
 					SpellItem spell	= registers.DX;
 					Actor perkOwner	= registers.R8;
 					Actor target	= registers.CX;
@@ -52,7 +56,10 @@ namespace ScrambledBugs.Patches.ApplySpellPerkEntryPoints
 				IncludeLength	= 0,
 				Before			= registers =>
 				{
-					// arrow != System.IntPtr.Zero
+					// arrow		!= System.IntPtr.Zero
+					// spell		!= System.IntPtr.Zero
+					// perkOwner	!= System.IntPtr.Zero
+					// target		!= System.IntPtr.Zero
 
 					ArrowProjectile arrow = registers.DI;
 
@@ -75,6 +82,10 @@ namespace ScrambledBugs.Patches.ApplySpellPerkEntryPoints
 				IncludeLength	= 0,
 				Before			= registers =>
 				{
+					// spell		!= System.IntPtr.Zero
+					// perkOwner	!= System.IntPtr.Zero
+					// target		!= System.IntPtr.Zero
+
 					SpellItem spell	= registers.DX;
 					Actor perkOwner	= registers.R8;
 					Actor target	= registers.CX;
@@ -91,6 +102,10 @@ namespace ScrambledBugs.Patches.ApplySpellPerkEntryPoints
 				IncludeLength	= 0,
 				Before			= registers =>
 				{
+					// spell		!= System.IntPtr.Zero
+					// attacker		!= System.IntPtr.Zero
+					// perkOwner	!= System.IntPtr.Zero
+
 					SpellItem spell	= registers.DX;
 					Actor attacker	= registers.R8;
 					Actor perkOwner	= registers.CX;

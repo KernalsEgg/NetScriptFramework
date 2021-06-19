@@ -106,6 +106,11 @@
 				static public Delegates.Types.BSTEventSource.RemoveEventSink RemoveEventSink { get; }	= System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.BSTEventSource.RemoveEventSink>(Offsets.BSTEventSource.RemoveEventSink);
 			}
 
+			static public class InventoryChanges
+			{
+				static public Delegates.Types.InventoryChanges.ResetWeight ResetWeight { get; } = System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.InventoryChanges.ResetWeight>(Offsets.InventoryChanges.ResetWeight);
+			}
+
 			static public class InventoryEntryData
 			{
 				static public Delegates.Types.InventoryEntryData.IsWorn IsWorn { get; } = System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.InventoryEntryData.IsWorn>(Offsets.InventoryEntryData.IsWorn);
@@ -119,6 +124,11 @@
 			static public class TESDataHandler
 			{
 				static public Delegates.Types.TESDataHandler.GetForm GetForm { get; } = System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.TESDataHandler.GetForm>(Offsets.TESDataHandler.GetForm);
+			}
+
+			static public class TESObjectREFR
+			{
+				static public Delegates.Types.TESObjectREFR.GetInventoryChanges GetInventoryChanges { get; } = System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.TESObjectREFR.GetInventoryChanges>(Offsets.TESObjectREFR.GetInventoryChanges);
 			}
 
 			static public class UI
@@ -168,6 +178,9 @@
 			static public class BGSPerkEntry
 			{
 				[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)] // Virtual
+				public delegate void AddPerkEntry(System.IntPtr perkEntry, System.IntPtr perkOwner);
+
+				[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)] // Virtual
 				public delegate System.Byte EvaluateConditions(System.IntPtr perkEntry, System.Int32 argumentCount, System.IntPtr arguments);
 
 				[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)] // Virtual
@@ -175,6 +188,9 @@
 
 				[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)] // Virtual
 				public delegate System.IntPtr GetFunctionData(System.IntPtr perkEntry);
+
+				[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)] // Virtual
+				public delegate void RemovePerkEntry(System.IntPtr perkEntry, System.IntPtr perkOwner);
 			}
 
 			static public class BSTArray
@@ -213,6 +229,18 @@
 
 				[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)]
 				public delegate void RemoveEventSink(System.IntPtr eventSource, System.IntPtr eventSink);
+			}
+
+			static public class InitTESThread
+			{
+				[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)] // Virtual
+				public delegate void Initialize(System.IntPtr initTESThread);
+			}
+
+			static public class InventoryChanges
+			{
+				[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)]
+				public delegate System.Byte ResetWeight(System.IntPtr inventoryChanges);
 			}
 
 			static public class InventoryEntryData
@@ -273,6 +301,9 @@
 			{
 				[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)] // Virtual
 				public delegate System.IntPtr GetCurrent3D(System.IntPtr reference);
+
+				[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)]
+				public delegate System.IntPtr GetInventoryChanges(System.IntPtr reference);
 			}
 
 			static public class UI

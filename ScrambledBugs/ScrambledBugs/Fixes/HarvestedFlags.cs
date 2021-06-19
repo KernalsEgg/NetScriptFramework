@@ -20,8 +20,8 @@ namespace ScrambledBugs.Fixes
 					
 					TESObjectREFR reference = registers.CX;
 
-					var baseObject	= reference.BaseObject;
-					var formType	= baseObject.FormType;
+					TESBoundObject baseObject	= reference.BaseObject;
+					var formType				= baseObject.FormType;
 
 					if (formType == FormType.Flora || formType == FormType.Tree)
 					{

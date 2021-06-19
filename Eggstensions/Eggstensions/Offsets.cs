@@ -20,7 +20,10 @@
 		static public class BGSEntryPointPerkEntry
 		{
 			/// <summary>SkyrimSE.exe + 0x32ECE0</summary>
-			static public System.IntPtr HandleEntryPoints { get; } = NetScriptFramework.Main.GameInfo.GetAddressOf(23073);
+			static public System.IntPtr HandleEntryPoints { get; }		= NetScriptFramework.Main.GameInfo.GetAddressOf(23073);
+
+			/// <summary>SkyrimSE.exe + 0x1598610</summary>
+			static public System.IntPtr VirtualFunctionTable { get; }	= NetScriptFramework.Main.GameInfo.GetAddressOf(241053);
 		}
 
 		static public class BSTArray
@@ -53,6 +56,21 @@
 
 			/// <summary>SkyrimSE.exe + 0x19D7C0</summary>
 			static public System.IntPtr RemoveEventSink { get; }	= NetScriptFramework.Main.GameInfo.GetAddressOf(14707);
+
+			/// <summary>SkyrimSE.exe + 0x19D270</summary>
+			static public System.IntPtr SendEvent { get; }			= NetScriptFramework.Main.GameInfo.GetAddressOf(14703);
+		}
+
+		static public class InitTESThread
+		{
+			/// <summary>SkyrimSE.exe + 0x164D900</summary>
+			static public System.IntPtr VirtualFunctionTable { get; } = NetScriptFramework.Main.GameInfo.GetAddressOf(259694);
+		}
+
+		static public class InventoryChanges
+		{
+			/// <summary>SkyrimSE.exe + 0x1EBD50</summary>
+			static public System.IntPtr ResetWeight { get; } = NetScriptFramework.Main.GameInfo.GetAddressOf(15897);
 		}
 
 		static public class InventoryEntryData
@@ -61,28 +79,28 @@
 			static public System.IntPtr IsWorn { get; } = NetScriptFramework.Main.GameInfo.GetAddressOf(15763);
 		}
 
+		static public class PlayerCharacter
+		{
+			/// <summary>SkyrimSE.exe + 0x2F26EF8</summary>
+			static public System.IntPtr Instance { get; } = NetScriptFramework.Main.GameInfo.GetAddressOf(517014);
+		}
+
 		static public class ScriptEventSourceHolder
 		{
 			/// <summary>SkyrimSE.exe + 0x186790</summary>
 			static public System.IntPtr GetInstance { get; } = NetScriptFramework.Main.GameInfo.GetAddressOf(14108);
 		}
 
-		static public class SettingT
-		{
-			/// <summary>SkyrimSE.exe + 0x1DE5468</summary>
-			static public System.IntPtr MagicGuideNoMarker { get; }		= NetScriptFramework.Main.GameInfo.GetAddressOf(506301);
-
-			/// <summary>SkyrimSE.exe + 0x1DE5480</summary>
-			static public System.IntPtr MagicGuideNoPath { get; }		= NetScriptFramework.Main.GameInfo.GetAddressOf(506303);
-
-			/// <summary>SkyrimSE.exe + 0x1DE6698</summary>
-			static public System.IntPtr PlayerSetMarkerName { get; }	= NetScriptFramework.Main.GameInfo.GetAddressOf(506560);
-		}
-
 		static public class TESDataHandler
 		{
 			/// <summary>SkyrimSE.exe + 0x194230</summary>
 			static public System.IntPtr GetForm { get; } = NetScriptFramework.Main.GameInfo.GetAddressOf(14461);
+		}
+
+		static public class TESObjectREFR
+		{
+			/// <summary>SkyrimSE.exe + 0x1D8E40</summary>
+			static public System.IntPtr GetInventoryChanges { get; } = NetScriptFramework.Main.GameInfo.GetAddressOf(15802);
 		}
 
 		static public class TESObjectWEAP

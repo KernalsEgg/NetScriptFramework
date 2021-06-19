@@ -34,9 +34,6 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Eggstensions.Events">
-      <HintPath>..\..\..\Program Files (x86)\Steam\steamapps\common\Skyrim Special Edition\Data\NetScriptFramework\Plugins\Lib\Eggstensions.Events.dll</HintPath>
-    </Reference>
     <Reference Include="NetScriptFramework">
       <HintPath>..\..\..\Program Files (x86)\Steam\steamapps\common\Skyrim Special Edition\Data\NetScriptFramework\NetScriptFramework.dll</HintPath>
     </Reference>
@@ -55,6 +52,7 @@
   <ItemGroup>
     <Compile Include="Delegates.cs" />
     <Compile Include="Fixes\HarvestedFlags.cs" />
+    <Compile Include="Fixes\HitEffectRaceCondition.cs" />
     <Compile Include="Offsets.cs" />
     <Compile Include="Patches\ApplySpellPerkEntryPoints\MultipleSpells.cs" />
     <Compile Include="Patches\AttachHitEffectArt.cs" />

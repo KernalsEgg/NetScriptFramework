@@ -5,7 +5,7 @@
 		[System.Flags]
 		public enum ChangeFlags : System.UInt32
 		{
-			Empty = 1 << 21
+			Empty = 1U << 21
 		}
 		
 		
@@ -16,7 +16,8 @@
 
 
 
-		public TESBoundObject BaseObject
+		/// <summary>TESBoundObject</summary>
+		public System.IntPtr BaseObject
 		{
 			get
 			{
@@ -31,6 +32,13 @@
 			var getCurrent3D = System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.TESObjectREFR.GetCurrent3D>(this[0x8D]);
 
 			return getCurrent3D(this);
+		}
+
+
+
+		public InventoryChanges GetInventoryChanges()
+		{
+			return Delegates.Instances.TESObjectREFR.GetInventoryChanges(this);
 		}
 
 

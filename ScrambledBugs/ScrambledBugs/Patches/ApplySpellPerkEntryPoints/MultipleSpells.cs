@@ -10,10 +10,13 @@ namespace ScrambledBugs.Patches.ApplySpellPerkEntryPoints
 {
 	internal class MultipleSpells
 	{
+		static MultipleSpells()
+		{
+			Memory.Write<System.IntPtr>(Offsets.Patches.ApplySpellPerkEntryPoints.MultipleSpells.SelectSpell, System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(MultipleSpells.NewSelectSpell));
+		}
+		
 		public MultipleSpells(System.Boolean castSpells)
 		{
-			Memory.Write<System.IntPtr>(Offsets.Patches.ApplySpellPerkEntryPoints.MultipleSpells.SelectSpell, System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(MultipleSpells.SelectSpellDelegate));
-
 			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters()
 			{
 				Address			= Offsets.Patches.ApplySpellPerkEntryPoints.MultipleSpells.ApplyBashingSpell + 0x40E,
@@ -22,6 +25,9 @@ namespace ScrambledBugs.Patches.ApplySpellPerkEntryPoints
 				IncludeLength	= 0,
 				Before			= registers =>
 				{
+					// perkOwner	!= System.IntPtr.Zero
+					// target		!= System.IntPtr.Zero
+					
 					var entryPoint	= (EntryPoint)registers.CX.ToInt32Safe();
 					Actor perkOwner	= registers.DX;
 					Actor target	= registers.R8;
@@ -49,6 +55,10 @@ namespace ScrambledBugs.Patches.ApplySpellPerkEntryPoints
 				IncludeLength	= 0,
 				Before			= registers =>
 				{
+					// perkOwner	!= System.IntPtr.Zero
+					// weapon		!= System.IntPtr.Zero
+					// target		!= System.IntPtr.Zero
+
 					var entryPoint			= (EntryPoint)registers.CX.ToInt32Safe();
 					Actor perkOwner			= registers.DX;
 					TESObjectWEAP weapon	= registers.R8;
@@ -77,7 +87,10 @@ namespace ScrambledBugs.Patches.ApplySpellPerkEntryPoints
 				IncludeLength	= 0,
 				Before			= registers =>
 				{
-					// arrow != System.IntPtr.Zero
+					// arrow		!= System.IntPtr.Zero
+					// perkOwner	!= System.IntPtr.Zero
+					// weapon		!= System.IntPtr.Zero
+					// target		!= System.IntPtr.Zero
 
 					ArrowProjectile arrow = registers.DI;
 
@@ -112,6 +125,10 @@ namespace ScrambledBugs.Patches.ApplySpellPerkEntryPoints
 				IncludeLength	= 0,
 				Before			= registers =>
 				{
+					// perkOwner	!= System.IntPtr.Zero
+					// spell		!= System.IntPtr.Zero
+					// target		!= System.IntPtr.Zero
+
 					var entryPoint	= (EntryPoint)registers.CX.ToInt32Safe();
 					Actor perkOwner	= registers.DX;
 					SpellItem spell	= registers.R8;
@@ -140,6 +157,8 @@ namespace ScrambledBugs.Patches.ApplySpellPerkEntryPoints
 				IncludeLength	= 0,
 				Before			= registers =>
 				{
+					// perkOwner != System.IntPtr.Zero
+					
 					var entryPoint	= (EntryPoint)registers.CX.ToInt32Safe();
 					Actor perkOwner	= registers.DX;
 
@@ -166,6 +185,10 @@ namespace ScrambledBugs.Patches.ApplySpellPerkEntryPoints
 				IncludeLength	= 0,
 				Before			= registers =>
 				{
+					// perkOwner		!= System.IntPtr.Zero
+					// attacker			!= System.IntPtr.Zero
+					// attackerWeapon	!= System.IntPtr.Zero
+					
 					var entryPoint					= (EntryPoint)registers.CX.ToInt32Safe();
 					Actor perkOwner					= registers.DX;
 					Actor attacker					= registers.R8;
@@ -189,10 +212,14 @@ namespace ScrambledBugs.Patches.ApplySpellPerkEntryPoints
 
 
 
-		static public Delegates.Types.Patches.ApplySpellPerkEntryPoints.MultipleSpells.EntryPointFunction SelectSpellDelegate { get; } = MultipleSpells.SelectSpell;
+		static public Delegates.Types.Patches.ApplySpellPerkEntryPoints.MultipleSpells.EntryPointFunction NewSelectSpell { get; } = MultipleSpells.SelectSpell;
 
 
 
+		/// <param name="perkOwnerAddress">Actor</param>
+		/// <param name="result">EntryPointFunctionResult</param>
+		/// <param name="resultsAddress">ref BSTArray.IntPtr</param>
+		/// <param name="entryPointFunctionDataSpellItemAddress">BGSEntryPointFunctionDataSpellItem</param>
 		static public void SelectSpell(System.IntPtr perkOwnerAddress, System.Int32 result, System.Byte resultCount, System.IntPtr resultsAddress, System.IntPtr entryPointFunctionDataSpellItemAddress)
 		{
 			// resultsAddress							!= System.IntPtr.Zero

@@ -19,19 +19,28 @@
 			static internal class ModArmorWeightPerkEntryPoint
 			{
 				/// <summary>SkyrimSE.exe + 0x1E9130</summary>
-				static public System.IntPtr GetTotalItemWeight { get; } = NetScriptFramework.Main.GameInfo.GetAddressOf(15883);
+				static public System.IntPtr GetInventoryWeight { get; } = NetScriptFramework.Main.GameInfo.GetAddressOf(15883);
 			}
 
 			static internal class SpeedMultUpdates
 			{
+				/// <summary>SkyrimSE.exe + 0x2F39A40</summary>
+				static public System.IntPtr ActorValueSinkFunctionTable { get; }	= NetScriptFramework.Main.GameInfo.GetAddressOf(517376);
+
 				/// <summary>SkyrimSE.exe + 0x5ED420</summary>
-				static public System.IntPtr RemoveMovementFlags { get; }	= NetScriptFramework.Main.GameInfo.GetAddressOf(36585);
+				static public System.IntPtr RemoveMovementFlags { get; }			= NetScriptFramework.Main.GameInfo.GetAddressOf(36585);
 
 				/// <summary>SkyrimSE.exe + 0x2F266F8</summary>
-				static public System.IntPtr SaveManager { get; }			= NetScriptFramework.Main.GameInfo.GetAddressOf(516851);
+				static public System.IntPtr SaveManager { get; }					= NetScriptFramework.Main.GameInfo.GetAddressOf(516851);
 
 				/// <summary>SkyrimSE.exe + 0x607FA0</summary>
-				static public System.IntPtr UpdateMovementSpeed { get; }	= NetScriptFramework.Main.GameInfo.GetAddressOf(36916);
+				static public System.IntPtr UpdateMovementSpeed { get; }			= NetScriptFramework.Main.GameInfo.GetAddressOf(36916);
+			}
+
+			static internal class HitEffectRaceCondition
+			{
+				/// <summary>SkyrimSE.exe + 0x53E670</summary>
+				static public System.IntPtr ShouldUpdate { get; } = NetScriptFramework.Main.GameInfo.GetAddressOf(33289);
 			}
 
 			static internal class TerrainDecals
@@ -84,10 +93,10 @@
 			static internal class AttachHitEffectArt
 			{
 				/// <summary>SkyrimSE.exe + 0x6314F0</summary>
-				static public System.IntPtr AddNoHitEffectArtFlag { get; }			= NetScriptFramework.Main.GameInfo.GetAddressOf(37804, 0x6F, 0, "24 F9" + "0C 01"); // 2 + 2
+				static public System.IntPtr AddNoHitEffectArtFlag { get; }		= NetScriptFramework.Main.GameInfo.GetAddressOf(37804, 0x6F, 0, "24 F9" + "0C 01"); // 2 + 2
 
 				/// <summary>SkyrimSE.exe + 0x558F20</summary>
-				static public System.IntPtr Attach { get; }							= NetScriptFramework.Main.GameInfo.GetAddressOf(33872);
+				static public System.IntPtr Attach { get; }						= NetScriptFramework.Main.GameInfo.GetAddressOf(33872);
 
 				/// <summary>SkyrimSE.exe + 0x558220</summary>
 				static public System.IntPtr AttachOnPerspectiveChange { get; }	= NetScriptFramework.Main.GameInfo.GetAddressOf(33862, 0x9A, 0, "74 08"); // 2

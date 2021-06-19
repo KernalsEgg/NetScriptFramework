@@ -75,12 +75,26 @@
 			return (EntryPointFunction)getFunction(this);
 		}
 
-		/// <returns>BGSEntryPointFunctionData*</returns>
+		/// <returns>BGSEntryPointFunctionData</returns>
 		virtual public System.IntPtr GetFunctionData()
 		{
 			var getFunctionData = System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.BGSPerkEntry.GetFunctionData>(this[0x2]);
 
 			return getFunctionData(this);
+		}
+
+		virtual public void AddPerkEntry(Actor perkOwner)
+		{
+			var addPerkEntry = System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.BGSPerkEntry.AddPerkEntry>(this[0xA]);
+
+			addPerkEntry(this, perkOwner);
+		}
+
+		virtual public void RemovePerkEntry(Actor perkOwner)
+		{
+			var removePerkEntry = System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.BGSPerkEntry.RemovePerkEntry>(this[0xB]);
+
+			removePerkEntry(this, perkOwner);
 		}
 	}
 }
