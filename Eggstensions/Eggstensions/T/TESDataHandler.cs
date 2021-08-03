@@ -1,12 +1,12 @@
 ﻿namespace Eggstensions
 {
-	public class TESDataHandler
+	[System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Explicit, Size = 0xDC0)]
+	unsafe public struct TESDataHandler
 	{
-		/// <param name="formID">FormID</param>
-		/// <returns>TESForm</returns>
-		static public TESForm GetForm(System.UInt32 formID)
+		// Static
+		static public TESForm* GetForm(System.UInt32 formID)
 		{
-			return Delegates.Instances.TESDataHandler.GetForm(formID);
+			return Eggstensions.Delegates.Instances.TESDataHandler.GetForm(formID);
 		}
 	}
 }

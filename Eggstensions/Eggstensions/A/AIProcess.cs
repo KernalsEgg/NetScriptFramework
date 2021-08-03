@@ -1,9 +1,7 @@
 ﻿namespace Eggstensions
 {
-	public class AIProcess : NativeObject
+	[System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Explicit, Size = 0x140)]
+	public struct AIProcess
 	{
-		public AIProcess(System.IntPtr address) : base(address)
-		{
-		}
 	}
 }

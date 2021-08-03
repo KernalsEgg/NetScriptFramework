@@ -1,10 +1,8 @@
 ﻿namespace Eggstensions
 {
-	public class SettingT<T> : Setting<T>
-		where T : unmanaged
+	[System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Explicit, Size = 0x18)]
+	public struct SettingT // Setting
 	{
-		public SettingT(System.IntPtr address) : base(address)
-		{
-		}
+		[System.Runtime.InteropServices.FieldOffset(0x0)] public Setting Setting;
 	}
 }

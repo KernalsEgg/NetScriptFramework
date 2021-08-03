@@ -12,54 +12,16 @@
 		Is3DLoaded				= 1U << 8, // SkyrimSE.exe + 0x754820 (VID 43030) + 0xD3
 		IsArrowQuiver3DHandled	= 1U << 26 // SkyrimSE.exe + 0x732390 (VID 42546) + 0x49
 	}
-	
-	
-	
-	public class Projectile : TESObjectREFR
+
+
+
+	[System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Explicit, Size = 0x1D8)]
+	public class Projectile // TESObjectREFR
 	{
-		public Projectile(System.IntPtr address) : base(address)
-		{
-		}
-
-
-
-		public System.Single Damage
-		{
-			get
-			{
-				return Memory.Read<System.Single>(this, 0x198); // SkyrimSE.exe + 0x74A950 (VID 42920) + 0x332
-			}
-		}
-
-		public ProjectileFlags Flags
-		{
-			get
-			{
-				return (ProjectileFlags)Memory.Read<System.UInt32>(this, 0x1CC);
-			}
-		}
-
-		public System.Boolean StartedQueueingFiles
-		{
-			get
-			{
-				return Memory.Read<System.Byte>(this, 0x1D0) != 0; // SkyrimSE.exe + 0x754DC0 (VID 43035) + 0x1CB
-			}
-		}
-
-		public System.Boolean FinishedQueueingFiles
-		{
-			get
-			{
-				return Memory.Read<System.Byte>(this, 0x1D1) != 0; // SkyrimSE.exe + 0x754FF0 (VID 43036) + 0x5
-			}
-		}
-
-
-
-		static public implicit operator Projectile(System.IntPtr address)
-		{
-			return new Projectile(address);
-		}
+		[System.Runtime.InteropServices.FieldOffset(0x0)] public TESObjectREFR TESObjectREFR;
+		[System.Runtime.InteropServices.FieldOffset(0x198)] public System.Single Damage;				// SkyrimSE.exe + 0x74A950 (VID 42920) + 0x332
+		[System.Runtime.InteropServices.FieldOffset(0x1CC)] public ProjectileFlags Flags;
+		[System.Runtime.InteropServices.FieldOffset(0x1D0)] public System.Byte StartedQueueingFiles;	// SkyrimSE.exe + 0x754DC0 (VID 43035) + 0x1CB
+		[System.Runtime.InteropServices.FieldOffset(0x1D1)] public System.Byte FinishedQueueingFiles;	// SkyrimSE.exe + 0x754FF0 (VID 43036) + 0x5
 	}
 }

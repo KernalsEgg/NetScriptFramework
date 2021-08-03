@@ -1,26 +1,18 @@
 ﻿namespace Eggstensions
 {
-	public class PlayerCharacter : Actor
+	[System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Explicit, Size = 0xBE0)]
+	unsafe public struct PlayerCharacter // Actor
 	{
-		public PlayerCharacter(System.IntPtr address) : base(address)
-		{
-		}
+		[System.Runtime.InteropServices.FieldOffset(0x0)] public Actor Actor;
 
 
 
-		static public PlayerCharacter Instance
+		static public PlayerCharacter* Instance
 		{
 			get
 			{
-				return Memory.Read<System.IntPtr>(Offsets.PlayerCharacter.Instance);
+				return (PlayerCharacter*)Memory.Read<System.IntPtr>(Eggstensions.Offsets.PlayerCharacter.Instance).ToPointer();
 			}
-		}
-
-
-
-		static public implicit operator PlayerCharacter(System.IntPtr address)
-		{
-			return new PlayerCharacter(address);
 		}
 	}
 }

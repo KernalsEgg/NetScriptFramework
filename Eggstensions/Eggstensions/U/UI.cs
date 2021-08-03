@@ -1,16 +1,12 @@
 ﻿namespace Eggstensions
 {
-	public class UI : NativeObject
+	[System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Explicit, Size = 0x1C8)]
+	public struct UI
 	{
-		public UI(System.IntPtr address) : base(address)
-		{
-		}
-
-
-
+		// Static
 		static public void Notification(System.String text, System.String sound, System.Boolean queueOnce)
 		{
-			Delegates.Instances.UI.Notification(text, sound, (System.Byte)(queueOnce ? 1 : 0));
+			Eggstensions.Delegates.Instances.UI.Notification(text, sound, (System.Byte)(queueOnce ? 1 : 0));
 		}
 	}
 }

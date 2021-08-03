@@ -14,19 +14,15 @@
 
 
 
-	public class BGSEntryPointFunctionData : VirtualObject
+	[System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Explicit, Size = 0x8)]
+	unsafe public struct BGSEntryPointFunctionData
 	{
-		public BGSEntryPointFunctionData(System.IntPtr address) : base(address)
+		// Virtual
+		static public EntryPointFunctionDataType GetType(BGSEntryPointFunctionData* entryPointFunctionData)
 		{
-		}
+			var getType = Memory.ReadVirtualFunction<Eggstensions.Delegates.Types.BGSEntryPointFunctionData.GetType>(*(System.IntPtr*)entryPointFunctionData, 0x1);
 
-
-
-		new virtual public EntryPointFunctionDataType GetType()
-		{
-			var getType = System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.BGSEntryPointFunctionData.GetType>(this[0x1]);
-
-			return (EntryPointFunctionDataType)getType(this);
+			return (EntryPointFunctionDataType)getType(entryPointFunctionData);
 		}
 	}
 }

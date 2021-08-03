@@ -9,64 +9,16 @@
 		BashAttack	= 1 << 2,
 		HitBlocked	= 1 << 3
 	}
-	
 
 
-	public class TESHitEvent : NativeObject
+
+	[System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Sequential, Size = 0x20)]
+	unsafe public struct TESHitEvent
 	{
-		public TESHitEvent(System.IntPtr address) : base(address)
-		{
-		}
-
-
-
-		public TESObjectREFR Target
-		{
-			get
-			{
-				return Memory.Read<System.IntPtr>(this, 0x0);
-			}
-		}
-
-		public TESObjectREFR Cause
-		{
-			get
-			{
-				return Memory.Read<System.IntPtr>(this, 0x8);
-			}
-		}
-
-		/// <summary>FormID</summary>
-		public System.UInt32 Source
-		{
-			get
-			{
-				return Memory.Read<System.UInt32>(this, 0x10);
-			}
-		}
-
-		/// <summary>FormID</summary>
-		public System.UInt32 Projectile
-		{
-			get
-			{
-				return Memory.Read<System.UInt32>(this, 0x14);
-			}
-		}
-
-		public HitEventFlags Flags
-		{
-			get
-			{
-				return (HitEventFlags)Memory.Read<System.Byte>(this, 0x18);
-			}
-		}
-
-
-
-		static public implicit operator TESHitEvent(System.IntPtr address)
-		{
-			return new TESHitEvent(address);
-		}
+		public TESObjectREFR* Target;		// 0x0
+		public TESObjectREFR* Cause;		// 0x8
+		public System.UInt32 Source;		// 0x10 (FormID)
+		public System.UInt32 Projectile;	// 0x14 (FormID)
+		public HitEventFlags Flags;			// 0x18
 	}
 }

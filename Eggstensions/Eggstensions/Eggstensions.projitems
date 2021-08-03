@@ -9,10 +9,16 @@
     <Import_RootNamespace>Eggstensions</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Assembly.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)A\ActiveEffect.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)A\Actor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)A\AIProcess.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)A\ArrowProjectile.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)E\Effect.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)E\EffectSetting.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)I\InitTESThread.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)T\TESObjectARMO.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UnmanagedArray.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)B\BGSEntryPointFunctionData.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)B\BGSEntryPointFunctionDataSpellItem.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)B\BGSEntryPointPerkEntry.cs" />
@@ -23,18 +29,18 @@
     <Compile Include="$(MSBuildThisFileDirectory)B\BSTArray.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)B\BSTEventSink.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)B\BSTEventSource.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Context.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Delegates.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Events.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethods.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)H\HandleEntryPointVisitor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)I\InventoryChanges.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)I\InventoryEntryData.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Math.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Memory.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)M\MagicCaster.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)M\MagicItem.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)M\MissileProjectile.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)M\ModelReferenceEffect.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)NativeObject.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)N\NiAVObject.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)N\NiNode.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)N\NiObject.cs" />
@@ -44,11 +50,12 @@
     <Compile Include="$(MSBuildThisFileDirectory)R\RefAttachTechniqueInput.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)R\ReferenceEffect.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)R\ReferenceEffectController.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)SequentialArray.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SkyrimSE.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)S\ScriptEventSourceHolder.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)S\Setting.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)S\SettingT.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)S\SpellItem.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Trampoline.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)T\TESActorBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)T\TESBoundObject.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)T\TESDataHandler.cs" />
@@ -60,8 +67,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)T\TESObjectWEAP.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)T\TESQuest.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)T\TESRace.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Union.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)U\UI.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)VirtualObject.cs" />
   </ItemGroup>
 </Project>

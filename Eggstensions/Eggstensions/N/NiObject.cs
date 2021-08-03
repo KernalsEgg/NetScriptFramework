@@ -1,18 +1,14 @@
 ﻿namespace Eggstensions
 {
-	public class NiObject : VirtualObject
+	[System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Explicit, Size = 0x10)]
+	unsafe public struct NiObject
 	{
-		public NiObject(System.IntPtr address) : base(address)
+		// Virtual
+		static public NiNode* AsNode(NiObject* niObject)
 		{
-		}
+			var asNode = Memory.ReadVirtualFunction<Eggstensions.Delegates.Types.NiObject.AsNode>(*(System.IntPtr*)niObject, 0x3);
 
-
-
-		virtual public NiNode AsNode()
-		{
-			var asNode = System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.NiObject.AsNode>(this[0x3]);
-
-			return asNode(this);
+			return asNode(niObject);
 		}
 	}
 }

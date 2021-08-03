@@ -6,17 +6,34 @@ using Events = Eggstensions.Events;
 
 namespace ScrambledBugs.Fixes
 {
-	internal class SpeedMultUpdates
+	unsafe internal class SpeedMultUpdates
 	{
-		public SpeedMultUpdates()
+		static SpeedMultUpdates()
 		{
+			SpeedMultUpdates.SpeedMultSink = (Actor* actor, System.Int32 actorValue, System.Single old, System.Single delta) =>
+			{
+				// actor != null
+
+				ScrambledBugs.Delegates.Instances.Fixes.SpeedMultUpdates.RemoveMovementFlags(actor);
+
+				var saveManager = Memory.Read<System.IntPtr>(ScrambledBugs.Offsets.Fixes.SpeedMultUpdates.SaveManager);
+
+				if (saveManager != System.IntPtr.Zero)
+				{
+					if (((Memory.Read<System.UInt32>(saveManager, 0x340) >> 1) & 1) == 0)
+					{
+						ScrambledBugs.Delegates.Instances.Fixes.SpeedMultUpdates.UpdateMovementSpeed(actor);
+					}
+				}
+			};
+
 			Events.Initialize.After -= SpeedMultUpdates.OnInitialize;
 			Events.Initialize.After += SpeedMultUpdates.OnInitialize;
 		}
 
 
 
-		static public Delegates.Types.Fixes.SpeedMultUpdates.ActorValueSink NewSpeedMultSink { get; } = SpeedMultUpdates.SpeedMultSink;
+		static public ScrambledBugs.Delegates.Types.Fixes.SpeedMultUpdates.ActorValueSink SpeedMultSink { get; }
 
 
 
@@ -24,26 +41,11 @@ namespace ScrambledBugs.Fixes
 		{
 			Events.Initialize.After -= SpeedMultUpdates.OnInitialize;
 
-			Memory.Write<System.IntPtr>(Offsets.Fixes.SpeedMultUpdates.ActorValueSinkFunctionTable + (System.Int32)ActorValue.SpeedMult * Memory<System.IntPtr>.Size, System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(SpeedMultUpdates.NewSpeedMultSink));
-		}
-
-		/// <param name="actorAddress">Actor</param>
-		/// <param name="actorValue">ActorValue</param>
-		static public void SpeedMultSink(System.IntPtr actorAddress, System.Int32 actorValue, System.Single old, System.Single delta)
-		{
-			// actorAddress != System.IntPtr.Zero
-
-			Delegates.Instances.Fixes.SpeedMultUpdates.RemoveMovementFlags(actorAddress);
-
-			var saveManager = Memory.Read<System.IntPtr>(Offsets.Fixes.SpeedMultUpdates.SaveManager);
-
-			if (saveManager != System.IntPtr.Zero)
-			{
-				if (((Memory.Read<System.UInt32>(saveManager, 0x340) >> 1) & 1) == 0)
-				{
-					Delegates.Instances.Fixes.SpeedMultUpdates.UpdateMovementSpeed(actorAddress);
-				}
-			}
+			Memory.Write<System.IntPtr>
+			(
+				ScrambledBugs.Offsets.Fixes.SpeedMultUpdates.ActorValueSinkFunctionTable + Memory.Size<System.IntPtr>.Unmanaged * (System.Int32)ActorValue.SpeedMult,
+				System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate<ScrambledBugs.Delegates.Types.Fixes.SpeedMultUpdates.ActorValueSink>(SpeedMultUpdates.SpeedMultSink)
+			);
 		}
 	}
 }

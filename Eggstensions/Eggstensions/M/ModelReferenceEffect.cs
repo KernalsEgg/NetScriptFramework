@@ -1,26 +1,9 @@
 ﻿namespace Eggstensions
 {
-	public class ModelReferenceEffect : ReferenceEffect
+	[System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Explicit, Size = 0xD8)]
+	public struct ModelReferenceEffect // ReferenceEffect
 	{
-		public ModelReferenceEffect(System.IntPtr address) : base(address)
-		{
-		}
-
-
-
-		public RefAttachTechniqueInput HitEffectArtData
-		{
-			get
-			{
-				return this + 0x68;
-			}
-		}
-
-
-
-		static public implicit operator ModelReferenceEffect(System.IntPtr address)
-		{
-			return new ModelReferenceEffect(address);
-		}
+		[System.Runtime.InteropServices.FieldOffset(0x0)] public ReferenceEffect ReferenceEffect;
+		[System.Runtime.InteropServices.FieldOffset(0x68)] public RefAttachTechniqueInput HitEffectArtData;
 	}
 }

@@ -1,16 +1,8 @@
 ﻿namespace Eggstensions
 {
-	public class ArrowProjectile : MissileProjectile
+	[System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Explicit, Size = 0x1F0)]
+	public struct ArrowProjectile // MissileProjectile
 	{
-		public ArrowProjectile(System.IntPtr address) : base(address)
-		{
-		}
-
-
-
-		static public implicit operator ArrowProjectile(System.IntPtr address)
-		{
-			return new ArrowProjectile(address);
-		}
+		[System.Runtime.InteropServices.FieldOffset(0x0)] public MissileProjectile MissileProjectile;
 	}
 }

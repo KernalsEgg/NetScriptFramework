@@ -1,26 +1,18 @@
 ﻿namespace Eggstensions
 {
-	public class TESObjectWEAP : TESBoundObject
+	[System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Explicit, Size = 0x220)]
+	unsafe public struct TESObjectWEAP // TESBoundObject
 	{
-		public TESObjectWEAP(System.IntPtr address) : base(address)
-		{
-		}
+		[System.Runtime.InteropServices.FieldOffset(0x0)] public TESBoundObject TESBoundObject;
 
 
 
-		static public TESObjectWEAP Unarmed
+		static public TESObjectWEAP* Unarmed
 		{
 			get
 			{
-				return Memory.Read<System.IntPtr>(Offsets.TESObjectWEAP.Unarmed);
+				return (TESObjectWEAP*)Memory.Read<System.IntPtr>(Eggstensions.Offsets.TESObjectWEAP.Unarmed).ToPointer();
 			}
-		}
-
-
-
-		static public implicit operator TESObjectWEAP(System.IntPtr address)
-		{
-			return new TESObjectWEAP(address);
 		}
 	}
 }

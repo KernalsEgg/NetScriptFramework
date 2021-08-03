@@ -6,30 +6,42 @@ namespace ScrambledBugs.Fixes
 {
 	internal class HitEffectRaceCondition
 	{
-		public HitEffectRaceCondition()
+		static HitEffectRaceCondition()
 		{
-			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters()
-			{
-				Address			= Offsets.Fixes.HitEffectRaceCondition.ShouldUpdate + 0x3B,
-				Pattern			= "48 8B 47 48" + "48 8B 48 10" + "8B 41 68" + "D1 E8",
-				ReplaceLength	= 4 + 4 + 3 + 2, // 13
-				IncludeLength	= 4 + 4 + 3 + 2, // 13
-				Before			= registers =>
-				{
-					// activeEffect != System.IntPtr.Zero
-					
-					ActiveEffect activeEffect = registers.DI;
+			// ECX: activeEffect->Flags
+			
+			var assembly = new UnmanagedArray<System.Byte>();
 
-					var flags = activeEffect.Flags;
+			assembly.Add(new System.Byte[1] { 0x52 });									// push rdx
+			assembly.Add(new System.Byte[2] { 0x8B, 0xD1 });							// mov edx, ecx
+			assembly.Add(new System.Byte[3] { 0xC1, 0xE9, 0x12 });						// shr ecx, 12 (ActiveEffectFlags.Dispelled)
+			assembly.Add(new System.Byte[3] { 0xF6, 0xC1, 0x01 });						// test cl, 01
+			assembly.Add(new System.Byte[2] { 0x75, (2 + 3 + 3 + 2) + (2 + 3 + 3) });	// jne 12
 
-					if ((flags & ActiveEffectFlags.ApplyingVisualEffects) != 0 || (flags & ActiveEffectFlags.ApplyingSounds) != 0)
-					{
-						registers.AX = System.IntPtr.Zero; // Return true
+			assembly.Add(new System.Byte[2] { 0x8B, 0xCA });							// mov ecx, edx
+			assembly.Add(new System.Byte[3] { 0xC1, 0xE9, 0x05 });						// shr ecx, 5 (ActiveEffectFlags.ApplyingVisualEffects)
+			assembly.Add(new System.Byte[3] { 0xF6, 0xC1, 0x01 });						// test cl, 01
+			assembly.Add(new System.Byte[2] { 0x75, 2 + 3 + 3 });						// jne 08
 
-						registers.Skip();
-					}
-				}
-			});
+			assembly.Add(new System.Byte[2] { 0x8B, 0xCA });							// mov ecx, edx
+			assembly.Add(new System.Byte[3] { 0xC1, 0xE9, 0x06 });						// shr ecx, 06 (ActiveEffectFlags.ApplyingSoundEffects)
+			assembly.Add(new System.Byte[3] { 0xF6, 0xC1, 0x01 });						// test cl, 01
+
+			assembly.Add(new System.Byte[1] { 0x5A });									// pop rdx
+			assembly.Add(new System.Byte[1] { 0xC3 });									// ret
+
+			SkyrimSE.Trampoline.WriteRelativeCallBranch
+			(
+				ScrambledBugs.Offsets.Fixes.HitEffectRaceCondition.ShouldUpdate,
+				assembly
+			);
+			Memory.SafeFill<System.Byte>
+			(
+				ScrambledBugs.Offsets.Fixes.HitEffectRaceCondition.ShouldUpdate,
+				Memory.Size<RelativeCall>.Unmanaged,
+				3 + 3 - Memory.Size<RelativeCall>.Unmanaged,
+				Assembly.Nop
+			);
 		}
 	}
 }

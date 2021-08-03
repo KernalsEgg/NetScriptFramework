@@ -4,21 +4,34 @@
 
 namespace ScrambledBugs.Patches
 {
-	internal class EquipBestAmmo
+	unsafe internal class EquipBestAmmo
 	{
-		public EquipBestAmmo()
+		static EquipBestAmmo()
 		{
-			Memory.SafeWriteArray<System.Byte>(Offsets.Patches.EquipBestAmmo.CompareDamageContainer, new System.Byte[2] { 0x76, 0x06 });
-			Memory.SafeWriteArray<System.Byte>(Offsets.Patches.EquipBestAmmo.CompareDamageInventoryChanges, new System.Byte[2] { 0x76, 0x10 });
+			Memory.SafeWriteArray<System.Byte>(ScrambledBugs.Offsets.Patches.EquipBestAmmo.CompareDamageContainer, new System.Byte[2] { 0x76, 0x06 });
+			Memory.SafeWriteArray<System.Byte>(ScrambledBugs.Offsets.Patches.EquipBestAmmo.CompareDamageInventoryChanges, new System.Byte[2] { 0x76, 0x10 });
 
-			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters()
+			EquipBestAmmo.InitializeDamage = (Context* context) =>
 			{
-				Address			= Offsets.Patches.EquipBestAmmo.GetWorstAmmo + 0x5F,
-				Pattern			= "F3 0F10 35 ?? ?? ?? ??",
-				ReplaceLength	= 8,
-				IncludeLength	= 0,
-				Before			= registers => registers.XMM6f = System.Single.MinValue
-			});
+				context->Xmm6.Single = System.Single.MinValue;
+			};
+
+			SkyrimSE.Trampoline.CaptureContext
+			(
+				ScrambledBugs.Offsets.Patches.EquipBestAmmo.InitializeDamage,
+				EquipBestAmmo.InitializeDamage
+			);
+			Memory.SafeFill<System.Byte>
+			(
+				ScrambledBugs.Offsets.Patches.EquipBestAmmo.InitializeDamage,
+				Memory.Size<RelativeCall>.Unmanaged,
+				8 - Memory.Size<RelativeCall>.Unmanaged,
+				Assembly.Nop
+			);
 		}
+
+
+
+		static public Eggstensions.Delegates.Types.Context.CaptureContext InitializeDamage { get; }
 	}
 }

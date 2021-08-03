@@ -40,15 +40,6 @@
 			static public System.IntPtr Deallocate { get; } = NetScriptFramework.Main.GameInfo.GetAddressOf(66915);
 		}
 
-		static public class BSTEventSink
-		{
-			/// <summary>SkyrimSE.exe + 0x19C820</summary>
-			static public System.IntPtr AddHarvestEventSink { get; }	= NetScriptFramework.Main.GameInfo.GetAddressOf(14685);
-
-			/// <summary>SkyrimSE.exe + 0x19C850</summary>
-			static public System.IntPtr RemoveHarvestEventSink { get; }	= NetScriptFramework.Main.GameInfo.GetAddressOf(14686);
-		}
-
 		static public class BSTEventSource
 		{
 			/// <summary>SkyrimSE.exe + 0x19D600</summary>

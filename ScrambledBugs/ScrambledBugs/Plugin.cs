@@ -3,29 +3,30 @@
 	public class Plugin : NetScriptFramework.Plugin
 	{
 		override public System.Int32 RequiredLibraryVersion { get; }	= 10;
-
-		override public System.Int32 Version { get; }					= 11;
-
+		override public System.Int32 Version { get; }					= 12;
 		override public System.String Author { get; }					= "meh321 and KernalsEgg";
-
 		override public System.String Key { get; }						= "ScrambledBugs";
-
 		override public System.String Name { get; }						= "Scrambled Bugs";
 
 
 
-		override protected System.Boolean Initialize(System.Boolean loadedAny)
+		override protected System.Boolean Initialize(System.Boolean loadedPlugin)
 		{
 			var path = "Data//NetScriptFramework//Plugins//ScrambledBugs.json";
 
 			if (System.IO.File.Exists(path))
 			{
 				var settings = Newtonsoft.Json.JsonConvert.DeserializeObject<ScrambledBugs.Settings>(System.IO.File.ReadAllText(path));
-
+				
 				// Fixes
 				if (settings.fixes.activeEffectConditions)
 				{
 					new ScrambledBugs.Fixes.ActiveEffectConditions();
+				}
+
+				if (settings.fixes.dualCasting)
+				{
+					new ScrambledBugs.Fixes.DualCasting();
 				}
 
 				if (settings.fixes.harvestedFlags)
@@ -61,7 +62,9 @@
 				// Patches
 				if (settings.patches.applySpellPerkEntryPoints.castSpells && settings.patches.applySpellPerkEntryPoints.multipleSpells)
 				{
-					new ScrambledBugs.Patches.ApplySpellPerkEntryPoints.MultipleSpells(true);
+					new ScrambledBugs.Patches.ApplySpellPerkEntryPoints.MultipleSpells();
+
+					ScrambledBugs.Patches.ApplySpellPerkEntryPoints.MultipleSpells.CastSpells = true;
 				}
 				else if (settings.patches.applySpellPerkEntryPoints.castSpells)
 				{
@@ -69,7 +72,9 @@
 				}
 				else if (settings.patches.applySpellPerkEntryPoints.multipleSpells)
 				{
-					new ScrambledBugs.Patches.ApplySpellPerkEntryPoints.MultipleSpells(false);
+					new ScrambledBugs.Patches.ApplySpellPerkEntryPoints.MultipleSpells();
+
+					ScrambledBugs.Patches.ApplySpellPerkEntryPoints.MultipleSpells.CastSpells = false;
 				}
 
 				if (settings.patches.attachHitEffectArt)

@@ -4,31 +4,35 @@
 
 namespace ScrambledBugs.Fixes
 {
-	internal class HarvestedFlags
+	unsafe internal class HarvestedFlags
 	{
-		public HarvestedFlags()
+		static HarvestedFlags()
 		{
-			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters()
+			var removeHarvestedFlag = Memory.ReadRelativeCall<ScrambledBugs.Delegates.Types.Fixes.HarvestedFlags.SetHarvestedFlag>(ScrambledBugs.Offsets.Fixes.HarvestedFlags.RemoveHarvestedFlag);
+
+			HarvestedFlags.RemoveChangeFlag = (TESObjectREFR* reference, System.Byte harvested) =>
 			{
-				Address			= Offsets.Fixes.HarvestedFlags.Respawn + 0x31C,
-				Pattern			= "E8 ?? ?? ?? ??",
-				ReplaceLength	= 5,
-				IncludeLength	= 5,
-				Before			= registers =>
+				// reference != null
+
+				var formType = reference->BaseObject->TESForm.FormType;
+
+				if (formType == FormType.Flora || formType == FormType.Tree)
 				{
-					// reference != System.IntPtr.Zero
-					
-					TESObjectREFR reference = registers.CX;
-
-					TESBoundObject baseObject	= reference.BaseObject;
-					var formType				= baseObject.FormType;
-
-					if (formType == FormType.Flora || formType == FormType.Tree)
-					{
-						reference.RemoveChanges((System.UInt32)TESObjectREFR.ChangeFlags.Empty);
-					}
+					TESForm.RemoveChanges(&reference->TESForm, (System.UInt32)TESObjectREFR.ChangeFlags.Empty);
 				}
-			});
+
+				removeHarvestedFlag(reference, harvested);
+			};
+			
+			SkyrimSE.Trampoline.WriteRelativeCall<ScrambledBugs.Delegates.Types.Fixes.HarvestedFlags.SetHarvestedFlag>
+			(
+				ScrambledBugs.Offsets.Fixes.HarvestedFlags.RemoveHarvestedFlag,
+				HarvestedFlags.RemoveChangeFlag
+			);
 		}
+
+
+
+		static public ScrambledBugs.Delegates.Types.Fixes.HarvestedFlags.SetHarvestedFlag RemoveChangeFlag { get; }
 	}
 }

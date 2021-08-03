@@ -30,26 +30,20 @@
 
 
 
-	public class MagicItem : TESBoundObject
+	[System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Explicit, Size = 0x90)]
+	unsafe public struct MagicItem // TESBoundObject, TESFullName
 	{
-		public MagicItem(System.IntPtr address) : base(address)
+		[System.Runtime.InteropServices.FieldOffset(0x0)] public TESBoundObject TESBoundObject;
+		[System.Runtime.InteropServices.FieldOffset(0x30)] public TESFullName TESFullName;
+
+
+
+		// Virtual
+		static public SpellType GetSpellType(MagicItem* magicItem)
 		{
-		}
+			var getSpellType = Memory.ReadVirtualFunction<Eggstensions.Delegates.Types.MagicItem.GetSpellType>(*(System.IntPtr*)magicItem, 0x53);
 
-
-
-		virtual public SpellType GetSpellType()
-		{
-			var getSpellType = System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.MagicItem.GetSpellType>(this[0x53]);
-
-			return (SpellType)getSpellType(this);
-		}
-
-
-
-		static public explicit operator TESFullName(MagicItem magicItem)
-		{
-			return new TESFullName(magicItem, 0x30);
+			return (SpellType)getSpellType(magicItem);
 		}
 	}
 }

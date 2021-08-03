@@ -10,7 +10,7 @@
 		ApplyingSounds			= 1U << 6,
 		HasConditions			= 1U << 7,
 		Recover					= 1U << 9,
-		DualCasted				= 1U << 12,
+		DualCasting				= 1U << 12,
 		Inactive				= 1U << 15,
 		AppliedEffects			= 1U << 16,
 		RemovedEffects			= 1U << 17,
@@ -20,11 +20,16 @@
 
 
 
-	public class ActiveEffect : VirtualObject
+	[System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Explicit, Size = 0x90)]
+	unsafe public struct ActiveEffect
 	{
-		public ActiveEffect(System.IntPtr address) : base(address)
-		{
-		}
+		[System.Runtime.InteropServices.FieldOffset(0x40)] public MagicItem* Spell;
+		[System.Runtime.InteropServices.FieldOffset(0x48)] public Effect* Effect;
+		[System.Runtime.InteropServices.FieldOffset(0x70)] public System.Single ElapsedTime;
+		[System.Runtime.InteropServices.FieldOffset(0x74)] public System.Single Duration;
+		[System.Runtime.InteropServices.FieldOffset(0x78)] public System.Single Magnitude;
+		[System.Runtime.InteropServices.FieldOffset(0x7C)] public ActiveEffectFlags Flags;
+		[System.Runtime.InteropServices.FieldOffset(0x8C)] public System.Single Padding8C;
 
 
 
@@ -32,47 +37,16 @@
 		{
 			get
 			{
-				return Memory.Read<System.Single>(Offsets.ActiveEffect.ConditionUpdateFrequency);
+				return Memory.Read<System.Single>(Eggstensions.Offsets.ActiveEffect.ConditionUpdateFrequency);
 			}
 		}
 
 
 
-		public System.Single ElapsedTime
+		// Member
+		static public void Dispel(ActiveEffect* activeEffect, System.Boolean force)
 		{
-			get
-			{
-				return Memory.Read<System.Single>(this, 0x70);
-			}
-		}
-
-		public ActiveEffectFlags Flags
-		{
-			get
-			{
-				return (ActiveEffectFlags)Memory.Read<System.UInt32>(this, 0x7C);
-			}
-		}
-
-
-
-		public void Dispel(System.Boolean force)
-		{
-			Delegates.Instances.ActiveEffect.Dispel(this, (System.Byte)(force ? 1 : 0));
-		}
-		
-		/// <summary>0x4</summary>
-		public Mutable.Union<T> GetPadding8C<T>()
-			where T : unmanaged
-		{
-			return new Mutable.Union<T>(this, 0x8C);
-		}
-
-
-
-		static public implicit operator ActiveEffect(System.IntPtr address)
-		{
-			return new ActiveEffect(address);
+			Eggstensions.Delegates.Instances.ActiveEffect.Dispel(activeEffect, (System.Byte)(force ? 1 : 0));
 		}
 	}
 }

@@ -1,16 +1,8 @@
 ﻿namespace Eggstensions
 {
-	public class TESBoundObject : TESForm
+	[System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Explicit, Size = 0x30)]
+	public struct TESBoundObject // TESForm
 	{
-		public TESBoundObject(System.IntPtr address) : base(address)
-		{
-		}
-
-
-
-		static public implicit operator TESBoundObject(System.IntPtr address)
-		{
-			return new TESBoundObject(address);
-		}
+		[System.Runtime.InteropServices.FieldOffset(0x0)] public TESForm TESForm;
 	}
 }

@@ -11,36 +11,20 @@
 
 
 
-	public class TESForm : VirtualObject
+	[System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Explicit, Size = 0x20)]
+	unsafe public struct TESForm
 	{
-		public TESForm(System.IntPtr address) : base(address)
+		[System.Runtime.InteropServices.FieldOffset(0x14)] public System.UInt32 FormId;
+		[System.Runtime.InteropServices.FieldOffset(0x1A)] public FormType FormType;
+
+
+
+		// Virtual
+		static public void RemoveChanges(TESForm* form, System.UInt32 changeFlags)
 		{
-		}
+			var removeChanges = Memory.ReadVirtualFunction<Eggstensions.Delegates.Types.TESForm.RemoveChanges>(*(System.IntPtr*)form, 0xB);
 
-
-
-		public FormType FormType
-		{
-			get
-			{
-				return (FormType)Memory.Read<System.Byte>(this, 0x1A);
-			}
-		}
-
-
-
-		virtual public void RemoveChanges(System.UInt32 changeFlags)
-		{
-			var removeChanges = System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.TESForm.RemoveChanges>(this[0xB]);
-
-			removeChanges(this, changeFlags);
-		}
-
-
-
-		static public implicit operator TESForm(System.IntPtr address)
-		{
-			return new TESForm(address);
+			removeChanges(form, changeFlags);
 		}
 	}
 }

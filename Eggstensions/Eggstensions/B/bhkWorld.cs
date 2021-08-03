@@ -1,16 +1,7 @@
 ﻿namespace Eggstensions
 {
-	public class bhkWorld : VirtualObject
+	[System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Explicit, Size = 0xC600)]
+	public struct bhkWorld
 	{
-		public bhkWorld(System.IntPtr address) : base(address)
-		{
-		}
-
-
-
-		static public implicit operator bhkWorld(System.IntPtr address)
-		{
-			return new bhkWorld(address);
-		}
 	}
 }

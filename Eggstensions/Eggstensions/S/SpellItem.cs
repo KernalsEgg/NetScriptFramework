@@ -1,35 +1,28 @@
 ﻿namespace Eggstensions
 {
-	public class SpellItem : MagicItem
+	[System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Explicit, Size = 0xE8)]
+	unsafe public struct SpellItem // MagicItem
 	{
-		public SpellItem(System.IntPtr address) : base(address)
-		{
-		}
+		[System.Runtime.InteropServices.FieldOffset(0x0)] public MagicItem MagicItem;
 
 
 
+		// Member
 		/// <summary>SkyrimSE.exe + 0x632180 (VID 37817)</summary>
-		public void Apply(Actor source, Actor target)
+		static public void Apply(SpellItem* spell, Actor* source, Actor* target)
 		{
-			var spellType = this.GetSpellType();
-
+			var spellType = MagicItem.GetSpellType(&spell->MagicItem);
+				
 			if (((1 << (System.Int32)spellType) & (System.Int32)SpellType.AddSpell) != 0)
 			{
-				target.AddSpell(this);
+				Actor.AddSpell(target, spell);
 			}
 			else
 			{
-				var magicCaster = source.GetMagicCaster(CastingSource.Instant);
+				var magicCaster = Actor.GetMagicCaster(source, CastingSource.Instant);
 
-				magicCaster.Cast(this, false, target, 1.0F, false, 0.0F, System.IntPtr.Zero);
+				MagicCaster.Cast(magicCaster, spell, false, target, 1.0F, false, 0.0F, null);
 			}
-		}
-
-
-
-		static public implicit operator SpellItem(System.IntPtr address)
-		{
-			return new SpellItem(address);
 		}
 	}
 }

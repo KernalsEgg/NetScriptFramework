@@ -1,23 +1,9 @@
 ﻿namespace Eggstensions
 {
-	public class TESQuest : TESForm
+	[System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Explicit, Size = 0x268)]
+	public struct TESQuest // TESForm, TESFullName
 	{
-		public TESQuest(System.IntPtr address) : base(address)
-		{
-		}
-
-
-
-		static public explicit operator TESFullName(TESQuest quest)
-		{
-			return new TESFullName(quest, 0x28);
-		}
-
-
-
-		static public implicit operator TESQuest(System.IntPtr address)
-		{
-			return new TESQuest(address);
-		}
+		[System.Runtime.InteropServices.FieldOffset(0x0)] public TESForm TESForm;
+		[System.Runtime.InteropServices.FieldOffset(0x28)] public TESFullName TESFullName;
 	}
 }

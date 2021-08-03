@@ -1,9 +1,8 @@
 ﻿namespace Eggstensions
 {
-	public class MissileProjectile : Projectile
+	[System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Explicit, Size = 0x1E0)]
+	public struct MissileProjectile
 	{
-		public MissileProjectile(System.IntPtr address) : base(address)
-		{
-		}
+		[System.Runtime.InteropServices.FieldOffset(0x0)] public Projectile Projectile;
 	}
 }

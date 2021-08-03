@@ -1,29 +1,14 @@
 ﻿namespace Eggstensions
 {
-	public class TESFullName : VirtualObject
+	[System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Explicit, Size = 0x10)]
+	unsafe public struct TESFullName
 	{
-		public TESFullName(System.IntPtr address) : base(address)
+		// Virtual
+		static public System.String GetFullName(TESFullName* fullName)
 		{
-		}
+			var getFullName = Memory.ReadVirtualFunction<Eggstensions.Delegates.Types.TESFullName.GetFullName>(*(System.IntPtr*)fullName, 0x5);
 
-		public TESFullName(System.IntPtr address, System.Int32 offset) : this(address + offset)
-		{
-		}
-
-
-
-		virtual public System.String GetFullName()
-		{
-			var getFullName = System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.TESFullName.GetFullName>(this[0x5]);
-
-			return Memory.ReadString(getFullName(this));
-		}
-
-
-
-		static public implicit operator TESFullName(System.IntPtr address)
-		{
-			return new TESFullName(address);
+			return Memory.ReadString(getFullName(fullName));
 		}
 	}
 }

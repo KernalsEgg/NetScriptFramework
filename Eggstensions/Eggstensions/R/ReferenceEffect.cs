@@ -1,19 +1,8 @@
 ﻿namespace Eggstensions
 {
-	public class ReferenceEffect : VirtualObject
+	[System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Explicit, Size = 0x48)]
+	unsafe public struct ReferenceEffect
 	{
-		public ReferenceEffect(System.IntPtr address) : base(address)
-		{
-		}
-
-
-
-		public ReferenceEffectController Controller
-		{
-			get
-			{
-				return Memory.Read<System.IntPtr>(this, 0x30);
-			}
-		}
+		[System.Runtime.InteropServices.FieldOffset(0x30)] public ReferenceEffectController* Controller;
 	}
 }

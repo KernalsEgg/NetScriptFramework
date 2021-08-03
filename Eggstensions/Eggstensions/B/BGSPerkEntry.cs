@@ -35,66 +35,48 @@
 
 
 
-	public class BGSPerkEntry : VirtualObject
+	[System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Explicit, Size = 0x10)]
+	unsafe public struct BGSPerkEntry
 	{
-		public BGSPerkEntry(System.IntPtr address) : base(address)
+		[System.Runtime.InteropServices.FieldOffset(0x8)] public System.Byte Rank;
+		[System.Runtime.InteropServices.FieldOffset(0x9)] public System.Byte Priority;
+
+
+
+		// Virtual
+		static public System.Boolean EvaluateConditions(BGSPerkEntry* perkEntry, System.Int32 argumentCount, System.IntPtr arguments)
 		{
+			var evaluateConditions = Memory.ReadVirtualFunction<Eggstensions.Delegates.Types.BGSPerkEntry.EvaluateConditions>(*(System.IntPtr*)perkEntry, 0x0);
+
+			return evaluateConditions(perkEntry, argumentCount, arguments) != 0;
 		}
 
-
-
-		public System.Byte Rank
+		static public EntryPointFunction GetFunction(BGSPerkEntry* perkEntry)
 		{
-			get
-			{
-				return Memory.Read<System.Byte>(this, 0x8);
-			}
+			var getFunction = Memory.ReadVirtualFunction<Eggstensions.Delegates.Types.BGSPerkEntry.GetFunction>(*(System.IntPtr*)perkEntry, 0x1);
+
+			return (EntryPointFunction)getFunction(perkEntry);
 		}
 
-		public System.Byte Priority
+		static public BGSEntryPointFunctionData* GetFunctionData(BGSPerkEntry* perkEntry)
 		{
-			get
-			{
-				return Memory.Read<System.Byte>(this, 0x9);
-			}
+			var getFunctionData = Memory.ReadVirtualFunction<Eggstensions.Delegates.Types.BGSPerkEntry.GetFunctionData>(*(System.IntPtr*)perkEntry, 0x2);
+
+			return getFunctionData(perkEntry);
 		}
 
-
-
-		virtual public System.Boolean EvaluateConditions(System.Int32 argumentCount, System.IntPtr arguments)
+		static public void AddPerkEntry(BGSPerkEntry* perkEntry, Actor* perkOwner)
 		{
-			var evaluateConditions = System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.BGSPerkEntry.EvaluateConditions>(this[0x0]);
+			var addPerkEntry = Memory.ReadVirtualFunction<Eggstensions.Delegates.Types.BGSPerkEntry.AddPerkEntry>(*(System.IntPtr*)perkEntry, 0xA);
 
-			return evaluateConditions(this, argumentCount, arguments) != 0;
+			addPerkEntry(perkEntry, perkOwner);
 		}
 
-		virtual public EntryPointFunction GetFunction()
+		static public void RemovePerkEntry(BGSPerkEntry* perkEntry, Actor* perkOwner)
 		{
-			var getFunction = System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.BGSPerkEntry.GetFunction>(this[0x1]);
+			var removePerkEntry = Memory.ReadVirtualFunction<Eggstensions.Delegates.Types.BGSPerkEntry.RemovePerkEntry>(*(System.IntPtr*)perkEntry, 0xB);
 
-			return (EntryPointFunction)getFunction(this);
-		}
-
-		/// <returns>BGSEntryPointFunctionData</returns>
-		virtual public System.IntPtr GetFunctionData()
-		{
-			var getFunctionData = System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.BGSPerkEntry.GetFunctionData>(this[0x2]);
-
-			return getFunctionData(this);
-		}
-
-		virtual public void AddPerkEntry(Actor perkOwner)
-		{
-			var addPerkEntry = System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.BGSPerkEntry.AddPerkEntry>(this[0xA]);
-
-			addPerkEntry(this, perkOwner);
-		}
-
-		virtual public void RemovePerkEntry(Actor perkOwner)
-		{
-			var removePerkEntry = System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.BGSPerkEntry.RemovePerkEntry>(this[0xB]);
-
-			removePerkEntry(this, perkOwner);
+			removePerkEntry(perkEntry, perkOwner);
 		}
 	}
 }

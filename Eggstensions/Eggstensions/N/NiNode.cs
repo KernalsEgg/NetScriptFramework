@@ -1,16 +1,8 @@
 ﻿namespace Eggstensions
 {
-	public class NiNode : NiAVObject
+	[System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Explicit, Size = 0x128)]
+	public struct NiNode // NiAVObject
 	{
-		public NiNode(System.IntPtr address) : base(address)
-		{
-		}
-
-
-
-		static public implicit operator NiNode(System.IntPtr address)
-		{
-			return new NiNode(address);
-		}
+		[System.Runtime.InteropServices.FieldOffset(0x0)] public NiAVObject NiAVObject;
 	}
 }

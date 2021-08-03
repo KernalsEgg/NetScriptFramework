@@ -1,23 +1,9 @@
 ﻿namespace Eggstensions
 {
-	public class TESActorBase : TESBoundObject
+	[System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Explicit, Size = 0x150)]
+	public struct TESActorBase // TESBoundObject, TESFullName
 	{
-		public TESActorBase(System.IntPtr address) : base(address)
-		{
-		}
-
-
-
-		static public explicit operator TESFullName(TESActorBase actorBase)
-		{
-			return new TESFullName(actorBase, 0xD8);
-		}
-
-
-
-		static public implicit operator TESActorBase(System.IntPtr address)
-		{
-			return new TESActorBase(address);
-		}
+		[System.Runtime.InteropServices.FieldOffset(0x0)] public TESBoundObject TESBoundObject;
+		[System.Runtime.InteropServices.FieldOffset(0xD8)] public TESFullName TESFullName;
 	}
 }

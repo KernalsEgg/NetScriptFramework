@@ -1,25 +1,14 @@
 ﻿namespace Eggstensions
 {
-	public class ReferenceEffectController : VirtualObject
+	[System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Explicit, Size = 0x8)]
+	unsafe public struct ReferenceEffectController
 	{
-		public ReferenceEffectController(System.IntPtr address) : base(address)
+		// Virtual
+		static public NiAVObject* GetAttachRoot(ReferenceEffectController* referenceEffectController)
 		{
-		}
+			var getAttachRoot = Memory.ReadVirtualFunction<Eggstensions.Delegates.Types.ReferenceEffectController.GetAttachRoot>(*(System.IntPtr*)referenceEffectController, 0xF);
 
-
-
-		virtual public NiAVObject GetAttachRoot()
-		{
-			var getAttachRoot = System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.ReferenceEffectController.GetAttachRoot>(this[0xF]);
-
-			return getAttachRoot(this);
-		}
-
-
-
-		static public implicit operator ReferenceEffectController(System.IntPtr address)
-		{
-			return new ReferenceEffectController(address);
+			return getAttachRoot(referenceEffectController);
 		}
 	}
 }

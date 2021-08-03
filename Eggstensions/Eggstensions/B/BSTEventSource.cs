@@ -1,28 +1,17 @@
 ﻿namespace Eggstensions
 {
-	public class BSTEventSource : NativeObject
+	[System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Explicit, Size = 0x58)]
+	unsafe public struct BSTEventSource
 	{
-		public BSTEventSource(System.IntPtr address) : base(address)
+		// Member
+		static public void AddEventSink(BSTEventSource* eventSource, System.IntPtr eventSink)
 		{
-		}
-		
-		
-		
-		public void AddEventSink(BSTEventSink eventSink)
-		{
-			Delegates.Instances.BSTEventSource.AddEventSink(this, eventSink);
+			Eggstensions.Delegates.Instances.BSTEventSource.AddEventSink(eventSource, eventSink);
 		}
 
-		public void RemoveEventSink(BSTEventSink eventSink)
+		static public void RemoveEventSink(BSTEventSource* eventSource, System.IntPtr eventSink)
 		{
-			Delegates.Instances.BSTEventSource.RemoveEventSink(this, eventSink);
-		}
-
-
-
-		static public implicit operator BSTEventSource(System.IntPtr address)
-		{
-			return new BSTEventSource(address);
+			Eggstensions.Delegates.Instances.BSTEventSource.RemoveEventSink(eventSource, eventSink);
 		}
 	}
 }

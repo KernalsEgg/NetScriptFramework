@@ -7,33 +7,27 @@
 
 
 
-	public class Actor : TESObjectREFR
+	[System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Explicit, Size = 0x2B0)]
+	unsafe public struct Actor // TESObjectREFR
 	{
-		public Actor(System.IntPtr address) : base(address)
+		[System.Runtime.InteropServices.FieldOffset(0x0)] public TESObjectREFR TESObjectREFR;
+
+
+
+		// Virtual
+		static public MagicCaster* GetMagicCaster(Actor* actor, CastingSource castingSource)
 		{
+			var getMagicCaster = Memory.ReadVirtualFunction<Eggstensions.Delegates.Types.Actor.GetMagicCaster>(*(System.IntPtr*)actor, 0x5C);
+
+			return getMagicCaster(actor, (System.Int32)castingSource);
 		}
 
 
 
-		virtual public MagicCaster GetMagicCaster(CastingSource castingSource)
+		// Member
+		static public System.Boolean AddSpell(Actor* actor, SpellItem* spell)
 		{
-			var getMagicCaster = System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.Actor.GetMagicCaster>(this[0x5C]);
-
-			return getMagicCaster(this, (System.Int32)castingSource);
-		}
-
-
-
-		public System.Boolean AddSpell(SpellItem spell)
-		{
-			return Delegates.Instances.Actor.AddSpell(this, spell) != 0;
-		}
-
-
-
-		static public implicit operator Actor(System.IntPtr address)
-		{
-			return new Actor(address);
+			return Eggstensions.Delegates.Instances.Actor.AddSpell(actor, spell) != 0;
 		}
 	}
 }

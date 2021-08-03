@@ -1,26 +1,9 @@
 ﻿namespace Eggstensions
 {
-	class BGSEntryPointFunctionDataSpellItem : BGSEntryPointFunctionData
+	[System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Explicit, Size = 0x10)]
+	unsafe public struct BGSEntryPointFunctionDataSpellItem // BGSEntryPointFunctionData
 	{
-		public BGSEntryPointFunctionDataSpellItem(System.IntPtr address) : base(address)
-		{
-		}
-
-
-
-		public SpellItem Spell
-		{
-			get
-			{
-				return Memory.Read<System.IntPtr>(this, 0x8);
-			}
-		}
-
-
-
-		static public implicit operator BGSEntryPointFunctionDataSpellItem(System.IntPtr address)
-		{
-			return new BGSEntryPointFunctionDataSpellItem(address);
-		}
+		[System.Runtime.InteropServices.FieldOffset(0x0)] public BGSEntryPointFunctionData BGSEntryPointFunctionData;
+		[System.Runtime.InteropServices.FieldOffset(0x8)] public SpellItem* Spell;
 	}
 }

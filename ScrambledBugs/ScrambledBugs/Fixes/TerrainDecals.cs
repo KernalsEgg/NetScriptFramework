@@ -6,9 +6,9 @@ namespace ScrambledBugs.Fixes
 {
 	internal class TerrainDecals
 	{
-		public TerrainDecals()
+		static TerrainDecals()
 		{
-			Memory.SafeWriteArray<System.Byte>(Offsets.Fixes.TerrainDecals.UnloadHavokData, new System.Byte[5] { Memory.Ret, Memory.Nop, Memory.Nop, Memory.Nop, Memory.Nop });
+			Memory.SafeWriteArray<System.Byte>(ScrambledBugs.Offsets.Fixes.TerrainDecals.UnloadHavokData, new System.Byte[5] { Assembly.Ret, Assembly.Nop, Assembly.Nop, Assembly.Nop, Assembly.Nop });
 		}
 	}
 }

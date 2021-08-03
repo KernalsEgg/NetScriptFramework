@@ -1,51 +1,35 @@
 ﻿namespace Eggstensions
 {
-	public class TESObjectREFR : TESForm
+	[System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Explicit, Size = 0x98)]
+	unsafe public struct TESObjectREFR // TESForm
 	{
 		[System.Flags]
 		public enum ChangeFlags : System.UInt32
 		{
 			Empty = 1U << 21
 		}
-		
-		
-		
-		public TESObjectREFR(System.IntPtr address) : base(address)
+
+
+
+		[System.Runtime.InteropServices.FieldOffset(0x0)] public TESForm TESForm;
+		[System.Runtime.InteropServices.FieldOffset(0x40)] public TESBoundObject* BaseObject;
+
+
+
+		// Virtual
+		static public NiAVObject* GetCurrent3D(TESObjectREFR* reference)
 		{
+			var getCurrent3D = Memory.ReadVirtualFunction<Eggstensions.Delegates.Types.TESObjectREFR.GetCurrent3D>(*(System.IntPtr*)reference, 0x8D);
+
+			return getCurrent3D(reference);
 		}
 
 
 
-		/// <summary>TESBoundObject</summary>
-		public System.IntPtr BaseObject
+		// Member
+		static public InventoryChanges* GetInventoryChanges(TESObjectREFR* reference)
 		{
-			get
-			{
-				return Memory.Read<System.IntPtr>(this, 0x40);
-			}
-		}
-
-
-
-		virtual public NiAVObject GetCurrent3D()
-		{
-			var getCurrent3D = System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.TESObjectREFR.GetCurrent3D>(this[0x8D]);
-
-			return getCurrent3D(this);
-		}
-
-
-
-		public InventoryChanges GetInventoryChanges()
-		{
-			return Delegates.Instances.TESObjectREFR.GetInventoryChanges(this);
-		}
-
-
-
-		static public implicit operator TESObjectREFR(System.IntPtr address)
-		{
-			return new TESObjectREFR(address);
+			return Eggstensions.Delegates.Instances.TESObjectREFR.GetInventoryChanges(reference);
 		}
 	}
 }

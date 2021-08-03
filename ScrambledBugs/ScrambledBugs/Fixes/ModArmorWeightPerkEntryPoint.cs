@@ -1,123 +1,137 @@
 ﻿using Eggstensions;
 
-using static Eggstensions.ExtensionMethods.IntPtr;
-
 
 
 namespace ScrambledBugs.Fixes
 {
-	internal class ModArmorWeightPerkEntryPoint
+	unsafe internal class ModArmorWeightPerkEntryPoint
 	{
 		static ModArmorWeightPerkEntryPoint()
 		{
-			ModArmorWeightPerkEntryPoint.OldAddPerkEntry	= Memory.WriteVirtualFunction<Eggstensions.Delegates.Types.BGSPerkEntry.AddPerkEntry>(Eggstensions.Offsets.BGSEntryPointPerkEntry.VirtualFunctionTable, 0xA, ModArmorWeightPerkEntryPoint.NewAddPerkEntry);
-			ModArmorWeightPerkEntryPoint.OldRemovePerkEntry	= Memory.WriteVirtualFunction<Eggstensions.Delegates.Types.BGSPerkEntry.RemovePerkEntry>(Eggstensions.Offsets.BGSEntryPointPerkEntry.VirtualFunctionTable, 0xB, ModArmorWeightPerkEntryPoint.NewRemovePerkEntry);
-		}
-		
-		public ModArmorWeightPerkEntryPoint()
-		{
-			// Modify the weight of worn armor in TESContainer
-			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters()
+			ModArmorWeightPerkEntryPoint.ModArmorWeightContainer = (Context* context) =>
 			{
-				Address			= Offsets.Fixes.ModArmorWeightPerkEntryPoint.GetInventoryWeight + 0x159,
-				Pattern			= "8B 55 10" + "8B 00",
-				ReplaceLength	= 3 + 2, // 5
-				IncludeLength	= 3 + 2, // 5
-				After			= registers =>
+				// inventoryEntryData	!= null
+				// itemWeight			!= null
+				// actor				!= null
+
+				var inventoryEntryData = (InventoryEntryData*)context->Rbp.IntPtr.ToPointer();
+				var item = inventoryEntryData->Item;
+
+				if (item != null)
 				{
-					// inventoryEntryData != System.IntPtr.Zero
+					var itemWeight = Memory.Read<System.Single>(context->Rsp.IntPtr, 0xB0);
 
-					InventoryEntryData inventoryEntryData = registers.BP;
-
-					var item = inventoryEntryData.Item;
-
-					if (item)
+					if (itemWeight > 0.0F)
 					{
-						var itemWeight = Memory.Read<System.Single>(registers.SP, 0xB0);
+						var actor = (Actor*)Memory.Read<System.IntPtr>(context->Rsp.IntPtr, 0xB8).ToPointer();
 
-						if (itemWeight > 0.0F)
+						if (actor != null)
 						{
-							Actor actor = Memory.Read<System.IntPtr>(registers.SP, 0xB8);
-
-							if (actor)
+							if (item->TESForm.FormType == FormType.Armor)
 							{
-								if (item.FormType == FormType.Armor)
+								var itemCount = context->Rdx.Int32 + context->Rax.Int32; // inventoryChangesItemCount + containerItemCount
+
+								if (itemCount > 0)
 								{
-									var itemCount = registers.DX.ToInt32Safe() + registers.AX.ToInt32Safe(); // inventoryChangesItemCount + containerItemCount
-
-									if (itemCount > 0)
+									if (InventoryEntryData.IsWorn(inventoryEntryData))
 									{
-										if (inventoryEntryData.IsWorn())
-										{
-											BGSEntryPointPerkEntry.HandleEntryPoints(EntryPoint.ModArmorWeight, actor, item, ref itemWeight);
+										BGSEntryPointPerkEntry.HandleEntryPoints(EntryPoint.ModArmorWeight, actor, item, &itemWeight);
 
-											registers.XMM7f	+= itemWeight;
-											registers.DX	-= 1; // inventoryChangesItemCount
-										}
+										context->Xmm7.Single += itemWeight;
+										context->Rdx.Int32 -= 1; // inventoryChangesItemCount
 									}
 								}
 							}
 						}
 					}
 				}
-			});
+			};
 
-			// Modify the weight of worn armor in InventoryChanges
-			NetScriptFramework.Memory.WriteHook(new NetScriptFramework.HookParameters()
+			SkyrimSE.Trampoline.CaptureContext
+			(
+				ScrambledBugs.Offsets.Fixes.ModArmorWeightPerkEntryPoint.ModArmorWeightContainer,
+				ModArmorWeightPerkEntryPoint.ModArmorWeightContainer,
+				Memory.ReadArray<System.Byte>
+				(
+					ScrambledBugs.Offsets.Fixes.ModArmorWeightPerkEntryPoint.ModArmorWeightContainer,
+					Memory.Size<RelativeCall>.Unmanaged
+				)
+			);
+
+
+
+			ModArmorWeightPerkEntryPoint.ModArmorWeightInventoryChanges = (Context* context) =>
 			{
-				Address			= Offsets.Fixes.ModArmorWeightPerkEntryPoint.GetInventoryWeight + 0x29F,
-				Pattern			= "E8 ?? ?? ?? ??" + "F3 0F10 8C 24 B0000000" + "F3 0F58 F1",
-				ReplaceLength	= 5 + 9 + 4, // 18
-				IncludeLength	= 0,
-				Before			= registers =>
+				// actor		!= null
+				// armor		!= null
+				// armorWeight	!= null
+
+				var actor = (Actor*)context->Rdx.IntPtr.ToPointer();
+				var armor = (TESObjectARMO*)context->R8.IntPtr.ToPointer();
+				var armorWeight = Memory.Read<System.Single>(context->R9.IntPtr);
+
+				context->Xmm1.Single = armorWeight; // armorWeight
+
+				BGSEntryPointPerkEntry.HandleEntryPoints(EntryPoint.ModArmorWeight, actor, armor, &armorWeight);
+
+				context->Xmm6.Single += armorWeight; // totalModifiedArmorWeight
+			};
+
+			SkyrimSE.Trampoline.CaptureContext
+			(
+				ScrambledBugs.Offsets.Fixes.ModArmorWeightPerkEntryPoint.ModArmorWeightInventoryChanges,
+				ModArmorWeightPerkEntryPoint.ModArmorWeightInventoryChanges
+			);
+			Memory.SafeFill<System.Byte>
+			(
+				ScrambledBugs.Offsets.Fixes.ModArmorWeightPerkEntryPoint.ModArmorWeightInventoryChanges,
+				Memory.Size<RelativeCall>.Unmanaged,
+				5 + 9 + 4 - Memory.Size<RelativeCall>.Unmanaged,
+				Assembly.Nop
+			);
+
+
+
+			var addPerkEntry = Memory.ReadVirtualFunction<Eggstensions.Delegates.Types.BGSPerkEntry.AddPerkEntry>(Eggstensions.Offsets.BGSEntryPointPerkEntry.VirtualFunctionTable, 0xA);
+
+			ModArmorWeightPerkEntryPoint.AddPerkEntry = (BGSPerkEntry* perkEntry, Actor* perkOwner) =>
+			{
+				addPerkEntry(perkEntry, perkOwner);
+
+				var inventoryChanges = TESObjectREFR.GetInventoryChanges(&perkOwner->TESObjectREFR);
+
+				if (inventoryChanges != null)
 				{
-					// actor		!= System.IntPtr.Zero
-					// item			!= System.IntPtr.Zero
-					// itemWeight	!= System.IntPtr.Zero
-
-					// entryPoint	= registers.CX
-					var actor		= registers.DX;
-					var item		= registers.R8;
-					var itemWeight	= Memory.Read<System.Single>(registers.R9);
-
-					registers.XMM1f = itemWeight; // itemWeight
-
-					BGSEntryPointPerkEntry.HandleEntryPoints(EntryPoint.ModArmorWeight, actor, item, ref itemWeight);
-
-					registers.XMM6f += itemWeight; // totalModifiedItemWeight
+					InventoryChanges.ResetWeight(inventoryChanges);
 				}
-			});
+			};
+
+			Memory.WriteVirtualFunction<Eggstensions.Delegates.Types.BGSPerkEntry.AddPerkEntry>(Eggstensions.Offsets.BGSEntryPointPerkEntry.VirtualFunctionTable, 0xA, ModArmorWeightPerkEntryPoint.AddPerkEntry);
+
+
+
+			var removePerkEntry = Memory.ReadVirtualFunction<Eggstensions.Delegates.Types.BGSPerkEntry.RemovePerkEntry>(Eggstensions.Offsets.BGSEntryPointPerkEntry.VirtualFunctionTable, 0xB);
+
+			ModArmorWeightPerkEntryPoint.RemovePerkEntry = (BGSPerkEntry* perkEntry, Actor* perkOwner) =>
+			{
+				removePerkEntry(perkEntry, perkOwner);
+
+				var inventoryChanges = TESObjectREFR.GetInventoryChanges(&perkOwner->TESObjectREFR);
+
+				if (inventoryChanges != null)
+				{
+					InventoryChanges.ResetWeight(inventoryChanges);
+				}
+			};
+
+			Memory.WriteVirtualFunction<Eggstensions.Delegates.Types.BGSPerkEntry.RemovePerkEntry>(Eggstensions.Offsets.BGSEntryPointPerkEntry.VirtualFunctionTable, 0xB, ModArmorWeightPerkEntryPoint.RemovePerkEntry);
 		}
 
 
 
-		static public Eggstensions.Delegates.Types.BGSPerkEntry.AddPerkEntry NewAddPerkEntry { get; }		= ModArmorWeightPerkEntryPoint.AddPerkEntry;
-		static public Eggstensions.Delegates.Types.BGSPerkEntry.RemovePerkEntry NewRemovePerkEntry { get; }	= ModArmorWeightPerkEntryPoint.RemovePerkEntry;
-		static public Eggstensions.Delegates.Types.BGSPerkEntry.AddPerkEntry OldAddPerkEntry { get; }
-		static public Eggstensions.Delegates.Types.BGSPerkEntry.RemovePerkEntry OldRemovePerkEntry { get; }
-
-
-
-		/// <param name="entryPointPerkEntryAddress">BGSEntryPointPerkEntry</param>
-		/// <param name="perkOwnerAddress">Actor</param>
-		static void AddPerkEntry(System.IntPtr entryPointPerkEntryAddress, System.IntPtr perkOwnerAddress)
-		{
-			ModArmorWeightPerkEntryPoint.OldAddPerkEntry(entryPointPerkEntryAddress, perkOwnerAddress);
-
-			Actor perkOwner = perkOwnerAddress;
-			InventoryChanges inventoryChanges = perkOwner.GetInventoryChanges();
-			inventoryChanges.ResetWeight();
-		}
-
-		/// <param name="entryPointPerkEntryAddress">BGSEntryPointPerkEntry</param>
-		/// <param name="perkOwnerAddress">Actor</param>
-		static void RemovePerkEntry(System.IntPtr entryPointPerkEntryAddress, System.IntPtr perkOwnerAddress)
-		{
-			ModArmorWeightPerkEntryPoint.OldRemovePerkEntry(entryPointPerkEntryAddress, perkOwnerAddress);
-
-			Actor perkOwner = perkOwnerAddress;
-			InventoryChanges inventoryChanges = perkOwner.GetInventoryChanges();
-			inventoryChanges.ResetWeight();
-		}
+		static public Eggstensions.Delegates.Types.BGSPerkEntry.AddPerkEntry AddPerkEntry { get; }
+		static public Eggstensions.Delegates.Types.Context.CaptureContext ModArmorWeightContainer { get; }
+		static public Eggstensions.Delegates.Types.Context.CaptureContext ModArmorWeightInventoryChanges { get; }
+		static public Eggstensions.Delegates.Types.BGSPerkEntry.RemovePerkEntry RemovePerkEntry { get; }
 	}
 }

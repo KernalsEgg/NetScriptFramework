@@ -5,21 +5,37 @@
 		Continue	= 0,
 		Stop		= 1
 	}
-	
-	
-	
-	public class BSTEventSink : NativeObject, System.IDisposable
-	{
-		public BSTEventSink(Delegates.Types.BSTEventSink.ProcessEvent processEvent) : base(System.Runtime.InteropServices.Marshal.AllocHGlobal(0x1 * Memory<System.IntPtr>.Size))
-		{
-			VirtualFunctionTable = System.Runtime.InteropServices.Marshal.AllocHGlobal(0x2 * Memory<System.IntPtr>.Size);
 
+
+
+	public class BSTEventSink : System.IDisposable
+	{
+		public BSTEventSink(Eggstensions.Delegates.Types.BSTEventSink.ProcessEvent processEvent)
+		{
 			Destructor		= eventSink => this.Dispose();
 			ProcessEvent	= processEvent;
 
-			Memory.Write<System.IntPtr>(Address, 0x0 * Memory<System.IntPtr>.Size, VirtualFunctionTable);
-			Memory.Write<System.IntPtr>(VirtualFunctionTable, 0x0 * Memory<System.IntPtr>.Size, System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(Destructor));
-			Memory.Write<System.IntPtr>(VirtualFunctionTable, 0x1 * Memory<System.IntPtr>.Size, System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate(ProcessEvent));
+			Address					= System.Runtime.InteropServices.Marshal.AllocHGlobal(0x1 * Memory.Size<System.IntPtr>.Unmanaged);
+			VirtualFunctionTable	= System.Runtime.InteropServices.Marshal.AllocHGlobal(0x2 * Memory.Size<System.IntPtr>.Unmanaged);
+
+			Memory.Write<System.IntPtr>
+			(
+				Address,
+				0x0 * Memory.Size<System.IntPtr>.Unmanaged,
+				VirtualFunctionTable
+			);
+			Memory.Write<System.IntPtr>
+			(
+				VirtualFunctionTable,
+				0x0 * Memory.Size<System.IntPtr>.Unmanaged,
+				System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate<Eggstensions.Delegates.Types.BSTEventSink.Destructor>(Destructor)
+			);
+			Memory.Write<System.IntPtr>
+			(
+				VirtualFunctionTable,
+				0x1 * Memory.Size<System.IntPtr>.Unmanaged,
+				System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate<Eggstensions.Delegates.Types.BSTEventSink.ProcessEvent>(ProcessEvent)
+			);
 		}
 
 		~BSTEventSink()
@@ -29,8 +45,9 @@
 
 
 
-		public Delegates.Types.BSTEventSink.Destructor Destructor { get; }
-		public Delegates.Types.BSTEventSink.ProcessEvent ProcessEvent { get; }
+		public Eggstensions.Delegates.Types.BSTEventSink.Destructor Destructor { get; }
+		public Eggstensions.Delegates.Types.BSTEventSink.ProcessEvent ProcessEvent { get; }
+		public System.IntPtr Address { get; }
 		public System.IntPtr VirtualFunctionTable { get; }
 
 
@@ -43,20 +60,10 @@
 
 
 
-		public void AddHarvestEventSink()
-		{
-			Delegates.Instances.BSTEventSink.AddHarvestEventSink(this);
-		}
-
 		public void Dispose()
 		{
 			this.Dispose(true);
 			System.GC.SuppressFinalize(this);
-		}
-
-		public void RemoveHarvestEventSink()
-		{
-			Delegates.Instances.BSTEventSink.RemoveHarvestEventSink(this);
 		}
 	}
 }

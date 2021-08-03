@@ -6,9 +6,9 @@ namespace ScrambledBugs.Patches
 {
 	internal class LockpickingExperience
 	{
-		public LockpickingExperience()
+		static LockpickingExperience()
 		{
-			Memory.SafeWriteArray<System.Byte>(Offsets.Patches.LockpickingExperience.HasNotBeenUnlocked, new System.Byte[2] { Memory.Nop, Memory.Nop });
+			Memory.SafeFill<System.Byte>(ScrambledBugs.Offsets.Patches.LockpickingExperience.HasNotBeenUnlocked, 2, Assembly.Nop);
 		}
 	}
 }

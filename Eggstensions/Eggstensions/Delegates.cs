@@ -1,309 +1,241 @@
 ﻿namespace Eggstensions
 {
-	namespace Marshal
-	{
-		namespace Delegates
-		{
-			namespace Instances
-			{
-				static public class BGSEntryPointPerkEntry
-				{
-					static public Delegates.Types.BGSEntryPointPerkEntry.HandleEntryPoints1BSTArray HandleEntryPoints1BSTArray { get; } = System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.BGSEntryPointPerkEntry.HandleEntryPoints1BSTArray>(Offsets.BGSEntryPointPerkEntry.HandleEntryPoints);
-					static public Delegates.Types.BGSEntryPointPerkEntry.HandleEntryPoints2BSTArray HandleEntryPoints2BSTArray { get; } = System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.BGSEntryPointPerkEntry.HandleEntryPoints2BSTArray>(Offsets.BGSEntryPointPerkEntry.HandleEntryPoints);
-					static public Delegates.Types.BGSEntryPointPerkEntry.HandleEntryPoints3BSTArray HandleEntryPoints3BSTArray { get; } = System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.BGSEntryPointPerkEntry.HandleEntryPoints3BSTArray>(Offsets.BGSEntryPointPerkEntry.HandleEntryPoints);
-				}
-
-				static public class BSTArray
-				{
-					static public class IntPtr
-					{
-						static public Delegates.Types.BSTArray.IntPtr.Push Push { get; } = System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.BSTArray.IntPtr.Push>(Offsets.BSTArray.IntPtr.Push);
-					}
-
-
-
-					static public Delegates.Types.BSTArray.Deallocate Deallocate { get; } = System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.BSTArray.Deallocate>(Offsets.BSTArray.Deallocate);
-				}
-			}
-
-			namespace Types
-			{
-				static public class BGSEntryPointPerkEntry
-				{
-					[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)]
-					public delegate void HandleEntryPoints1BSTArray(System.Int32 entryPoint, System.IntPtr perkOwner, Marshal.BSTArray result1);
-
-					[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)]
-					public delegate void HandleEntryPoints2BSTArray(System.Int32 entryPoint, System.IntPtr perkOwner, System.IntPtr argument2, Marshal.BSTArray result1);
-
-					[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)]
-					public delegate void HandleEntryPoints3BSTArray(System.Int32 entryPoint, System.IntPtr perkOwner, System.IntPtr argument2, System.IntPtr argument3, Marshal.BSTArray result1);
-				}
-
-				static public class BSTArray
-				{
-					static public class IntPtr
-					{
-						[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)]
-						public delegate System.Int32 Push(Marshal.BSTArray array, ref System.IntPtr element);
-					}
-
-
-
-					[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)]
-					public delegate void Deallocate(Marshal.BSTArray array);
-				}
-			}
-		}
-	}
-	
 	namespace Delegates
 	{
 		namespace Instances
 		{
 			static public class ActiveEffect
 			{
-				static public Delegates.Types.ActiveEffect.Dispel Dispel { get; } = System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.ActiveEffect.Dispel>(Offsets.ActiveEffect.Dispel);
+				static public Delegates.Types.ActiveEffect.Dispel Dispel { get; } = System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.ActiveEffect.Dispel>(Eggstensions.Offsets.ActiveEffect.Dispel);
 			}
 			
 			static public class Actor
 			{
-				static public Delegates.Types.Actor.AddSpell AddSpell { get; } = System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.Actor.AddSpell>(Offsets.Actor.AddSpell);
+				static public Delegates.Types.Actor.AddSpell AddSpell { get; } = System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.Actor.AddSpell>(Eggstensions.Offsets.Actor.AddSpell);
 			}
 
 			static public class BGSEntryPointPerkEntry
 			{
-				static public Delegates.Types.BGSEntryPointPerkEntry.HandleEntryPoints1IntPtr HandleEntryPoints1IntPtr { get; } = System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.BGSEntryPointPerkEntry.HandleEntryPoints1IntPtr>(Offsets.BGSEntryPointPerkEntry.HandleEntryPoints);
+				static public Delegates.Types.BGSEntryPointPerkEntry.HandleEntryPoints1 HandleEntryPoints1 { get; } = System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.BGSEntryPointPerkEntry.HandleEntryPoints1>(Eggstensions.Offsets.BGSEntryPointPerkEntry.HandleEntryPoints);
 
-				static public Delegates.Types.BGSEntryPointPerkEntry.HandleEntryPoints2IntPtr HandleEntryPoints2IntPtr { get; } = System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.BGSEntryPointPerkEntry.HandleEntryPoints2IntPtr>(Offsets.BGSEntryPointPerkEntry.HandleEntryPoints);
+				static public Delegates.Types.BGSEntryPointPerkEntry.HandleEntryPoints2 HandleEntryPoints2 { get; } = System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.BGSEntryPointPerkEntry.HandleEntryPoints2>(Eggstensions.Offsets.BGSEntryPointPerkEntry.HandleEntryPoints);
 
-				static public Delegates.Types.BGSEntryPointPerkEntry.HandleEntryPoints2Single HandleEntryPoints2Single { get; } = System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.BGSEntryPointPerkEntry.HandleEntryPoints2Single>(Offsets.BGSEntryPointPerkEntry.HandleEntryPoints);
-
-				static public Delegates.Types.BGSEntryPointPerkEntry.HandleEntryPoints3IntPtr HandleEntryPoints3IntPtr { get; } = System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.BGSEntryPointPerkEntry.HandleEntryPoints3IntPtr>(Offsets.BGSEntryPointPerkEntry.HandleEntryPoints);
+				static public Delegates.Types.BGSEntryPointPerkEntry.HandleEntryPoints3 HandleEntryPoints3 { get; } = System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.BGSEntryPointPerkEntry.HandleEntryPoints3>(Eggstensions.Offsets.BGSEntryPointPerkEntry.HandleEntryPoints);
 			}
 
 			static public class BSTArray
 			{
 				static public class IntPtr
 				{
-					static public Delegates.Types.BSTArray.IntPtr.Push Push { get; } = System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.BSTArray.IntPtr.Push>(Offsets.BSTArray.IntPtr.Push);
+					static public Delegates.Types.BSTArray.IntPtr.Push Push { get; } = System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.BSTArray.IntPtr.Push>(Eggstensions.Offsets.BSTArray.IntPtr.Push);
 				}
-				
-				
-				
-				static public Delegates.Types.BSTArray.Deallocate Deallocate { get; } = System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.BSTArray.Deallocate>(Offsets.BSTArray.Deallocate);
-			}
 
-			static public class BSTEventSink
-			{
-				static public Delegates.Types.BSTEventSink.AddHarvestEventSink AddHarvestEventSink { get; }			= System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.BSTEventSink.AddHarvestEventSink>(Offsets.BSTEventSink.AddHarvestEventSink);
-				static public Delegates.Types.BSTEventSink.RemoveHarvestEventSink RemoveHarvestEventSink { get; }	= System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.BSTEventSink.RemoveHarvestEventSink>(Offsets.BSTEventSink.RemoveHarvestEventSink);
+
+
+				static public Delegates.Types.BSTArray.Deallocate Deallocate { get; } = System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.BSTArray.Deallocate>(Eggstensions.Offsets.BSTArray.Deallocate);
 			}
 
 			static public class BSTEventSource
 			{
-				static public Delegates.Types.BSTEventSource.AddEventSink AddEventSink { get; }			= System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.BSTEventSource.AddEventSink>(Offsets.BSTEventSource.AddEventSink);
-				static public Delegates.Types.BSTEventSource.RemoveEventSink RemoveEventSink { get; }	= System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.BSTEventSource.RemoveEventSink>(Offsets.BSTEventSource.RemoveEventSink);
+				static public Delegates.Types.BSTEventSource.AddEventSink AddEventSink { get; }			= System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.BSTEventSource.AddEventSink>(Eggstensions.Offsets.BSTEventSource.AddEventSink);
+				static public Delegates.Types.BSTEventSource.RemoveEventSink RemoveEventSink { get; }	= System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.BSTEventSource.RemoveEventSink>(Eggstensions.Offsets.BSTEventSource.RemoveEventSink);
 			}
 
 			static public class InventoryChanges
 			{
-				static public Delegates.Types.InventoryChanges.ResetWeight ResetWeight { get; } = System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.InventoryChanges.ResetWeight>(Offsets.InventoryChanges.ResetWeight);
+				static public Delegates.Types.InventoryChanges.ResetWeight ResetWeight { get; } = System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.InventoryChanges.ResetWeight>(Eggstensions.Offsets.InventoryChanges.ResetWeight);
 			}
 
 			static public class InventoryEntryData
 			{
-				static public Delegates.Types.InventoryEntryData.IsWorn IsWorn { get; } = System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.InventoryEntryData.IsWorn>(Offsets.InventoryEntryData.IsWorn);
+				static public Delegates.Types.InventoryEntryData.IsWorn IsWorn { get; } = System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.InventoryEntryData.IsWorn>(Eggstensions.Offsets.InventoryEntryData.IsWorn);
 			}
 
 			static public class ScriptEventSourceHolder
 			{
-				static public Delegates.Types.ScriptEventSourceHolder.GetInstance GetInstance { get; } = System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.ScriptEventSourceHolder.GetInstance>(Offsets.ScriptEventSourceHolder.GetInstance);
+				static public Delegates.Types.ScriptEventSourceHolder.GetInstance GetInstance { get; } = System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.ScriptEventSourceHolder.GetInstance>(Eggstensions.Offsets.ScriptEventSourceHolder.GetInstance);
 			}
 
 			static public class TESDataHandler
 			{
-				static public Delegates.Types.TESDataHandler.GetForm GetForm { get; } = System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.TESDataHandler.GetForm>(Offsets.TESDataHandler.GetForm);
+				static public Delegates.Types.TESDataHandler.GetForm GetForm { get; } = System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.TESDataHandler.GetForm>(Eggstensions.Offsets.TESDataHandler.GetForm);
 			}
 
 			static public class TESObjectREFR
 			{
-				static public Delegates.Types.TESObjectREFR.GetInventoryChanges GetInventoryChanges { get; } = System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.TESObjectREFR.GetInventoryChanges>(Offsets.TESObjectREFR.GetInventoryChanges);
+				static public Delegates.Types.TESObjectREFR.GetInventoryChanges GetInventoryChanges { get; } = System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.TESObjectREFR.GetInventoryChanges>(Eggstensions.Offsets.TESObjectREFR.GetInventoryChanges);
 			}
 
 			static public class UI
 			{
-				static public Delegates.Types.UI.Notification Notification { get; } = System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.UI.Notification>(Offsets.UI.Notification);
+				static public Delegates.Types.UI.Notification Notification { get; } = System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.UI.Notification>(Eggstensions.Offsets.UI.Notification);
 			}
 		}
 
 		namespace Types
 		{
-			static public class ActiveEffect
+			unsafe static public class ActiveEffect
 			{
 				[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)]
-				public delegate void Dispel(System.IntPtr activeEffect, System.Byte force);
+				public delegate void Dispel(Eggstensions.ActiveEffect* activeEffect, System.Byte force);
 			}
-			
-			static public class Actor
+
+			unsafe static public class Actor
 			{
 				[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)]
-				public delegate System.Byte AddSpell(System.IntPtr actor, System.IntPtr spell);
+				public delegate System.Byte AddSpell(Eggstensions.Actor* actor, Eggstensions.SpellItem* spell);
 
 				[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)] // Virtual
-				public delegate System.IntPtr GetMagicCaster(System.IntPtr actor, System.Int32 castingSource);
+				public delegate Eggstensions.MagicCaster* GetMagicCaster(Eggstensions.Actor* actor, System.Int32 castingSource);
 			}
 
-			static public class BGSEntryPointFunctionData
+			unsafe static public class BGSEntryPointFunctionData
 			{
 				[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)] // Virtual
-				new public delegate System.Int32 GetType(System.IntPtr entryPointFunctionData);
+				new public delegate System.Int32 GetType(Eggstensions.BGSEntryPointFunctionData* entryPointFunctionData);
 			}
 
-			static public class BGSEntryPointPerkEntry
+			unsafe static public class BGSEntryPointPerkEntry
 			{
 				[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)]
-				public delegate void HandleEntryPoints1IntPtr(System.Int32 entryPoint, System.IntPtr perkOwner, ref System.IntPtr result1);
+				public delegate void HandleEntryPoints1(System.Int32 entryPoint, Eggstensions.Actor* perkOwner, void* result1);
 
 				[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)]
-				public delegate void HandleEntryPoints2IntPtr(System.Int32 entryPoint, System.IntPtr perkOwner, System.IntPtr argument2, ref System.IntPtr result1);
+				public delegate void HandleEntryPoints2(System.Int32 entryPoint, Eggstensions.Actor* perkOwner, void* argument2, void* result1);
 
 				[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)]
-				public delegate void HandleEntryPoints2Single(System.Int32 entryPoint, System.IntPtr perkOwner, System.IntPtr argument2, ref System.Single result1);
-
-				[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)]
-				public delegate void HandleEntryPoints3IntPtr(System.Int32 entryPoint, System.IntPtr perkOwner, System.IntPtr argument2, System.IntPtr argument3, ref System.IntPtr result1);
+				public delegate void HandleEntryPoints3(System.Int32 entryPoint, Eggstensions.Actor* perkOwner, void* argument2, void* argument3, void* result1);
 			}
 
-			static public class BGSPerkEntry
+			unsafe static public class BGSPerkEntry
 			{
 				[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)] // Virtual
-				public delegate void AddPerkEntry(System.IntPtr perkEntry, System.IntPtr perkOwner);
+				public delegate void AddPerkEntry(Eggstensions.BGSPerkEntry* perkEntry, Eggstensions.Actor* perkOwner);
 
 				[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)] // Virtual
-				public delegate System.Byte EvaluateConditions(System.IntPtr perkEntry, System.Int32 argumentCount, System.IntPtr arguments);
+				public delegate System.Byte EvaluateConditions(Eggstensions.BGSPerkEntry* perkEntry, System.Int32 argumentCount, System.IntPtr arguments);
 
 				[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)] // Virtual
-				public delegate System.Byte GetFunction(System.IntPtr perkEntry);
+				public delegate System.Byte GetFunction(Eggstensions.BGSPerkEntry* perkEntry);
 
 				[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)] // Virtual
-				public delegate System.IntPtr GetFunctionData(System.IntPtr perkEntry);
+				public delegate Eggstensions.BGSEntryPointFunctionData* GetFunctionData(Eggstensions.BGSPerkEntry* perkEntry);
 
 				[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)] // Virtual
-				public delegate void RemovePerkEntry(System.IntPtr perkEntry, System.IntPtr perkOwner);
+				public delegate void RemovePerkEntry(Eggstensions.BGSPerkEntry* perkEntry, Eggstensions.Actor* perkOwner);
 			}
 
-			static public class BSTArray
+			unsafe static public class BSTArray
 			{
 				static public class IntPtr
 				{
 					[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)]
-					public delegate System.Int32 Push(System.IntPtr array, ref System.IntPtr element);
+					public delegate System.Int32 Push(Eggstensions.BSTArray* array, System.IntPtr element);
 				}
 
 
 
 				[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)]
-				public delegate void Deallocate(System.IntPtr array);
+				public delegate void Deallocate(Eggstensions.BSTArray* array);
 			}
 
-			static public class BSTEventSink
+			unsafe static public class BSTEventSink
 			{
-				[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)]
-				public delegate void AddHarvestEventSink(System.IntPtr eventSink);
-
 				[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)] // Virtual
 				public delegate void Destructor(System.IntPtr eventSink);
 
 				[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)] // Virtual
-				public delegate System.Int32 ProcessEvent(System.IntPtr eventSink, System.IntPtr eventArguments, System.IntPtr eventSource);
-
-				[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)]
-				public delegate void RemoveHarvestEventSink(System.IntPtr eventSink);
+				public delegate System.Int32 ProcessEvent(System.IntPtr eventSink, void* eventArguments, void* eventSource);
 			}
 
-			static public class BSTEventSource
+			unsafe static public class BSTEventSource
 			{
 				[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)]
-				public delegate void AddEventSink(System.IntPtr eventSource, System.IntPtr eventSink);
+				public delegate void AddEventSink(Eggstensions.BSTEventSource* eventSource, System.IntPtr eventSink);
 
 				[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)]
-				public delegate void RemoveEventSink(System.IntPtr eventSource, System.IntPtr eventSink);
+				public delegate void RemoveEventSink(Eggstensions.BSTEventSource* eventSource, System.IntPtr eventSink);
 			}
 
-			static public class InitTESThread
-			{
-				[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)] // Virtual
-				public delegate void Initialize(System.IntPtr initTESThread);
-			}
-
-			static public class InventoryChanges
+			unsafe static public class Context
 			{
 				[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)]
-				public delegate System.Byte ResetWeight(System.IntPtr inventoryChanges);
+				public delegate void CaptureContext(Eggstensions.Context* context);
 			}
 
-			static public class InventoryEntryData
+			unsafe static public class InitTESThread
+			{
+				[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)] // Virtual
+				public delegate void Initialize(Eggstensions.InitTESThread* initTESThread);
+			}
+
+			unsafe static public class InventoryChanges
 			{
 				[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)]
-				public delegate System.Byte IsWorn(System.IntPtr inventoryEntryData);
+				public delegate System.Byte ResetWeight(Eggstensions.InventoryChanges* inventoryChanges);
 			}
 
-			static public class MagicCaster
-			{
-				[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)] // Virtual
-				public delegate void Cast(System.IntPtr magicCaster, System.IntPtr spell, System.Byte noHitEffectArt, System.IntPtr target, System.Single dualCastingMultiplier, System.Byte hostileDualCastingMultiplierOnly, System.Single magnitudeOverride, System.IntPtr unknownPointer);
-			}
-
-			static public class MagicItem
-			{
-				[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)] // Virtual
-				public delegate System.Int32 GetSpellType(System.IntPtr magicItem);
-			}
-
-			static public class NiObject
-			{
-				[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)] // Virtual
-				public delegate System.IntPtr AsNode(System.IntPtr niObject);
-			}
-
-			static public class ReferenceEffectController
-			{
-				[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)] // Virtual
-				public delegate System.IntPtr GetAttachRoot(System.IntPtr referenceEffectController);
-			}
-
-			static public class ScriptEventSourceHolder
+			unsafe static public class InventoryEntryData
 			{
 				[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)]
-				public delegate System.IntPtr GetInstance();
+				public delegate System.Byte IsWorn(Eggstensions.InventoryEntryData* inventoryEntryData);
 			}
 
-			static public class TESDataHandler
+			unsafe static public class MagicCaster
+			{
+				[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)] // Virtual
+				public delegate void Cast(Eggstensions.MagicCaster* magicCaster, Eggstensions.SpellItem* spell, System.Byte noHitEffectArt, Eggstensions.Actor* target, System.Single dualCastingMultiplier, System.Byte hostileDualCastingMultiplierOnly, System.Single magnitudeOverride, Eggstensions.Actor* cause);
+			}
+
+			unsafe static public class MagicItem
+			{
+				[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)] // Virtual
+				public delegate System.Int32 GetSpellType(Eggstensions.MagicItem* magicItem);
+			}
+
+			unsafe static public class NiObject
+			{
+				[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)] // Virtual
+				public delegate Eggstensions.NiNode* AsNode(Eggstensions.NiObject* niObject);
+			}
+
+			unsafe static public class ReferenceEffectController
+			{
+				[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)] // Virtual
+				public delegate Eggstensions.NiAVObject* GetAttachRoot(Eggstensions.ReferenceEffectController* referenceEffectController);
+			}
+
+			unsafe static public class ScriptEventSourceHolder
 			{
 				[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)]
-				public delegate System.IntPtr GetForm(System.UInt32 formID);
+				public delegate Eggstensions.ScriptEventSourceHolder* GetInstance();
 			}
 
-			static public class TESForm
+			unsafe static public class TESDataHandler
 			{
-				[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)] // Virtual
-				public delegate void RemoveChanges(System.IntPtr form, System.UInt32 changeFlags);
+				[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)]
+				public delegate Eggstensions.TESForm* GetForm(System.UInt32 formID);
 			}
 
-			static public class TESFullName
+			unsafe static public class TESForm
 			{
 				[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)] // Virtual
-				public delegate System.IntPtr GetFullName(System.IntPtr fullName);
+				public delegate void RemoveChanges(Eggstensions.TESForm* form, System.UInt32 changeFlags);
 			}
 
-			static public class TESObjectREFR
+			unsafe static public class TESFullName
 			{
 				[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)] // Virtual
-				public delegate System.IntPtr GetCurrent3D(System.IntPtr reference);
+				public delegate System.IntPtr GetFullName(Eggstensions.TESFullName* fullName);
+			}
+
+			unsafe static public class TESObjectREFR
+			{
+				[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)] // Virtual
+				public delegate Eggstensions.NiAVObject* GetCurrent3D(Eggstensions.TESObjectREFR* reference);
 
 				[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)]
-				public delegate System.IntPtr GetInventoryChanges(System.IntPtr reference);
+				public delegate Eggstensions.InventoryChanges* GetInventoryChanges(Eggstensions.TESObjectREFR* reference);
 			}
 
 			static public class UI

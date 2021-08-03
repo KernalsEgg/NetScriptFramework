@@ -1,23 +1,12 @@
 ﻿namespace Eggstensions
 {
-	public class InventoryChanges : NativeObject
+	[System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Explicit, Size = 0x20)]
+	unsafe public struct InventoryChanges
 	{
-		public InventoryChanges(System.IntPtr address) : base(address)
+		// Member
+		static public void ResetWeight(InventoryChanges* inventoryChanges)
 		{
-		}
-
-
-
-		public void ResetWeight()
-		{
-			Delegates.Instances.InventoryChanges.ResetWeight(this);
-		}
-
-
-
-		static public implicit operator InventoryChanges(System.IntPtr address)
-		{
-			return new InventoryChanges(address);
+			Eggstensions.Delegates.Instances.InventoryChanges.ResetWeight(inventoryChanges);
 		}
 	}
 }

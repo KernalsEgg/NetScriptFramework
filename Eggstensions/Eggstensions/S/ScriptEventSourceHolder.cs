@@ -1,34 +1,18 @@
 ﻿namespace Eggstensions
 {
-	public class ScriptEventSourceHolder : NativeObject
+	[System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Explicit, Size = 0x1290)]
+	unsafe public struct ScriptEventSourceHolder
 	{
-		public ScriptEventSourceHolder(System.IntPtr address) : base(address)
-		{
-		}
+		[System.Runtime.InteropServices.FieldOffset(0x5D8)] public BSTEventSource TESHitEvent;
 
 
 
-		static public ScriptEventSourceHolder Instance
+		static public ScriptEventSourceHolder* Instance
 		{
 			get
 			{
-				return Delegates.Instances.ScriptEventSourceHolder.GetInstance();
+				return Eggstensions.Delegates.Instances.ScriptEventSourceHolder.GetInstance();
 			}
-		}
-
-		static public BSTEventSource TESHitEvent
-		{
-			get
-			{
-				return Instance + 0x5D8;
-			}
-		}
-
-
-
-		static public implicit operator ScriptEventSourceHolder(System.IntPtr address)
-		{
-			return new ScriptEventSourceHolder(address);
 		}
 	}
 }

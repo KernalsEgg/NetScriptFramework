@@ -5,6 +5,7 @@
 		public class Fixes
 		{
 			public System.Boolean activeEffectConditions { get; set; }
+			public System.Boolean dualCasting { get; set; }
 			public System.Boolean harvestedFlags { get; set; }
 			public System.Boolean hitEffectRaceCondition { get; set; }
 			public System.Boolean modArmorWeightPerkEntryPoint { get; set; }

@@ -53,6 +53,7 @@
     <Compile Include="Delegates.cs" />
     <Compile Include="Fixes\HarvestedFlags.cs" />
     <Compile Include="Fixes\HitEffectRaceCondition.cs" />
+    <Compile Include="Fixes\DualCasting.cs" />
     <Compile Include="Offsets.cs" />
     <Compile Include="Patches\ApplySpellPerkEntryPoints\MultipleSpells.cs" />
     <Compile Include="Patches\AttachHitEffectArt.cs" />
