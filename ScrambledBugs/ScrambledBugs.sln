@@ -7,6 +7,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScrambledBugs", "ScrambledB
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Eggstensions", "..\Eggstensions\Eggstensions\Eggstensions.shproj", "{740EFF05-9743-47CE-B6EA-09584EAF1EDF}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{15F6EBDA-40CA-4333-9AB7-265006F80F6A}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		..\Eggstensions\Eggstensions\Eggstensions.projitems*{740eff05-9743-47ce-b6ea-09584eaf1edf}*SharedItemsImports = 13
