@@ -22,7 +22,7 @@ namespace ScrambledBugs.Fixes
 				{
 					if (((Memory.Read<System.UInt32>(saveManager, 0x340) >> 1) & 1) == 0)
 					{
-						ScrambledBugs.Delegates.Instances.Fixes.SpeedMultUpdates.UpdateMovementSpeed(actor);
+						Actor.UpdateMovementSpeed(actor);
 					}
 				}
 			};

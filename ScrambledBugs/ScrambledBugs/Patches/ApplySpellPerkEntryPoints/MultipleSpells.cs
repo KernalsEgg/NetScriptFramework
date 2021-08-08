@@ -36,7 +36,7 @@ namespace ScrambledBugs.Patches.ApplySpellPerkEntryPoints
 				}
 			};
 
-			SkyrimSE.Trampoline.WriteRelativeCall<ScrambledBugs.Delegates.Types.Patches.ApplySpellPerkEntryPoints.MultipleSpells.ApplyBashingSpell>
+			ScrambledBugs.Plugin.Trampoline.WriteRelativeCall<ScrambledBugs.Delegates.Types.Patches.ApplySpellPerkEntryPoints.MultipleSpells.ApplyBashingSpell>
 			(
 				ScrambledBugs.Offsets.Patches.ApplySpellPerkEntryPoints.MultipleSpells.ApplyBashingSpell,
 				MultipleSpells.ApplyBashingSpell
@@ -73,7 +73,7 @@ namespace ScrambledBugs.Patches.ApplySpellPerkEntryPoints
 				}
 			};
 
-			SkyrimSE.Trampoline.WriteRelativeCall<ScrambledBugs.Delegates.Types.Patches.ApplySpellPerkEntryPoints.MultipleSpells.ApplyCombatHitSpell>
+			ScrambledBugs.Plugin.Trampoline.WriteRelativeCall<ScrambledBugs.Delegates.Types.Patches.ApplySpellPerkEntryPoints.MultipleSpells.ApplyCombatHitSpell>
 			(
 				ScrambledBugs.Offsets.Patches.ApplySpellPerkEntryPoints.MultipleSpells.ApplyCombatHitSpell,
 				MultipleSpells.ApplyCombatHitSpell
@@ -88,9 +88,9 @@ namespace ScrambledBugs.Patches.ApplySpellPerkEntryPoints
 			assembly.Add(new System.Byte[4] { 0x41, 0xF6, 0xC2, 0x01 });																													// test r10b, 01
 			assembly.Add(new System.Byte[2] { 0x74, (System.Byte)Memory.Size<AbsoluteJump>.Unmanaged });																					// je 0E
 			assembly.Add(Assembly.AbsoluteJump<ScrambledBugs.Delegates.Types.Patches.ApplySpellPerkEntryPoints.MultipleSpells.ApplyCombatHitSpell>(MultipleSpells.ApplyCombatHitSpell));
-			assembly.Add(new System.Byte[1] { 0xC3 });																																		// ret
+			assembly.Add(new System.Byte[1] { 0xC3 });                                                                                                                                      // ret
 
-			SkyrimSE.Trampoline.WriteRelativeCallBranch
+			ScrambledBugs.Plugin.Trampoline.WriteRelativeCallBranch
 			(
 				ScrambledBugs.Offsets.Patches.ApplySpellPerkEntryPoints.MultipleSpells.ApplyCombatHitSpellArrowProjectile,
 				assembly
@@ -127,7 +127,7 @@ namespace ScrambledBugs.Patches.ApplySpellPerkEntryPoints
 				}
 			};
 
-			SkyrimSE.Trampoline.WriteRelativeCall<ScrambledBugs.Delegates.Types.Patches.ApplySpellPerkEntryPoints.MultipleSpells.ApplyReanimateSpell>
+			ScrambledBugs.Plugin.Trampoline.WriteRelativeCall<ScrambledBugs.Delegates.Types.Patches.ApplySpellPerkEntryPoints.MultipleSpells.ApplyReanimateSpell>
 			(
 				ScrambledBugs.Offsets.Patches.ApplySpellPerkEntryPoints.MultipleSpells.ApplyReanimateSpell,
 				MultipleSpells.ApplyReanimateSpell
@@ -162,7 +162,7 @@ namespace ScrambledBugs.Patches.ApplySpellPerkEntryPoints
 				}
 			};
 
-			SkyrimSE.Trampoline.WriteRelativeCall<ScrambledBugs.Delegates.Types.Patches.ApplySpellPerkEntryPoints.MultipleSpells.ApplySneakingSpell>
+			ScrambledBugs.Plugin.Trampoline.WriteRelativeCall<ScrambledBugs.Delegates.Types.Patches.ApplySpellPerkEntryPoints.MultipleSpells.ApplySneakingSpell>
 			(
 				ScrambledBugs.Offsets.Patches.ApplySpellPerkEntryPoints.MultipleSpells.ApplySneakingSpell,
 				MultipleSpells.ApplySneakingSpell
@@ -199,7 +199,7 @@ namespace ScrambledBugs.Patches.ApplySpellPerkEntryPoints
 				}
 			};
 
-			SkyrimSE.Trampoline.WriteRelativeCall<ScrambledBugs.Delegates.Types.Patches.ApplySpellPerkEntryPoints.MultipleSpells.ApplyWeaponSwingSpell>
+			ScrambledBugs.Plugin.Trampoline.WriteRelativeCall<ScrambledBugs.Delegates.Types.Patches.ApplySpellPerkEntryPoints.MultipleSpells.ApplyWeaponSwingSpell>
 			(
 				ScrambledBugs.Offsets.Patches.ApplySpellPerkEntryPoints.MultipleSpells.ApplyWeaponSwingSpell,
 				MultipleSpells.ApplyWeaponSwingSpell

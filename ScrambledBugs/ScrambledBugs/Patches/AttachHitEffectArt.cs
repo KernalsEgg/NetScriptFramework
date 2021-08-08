@@ -56,9 +56,9 @@ namespace ScrambledBugs.Patches
 			assembly.Add(new System.Byte[4] { 0x48, 0x83, 0xC4, 0x28 });				// add rsp, 28
 			assembly.Add(new System.Byte[2] { 0x41, 0x5D });							// pop r13
 			assembly.Add(new System.Byte[2] { 0x41, 0x5C });							// pop r12
-			assembly.Add(new System.Byte[1] { 0xC3 });									// ret
+			assembly.Add(new System.Byte[1] { 0xC3 });                                  // ret
 
-			SkyrimSE.Trampoline.WriteRelativeCallBranch
+			ScrambledBugs.Plugin.Trampoline.WriteRelativeCallBranch
 			(
 				ScrambledBugs.Offsets.Patches.AttachHitEffectArt.Attach,
 				assembly

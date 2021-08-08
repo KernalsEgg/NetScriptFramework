@@ -2,15 +2,33 @@
 {
 	public enum ActorValue : System.Int32
 	{
-		SpeedMult = 30
+		None			= -1,
+		Magicka			= 25,
+		SpeedMult		= 30,
+		RightItemCharge	= 64,
+		LeftItemCharge	= 82
+	}
+
+	public enum ActorValueModifier : System.Int32
+	{
+		Permanent	= 0,
+		Temporary	= 1,
+		Damage		= 2
+	}
+
+	public enum EquipType : System.Int32
+	{
+		LeftHand	= 0,
+		RightHand	= 1,
 	}
 
 
 
 	[System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Explicit, Size = 0x2B0)]
-	unsafe public struct Actor // TESObjectREFR
+	unsafe public struct Actor // TESObjectREFR, ActorValueOwner
 	{
 		[System.Runtime.InteropServices.FieldOffset(0x0)] public TESObjectREFR TESObjectREFR;
+		[System.Runtime.InteropServices.FieldOffset(0xB0)] public ActorValueOwner ActorValueOwner;
 
 
 
@@ -28,6 +46,21 @@
 		static public System.Boolean AddSpell(Actor* actor, SpellItem* spell)
 		{
 			return Eggstensions.Delegates.Instances.Actor.AddSpell(actor, spell) != 0;
+		}
+
+		static public void RemoveActorValueModifiers(Actor* actor, ActorValue actorValue)
+		{
+			Eggstensions.Delegates.Instances.Actor.RemoveActorValueModifiers(actor, (System.Int32)actorValue);
+		}
+
+		static public void RevertSelectedSpell(Actor* actor, EquipType equipType, MagicItem* magicItem)
+		{
+			Eggstensions.Delegates.Instances.Actor.RevertSelectedSpell(actor, (System.Int32)equipType, magicItem);
+		}
+
+		static public void UpdateMovementSpeed(Actor* actor)
+		{
+			Eggstensions.Delegates.Instances.Actor.UpdateMovementSpeed(actor);
 		}
 	}
 }

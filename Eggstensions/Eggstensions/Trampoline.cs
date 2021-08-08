@@ -1,12 +1,15 @@
 ﻿namespace Eggstensions
 {
-	// Implement List<System.Byte[]> interfaces? e.g. Add, Contains, IndexOf, Remove, RemoveAt
 	public class Trampoline : System.IDisposable
 	{
-		public Trampoline(System.Diagnostics.ProcessModule processModule, System.Int32 size)
+		public Trampoline(System.Diagnostics.ProcessModule processModule)
 		{
-			Address = Trampoline.Allocate(processModule, size);
-			Size = size;
+			ProcessModule = processModule;
+
+			if (ProcessModule == null)
+			{
+				throw new System.NullReferenceException(nameof(Trampoline.ProcessModule));
+			}
 		}
 
 		~Trampoline()
@@ -18,21 +21,12 @@
 
 		private System.Int32 position = 0;
 
-
-
-		public System.IntPtr Address { get; }
-
-		public System.Int32 Size { get; }
+		private System.Action writes = null;
 
 
 
-		public System.Int32 Position
-		{
-			get
-			{
-				return position;
-			}
-		}
+		public System.IntPtr Address { get; private set; }
+		public System.Diagnostics.ProcessModule ProcessModule { get; }
 
 
 
@@ -56,7 +50,7 @@
 				if (memoryBasicInformation.State == MemoryBasicInformation.States.MemFree)
 				{
 					var baseAddress = Math.Ceiling(memoryBasicInformation.BaseAddress, systemInfo.AllocationGranularity);
-					
+
 					// If rounding has not changed regions and the region is at least the specified size
 					if (baseAddress.ToInt64() < minimum.ToInt64() && (minimum.ToInt64() - baseAddress.ToInt64()) >= size)
 					{
@@ -82,17 +76,40 @@
 
 
 
+		private System.Int32 Reserve(System.Int32 size)
+		{
+			return System.Threading.Interlocked.Add(ref this.position, size) - size;
+		}
+
+
+
 		public void CaptureContext(System.IntPtr address, Eggstensions.Delegates.Types.Context.CaptureContext function, System.Byte[] before = null, System.Byte[] after = null)
 		{
 			var captureContext = Assembly.CaptureContext(function, before, after);
-			var reservation = this.Reserve(Memory.Size<System.Byte>.Unmanaged * captureContext.Length);
-			Memory.SafeWriteArray<System.Byte>(reservation, captureContext);
-			Memory.WriteRelativeCall(address, reservation);
+			var position = this.Reserve(Memory.Size<System.Byte>.Unmanaged * captureContext.Length);
+
+			this.writes += () =>
+			{
+				Memory.SafeWriteArray<System.Byte>(Address + position, captureContext);
+				Memory.WriteRelativeCall(address, Address + position);
+			};
 		}
 
 		public void CaptureContext(System.IntPtr address, System.Int32 offset, Eggstensions.Delegates.Types.Context.CaptureContext function, System.Byte[] before = null, System.Byte[] after = null)
 		{
 			this.CaptureContext(address + offset, function, before, after);
+		}
+
+		public void Commit()
+		{
+			Address = Trampoline.Allocate(ProcessModule, this.position);
+
+			if (Address == System.IntPtr.Zero)
+			{
+				throw new System.InsufficientMemoryException(nameof(Trampoline));
+			}
+
+			this.writes?.Invoke();
 		}
 
 		public void Dispose()
@@ -101,17 +118,17 @@
 			System.GC.SuppressFinalize(this);
 		}
 
-		public System.IntPtr Reserve(System.Int32 size)
-		{
-			return Address + (System.Threading.Interlocked.Add(ref this.position, size) - size);
-		}
-
 		public void WriteRelativeCall<T>(System.IntPtr address, T function)
 			where T : System.Delegate
 		{
-			var reservation = this.Reserve(Memory.Size<AbsoluteJump>.Unmanaged);
-			Memory.SafeWrite<AbsoluteJump>(reservation, Assembly.AbsoluteJump<T>(function));
-			Memory.WriteRelativeCall(address, reservation);
+			var absoluteJump = Assembly.AbsoluteJump<T>(function);
+			var position = this.Reserve(Memory.Size<AbsoluteJump>.Unmanaged);
+
+			this.writes += () =>
+			{
+				Memory.SafeWrite<AbsoluteJump>(Address + position, absoluteJump);
+				Memory.WriteRelativeCall(address, Address + position);
+			};
 		}
 
 		public void WriteRelativeCall<T>(System.IntPtr address, System.Int32 offset, T function)
@@ -122,9 +139,13 @@
 
 		public void WriteRelativeCallBranch(System.IntPtr address, System.Byte[] assembly)
 		{
-			var reservation = this.Reserve(Memory.Size<System.Byte>.Unmanaged * assembly.Length);
-			Memory.SafeWriteArray<System.Byte>(reservation, assembly);
-			Memory.WriteRelativeCall(address, reservation);
+			var position = this.Reserve(Memory.Size<System.Byte>.Unmanaged * assembly.Length);
+
+			this.writes += () =>
+			{
+				Memory.SafeWriteArray<System.Byte>(Address + position, assembly);
+				Memory.WriteRelativeCall(address, Address + position);
+			};
 		}
 
 		public void WriteRelativeCallBranch(System.IntPtr address, System.Int32 offset, System.Byte[] assembly)
@@ -135,9 +156,14 @@
 		public void WriteRelativeJump<T>(System.IntPtr address, T function)
 			where T : System.Delegate
 		{
-			var reservation = this.Reserve(Memory.Size<AbsoluteJump>.Unmanaged);
-			Memory.SafeWrite<AbsoluteJump>(reservation, Assembly.AbsoluteJump<T>(function));
-			Memory.WriteRelativeJump(address, reservation);
+			var absoluteJump = Assembly.AbsoluteJump<T>(function);
+			var position = this.Reserve(Memory.Size<AbsoluteJump>.Unmanaged);
+
+			this.writes += () =>
+			{
+				Memory.SafeWrite<AbsoluteJump>(Address + position, absoluteJump);
+				Memory.WriteRelativeJump(address, Address + position);
+			};
 		}
 
 		public void WriteRelativeJump<T>(System.IntPtr address, System.Int32 offset, T function)
@@ -148,9 +174,13 @@
 
 		public void WriteRelativeJumpBranch(System.IntPtr address, System.Byte[] assembly)
 		{
-			var reservation = this.Reserve(Memory.Size<System.Byte>.Unmanaged * assembly.Length);
-			Memory.SafeWriteArray<System.Byte>(reservation, assembly);
-			Memory.WriteRelativeJump(address, reservation);
+			var position = this.Reserve(Memory.Size<System.Byte>.Unmanaged * assembly.Length);
+
+			this.writes += () =>
+			{
+				Memory.SafeWriteArray<System.Byte>(Address + position, assembly);
+				Memory.WriteRelativeJump(address, Address + position);
+			};
 		}
 
 		public void WriteRelativeJumpBranch(System.IntPtr address, System.Int32 offset, System.Byte[] assembly)

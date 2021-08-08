@@ -47,7 +47,7 @@ namespace ScrambledBugs.Fixes
 				}
 			};
 
-			SkyrimSE.Trampoline.CaptureContext
+			ScrambledBugs.Plugin.Trampoline.CaptureContext
 			(
 				ScrambledBugs.Offsets.Fixes.ModArmorWeightPerkEntryPoint.ModArmorWeightContainer,
 				ModArmorWeightPerkEntryPoint.ModArmorWeightContainer,
@@ -77,7 +77,7 @@ namespace ScrambledBugs.Fixes
 				context->Xmm6.Single += armorWeight; // totalModifiedArmorWeight
 			};
 
-			SkyrimSE.Trampoline.CaptureContext
+			ScrambledBugs.Plugin.Trampoline.CaptureContext
 			(
 				ScrambledBugs.Offsets.Fixes.ModArmorWeightPerkEntryPoint.ModArmorWeightInventoryChanges,
 				ModArmorWeightPerkEntryPoint.ModArmorWeightInventoryChanges

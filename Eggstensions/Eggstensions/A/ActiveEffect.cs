@@ -29,7 +29,7 @@
 		[System.Runtime.InteropServices.FieldOffset(0x74)] public System.Single Duration;
 		[System.Runtime.InteropServices.FieldOffset(0x78)] public System.Single Magnitude;
 		[System.Runtime.InteropServices.FieldOffset(0x7C)] public ActiveEffectFlags Flags;
-		[System.Runtime.InteropServices.FieldOffset(0x8C)] public System.Single Padding8C;
+		[System.Runtime.InteropServices.FieldOffset(0x88)] public CastingSource CastingSource;
 
 
 

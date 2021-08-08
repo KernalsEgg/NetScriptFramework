@@ -4,15 +4,15 @@
 
 namespace ScrambledBugs.Fixes
 {
-	unsafe internal class DualCasting
+	unsafe internal class MagicEffectFlags
 	{
-		static DualCasting()
+		static MagicEffectFlags()
 		{
-			DualCasting.SetDualCasting = (ActiveEffect* activeEffect, System.Single multiplier) =>
+			MagicEffectFlags.SetEffectiveness = (ActiveEffect* activeEffect, System.Single effectiveness) =>
 			{
 				// activeEffect != null
 
-				if (multiplier == 1.0F || multiplier < 0.0F)
+				if (effectiveness == 1.0F || effectiveness < 0.0F)
 				{
 					return;
 				}
@@ -21,13 +21,13 @@ namespace ScrambledBugs.Fixes
 
 				if ((flags & EffectSettingFlags.NoDuration) != EffectSettingFlags.NoDuration && (flags & EffectSettingFlags.PowerAffectsDuration) == EffectSettingFlags.PowerAffectsDuration)
 				{
-					activeEffect->Duration *= multiplier;
+					activeEffect->Duration *= effectiveness;
 				}
 
 				if ((flags & EffectSettingFlags.NoMagnitude) != EffectSettingFlags.NoMagnitude && (flags & EffectSettingFlags.PowerAffectsMagnitude) == EffectSettingFlags.PowerAffectsMagnitude)
 				{
 					var oldMagnitude = activeEffect->Magnitude;
-					var newMagnitude = oldMagnitude * multiplier;
+					var newMagnitude = oldMagnitude * effectiveness;
 
 					if (oldMagnitude > 0.0F)
 					{
@@ -48,21 +48,21 @@ namespace ScrambledBugs.Fixes
 				}
 			};
 
-			SkyrimSE.Trampoline.WriteRelativeCall<ScrambledBugs.Delegates.Types.Fixes.DualCasting.SetDualCasting>
+			ScrambledBugs.Plugin.Trampoline.WriteRelativeCall<ScrambledBugs.Delegates.Types.Fixes.MagicEffectFlags.SetEffectiveness>
 			(
-				ScrambledBugs.Offsets.Fixes.DualCasting.ResetDualCasting,
-				DualCasting.SetDualCasting
+				ScrambledBugs.Offsets.Fixes.MagicEffectFlags.ResetEffectiveness,
+				MagicEffectFlags.SetEffectiveness
 			);
 
-			SkyrimSE.Trampoline.WriteRelativeCall<ScrambledBugs.Delegates.Types.Fixes.DualCasting.SetDualCasting>
+			ScrambledBugs.Plugin.Trampoline.WriteRelativeCall<ScrambledBugs.Delegates.Types.Fixes.MagicEffectFlags.SetEffectiveness>
 			(
-				ScrambledBugs.Offsets.Fixes.DualCasting.SetDualCasting,
-				DualCasting.SetDualCasting
+				ScrambledBugs.Offsets.Fixes.MagicEffectFlags.SetEffectiveness,
+				MagicEffectFlags.SetEffectiveness
 			);
 		}
 
 
 
-		static public ScrambledBugs.Delegates.Types.Fixes.DualCasting.SetDualCasting SetDualCasting { get; }
+		static public ScrambledBugs.Delegates.Types.Fixes.MagicEffectFlags.SetEffectiveness SetEffectiveness { get; }
 	}
 }

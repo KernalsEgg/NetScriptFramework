@@ -1,4 +1,8 @@
-﻿namespace ScrambledBugs
+﻿using Eggstensions;
+
+
+
+namespace ScrambledBugs
 {
 	public class Plugin : NetScriptFramework.Plugin
 	{
@@ -10,23 +14,20 @@
 
 
 
-		override protected System.Boolean Initialize(System.Boolean loadedPlugin)
+		override protected System.Boolean Initialize(System.Boolean pluginLoaded)
 		{
 			var path = "Data//NetScriptFramework//Plugins//ScrambledBugs.json";
 
 			if (System.IO.File.Exists(path))
 			{
+				Plugin.Trampoline = new Trampoline(Memory.GetProcessModule("SkyrimSE.exe"));
+				
 				var settings = Newtonsoft.Json.JsonConvert.DeserializeObject<ScrambledBugs.Settings>(System.IO.File.ReadAllText(path));
 				
 				// Fixes
 				if (settings.fixes.activeEffectConditions)
 				{
 					new ScrambledBugs.Fixes.ActiveEffectConditions();
-				}
-
-				if (settings.fixes.dualCasting)
-				{
-					new ScrambledBugs.Fixes.DualCasting();
 				}
 
 				if (settings.fixes.harvestedFlags)
@@ -37,6 +38,11 @@
 				if (settings.fixes.hitEffectRaceCondition)
 				{
 					new ScrambledBugs.Fixes.HitEffectRaceCondition();
+				}
+
+				if (settings.fixes.magicEffectFlags)
+				{
+					new ScrambledBugs.Fixes.MagicEffectFlags();
 				}
 
 				if (settings.fixes.modArmorWeightPerkEntryPoint)
@@ -57,6 +63,11 @@
 				if (settings.fixes.trainingMenuText)
 				{
 					new ScrambledBugs.Fixes.TrainingMenuText();
+				}
+
+				if (settings.fixes.weaponCharge)
+				{
+					new ScrambledBugs.Fixes.WeaponCharge();
 				}
 
 				// Patches
@@ -106,9 +117,15 @@
 				{
 					new ScrambledBugs.Patches.UnderfilledSoulGems();
 				}
+
+				Plugin.Trampoline.Commit();
 			}
 
 			return true;
 		}
+
+
+
+		static public Trampoline Trampoline { get; private set; }
 	}
 }

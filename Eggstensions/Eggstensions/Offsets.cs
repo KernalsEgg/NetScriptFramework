@@ -14,7 +14,16 @@
 		static public class Actor
 		{
 			/// <summary>SkyrimSE.exe + 0x62F560</summary>
-			static public System.IntPtr AddSpell { get; } = NetScriptFramework.Main.GameInfo.GetAddressOf(37771);
+			static public System.IntPtr AddSpell { get; }					= NetScriptFramework.Main.GameInfo.GetAddressOf(37771);
+
+			/// <summary>SkyrimSE.exe + 0x621590</summary>
+			static public System.IntPtr RemoveActorValueModifiers { get; }	= NetScriptFramework.Main.GameInfo.GetAddressOf(37527);
+
+			/// <summary>SkyrimSE.exe + 0x632270</summary>
+			static public System.IntPtr RevertSelectedSpell { get; }		= NetScriptFramework.Main.GameInfo.GetAddressOf(37819);
+
+			/// <summary>SkyrimSE.exe + 0x607FA0</summary>
+			static public System.IntPtr UpdateMovementSpeed { get; }		= NetScriptFramework.Main.GameInfo.GetAddressOf(36916);
 		}
 
 		static public class BGSEntryPointPerkEntry
@@ -52,6 +61,15 @@
 			static public System.IntPtr SendEvent { get; }			= NetScriptFramework.Main.GameInfo.GetAddressOf(14703);
 		}
 
+		static public class ExtraDataList
+		{
+			/// <summary>SkyrimSE.exe + 0x113890</summary>
+			static public System.IntPtr GetCharge { get; }		= NetScriptFramework.Main.GameInfo.GetAddressOf(11560);
+
+			/// <summary>SkyrimSE.exe + 0x1EE7E0</summary>
+			static public System.IntPtr HasExtraData { get; }	= NetScriptFramework.Main.GameInfo.GetAddressOf(15971);
+		}
+
 		static public class InitTESThread
 		{
 			/// <summary>SkyrimSE.exe + 0x164D900</summary>
@@ -70,6 +88,15 @@
 			static public System.IntPtr IsWorn { get; } = NetScriptFramework.Main.GameInfo.GetAddressOf(15763);
 		}
 
+		static public class MagicItem
+		{
+			/// <summary>SkyrimSE.exe + 0x101A30</summary>
+			static public System.IntPtr GetCost { get; } = NetScriptFramework.Main.GameInfo.GetAddressOf(11213);
+
+			/// <summary>SkyrimSE.exe + 0x556780</summary>
+			static public System.IntPtr GetCostActorValue { get; } = NetScriptFramework.Main.GameInfo.GetAddressOf(33817);
+		}
+
 		static public class PlayerCharacter
 		{
 			/// <summary>SkyrimSE.exe + 0x2F26EF8</summary>
@@ -86,6 +113,15 @@
 		{
 			/// <summary>SkyrimSE.exe + 0x194230</summary>
 			static public System.IntPtr GetForm { get; } = NetScriptFramework.Main.GameInfo.GetAddressOf(14461);
+		}
+
+		static public class TESForm
+		{
+			/// <summary>SkyrimSE.exe + 0x190D50</summary>
+			static public System.IntPtr GetEnchantment { get; }		= NetScriptFramework.Main.GameInfo.GetAddressOf(14411);
+
+			/// <summary>SkyrimSE.exe + 0x190DC0</summary>
+			static public System.IntPtr GetMaximumCharge { get; }	= NetScriptFramework.Main.GameInfo.GetAddressOf(14412);
 		}
 
 		static public class TESObjectREFR

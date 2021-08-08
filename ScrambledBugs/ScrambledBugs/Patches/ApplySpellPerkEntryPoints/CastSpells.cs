@@ -16,14 +16,14 @@ namespace ScrambledBugs.Patches.ApplySpellPerkEntryPoints
 
 				SpellItem.Apply(spell, source, target);
 			};
-			
-			SkyrimSE.Trampoline.WriteRelativeCall<ScrambledBugs.Delegates.Types.Patches.ApplySpellPerkEntryPoints.CastSpells.ApplySpell>
+
+			ScrambledBugs.Plugin.Trampoline.WriteRelativeCall<ScrambledBugs.Delegates.Types.Patches.ApplySpellPerkEntryPoints.CastSpells.ApplySpell>
 			(
 				ScrambledBugs.Offsets.Patches.ApplySpellPerkEntryPoints.CastSpells.ApplyBashingSpell,
 				CastSpells.ApplySpell
 			);
 
-			SkyrimSE.Trampoline.WriteRelativeCall<ScrambledBugs.Delegates.Types.Patches.ApplySpellPerkEntryPoints.CastSpells.ApplySpell>
+			ScrambledBugs.Plugin.Trampoline.WriteRelativeCall<ScrambledBugs.Delegates.Types.Patches.ApplySpellPerkEntryPoints.CastSpells.ApplySpell>
 			(
 				ScrambledBugs.Offsets.Patches.ApplySpellPerkEntryPoints.CastSpells.ApplyCombatHitSpell,
 				CastSpells.ApplySpell
@@ -36,21 +36,21 @@ namespace ScrambledBugs.Patches.ApplySpellPerkEntryPoints
 			assembly.Add(new System.Byte[4] { 0x41, 0xF6, 0xC2, 0x01 });																							// test r10b, 01
 			assembly.Add(new System.Byte[2] { 0x74, (System.Byte)Memory.Size<AbsoluteJump>.Unmanaged });															// je 0E
 			assembly.Add(Assembly.AbsoluteJump<ScrambledBugs.Delegates.Types.Patches.ApplySpellPerkEntryPoints.CastSpells.ApplySpell>(CastSpells.ApplySpell));
-			assembly.Add(new System.Byte[1] { 0xC3 });																												// ret
+			assembly.Add(new System.Byte[1] { 0xC3 });                                                                                                              // ret
 
-			SkyrimSE.Trampoline.WriteRelativeCallBranch
+			ScrambledBugs.Plugin.Trampoline.WriteRelativeCallBranch
 			(
 				ScrambledBugs.Offsets.Patches.ApplySpellPerkEntryPoints.CastSpells.ApplyCombatHitSpellArrowProjectile,
 				assembly
 			);
 
-			SkyrimSE.Trampoline.WriteRelativeCall<ScrambledBugs.Delegates.Types.Patches.ApplySpellPerkEntryPoints.CastSpells.ApplySpell>
+			ScrambledBugs.Plugin.Trampoline.WriteRelativeCall<ScrambledBugs.Delegates.Types.Patches.ApplySpellPerkEntryPoints.CastSpells.ApplySpell>
 			(
 				ScrambledBugs.Offsets.Patches.ApplySpellPerkEntryPoints.CastSpells.ApplyReanimateSpell,
 				CastSpells.ApplySpell
 			);
 
-			SkyrimSE.Trampoline.WriteRelativeCall<ScrambledBugs.Delegates.Types.Patches.ApplySpellPerkEntryPoints.CastSpells.ApplySpell>
+			ScrambledBugs.Plugin.Trampoline.WriteRelativeCall<ScrambledBugs.Delegates.Types.Patches.ApplySpellPerkEntryPoints.CastSpells.ApplySpell>
 			(
 				ScrambledBugs.Offsets.Patches.ApplySpellPerkEntryPoints.CastSpells.ApplyWeaponSwingSpell,
 				CastSpells.ApplySpell

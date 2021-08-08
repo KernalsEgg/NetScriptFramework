@@ -67,6 +67,23 @@
 				);
 			}
 
+			static internal class MagicEffectFlags
+			{
+				/// <summary>ActiveEffect::ResetElapsedTime (SkyrimSE.exe + 0x53E1B0)</summary>
+				static public System.IntPtr ResetEffectiveness { get; } = NetScriptFramework.Main.GameInfo.GetAddressOf
+				(
+					33283, 0x105, 0, // 0x5
+					"E8 ?? ?? ?? ??" // call
+				);
+
+				/// <summary>ActiveEffect::SetEffectiveness (SkyrimSE.exe + 0x53DEB0)</summary>
+				static public System.IntPtr SetEffectiveness { get; } = NetScriptFramework.Main.GameInfo.GetAddressOf
+				(
+					33277, 0x68, 0,		// 0x5
+					"E8 ?? ?? ?? ??"	// call
+				);
+			}
+
 			static internal class ModArmorWeightPerkEntryPoint
 			{
 				/// <summary>TESObjectREFR::GetInventoryWeight (SkyrimSE.exe + 0x1E9130)</summary>
@@ -87,23 +104,6 @@
 				);
 			}
 
-			static internal class DualCasting
-			{
-				/// <summary>ActiveEffect::ResetElapsedTime (SkyrimSE.exe + 0x53E1B0)</summary>
-				static public System.IntPtr ResetDualCasting { get; } = NetScriptFramework.Main.GameInfo.GetAddressOf
-				(
-					33283, 0x105, 0, // 0x5
-					"E8 ?? ?? ?? ??" // call
-				);
-
-				/// <summary>ActiveEffect::SetDualCasting (SkyrimSE.exe + 0x53DEB0)</summary>
-				static public System.IntPtr SetDualCasting { get; } = NetScriptFramework.Main.GameInfo.GetAddressOf
-				(
-					33277, 0x68, 0,		// 0x5
-					"E8 ?? ?? ?? ??"	// call
-				);
-			}
-
 			static internal class SpeedMultUpdates
 			{
 				/// <summary>SkyrimSE.exe + 0x2F39A40</summary>
@@ -114,9 +114,6 @@
 
 				/// <summary>SkyrimSE.exe + 0x2F266F8</summary>
 				static public System.IntPtr SaveManager { get; }					= NetScriptFramework.Main.GameInfo.GetAddressOf(516851);
-
-				/// <summary>SkyrimSE.exe + 0x607FA0</summary>
-				static public System.IntPtr UpdateMovementSpeed { get; }			= NetScriptFramework.Main.GameInfo.GetAddressOf(36916);
 			}
 
 			static internal class TerrainDecals
@@ -136,6 +133,33 @@
 				(
 					51794, 0x289, 0,	// 0x3
 					"FF 50 10"			// call [rax+10]
+				);
+			}
+
+			static internal class WeaponCharge
+			{
+				/// <summary>SkyrimSE.exe + 0x6AE010</summary>
+				static public System.IntPtr AddEquippedWeaponFlags { get; }	= NetScriptFramework.Main.GameInfo.GetAddressOf(39498);
+
+				/// <summary>SkyrimSE.exe + 0x86C640</summary>
+				static public System.IntPtr Enchant { get; }				= NetScriptFramework.Main.GameInfo.GetAddressOf
+				(
+					50450, 0x17E, 0, // 0x5
+					"E8 ?? ?? ?? ??" // call
+				);
+
+				/// <summary>SkyrimSE.exe + 0x60B9E0</summary>
+				static public System.IntPtr Equip { get; }					= NetScriptFramework.Main.GameInfo.GetAddressOf
+				(
+					36976, 0x303, 0, // 0x5
+					"E8 ?? ?? ?? ??" // call
+				);
+
+				/// <summary>SkyrimSE.exe + 0x88E890</summary>
+				static public System.IntPtr Recharge { get; }				= NetScriptFramework.Main.GameInfo.GetAddressOf
+				(
+					50980, 0x222, 0, // 0x5
+					"E8 ?? ?? ?? ??" // call
 				);
 			}
 		}

@@ -12,10 +12,13 @@
     <Compile Include="$(MSBuildThisFileDirectory)Assembly.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)A\ActiveEffect.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)A\Actor.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)A\ActorValueOwner.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)A\AIProcess.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)A\ArrowProjectile.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)E\Effect.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)E\EffectSetting.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)E\EnchantmentItem.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)E\ExtraDataList.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)I\InitTESThread.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)T\TESObjectARMO.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UnmanagedArray.cs" />
@@ -50,7 +53,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)R\RefAttachTechniqueInput.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)R\ReferenceEffect.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)R\ReferenceEffectController.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)SkyrimSE.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)S\ScriptEventSourceHolder.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)S\Setting.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)S\SettingT.cs" />

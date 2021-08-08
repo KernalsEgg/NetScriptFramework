@@ -53,13 +53,14 @@
     <Compile Include="Delegates.cs" />
     <Compile Include="Fixes\HarvestedFlags.cs" />
     <Compile Include="Fixes\HitEffectRaceCondition.cs" />
-    <Compile Include="Fixes\DualCasting.cs" />
+    <Compile Include="Fixes\MagicEffectFlags.cs" />
     <Compile Include="Offsets.cs" />
     <Compile Include="Patches\ApplySpellPerkEntryPoints\MultipleSpells.cs" />
     <Compile Include="Patches\AttachHitEffectArt.cs" />
     <Compile Include="Fixes\ModArmorWeightPerkEntryPoint.cs" />
     <Compile Include="Fixes\TrainingMenuText.cs" />
     <Compile Include="Patches\EquipBestAmmo.cs" />
+    <Compile Include="Fixes\WeaponCharge.cs" />
     <Compile Include="Patches\LockpickingExperience.cs" />
     <Compile Include="Fixes\SpeedMultUpdates.cs" />
     <Compile Include="Patches\MultipleHitEffects.cs" />

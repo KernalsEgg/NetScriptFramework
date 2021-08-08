@@ -13,8 +13,11 @@ namespace ScrambledBugs
 				static internal class SpeedMultUpdates
 				{
 					static public Delegates.Types.Fixes.SpeedMultUpdates.RemoveMovementFlags RemoveMovementFlags { get; } = System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.Fixes.SpeedMultUpdates.RemoveMovementFlags>(ScrambledBugs.Offsets.Fixes.SpeedMultUpdates.RemoveMovementFlags);
+				}
 
-					static public Delegates.Types.Fixes.SpeedMultUpdates.UpdateMovementSpeed UpdateMovementSpeed { get; } = System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.Fixes.SpeedMultUpdates.UpdateMovementSpeed>(ScrambledBugs.Offsets.Fixes.SpeedMultUpdates.UpdateMovementSpeed);
+				static internal class WeaponCharge
+				{
+					static public Delegates.Types.Fixes.WeaponCharge.AddEquippedWeaponFlags AddEquippedWeaponFlags { get; } = System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.Fixes.WeaponCharge.AddEquippedWeaponFlags>(ScrambledBugs.Offsets.Fixes.WeaponCharge.AddEquippedWeaponFlags);
 				}
 			}
 		}
@@ -29,10 +32,10 @@ namespace ScrambledBugs
 					public delegate void SetHarvestedFlag(TESObjectREFR* reference, System.Byte harvested);
 				}
 
-				unsafe static internal class DualCasting
+				unsafe static internal class MagicEffectFlags
 				{
 					[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)]
-					public delegate void SetDualCasting(ActiveEffect* activeEffect, System.Single multiplier);
+					public delegate void SetEffectiveness(ActiveEffect* activeEffect, System.Single effectiveness);
 				}
 
 				unsafe static internal class SpeedMultUpdates
@@ -42,9 +45,15 @@ namespace ScrambledBugs
 
 					[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)]
 					public delegate void RemoveMovementFlags(Actor* actor);
+				}
+
+				unsafe static internal class WeaponCharge
+				{
+					[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)]
+					public delegate void AddEquippedWeaponFlags(PlayerCharacter* player, System.Byte flags);
 
 					[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)]
-					public delegate void UpdateMovementSpeed(Actor* actor);
+					public delegate void HandleEquippedWeapon(Actor* actor, TESObjectWEAP* weapon, ExtraDataList* extraDataList, System.Byte leftHand);
 				}
 			}
 

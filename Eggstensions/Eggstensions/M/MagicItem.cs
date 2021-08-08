@@ -8,6 +8,14 @@
 		Instant		= 3
 	}
 
+	public enum CastingType : System.Int32
+	{
+		ConstantEffect	= 0,
+		FireAndForget	= 1,
+		Concentration	= 2,
+		Scroll			= 3
+	}
+
 	public enum SpellType : System.Int32
 	{
 		Spell				= 0,
@@ -44,6 +52,26 @@
 			var getSpellType = Memory.ReadVirtualFunction<Eggstensions.Delegates.Types.MagicItem.GetSpellType>(*(System.IntPtr*)magicItem, 0x53);
 
 			return (SpellType)getSpellType(magicItem);
+		}
+
+		static public CastingType GetCastingType(MagicItem* magicItem)
+		{
+			var getCastingType = Memory.ReadVirtualFunction<Eggstensions.Delegates.Types.MagicItem.GetCastingType>(*(System.IntPtr*)magicItem, 0x55);
+
+			return (CastingType)getCastingType(magicItem);
+		}
+
+
+
+		// Member
+		static public System.Single GetCost(MagicItem* magicItem, Actor* caster)
+		{
+			return Eggstensions.Delegates.Instances.MagicItem.GetCost(magicItem, caster);
+		}
+
+		static public ActorValue GetCostActorValue(MagicItem* magicItem, System.Boolean rightHand)
+		{
+			return (ActorValue)Eggstensions.Delegates.Instances.MagicItem.GetCostActorValue(magicItem, rightHand ? 1 : 0);
 		}
 	}
 }

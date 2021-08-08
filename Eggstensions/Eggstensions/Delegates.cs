@@ -11,7 +11,10 @@
 			
 			static public class Actor
 			{
-				static public Delegates.Types.Actor.AddSpell AddSpell { get; } = System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.Actor.AddSpell>(Eggstensions.Offsets.Actor.AddSpell);
+				static public Delegates.Types.Actor.AddSpell AddSpell { get; }										= System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.Actor.AddSpell>(Eggstensions.Offsets.Actor.AddSpell);
+				static public Delegates.Types.Actor.RemoveActorValueModifiers RemoveActorValueModifiers { get; }	= System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.Actor.RemoveActorValueModifiers>(Eggstensions.Offsets.Actor.RemoveActorValueModifiers);
+				static public Delegates.Types.Actor.RevertSelectedSpell RevertSelectedSpell { get; }				= System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.Actor.RevertSelectedSpell>(Eggstensions.Offsets.Actor.RevertSelectedSpell);
+				static public Delegates.Types.Actor.UpdateMovementSpeed UpdateMovementSpeed { get; }				= System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.Actor.UpdateMovementSpeed>(Eggstensions.Offsets.Actor.UpdateMovementSpeed);
 			}
 
 			static public class BGSEntryPointPerkEntry
@@ -41,6 +44,12 @@
 				static public Delegates.Types.BSTEventSource.RemoveEventSink RemoveEventSink { get; }	= System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.BSTEventSource.RemoveEventSink>(Eggstensions.Offsets.BSTEventSource.RemoveEventSink);
 			}
 
+			static public class ExtraDataList
+			{
+				static public Delegates.Types.ExtraDataList.GetCharge GetCharge { get; }		= System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.ExtraDataList.GetCharge>(Eggstensions.Offsets.ExtraDataList.GetCharge);
+				static public Delegates.Types.ExtraDataList.HasExtraData HasExtraData { get; }	= System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.ExtraDataList.HasExtraData>(Eggstensions.Offsets.ExtraDataList.HasExtraData);
+			}
+
 			static public class InventoryChanges
 			{
 				static public Delegates.Types.InventoryChanges.ResetWeight ResetWeight { get; } = System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.InventoryChanges.ResetWeight>(Eggstensions.Offsets.InventoryChanges.ResetWeight);
@@ -51,6 +60,12 @@
 				static public Delegates.Types.InventoryEntryData.IsWorn IsWorn { get; } = System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.InventoryEntryData.IsWorn>(Eggstensions.Offsets.InventoryEntryData.IsWorn);
 			}
 
+			static public class MagicItem
+			{
+				static public Delegates.Types.MagicItem.GetCost GetCost { get; } = System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.MagicItem.GetCost>(Eggstensions.Offsets.MagicItem.GetCost);
+				static public Delegates.Types.MagicItem.GetCostActorValue GetCostActorValue { get; } = System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.MagicItem.GetCostActorValue>(Eggstensions.Offsets.MagicItem.GetCostActorValue);
+			}
+
 			static public class ScriptEventSourceHolder
 			{
 				static public Delegates.Types.ScriptEventSourceHolder.GetInstance GetInstance { get; } = System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.ScriptEventSourceHolder.GetInstance>(Eggstensions.Offsets.ScriptEventSourceHolder.GetInstance);
@@ -59,6 +74,12 @@
 			static public class TESDataHandler
 			{
 				static public Delegates.Types.TESDataHandler.GetForm GetForm { get; } = System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.TESDataHandler.GetForm>(Eggstensions.Offsets.TESDataHandler.GetForm);
+			}
+
+			static public class TESForm
+			{
+				static public Delegates.Types.TESForm.GetEnchantment GetEnchantment { get; }		= System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.TESForm.GetEnchantment>(Eggstensions.Offsets.TESForm.GetEnchantment);
+				static public Delegates.Types.TESForm.GetMaximumCharge GetMaximumCharge { get; }	= System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.TESForm.GetMaximumCharge>(Eggstensions.Offsets.TESForm.GetMaximumCharge);
 			}
 
 			static public class TESObjectREFR
@@ -87,6 +108,24 @@
 
 				[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)] // Virtual
 				public delegate Eggstensions.MagicCaster* GetMagicCaster(Eggstensions.Actor* actor, System.Int32 castingSource);
+
+				[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)]
+				public delegate void RemoveActorValueModifiers(Eggstensions.Actor* actor, System.Int32 actorValue);
+
+				[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)]
+				public delegate void RevertSelectedSpell(Eggstensions.Actor* actor, System.Int32 equipType, Eggstensions.MagicItem* magicItem);
+
+				[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)]
+				public delegate void UpdateMovementSpeed(Eggstensions.Actor* actor);
+			}
+
+			unsafe static public class ActorValueOwner
+			{
+				[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)] // Virtual
+				public delegate void RestoreActorValue(Eggstensions.ActorValueOwner* actorValueOwner, System.Int32 actorValueModifier, System.Int32 actorValue, System.Single value);
+
+				[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)] // Virtual
+				public delegate void SetActorValue(Eggstensions.ActorValueOwner* actorValueOwner, System.Int32 actorValue, System.Single value);
 			}
 
 			unsafe static public class BGSEntryPointFunctionData
@@ -163,6 +202,15 @@
 				public delegate void CaptureContext(Eggstensions.Context* context);
 			}
 
+			unsafe static public class ExtraDataList
+			{
+				[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)]
+				public delegate System.Single GetCharge(Eggstensions.ExtraDataList* extraDataList);
+
+				[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)]
+				public delegate System.Byte HasExtraData(Eggstensions.ExtraDataList* extraDataList, System.Int32 extraDataType);
+			}
+
 			unsafe static public class InitTESThread
 			{
 				[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)] // Virtual
@@ -184,11 +232,20 @@
 			unsafe static public class MagicCaster
 			{
 				[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)] // Virtual
-				public delegate void Cast(Eggstensions.MagicCaster* magicCaster, Eggstensions.SpellItem* spell, System.Byte noHitEffectArt, Eggstensions.Actor* target, System.Single dualCastingMultiplier, System.Byte hostileDualCastingMultiplierOnly, System.Single magnitudeOverride, Eggstensions.Actor* cause);
+				public delegate void Cast(Eggstensions.MagicCaster* magicCaster, Eggstensions.SpellItem* spell, System.Byte noHitEffectArt, Eggstensions.Actor* target, System.Single effectiveness, System.Byte hostileEffectivenessOnly, System.Single magnitudeOverride, Eggstensions.Actor* cause);
 			}
 
 			unsafe static public class MagicItem
 			{
+				[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)] // Virtual
+				public delegate System.Int32 GetCastingType(Eggstensions.MagicItem* magicItem);
+
+				[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)]
+				public delegate System.Single GetCost(Eggstensions.MagicItem* magicItem, Eggstensions.Actor* caster);
+
+				[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)]
+				public delegate System.Int32 GetCostActorValue(Eggstensions.MagicItem* magicItem, System.Int32 rightHand);
+
 				[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)] // Virtual
 				public delegate System.Int32 GetSpellType(Eggstensions.MagicItem* magicItem);
 			}
@@ -219,6 +276,12 @@
 
 			unsafe static public class TESForm
 			{
+				[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)]
+				public delegate Eggstensions.EnchantmentItem* GetEnchantment(Eggstensions.TESForm* form, Eggstensions.ExtraDataList* extraDataList);
+
+				[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)]
+				public delegate System.UInt16 GetMaximumCharge(Eggstensions.TESForm* form, Eggstensions.ExtraDataList* extraDataList);
+
 				[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)] // Virtual
 				public delegate void RemoveChanges(Eggstensions.TESForm* form, System.UInt32 changeFlags);
 			}

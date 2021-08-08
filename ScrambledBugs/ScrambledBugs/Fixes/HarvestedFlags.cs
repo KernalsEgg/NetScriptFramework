@@ -23,8 +23,8 @@ namespace ScrambledBugs.Fixes
 
 				removeHarvestedFlag(reference, harvested);
 			};
-			
-			SkyrimSE.Trampoline.WriteRelativeCall<ScrambledBugs.Delegates.Types.Fixes.HarvestedFlags.SetHarvestedFlag>
+
+			ScrambledBugs.Plugin.Trampoline.WriteRelativeCall<ScrambledBugs.Delegates.Types.Fixes.HarvestedFlags.SetHarvestedFlag>
 			(
 				ScrambledBugs.Offsets.Fixes.HarvestedFlags.RemoveHarvestedFlag,
 				HarvestedFlags.RemoveChangeFlag

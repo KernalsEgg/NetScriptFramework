@@ -26,5 +26,18 @@
 
 			removeChanges(form, changeFlags);
 		}
+
+
+
+		// Member
+		static public EnchantmentItem* GetEnchantment(TESForm* form, ExtraDataList* extraDataList)
+		{
+			return Eggstensions.Delegates.Instances.TESForm.GetEnchantment(form, extraDataList);
+		}
+
+		static public System.UInt16 GetMaximumCharge(TESForm* form, ExtraDataList* extraDataList)
+		{
+			return Eggstensions.Delegates.Instances.TESForm.GetMaximumCharge(form, extraDataList);
+		}
 	}
 }

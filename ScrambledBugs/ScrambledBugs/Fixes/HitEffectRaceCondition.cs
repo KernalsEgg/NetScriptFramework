@@ -28,9 +28,9 @@ namespace ScrambledBugs.Fixes
 			assembly.Add(new System.Byte[3] { 0xF6, 0xC1, 0x01 });						// test cl, 01
 
 			assembly.Add(new System.Byte[1] { 0x5A });									// pop rdx
-			assembly.Add(new System.Byte[1] { 0xC3 });									// ret
+			assembly.Add(new System.Byte[1] { 0xC3 });                                  // ret
 
-			SkyrimSE.Trampoline.WriteRelativeCallBranch
+			ScrambledBugs.Plugin.Trampoline.WriteRelativeCallBranch
 			(
 				ScrambledBugs.Offsets.Fixes.HitEffectRaceCondition.ShouldUpdate,
 				assembly

@@ -16,7 +16,7 @@ namespace ScrambledBugs.Patches
 				context->Xmm6.Single = System.Single.MinValue;
 			};
 
-			SkyrimSE.Trampoline.CaptureContext
+			ScrambledBugs.Plugin.Trampoline.CaptureContext
 			(
 				ScrambledBugs.Offsets.Patches.EquipBestAmmo.InitializeDamage,
 				EquipBestAmmo.InitializeDamage

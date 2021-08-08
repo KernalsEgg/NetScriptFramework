@@ -2,13 +2,14 @@
 	"fixes":
 	{
 		"activeEffectConditions": true,			/* Eliminate floating-point error from the elapsed time of active effects so that updates to their conditions will not be skipped. Disable this if Bug Fixes SSE is installed and FixAbilityConditionBug is enabled. */
-		"dualCasting": true,					/* The magnitude and duration of magic effects are set correctly when dual casting. */
 		"harvestedFlags": true,					/* Flora and trees are saved when they respawn. */
 		"hitEffectRaceCondition": true,			/* Eliminate a race condition that can prevent hit effects from being applied when an actors mesh is loaded after their magic effects. */
+		"magicEffectFlags": true,				/* The effectiveness of magic effects is set correctly using their flags. */
 		"modArmorWeightPerkEntryPoint": true,	/* Modify the weight of only worn armor using a perk entry point. */
 		"speedMultUpdates": true,
 		"terrainDecals": true,					/* Apply decals to terrain in cells that have been partially unloaded. */
-		"trainingMenuText": true				/* Display the correct cost of a lesson in the training menu when the relevant skill is buffed or debuffed. */
+		"trainingMenuText": true,				/* Display the correct cost of a lesson in the training menu when the relevant skill is buffed or debuffed. */
+		"weaponCharge": true					/* The charge of equipped enchanted weapons can always be fully restored by magic effects. */
 	},
 	"patches":
 	{
