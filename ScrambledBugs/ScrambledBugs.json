@@ -6,7 +6,6 @@
 		"hitEffectRaceCondition": true,			/* Eliminate a race condition that can prevent hit effects from being applied when an actors mesh is loaded after their magic effects. */
 		"magicEffectFlags": true,				/* The effectiveness of magic effects is set correctly using their flags. */
 		"modArmorWeightPerkEntryPoint": true,	/* Modify the weight of only worn armor using a perk entry point. */
-		"speedMultUpdates": true,
 		"terrainDecals": true,					/* Apply decals to terrain in cells that have been partially unloaded. */
 		"trainingMenuText": true,				/* Display the correct cost of a lesson in the training menu when the relevant skill is buffed or debuffed. */
 		"weaponCharge": true					/* The charge of equipped enchanted weapons can always be fully restored by magic effects. */
@@ -16,13 +15,14 @@
 		"applySpellPerkEntryPoints":			/* Spells are not applied using perk entry points when the kill camera simulates the trajectory of an arrow. */
 		{
 			"castSpells": true,					/* Spells applied using perk entry points are cast by the source on the target. */
-			"multipleSpells": true			/* Apply any number of spells at once using perk entry points. */
+			"multipleSpells": false				/* Apply any number of spells at once using perk entry points. */
 		},
-		"attachHitEffectArt": true,			/* Hit effect art is attached when an actor is loaded. */
-		"equipBestAmmo": true,				/* Automatically equip your best arrows or bolts when you equip a bow or crossbow. */
+		"attachHitEffectArt": false,			/* Hit effect art is attached when an actor is loaded. */
+		"equipBestAmmo": false,					/* Automatically equip your best playable arrows or bolts when you equip a bow or crossbow. */
 		"lockpickingExperience": true,			/* Earn experience each time you pick a lock. */
-		"multipleHitEffects": true,			/* Each of a cloaking spells effects can apply hit effects. */
+		"multipleHitEffects": false,			/* Each of a cloaking spells effects can apply hit effects. */
 		"pausedGameHitEffects": true,			/* Apply any number of hit effects to the player while the game is paused. */
-		"underfilledSoulGems": true			/* Trap only souls of the appropriate size in soul gems. */
+		"reflectDamage": true,					/* Reflect any amount of damage. */
+		"underfilledSoulGems": false			/* Trap only souls of the appropriate size in soul gems. */
 	}
 }

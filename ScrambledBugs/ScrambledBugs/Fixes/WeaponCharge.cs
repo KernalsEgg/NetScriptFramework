@@ -8,9 +8,9 @@ namespace ScrambledBugs.Fixes
 	{
 		static WeaponCharge()
 		{
-			WeaponCharge.HandleEquippedWeapon = (Actor* actor, TESObjectWEAP* weapon, ExtraDataList* extraDataList, System.Byte leftHand) =>
+			WeaponCharge.HandleEquippedItem = (Actor* actor, TESBoundObject* item, ExtraDataList* extraDataList, System.Byte leftHand) =>
 			{
-				if (weapon == null)
+				if (item == null)
 				{
 					return;
 				}
@@ -20,10 +20,10 @@ namespace ScrambledBugs.Fixes
 
 				if (actor == player)
 				{
-					ScrambledBugs.Delegates.Instances.Fixes.WeaponCharge.AddEquippedWeaponFlags(player, (System.Byte)((rightHand ? 1 : 0) + 1));
+					ScrambledBugs.Delegates.Instances.Fixes.WeaponCharge.RemoveEquippedItemFlags(player, (System.Byte)((rightHand ? 1 : 0) + 1));
 				}
 
-				var enchantment = TESForm.GetEnchantment(&weapon->TESBoundObject.TESForm, extraDataList);
+				var enchantment = TESForm.GetEnchantment(&item->TESForm, extraDataList);
 
 				if (enchantment == null)
 				{
@@ -39,52 +39,44 @@ namespace ScrambledBugs.Fixes
 
 				var actorValue = MagicItem.GetCostActorValue(&enchantment->MagicItem, rightHand);
 
-				if (actorValue == ActorValue.None)
+				if (actorValue != ActorValue.None)
 				{
-					return;
-				}
+					Actor.RemoveActorValueModifiers(actor, actorValue);
 
-				Actor.RemoveActorValueModifiers(actor, actorValue);
+					var maximumCharge = TESForm.GetMaximumCharge(&item->TESForm, extraDataList);
+					ActorValueOwner.SetActorValue(&actor->ActorValueOwner, actorValue, maximumCharge);
 
-				if (extraDataList != null)
-				{
-					var maximumCharge = TESForm.GetMaximumCharge(&weapon->TESBoundObject.TESForm, extraDataList);
-					var actorValueOwner = &actor->ActorValueOwner;
-
-					ActorValueOwner.SetActorValue(actorValueOwner, actorValue, maximumCharge);
-
-					if (ExtraDataList.HasExtraData(extraDataList, ExtraDataType.Charge))
+					if (extraDataList != null && ExtraDataList.HasExtraData(extraDataList, ExtraDataType.Charge))
 					{
 						var charge = ExtraDataList.GetCharge(extraDataList);
-
-						ActorValueOwner.RestoreActorValue(actorValueOwner, ActorValueModifier.Damage, actorValue, -(maximumCharge - charge));
+						ActorValueOwner.RestoreActorValue(&actor->ActorValueOwner, ActorValueModifier.Damage, actorValue, -(maximumCharge - charge));
 					}
 				}
 
 				Actor.RevertSelectedSpell(actor, (EquipType)(rightHand ? 1 : 0), &enchantment->MagicItem);
 			};
 
-			ScrambledBugs.Plugin.Trampoline.WriteRelativeCall<ScrambledBugs.Delegates.Types.Fixes.WeaponCharge.HandleEquippedWeapon>
+			ScrambledBugs.Plugin.Trampoline.WriteRelativeCall<ScrambledBugs.Delegates.Types.Fixes.WeaponCharge.HandleEquippedItem>
 			(
 				ScrambledBugs.Offsets.Fixes.WeaponCharge.Enchant,
-				WeaponCharge.HandleEquippedWeapon
+				WeaponCharge.HandleEquippedItem
 			);
 
-			ScrambledBugs.Plugin.Trampoline.WriteRelativeCall<ScrambledBugs.Delegates.Types.Fixes.WeaponCharge.HandleEquippedWeapon>
+			ScrambledBugs.Plugin.Trampoline.WriteRelativeCall<ScrambledBugs.Delegates.Types.Fixes.WeaponCharge.HandleEquippedItem>
 			(
 				ScrambledBugs.Offsets.Fixes.WeaponCharge.Equip,
-				WeaponCharge.HandleEquippedWeapon
+				WeaponCharge.HandleEquippedItem
 			);
 
-			ScrambledBugs.Plugin.Trampoline.WriteRelativeCall<ScrambledBugs.Delegates.Types.Fixes.WeaponCharge.HandleEquippedWeapon>
+			ScrambledBugs.Plugin.Trampoline.WriteRelativeCall<ScrambledBugs.Delegates.Types.Fixes.WeaponCharge.HandleEquippedItem>
 			(
 				ScrambledBugs.Offsets.Fixes.WeaponCharge.Recharge,
-				WeaponCharge.HandleEquippedWeapon
+				WeaponCharge.HandleEquippedItem
 			);
 		}
 
 
 
-		static public ScrambledBugs.Delegates.Types.Fixes.WeaponCharge.HandleEquippedWeapon HandleEquippedWeapon { get; }
+		static public ScrambledBugs.Delegates.Types.Fixes.WeaponCharge.HandleEquippedItem HandleEquippedItem { get; }
 	}
 }

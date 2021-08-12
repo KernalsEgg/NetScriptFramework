@@ -139,24 +139,24 @@
 			static internal class WeaponCharge
 			{
 				/// <summary>SkyrimSE.exe + 0x6AE010</summary>
-				static public System.IntPtr AddEquippedWeaponFlags { get; }	= NetScriptFramework.Main.GameInfo.GetAddressOf(39498);
+				static public System.IntPtr RemoveEquippedItemFlags { get; }	= NetScriptFramework.Main.GameInfo.GetAddressOf(39498);
 
 				/// <summary>SkyrimSE.exe + 0x86C640</summary>
-				static public System.IntPtr Enchant { get; }				= NetScriptFramework.Main.GameInfo.GetAddressOf
+				static public System.IntPtr Enchant { get; }					= NetScriptFramework.Main.GameInfo.GetAddressOf
 				(
 					50450, 0x17E, 0, // 0x5
 					"E8 ?? ?? ?? ??" // call
 				);
 
 				/// <summary>SkyrimSE.exe + 0x60B9E0</summary>
-				static public System.IntPtr Equip { get; }					= NetScriptFramework.Main.GameInfo.GetAddressOf
+				static public System.IntPtr Equip { get; }						= NetScriptFramework.Main.GameInfo.GetAddressOf
 				(
 					36976, 0x303, 0, // 0x5
 					"E8 ?? ?? ?? ??" // call
 				);
 
 				/// <summary>SkyrimSE.exe + 0x88E890</summary>
-				static public System.IntPtr Recharge { get; }				= NetScriptFramework.Main.GameInfo.GetAddressOf
+				static public System.IntPtr Recharge { get; }					= NetScriptFramework.Main.GameInfo.GetAddressOf
 				(
 					50980, 0x222, 0, // 0x5
 					"E8 ?? ?? ?? ??" // call
@@ -295,17 +295,19 @@
 
 			static internal class EquipBestAmmo
 			{
-				/// <summary>SkyrimSE.exe + 0x1E3090</summary>
+				/// <summary>InventoryChanges::GetWorstAmmo (SkyrimSE.exe + 0x1E3090)</summary>
 				static public System.IntPtr CompareDamageContainer { get; }			= NetScriptFramework.Main.GameInfo.GetAddressOf
 				(
-					15846, 0x11A, 0,	// 0x2
+					15846, 0x117, 0,    // 0x2
+					"0F2F C6" +			// comiss xmm0, xmm6
 					"73 06"				// jnb 06
 				);
 
-				/// <summary>SkyrimSE.exe + 0x1E3090</summary>
+				/// <summary>InventoryChanges::GetWorstAmmo (SkyrimSE.exe + 0x1E3090)</summary>
 				static public System.IntPtr CompareDamageInventoryChanges { get; }	= NetScriptFramework.Main.GameInfo.GetAddressOf
 				(
-					15846, 0x1E1, 0,	// 0x2
+					15846, 0x1DE, 0,    // 0x2
+					"0F2F C6" +			// comiss xmm0, xmm6
 					"73 10"				// jnb 10
 				);
 
@@ -344,6 +346,16 @@
 				(
 					33319, 0x37, 0,	// 0x2
 					"74 3F"			// je 3F
+				);
+			}
+
+			static internal class ReflectDamage
+			{
+				/// <summary>SkyrimSE.exe + 0x743510</summary>
+				static public System.IntPtr CompareReflectDamage { get; } = NetScriptFramework.Main.GameInfo.GetAddressOf
+				(
+					42842, 0x544, 0,	// 0x2
+					"77 03"				// ja 2E
 				);
 			}
 

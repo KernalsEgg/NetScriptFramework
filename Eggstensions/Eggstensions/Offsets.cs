@@ -120,6 +120,9 @@
 			/// <summary>SkyrimSE.exe + 0x190D50</summary>
 			static public System.IntPtr GetEnchantment { get; }		= NetScriptFramework.Main.GameInfo.GetAddressOf(14411);
 
+			/// <summary>SkyrimSE.exe + 0x196E10</summary>
+			static public System.IntPtr GetFullName { get; }		= NetScriptFramework.Main.GameInfo.GetAddressOf(14548);
+
 			/// <summary>SkyrimSE.exe + 0x190DC0</summary>
 			static public System.IntPtr GetMaximumCharge { get; }	= NetScriptFramework.Main.GameInfo.GetAddressOf(14412);
 		}

@@ -18,8 +18,9 @@
 	}
 	
 	[System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Explicit, Size = 0x198)]
-	public struct EffectSetting
+	public struct EffectSetting // TESForm
 	{
+		[System.Runtime.InteropServices.FieldOffset(0x0)] public TESForm TESForm;
 		[System.Runtime.InteropServices.FieldOffset(0x68)] public EffectSettingData Data;
 	}
 }

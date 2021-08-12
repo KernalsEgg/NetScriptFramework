@@ -35,6 +35,11 @@
 			return Eggstensions.Delegates.Instances.TESForm.GetEnchantment(form, extraDataList);
 		}
 
+		static public System.String GetFullName(TESForm* form)
+		{
+			return Memory.ReadString(Eggstensions.Delegates.Instances.TESForm.GetFullName(form));
+		}
+
 		static public System.UInt16 GetMaximumCharge(TESForm* form, ExtraDataList* extraDataList)
 		{
 			return Eggstensions.Delegates.Instances.TESForm.GetMaximumCharge(form, extraDataList);

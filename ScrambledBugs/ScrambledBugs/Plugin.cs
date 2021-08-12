@@ -14,14 +14,16 @@ namespace ScrambledBugs
 
 
 
+		static public Trampoline Trampoline { get; } = new Trampoline(Memory.GetProcessModule("SkyrimSE.exe"));
+
+
+
 		override protected System.Boolean Initialize(System.Boolean pluginLoaded)
 		{
 			var path = "Data//NetScriptFramework//Plugins//ScrambledBugs.json";
 
 			if (System.IO.File.Exists(path))
 			{
-				Plugin.Trampoline = new Trampoline(Memory.GetProcessModule("SkyrimSE.exe"));
-				
 				var settings = Newtonsoft.Json.JsonConvert.DeserializeObject<ScrambledBugs.Settings>(System.IO.File.ReadAllText(path));
 				
 				// Fixes
@@ -113,6 +115,11 @@ namespace ScrambledBugs
 					new ScrambledBugs.Patches.PausedGameHitEffects();
 				}
 
+				if (settings.patches.reflectDamage)
+				{
+					new ScrambledBugs.Patches.ReflectDamage();
+				}
+
 				if (settings.patches.underfilledSoulGems)
 				{
 					new ScrambledBugs.Patches.UnderfilledSoulGems();
@@ -123,9 +130,5 @@ namespace ScrambledBugs
 
 			return true;
 		}
-
-
-
-		static public Trampoline Trampoline { get; private set; }
 	}
 }

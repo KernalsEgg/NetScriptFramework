@@ -20,6 +20,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)E\EnchantmentItem.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)E\ExtraDataList.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)I\InitTESThread.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)T\TESAmmo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)T\TESObjectARMO.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UnmanagedArray.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)B\BGSEntryPointFunctionData.cs" />

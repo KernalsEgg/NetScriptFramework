@@ -79,6 +79,7 @@
 			static public class TESForm
 			{
 				static public Delegates.Types.TESForm.GetEnchantment GetEnchantment { get; }		= System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.TESForm.GetEnchantment>(Eggstensions.Offsets.TESForm.GetEnchantment);
+				static public Delegates.Types.TESForm.GetFullName GetFullName { get; }				= System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.TESForm.GetFullName>(Eggstensions.Offsets.TESForm.GetFullName);
 				static public Delegates.Types.TESForm.GetMaximumCharge GetMaximumCharge { get; }	= System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.TESForm.GetMaximumCharge>(Eggstensions.Offsets.TESForm.GetMaximumCharge);
 			}
 
@@ -268,6 +269,12 @@
 				public delegate Eggstensions.ScriptEventSourceHolder* GetInstance();
 			}
 
+			unsafe static public class TESAmmo
+			{
+				[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)] // Virtual
+				public delegate System.Byte IsPlayable(Eggstensions.TESAmmo* ammo);
+			}
+
 			unsafe static public class TESDataHandler
 			{
 				[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)]
@@ -278,6 +285,9 @@
 			{
 				[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)]
 				public delegate Eggstensions.EnchantmentItem* GetEnchantment(Eggstensions.TESForm* form, Eggstensions.ExtraDataList* extraDataList);
+
+				[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)]
+				public delegate System.IntPtr GetFullName(Eggstensions.TESForm* form);
 
 				[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)]
 				public delegate System.UInt16 GetMaximumCharge(Eggstensions.TESForm* form, Eggstensions.ExtraDataList* extraDataList);

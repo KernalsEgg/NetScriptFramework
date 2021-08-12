@@ -65,6 +65,7 @@
     <Compile Include="Fixes\SpeedMultUpdates.cs" />
     <Compile Include="Patches\MultipleHitEffects.cs" />
     <Compile Include="Patches\PausedGameHitEffects.cs" />
+    <Compile Include="Patches\ReflectDamage.cs" />
     <Compile Include="Patches\UnderfilledSoulGems.cs" />
     <Compile Include="Plugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

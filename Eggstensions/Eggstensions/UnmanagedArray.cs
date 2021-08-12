@@ -47,7 +47,7 @@
 			return array;
 		}
 
-		static public UnmanagedArray<TDestination> CreateInstance(params TDestination[] elements)
+		static public UnmanagedArray<TDestination> CreateInstance(TDestination[] elements)
 		{
 			var array = new UnmanagedArray<TDestination>();
 			array.Add(elements);
@@ -64,7 +64,7 @@
 			return array;
 		}
 
-		static public UnmanagedArray<TDestination> CreateInstance<TSource>(params TSource[] elements)
+		static public UnmanagedArray<TDestination> CreateInstance<TSource>(TSource[] elements)
 			where TSource : unmanaged
 		{
 			var array = new UnmanagedArray<TDestination>();
@@ -89,7 +89,7 @@
 			this.elements = copy;
 		}
 
-		public void Add(params TDestination[] elements)
+		public void Add(TDestination[] elements)
 		{
 			var copy = new TDestination[this.elements.Length + elements.Length];
 
@@ -112,7 +112,7 @@
 			this.Add(Memory.ConvertToArray<TSource, TDestination>(element));
 		}
 
-		public void Add<TSource>(params TSource[] elements)
+		public void Add<TSource>(TSource[] elements)
 			where TSource : unmanaged
 		{
 			this.Add(Memory.ConvertArrayToArray<TSource, TDestination>(elements));

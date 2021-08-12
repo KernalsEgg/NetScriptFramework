@@ -17,7 +17,7 @@ namespace ScrambledBugs
 
 				static internal class WeaponCharge
 				{
-					static public Delegates.Types.Fixes.WeaponCharge.AddEquippedWeaponFlags AddEquippedWeaponFlags { get; } = System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.Fixes.WeaponCharge.AddEquippedWeaponFlags>(ScrambledBugs.Offsets.Fixes.WeaponCharge.AddEquippedWeaponFlags);
+					static public Delegates.Types.Fixes.WeaponCharge.RemoveEquippedItemFlags RemoveEquippedItemFlags { get; } = System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.Fixes.WeaponCharge.RemoveEquippedItemFlags>(ScrambledBugs.Offsets.Fixes.WeaponCharge.RemoveEquippedItemFlags);
 				}
 			}
 		}
@@ -50,10 +50,10 @@ namespace ScrambledBugs
 				unsafe static internal class WeaponCharge
 				{
 					[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)]
-					public delegate void AddEquippedWeaponFlags(PlayerCharacter* player, System.Byte flags);
+					public delegate void RemoveEquippedItemFlags(PlayerCharacter* player, System.Byte flags);
 
 					[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)]
-					public delegate void HandleEquippedWeapon(Actor* actor, TESObjectWEAP* weapon, ExtraDataList* extraDataList, System.Byte leftHand);
+					public delegate void HandleEquippedItem(Actor* actor, TESBoundObject* item, ExtraDataList* extraDataList, System.Byte leftHand);
 				}
 			}
 

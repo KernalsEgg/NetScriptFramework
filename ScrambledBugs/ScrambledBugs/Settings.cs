@@ -31,6 +31,7 @@
 			public System.Boolean lockpickingExperience { get; set; }
 			public System.Boolean multipleHitEffects { get; set; }
 			public System.Boolean pausedGameHitEffects { get; set; }
+			public System.Boolean reflectDamage { get; set; }
 			public System.Boolean underfilledSoulGems { get; set; }
 		}
 

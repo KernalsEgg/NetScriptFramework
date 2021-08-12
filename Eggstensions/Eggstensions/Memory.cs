@@ -137,7 +137,7 @@
 			return Memory.Compare<T>(address + offset, value);
 		}
 
-		static public System.Boolean CompareArray<T>(System.IntPtr address, params T[] values)
+		static public System.Boolean CompareArray<T>(System.IntPtr address, T[] values)
 			where T : unmanaged, System.IEquatable<T>
 		{
 			var length	= values.Length;
@@ -154,13 +154,13 @@
 			return true;
 		}
 
-		static public System.Boolean CompareArray<T>(System.IntPtr address, System.Int32 offset, params T[] values)
+		static public System.Boolean CompareArray<T>(System.IntPtr address, System.Int32 offset, T[] values)
 			where T : unmanaged, System.IEquatable<T>
 		{
 			return Memory.CompareArray<T>(address + offset, values);
 		}
 
-		static public System.Boolean CompareNullableArray<T>(System.IntPtr address, params T?[] values)
+		static public System.Boolean CompareNullableArray<T>(System.IntPtr address, T?[] values)
 			where T : unmanaged, System.IEquatable<T>
 		{
 			var length	= values.Length;
@@ -182,7 +182,7 @@
 			return true;
 		}
 
-		static public System.Boolean CompareNullableArray<T>(System.IntPtr address, System.Int32 offset, params T?[] values)
+		static public System.Boolean CompareNullableArray<T>(System.IntPtr address, System.Int32 offset, T?[] values)
 			where T : unmanaged, System.IEquatable<T>
 		{
 			return Memory.CompareNullableArray<T>(address + offset, values);
@@ -211,7 +211,7 @@
 			return array;
 		}
 
-		unsafe static public TTo[] ConvertArrayToArray<TFrom, TTo>(params TFrom[] values)
+		unsafe static public TTo[] ConvertArrayToArray<TFrom, TTo>(TFrom[] values)
 			where TFrom : unmanaged
 			where TTo : unmanaged
 		{
@@ -381,7 +381,7 @@
 			Memory.SafeWrite<T>(address + offset, value);
 		}
 
-		static public void SafeWriteArray<T>(System.IntPtr address, params T[] values)
+		static public void SafeWriteArray<T>(System.IntPtr address, T[] values)
 			where T : unmanaged
 		{
 			var size = new System.IntPtr(Memory.Size<T>.Unmanaged * values.Length);
@@ -399,7 +399,7 @@
 			}
 		}
 
-		static public void SafeWriteArray<T>(System.IntPtr address, System.Int32 offset, params T[] values)
+		static public void SafeWriteArray<T>(System.IntPtr address, System.Int32 offset, T[] values)
 			where T : unmanaged
 		{
 			Memory.SafeWriteArray<T>(address + offset, values);
@@ -417,7 +417,7 @@
 			Memory.Write<T>(address + offset, value);
 		}
 
-		static public void WriteArray<T>(System.IntPtr address, params T[] values)
+		static public void WriteArray<T>(System.IntPtr address, T[] values)
 			where T : unmanaged
 		{
 			var length	= values.Length;
@@ -429,7 +429,7 @@
 			}
 		}
 
-		static public void WriteArray<T>(System.IntPtr address, System.Int32 offset, params T[] values)
+		static public void WriteArray<T>(System.IntPtr address, System.Int32 offset, T[] values)
 			where T : unmanaged
 		{
 			Memory.WriteArray<T>(address + offset, values);
