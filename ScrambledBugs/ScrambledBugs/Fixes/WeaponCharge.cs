@@ -15,8 +15,8 @@ namespace ScrambledBugs.Fixes
 					return;
 				}
 
-				var player = PlayerCharacter.Instance;
-				var rightHand = leftHand == 0;
+				var player		= PlayerCharacter.Instance;
+				var rightHand	= leftHand == 0;
 
 				if (actor == player)
 				{

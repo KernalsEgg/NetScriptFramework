@@ -14,8 +14,8 @@ namespace ScrambledBugs.Fixes
 				// itemWeight			!= null
 				// actor				!= null
 
-				var inventoryEntryData = (InventoryEntryData*)context->Rbp.IntPtr.ToPointer();
-				var item = inventoryEntryData->Item;
+				var inventoryEntryData	= (InventoryEntryData*)context->Rbp.IntPtr.ToPointer();
+				var item				= inventoryEntryData->Item;
 
 				if (item != null)
 				{
@@ -37,8 +37,8 @@ namespace ScrambledBugs.Fixes
 									{
 										BGSEntryPointPerkEntry.HandleEntryPoints(EntryPoint.ModArmorWeight, actor, item, &itemWeight);
 
-										context->Xmm7.Single += itemWeight;
-										context->Rdx.Int32 -= 1; // inventoryChangesItemCount
+										context->Xmm7.Single	+= itemWeight;
+										context->Rdx.Int32		-= 1; // inventoryChangesItemCount
 									}
 								}
 							}
@@ -66,9 +66,9 @@ namespace ScrambledBugs.Fixes
 				// armor		!= null
 				// armorWeight	!= null
 
-				var actor = (Actor*)context->Rdx.IntPtr.ToPointer();
-				var armor = (TESObjectARMO*)context->R8.IntPtr.ToPointer();
-				var armorWeight = Memory.Read<System.Single>(context->R9.IntPtr);
+				var actor		= (Actor*)context->Rdx.IntPtr.ToPointer();
+				var armor		= (TESObjectARMO*)context->R8.IntPtr.ToPointer();
+				var armorWeight	= Memory.Read<System.Single>(context->R9.IntPtr);
 
 				context->Xmm1.Single = armorWeight; // armorWeight
 

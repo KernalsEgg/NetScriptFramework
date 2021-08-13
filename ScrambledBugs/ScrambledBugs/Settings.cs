@@ -4,12 +4,20 @@
 	{
 		public class Fixes
 		{
-			public System.Boolean activeEffectConditions { get; set; }
+			public class ApplySpellPerkEntryPoints
+			{
+				public System.Boolean arrows { get; set; }
+			}
+			
+			
+			
+			public Fixes.ApplySpellPerkEntryPoints applySpellPerkEntryPoints { get; set; }
 			public System.Boolean harvestedFlags { get; set; }
 			public System.Boolean hitEffectRaceCondition { get; set; }
+			public System.Boolean magicEffectConditions { get; set; }
 			public System.Boolean magicEffectFlags { get; set; }
 			public System.Boolean modArmorWeightPerkEntryPoint { get; set; }
-			public System.Boolean speedMultUpdates { get; set; }
+			public System.Boolean movementSpeed { get; set; }
 			public System.Boolean terrainDecals { get; set; }
 			public System.Boolean trainingMenuText { get; set; }
 			public System.Boolean weaponCharge { get; set; }

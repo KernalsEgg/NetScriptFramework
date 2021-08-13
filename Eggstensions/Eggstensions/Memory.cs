@@ -293,10 +293,20 @@
 			return Memory.ReadArray<T>(address + offset, length);
 		}
 
+		static public System.IntPtr ReadRelativeCall(System.IntPtr address)
+		{
+			return address + Memory.Read<RelativeCall>(address).Relative32 + Memory.Size<RelativeCall>.Unmanaged;
+		}
+
+		static public System.IntPtr ReadRelativeCall(System.IntPtr address, System.Int32 offset)
+		{
+			return Memory.ReadRelativeCall(address + offset);
+		}
+
 		static public T ReadRelativeCall<T>(System.IntPtr address)
 			where T : System.Delegate
 		{
-			return System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<T>(address + Memory.Read<RelativeCall>(address).Relative32 + Memory.Size<RelativeCall>.Unmanaged);
+			return System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<T>(Memory.ReadRelativeCall(address));
 		}
 
 		static public T ReadRelativeCall<T>(System.IntPtr address, System.Int32 offset)
@@ -305,10 +315,20 @@
 			return Memory.ReadRelativeCall<T>(address + offset);
 		}
 
+		static public System.IntPtr ReadRelativeJump(System.IntPtr address)
+		{
+			return address + Memory.Read<RelativeJump>(address).Relative32 + Memory.Size<RelativeJump>.Unmanaged;
+		}
+
+		static public System.IntPtr ReadRelativeJump(System.IntPtr address, System.Int32 offset)
+		{
+			return Memory.ReadRelativeJump(address + offset);
+		}
+
 		static public T ReadRelativeJump<T>(System.IntPtr address)
 			where T : System.Delegate
 		{
-			return System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<T>(address + Memory.Read<RelativeJump>(address).Relative32 + Memory.Size<RelativeJump>.Unmanaged);
+			return System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<T>(Memory.ReadRelativeJump(address));
 		}
 
 		static public T ReadRelativeJump<T>(System.IntPtr address, System.Int32 offset)
@@ -327,10 +347,15 @@
 			return Memory.ReadString(address + offset);
 		}
 
+		static public System.IntPtr ReadVirtualFunction(System.IntPtr address, System.Int32 index)
+		{
+			return Memory.Read<System.IntPtr>(address, Memory.Size<System.IntPtr>.Unmanaged * index);
+		}
+
 		static public T ReadVirtualFunction<T>(System.IntPtr address, System.Int32 index)
 			where T : System.Delegate
 		{
-			return System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<T>(Memory.Read<System.IntPtr>(address, Memory.Size<System.IntPtr>.Unmanaged * index));
+			return System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<T>(Memory.ReadVirtualFunction(address, index));
 		}
 
 		static public void SafeFill<T>(System.IntPtr address, System.Int32 count, T value)

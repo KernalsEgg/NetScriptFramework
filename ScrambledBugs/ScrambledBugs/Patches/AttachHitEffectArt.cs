@@ -16,6 +16,8 @@ namespace ScrambledBugs.Patches
 			// RSI: modelReferenceEffect
 			// RBX: actor
 
+			// Volatile registers
+
 			// actor							!= null
 			// modelReferenceEffect				!= null
 			// modelReferenceEffect->Controller	!= null

@@ -1,7 +1,7 @@
 ﻿namespace Eggstensions
 {
 	[System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Explicit, Size = 0x220)]
-	unsafe public struct TESObjectWEAP // TESBoundObject
+	unsafe public struct TESObjectWEAP
 	{
 		[System.Runtime.InteropServices.FieldOffset(0x0)] public TESBoundObject TESBoundObject;
 

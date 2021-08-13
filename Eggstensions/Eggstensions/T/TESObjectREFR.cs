@@ -1,7 +1,7 @@
 ﻿namespace Eggstensions
 {
 	[System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Explicit, Size = 0x98)]
-	unsafe public struct TESObjectREFR // TESForm
+	unsafe public struct TESObjectREFR
 	{
 		[System.Flags]
 		public enum ChangeFlags : System.UInt32

@@ -26,12 +26,9 @@ namespace ScrambledBugs
 			{
 				var settings = Newtonsoft.Json.JsonConvert.DeserializeObject<ScrambledBugs.Settings>(System.IO.File.ReadAllText(path));
 				
-				// Fixes
-				if (settings.fixes.activeEffectConditions)
-				{
-					new ScrambledBugs.Fixes.ActiveEffectConditions();
-				}
 
+
+				// Fixes
 				if (settings.fixes.harvestedFlags)
 				{
 					new ScrambledBugs.Fixes.HarvestedFlags();
@@ -40,6 +37,11 @@ namespace ScrambledBugs
 				if (settings.fixes.hitEffectRaceCondition)
 				{
 					new ScrambledBugs.Fixes.HitEffectRaceCondition();
+				}
+
+				if (settings.fixes.magicEffectConditions)
+				{
+					new ScrambledBugs.Fixes.MagicEffectConditions();
 				}
 
 				if (settings.fixes.magicEffectFlags)
@@ -52,9 +54,9 @@ namespace ScrambledBugs
 					new ScrambledBugs.Fixes.ModArmorWeightPerkEntryPoint();
 				}
 
-				if (settings.fixes.speedMultUpdates)
+				if (settings.fixes.movementSpeed)
 				{
-					new ScrambledBugs.Fixes.SpeedMultUpdates();
+					new ScrambledBugs.Fixes.MovementSpeed();
 				}
 
 				if (settings.fixes.terrainDecals)
@@ -72,22 +74,18 @@ namespace ScrambledBugs
 					new ScrambledBugs.Fixes.WeaponCharge();
 				}
 
+
+
 				// Patches
-				if (settings.patches.applySpellPerkEntryPoints.castSpells && settings.patches.applySpellPerkEntryPoints.multipleSpells)
+				if (settings.patches.applySpellPerkEntryPoints.multipleSpells)
 				{
 					new ScrambledBugs.Patches.ApplySpellPerkEntryPoints.MultipleSpells();
 
-					ScrambledBugs.Patches.ApplySpellPerkEntryPoints.MultipleSpells.CastSpells = true;
+					ScrambledBugs.Patches.ApplySpellPerkEntryPoints.MultipleSpells.CastSpells = settings.patches.applySpellPerkEntryPoints.castSpells;
 				}
 				else if (settings.patches.applySpellPerkEntryPoints.castSpells)
 				{
 					new ScrambledBugs.Patches.ApplySpellPerkEntryPoints.CastSpells();
-				}
-				else if (settings.patches.applySpellPerkEntryPoints.multipleSpells)
-				{
-					new ScrambledBugs.Patches.ApplySpellPerkEntryPoints.MultipleSpells();
-
-					ScrambledBugs.Patches.ApplySpellPerkEntryPoints.MultipleSpells.CastSpells = false;
 				}
 
 				if (settings.patches.attachHitEffectArt)
@@ -124,6 +122,16 @@ namespace ScrambledBugs
 				{
 					new ScrambledBugs.Patches.UnderfilledSoulGems();
 				}
+
+
+
+				// Fixes
+				if (settings.fixes.applySpellPerkEntryPoints.arrows)
+				{
+					new ScrambledBugs.Fixes.ApplySpellPerkEntryPoints.Arrows();
+				}
+
+
 
 				Plugin.Trampoline.Commit();
 			}

@@ -1,21 +1,5 @@
 ﻿namespace Eggstensions
 {
-	public enum ActorValue : System.Int32
-	{
-		None			= -1,
-		Magicka			= 25,
-		SpeedMult		= 30,
-		RightItemCharge	= 64,
-		LeftItemCharge	= 82
-	}
-
-	public enum ActorValueModifier : System.Int32
-	{
-		Permanent	= 0,
-		Temporary	= 1,
-		Damage		= 2
-	}
-
 	public enum EquipType : System.Int32
 	{
 		LeftHand	= 0,
@@ -25,7 +9,7 @@
 
 
 	[System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Explicit, Size = 0x2B0)]
-	unsafe public struct Actor // TESObjectREFR, ActorValueOwner
+	unsafe public struct Actor
 	{
 		[System.Runtime.InteropServices.FieldOffset(0x0)] public TESObjectREFR TESObjectREFR;
 		[System.Runtime.InteropServices.FieldOffset(0xB0)] public ActorValueOwner ActorValueOwner;

@@ -10,9 +10,9 @@ namespace ScrambledBugs
 		{
 			namespace Fixes
 			{
-				static internal class SpeedMultUpdates
+				static internal class MovementSpeed
 				{
-					static public Delegates.Types.Fixes.SpeedMultUpdates.RemoveMovementFlags RemoveMovementFlags { get; } = System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.Fixes.SpeedMultUpdates.RemoveMovementFlags>(ScrambledBugs.Offsets.Fixes.SpeedMultUpdates.RemoveMovementFlags);
+					static public Delegates.Types.Fixes.MovementSpeed.RemoveMovementFlags RemoveMovementFlags { get; } = System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.Fixes.MovementSpeed.RemoveMovementFlags>(ScrambledBugs.Offsets.Fixes.MovementSpeed.RemoveMovementFlags);
 				}
 
 				static internal class WeaponCharge
@@ -38,7 +38,7 @@ namespace ScrambledBugs
 					public delegate void SetEffectiveness(ActiveEffect* activeEffect, System.Single effectiveness);
 				}
 
-				unsafe static internal class SpeedMultUpdates
+				unsafe static internal class MovementSpeed
 				{
 					[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)]
 					public delegate void ActorValueSink(Actor* actor, System.Int32 actorValue, System.Single old, System.Single delta);

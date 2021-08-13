@@ -1,7 +1,7 @@
 ﻿namespace Eggstensions
 {
 	[System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Explicit, Size = 0xBE0)]
-	unsafe public struct PlayerCharacter // Actor
+	unsafe public struct PlayerCharacter
 	{
 		[System.Runtime.InteropServices.FieldOffset(0x0)] public Actor Actor;
 

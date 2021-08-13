@@ -39,7 +39,7 @@
 
 
 	[System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Explicit, Size = 0x90)]
-	unsafe public struct MagicItem // TESBoundObject, TESFullName
+	unsafe public struct MagicItem
 	{
 		[System.Runtime.InteropServices.FieldOffset(0x0)] public TESBoundObject TESBoundObject;
 		[System.Runtime.InteropServices.FieldOffset(0x30)] public TESFullName TESFullName;

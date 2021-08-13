@@ -62,8 +62,8 @@
 
 			static public class MagicItem
 			{
-				static public Delegates.Types.MagicItem.GetCost GetCost { get; } = System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.MagicItem.GetCost>(Eggstensions.Offsets.MagicItem.GetCost);
-				static public Delegates.Types.MagicItem.GetCostActorValue GetCostActorValue { get; } = System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.MagicItem.GetCostActorValue>(Eggstensions.Offsets.MagicItem.GetCostActorValue);
+				static public Delegates.Types.MagicItem.GetCost GetCost { get; }						= System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.MagicItem.GetCost>(Eggstensions.Offsets.MagicItem.GetCost);
+				static public Delegates.Types.MagicItem.GetCostActorValue GetCostActorValue { get; }	= System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.MagicItem.GetCostActorValue>(Eggstensions.Offsets.MagicItem.GetCostActorValue);
 			}
 
 			static public class ScriptEventSourceHolder

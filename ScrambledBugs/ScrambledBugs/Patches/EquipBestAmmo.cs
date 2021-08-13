@@ -30,8 +30,8 @@ namespace ScrambledBugs.Patches
 
 			EquipBestAmmo.CompareDamageContainer = (Context* context) =>
 			{
-				var damage = context->Xmm0.Single;
-				var highestDamage = context->Xmm6.Single;
+				var damage			= context->Xmm0.Single;
+				var highestDamage	= context->Xmm6.Single;
 
 				if (damage > highestDamage)
 				{
@@ -56,8 +56,8 @@ namespace ScrambledBugs.Patches
 
 			EquipBestAmmo.CompareDamageInventoryChanges = (Context* context) =>
 			{
-				var damage = context->Xmm0.Single;
-				var highestDamage = context->Xmm6.Single;
+				var damage			= context->Xmm0.Single;
+				var highestDamage	= context->Xmm6.Single;
 
 				if (damage > highestDamage)
 				{

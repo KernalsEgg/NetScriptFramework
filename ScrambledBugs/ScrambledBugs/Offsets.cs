@@ -4,7 +4,44 @@
 	{
 		namespace Fixes
 		{
-			static internal class ActiveEffectConditions
+			namespace ApplySpellPerkEntryPoints
+			{
+				static internal class Arrows
+				{
+					/// <summary>ArrowProjectile::GetImpactData (SkyrimSE.exe + 0x732400)</summary>
+					static public System.IntPtr ApplyCombatHitSpellArrow { get; } = NetScriptFramework.Main.GameInfo.GetAddressOf
+					(
+						42547, 0x28B, 0, // 0x5
+						"E8 ?? ?? ?? ??" // call
+					);
+				}
+			}
+
+
+
+			static internal class HarvestedFlags
+			{
+				/// <summary>TESObjectREFR::Respawn (SkyrimSE.exe + 0x278920)</summary>
+				static public System.IntPtr RemoveHarvestedFlag { get; } = NetScriptFramework.Main.GameInfo.GetAddressOf
+				(
+					18843, 0x31C, 0, // 0x5
+					"E8 ?? ?? ?? ??" // call
+				);
+			}
+
+			static internal class HitEffectRaceCondition
+			{
+				/// <summary>ActiveEffect::ShouldUpdate (SkyrimSE.exe + 0x53E670)</summary>
+				static public System.IntPtr ShouldUpdate { get; } = NetScriptFramework.Main.GameInfo.GetAddressOf
+				(
+					33289, 0x68, 0,	// 3 + 3 + 2 = 0x8
+					"C1 E9 12" +	// shr ecx, 12
+					"F6 C1 01" +	// test cl, 1
+					"75 0D"			// jne D
+				);
+			}
+
+			static internal class MagicEffectConditions
 			{
 				/// <summary>ActiveEffect::UpdateConditions (SkyrimSE.exe + 0x53E3E0)</summary>
 				static public System.IntPtr UpdateConditions { get; } = NetScriptFramework.Main.GameInfo.GetAddressOf
@@ -45,39 +82,17 @@
 				);
 			}
 
-			static internal class HarvestedFlags
-			{
-				/// <summary>TESObjectREFR::Respawn (SkyrimSE.exe + 0x278920)</summary>
-				static public System.IntPtr RemoveHarvestedFlag { get; } = NetScriptFramework.Main.GameInfo.GetAddressOf
-				(
-					18843, 0x31C, 0, // 0x5
-					"E8 ?? ?? ?? ??" // call
-				);
-			}
-
-			static internal class HitEffectRaceCondition
-			{
-				/// <summary>ActiveEffect::ShouldUpdate (SkyrimSE.exe + 0x53E670)</summary>
-				static public System.IntPtr ShouldUpdate { get; } = NetScriptFramework.Main.GameInfo.GetAddressOf
-				(
-					33289, 0x68, 0,	// 3 + 3 + 2 = 0x8
-					"C1 E9 12" +	// shr ecx, 12
-					"F6 C1 01" +	// test cl, 1
-					"75 0D"			// jne D
-				);
-			}
-
 			static internal class MagicEffectFlags
 			{
 				/// <summary>ActiveEffect::ResetElapsedTime (SkyrimSE.exe + 0x53E1B0)</summary>
-				static public System.IntPtr ResetEffectiveness { get; } = NetScriptFramework.Main.GameInfo.GetAddressOf
+				static public System.IntPtr ResetEffectiveness { get; }	= NetScriptFramework.Main.GameInfo.GetAddressOf
 				(
 					33283, 0x105, 0, // 0x5
 					"E8 ?? ?? ?? ??" // call
 				);
 
 				/// <summary>ActiveEffect::SetEffectiveness (SkyrimSE.exe + 0x53DEB0)</summary>
-				static public System.IntPtr SetEffectiveness { get; } = NetScriptFramework.Main.GameInfo.GetAddressOf
+				static public System.IntPtr SetEffectiveness { get; }	= NetScriptFramework.Main.GameInfo.GetAddressOf
 				(
 					33277, 0x68, 0,		// 0x5
 					"E8 ?? ?? ?? ??"	// call
@@ -104,7 +119,7 @@
 				);
 			}
 
-			static internal class SpeedMultUpdates
+			static internal class MovementSpeed
 			{
 				/// <summary>SkyrimSE.exe + 0x2F39A40</summary>
 				static public System.IntPtr ActorValueSinkFunctionTable { get; }	= NetScriptFramework.Main.GameInfo.GetAddressOf(517376);
@@ -171,35 +186,35 @@
 				static internal class CastSpells
 				{
 					/// <summary>Actor::WeaponHit (SkyrimSE.exe + 0x628C20)</summary>
-					static public System.IntPtr ApplyBashingSpell { get; }					= NetScriptFramework.Main.GameInfo.GetAddressOf
+					static public System.IntPtr ApplyBashingSpell { get; }			= NetScriptFramework.Main.GameInfo.GetAddressOf
 					(
 						37673, 0x429, 0, // 0x5
 						"E8 ?? ?? ?? ??" // call
 					);
 
 					/// <summary>Actor::ApplyWeaponHitSpells (SkyrimSE.exe + 0x6310A0)</summary>
-					static public System.IntPtr ApplyCombatHitSpell { get; }				= NetScriptFramework.Main.GameInfo.GetAddressOf
+					static public System.IntPtr ApplyCombatHitSpell { get; }		= NetScriptFramework.Main.GameInfo.GetAddressOf
 					(
 						37799, 0x79, 0,		// 0x5
 						"E8 ?? ?? ?? ??"	// call
 					);
 
 					/// <summary>ArrowProjectile::GetImpactData (SkyrimSE.exe + 0x732400)</summary>
-					static public System.IntPtr ApplyCombatHitSpellArrowProjectile { get; }	= NetScriptFramework.Main.GameInfo.GetAddressOf
+					static public System.IntPtr ApplyCombatHitSpellArrow { get; }	= NetScriptFramework.Main.GameInfo.GetAddressOf
 					(
 						42547, 0x2A7, 0, // 0x5
 						"E8 ?? ?? ?? ??" // call
 					);
 
 					/// <summary>ReanimateEffect::GetUp (SkyrimSE.exe + 0x634BF0)</summary>
-					static public System.IntPtr ApplyReanimateSpell { get; }				= NetScriptFramework.Main.GameInfo.GetAddressOf
+					static public System.IntPtr ApplyReanimateSpell { get; }		= NetScriptFramework.Main.GameInfo.GetAddressOf
 					(
 						37865, 0xD2, 0,		// 0x5
 						"E8 ?? ?? ?? ??"	// call
 					);
 
 					/// <summary>Actor::WeaponSwing (SkyrimSE.exe + 0x6260F0)</summary>
-					static public System.IntPtr ApplyWeaponSwingSpell { get; }				= NetScriptFramework.Main.GameInfo.GetAddressOf
+					static public System.IntPtr ApplyWeaponSwingSpell { get; }		= NetScriptFramework.Main.GameInfo.GetAddressOf
 					(
 						37628, 0xC3, 0,		// 0x5
 						"E8 ?? ?? ?? ??"	// call
@@ -209,52 +224,52 @@
 				static internal class MultipleSpells
 				{
 					/// <summary>Actor::WeaponHit (SkyrimSE.exe + 0x628C20)</summary>
-					static public System.IntPtr ApplyBashingSpell { get; }					= NetScriptFramework.Main.GameInfo.GetAddressOf
+					static public System.IntPtr ApplyBashingSpell { get; }			= NetScriptFramework.Main.GameInfo.GetAddressOf
 					(
 						37673, 0x40E, 0, // 0x5
 						"E8 ?? ?? ?? ??" // call
 					);
 
 					/// <summary>Actor::ApplyWeaponHitSpells (SkyrimSE.exe + 0x6310A0)</summary>
-					static public System.IntPtr ApplyCombatHitSpell { get; }				= NetScriptFramework.Main.GameInfo.GetAddressOf
+					static public System.IntPtr ApplyCombatHitSpell { get; }		= NetScriptFramework.Main.GameInfo.GetAddressOf
 					(
 						37799, 0x61, 0,		// 0x5
 						"E8 ?? ?? ?? ??"	// call
 					);
 
 					/// <summary>ArrowProjectile::GetImpactData (SkyrimSE.exe + 0x732400)</summary>
-					static public System.IntPtr ApplyCombatHitSpellArrowProjectile { get; }	= NetScriptFramework.Main.GameInfo.GetAddressOf
+					static public System.IntPtr ApplyCombatHitSpellArrow { get; }	= NetScriptFramework.Main.GameInfo.GetAddressOf
 					(
 						42547, 0x28B, 0, // 0x5
 						"E8 ?? ?? ?? ??" // call
 					);
 
 					/// <summary>ReanimateEffect::GetUp (SkyrimSE.exe + 0x634BF0)</summary>
-					static public System.IntPtr ApplyReanimateSpell { get; }				= NetScriptFramework.Main.GameInfo.GetAddressOf
+					static public System.IntPtr ApplyReanimateSpell { get; }		= NetScriptFramework.Main.GameInfo.GetAddressOf
 					(
 						37865, 0xBA, 0,		// 0x5
 						"E8 ?? ?? ?? ??"	// call
 					);
 
 					/// <summary>Actor::SetSneaking (SkyrimSE.exe + 0x6089E0)</summary>
-					static public System.IntPtr ApplySneakingSpell { get; }					= NetScriptFramework.Main.GameInfo.GetAddressOf
+					static public System.IntPtr ApplySneakingSpell { get; }			= NetScriptFramework.Main.GameInfo.GetAddressOf
 					(
 						36926, 0xB6, 0,		// 0x5
 						"E8 ?? ?? ?? ??"	// call
 					);
 
 					/// <summary>Actor::WeaponSwing (SkyrimSE.exe + 0x6260F0)</summary>
-					static public System.IntPtr ApplyWeaponSwingSpell { get; }				= NetScriptFramework.Main.GameInfo.GetAddressOf
+					static public System.IntPtr ApplyWeaponSwingSpell { get; }		= NetScriptFramework.Main.GameInfo.GetAddressOf
 					(
 						37628, 0xAB, 0,		// 0x5
 						"E8 ?? ?? ?? ??"	// call
 					);
 
 					/// <summary>SkyrimSE.exe + 0x1DD3B20</summary>
-					static public System.IntPtr SelectSpell { get; }						= NetScriptFramework.Main.GameInfo.GetAddressOf(675819);
+					static public System.IntPtr SelectSpell { get; }				= NetScriptFramework.Main.GameInfo.GetAddressOf(675819);
 
 					/// <summary>SkyrimSE.exe + 0x1DD3BB0</summary>
-					static public System.IntPtr SelectSpellResultCount { get; }				= NetScriptFramework.Main.GameInfo.GetAddressOf(502190);
+					static public System.IntPtr SelectSpellResultCount { get; }		= NetScriptFramework.Main.GameInfo.GetAddressOf(502190);
 				}
 			}
 

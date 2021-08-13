@@ -1,7 +1,7 @@
 ﻿namespace Eggstensions
 {
 	[System.Flags]
-	public enum HitEventFlags : System.Byte
+	public enum TESHitEventFlags : System.Byte
 	{
 		None		= 0,
 		PowerAttack	= 1 << 0,
@@ -19,6 +19,6 @@
 		public TESObjectREFR* Cause;		// 0x8
 		public System.UInt32 Source;		// 0x10 (FormID)
 		public System.UInt32 Projectile;	// 0x14 (FormID)
-		public HitEventFlags Flags;			// 0x18
+		public TESHitEventFlags Flags;		// 0x18
 	}
 }

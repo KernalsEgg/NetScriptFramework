@@ -91,10 +91,10 @@
 		static public class MagicItem
 		{
 			/// <summary>SkyrimSE.exe + 0x101A30</summary>
-			static public System.IntPtr GetCost { get; } = NetScriptFramework.Main.GameInfo.GetAddressOf(11213);
+			static public System.IntPtr GetCost { get; }			= NetScriptFramework.Main.GameInfo.GetAddressOf(11213);
 
 			/// <summary>SkyrimSE.exe + 0x556780</summary>
-			static public System.IntPtr GetCostActorValue { get; } = NetScriptFramework.Main.GameInfo.GetAddressOf(33817);
+			static public System.IntPtr GetCostActorValue { get; }	= NetScriptFramework.Main.GameInfo.GetAddressOf(33817);
 		}
 
 		static public class PlayerCharacter

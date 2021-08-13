@@ -1,7 +1,7 @@
 ﻿namespace Eggstensions
 {
 	[System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Explicit, Size = 0x30)]
-	unsafe public struct BGSEntryPointPerkEntry // BGSPerkEntry
+	unsafe public struct BGSEntryPointPerkEntry
 	{
 		[System.Runtime.InteropServices.FieldOffset(0x0)] public BGSPerkEntry BGSPerkEntry;
 		[System.Runtime.InteropServices.FieldOffset(0x10)] public EntryPoint EntryPoint;

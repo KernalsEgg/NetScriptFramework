@@ -79,21 +79,10 @@ namespace ScrambledBugs.Patches.ApplySpellPerkEntryPoints
 				MultipleSpells.ApplyCombatHitSpell
 			);
 
-
-
-			var assembly = new UnmanagedArray<System.Byte>();
-
-			assembly.Add(new System.Byte[7] { 0x44, 0x8B, 0x97, 0xCC, 0x01, 0x00, 0x00 });																									// mov r10d, [rdi+1CC]
-			assembly.Add(new System.Byte[4] { 0x41, 0xC1, 0xEA, 0x08 });																													// shr r10d, 08 (ProjectileFlags.Is3DLoaded)
-			assembly.Add(new System.Byte[4] { 0x41, 0xF6, 0xC2, 0x01 });																													// test r10b, 01
-			assembly.Add(new System.Byte[2] { 0x74, (System.Byte)Memory.Size<AbsoluteJump>.Unmanaged });																					// je 0E
-			assembly.Add(Assembly.AbsoluteJump<ScrambledBugs.Delegates.Types.Patches.ApplySpellPerkEntryPoints.MultipleSpells.ApplyCombatHitSpell>(MultipleSpells.ApplyCombatHitSpell));
-			assembly.Add(new System.Byte[1] { 0xC3 });                                                                                                                                      // ret
-
-			ScrambledBugs.Plugin.Trampoline.WriteRelativeCallBranch
+			ScrambledBugs.Plugin.Trampoline.WriteRelativeCall<ScrambledBugs.Delegates.Types.Patches.ApplySpellPerkEntryPoints.MultipleSpells.ApplyCombatHitSpell>
 			(
-				ScrambledBugs.Offsets.Patches.ApplySpellPerkEntryPoints.MultipleSpells.ApplyCombatHitSpellArrowProjectile,
-				assembly
+				ScrambledBugs.Offsets.Patches.ApplySpellPerkEntryPoints.MultipleSpells.ApplyCombatHitSpellArrow,
+				MultipleSpells.ApplyCombatHitSpell
 			);
 
 
@@ -228,8 +217,9 @@ namespace ScrambledBugs.Patches.ApplySpellPerkEntryPoints
 					return;
 				}
 
-				var spells = (BSTArray*)Memory.Read<System.IntPtr>(results).ToPointer();
-				var spell = ((BGSEntryPointFunctionDataSpellItem*)entryPointFunctionData)->Spell;
+				var spells	= (BSTArray*)Memory.Read<System.IntPtr>(results).ToPointer();
+				var spell	= ((BGSEntryPointFunctionDataSpellItem*)entryPointFunctionData)->Spell;
+
 				BSTArray.Push(spells, new System.IntPtr(&spell));
 			};
 
@@ -242,15 +232,12 @@ namespace ScrambledBugs.Patches.ApplySpellPerkEntryPoints
 
 
 
-		static public System.Boolean CastSpells { get; set; }
-
-
-
 		static public ScrambledBugs.Delegates.Types.Patches.ApplySpellPerkEntryPoints.MultipleSpells.ApplyBashingSpell ApplyBashingSpell { get; }
 		static public ScrambledBugs.Delegates.Types.Patches.ApplySpellPerkEntryPoints.MultipleSpells.ApplyCombatHitSpell ApplyCombatHitSpell { get; }
 		static public ScrambledBugs.Delegates.Types.Patches.ApplySpellPerkEntryPoints.MultipleSpells.ApplyReanimateSpell ApplyReanimateSpell { get; }
 		static public ScrambledBugs.Delegates.Types.Patches.ApplySpellPerkEntryPoints.MultipleSpells.ApplySneakingSpell ApplySneakingSpell { get; }
 		static public ScrambledBugs.Delegates.Types.Patches.ApplySpellPerkEntryPoints.MultipleSpells.ApplyWeaponSwingSpell ApplyWeaponSwingSpell { get; }
 		static public ScrambledBugs.Delegates.Types.Patches.ApplySpellPerkEntryPoints.MultipleSpells.EntryPointFunction SelectSpell { get; }
+		static public System.Boolean CastSpells { get; set; }
 	}
 }

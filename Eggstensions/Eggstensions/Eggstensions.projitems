@@ -15,6 +15,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)A\ActorValueOwner.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)A\AIProcess.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)A\ArrowProjectile.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)C\Color.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)E\Effect.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)E\EffectSetting.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)E\EnchantmentItem.cs" />
