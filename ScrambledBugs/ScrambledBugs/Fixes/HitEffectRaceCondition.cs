@@ -32,6 +32,15 @@ namespace ScrambledBugs.Fixes
 
 			Memory.SafeFill<System.Byte>(ScrambledBugs.Offsets.Fixes.HitEffectRaceCondition.ShouldUpdate, 3 + 3, Assembly.Nop);
 			ScrambledBugs.Plugin.Trampoline.WriteRelativeCallBranch(ScrambledBugs.Offsets.Fixes.HitEffectRaceCondition.ShouldUpdate, assembly);
+
+			/*
+			return
+				(flags & ActiveEffectFlags.Dispelled) == ActiveEffectFlags.Dispelled
+				||
+				(flags & ActiveEffectFlags.ApplyingVisualEffects) == ActiveEffectFlags.ApplyingVisualEffects
+				||
+				(flags & ActiveEffectFlags.ApplyingSoundEffects) == ActiveEffectFlags.ApplyingSoundEffects;
+			*/
 		}
 	}
 }

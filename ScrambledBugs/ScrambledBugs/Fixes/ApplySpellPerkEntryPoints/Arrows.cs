@@ -16,6 +16,8 @@ namespace ScrambledBugs.Fixes.ApplySpellPerkEntryPoints
 				{
 					var handleEntryPoints = Memory.ReadRelativeCall(ScrambledBugs.Offsets.Fixes.ApplySpellPerkEntryPoints.Arrows.ApplyCombatHitSpellArrow);
 
+					// RDI: arrowProjectile
+
 					var assembly = new UnmanagedArray<System.Byte>();
 
 					assembly.Add(new System.Byte[7] { 0x44, 0x8B, 0x97, 0xCC, 0x01, 0x00, 0x00 });					// mov r10d, [rdi+1CC]
@@ -29,6 +31,17 @@ namespace ScrambledBugs.Fixes.ApplySpellPerkEntryPoints
 					
 					Memory.SafeWriteArray<System.Byte>(trampoline.Address + position, assembly);
 					Memory.WriteRelativeCall(ScrambledBugs.Offsets.Fixes.ApplySpellPerkEntryPoints.Arrows.ApplyCombatHitSpellArrow, trampoline.Address + position);
+
+					// arrowProjectile != null
+
+					/*
+					if ((arrowProjectile->MissileProjectile.Projectile.Flags & ProjectileFlags.Is3DLoaded) == ProjectileFlags.Is3DLoaded)
+					{
+						goto Function;
+					}
+
+					return;
+					*/
 				}
 			};
 		}

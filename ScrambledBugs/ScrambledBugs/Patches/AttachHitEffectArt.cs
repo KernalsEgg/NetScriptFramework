@@ -18,10 +18,6 @@ namespace ScrambledBugs.Patches
 
 			// Volatile registers
 
-			// actor							!= null
-			// modelReferenceEffect				!= null
-			// modelReferenceEffect->Controller	!= null
-
 			var assembly = new UnmanagedArray<System.Byte>();
 			
 			assembly.Add(new System.Byte[2] { 0x41, 0x54 });							// push r12
@@ -30,13 +26,13 @@ namespace ScrambledBugs.Patches
 
 			assembly.Add(new System.Byte[4] { 0x48, 0x8B, 0x4E, 0x30 });				// mov rcx, [rsi+30] (modelReferenceEffect->Controller)
 			assembly.Add(new System.Byte[3] { 0x48, 0x8B, 0x01 });						// mov rax, [rcx]
-			assembly.Add(new System.Byte[3] { 0xFF, 0x50, 0x78 });						// call [rax+78] (ReferenceEffectController.GetAttachRoot)
+			assembly.Add(new System.Byte[3] { 0xFF, 0x50, 0x78 });						// call [rax+78] (ReferenceEffectController.GetAttachRoot(controller))
 			assembly.Add(new System.Byte[3] { 0x48, 0x85, 0xC0 });						// test rax, rax (attachRoot)
 			assembly.Add(new System.Byte[2] { 0x75, 3 + 3 + 6 });						// jnz 0C (attachRoot == null)
 
 			assembly.Add(new System.Byte[3] { 0x48, 0x8B, 0xCB });						// mov rcx, rbx (actor)
 			assembly.Add(new System.Byte[3] { 0x48, 0x8B, 0x01 });						// mov rax, [rcx]
-			assembly.Add(new System.Byte[6] { 0xFF, 0x90, 0x68, 0x04, 0x00, 0x00 });	// call [rax+468] (TESObjectREFR.GetCurrent3D)
+			assembly.Add(new System.Byte[6] { 0xFF, 0x90, 0x68, 0x04, 0x00, 0x00 });	// call [rax+468] (TESObjectREFR.GetCurrent3D(actor))
 
 			assembly.Add(new System.Byte[3] { 0x45, 0x31, 0xE4 });						// xor r12d, r12d (attachRootNode)
 			assembly.Add(new System.Byte[3] { 0x48, 0x85, 0xC0 });						// test rax, rax
@@ -45,7 +41,7 @@ namespace ScrambledBugs.Patches
 			assembly.Add(new System.Byte[3] { 0x4C, 0x8B, 0xE8 });						// mov r13, rax
 			assembly.Add(new System.Byte[3] { 0x48, 0x8B, 0xC8 });						// mov rcx, rax
 			assembly.Add(new System.Byte[3] { 0x48, 0x8B, 0x00 });						// mov rax, [rax]
-			assembly.Add(new System.Byte[3] { 0xFF, 0x50, 0x18 });						// call [rax+18] (NiObject.AsNode)
+			assembly.Add(new System.Byte[3] { 0xFF, 0x50, 0x18 });						// call [rax+18] (NiObject.AsNode(attachRoot))
 			assembly.Add(new System.Byte[3] { 0x4C, 0x8B, 0xE0 });						// mov r12, rax
 			assembly.Add(new System.Byte[3] { 0x4D, 0x85, 0xE4 });						// test r12, r12
 			assembly.Add(new System.Byte[2] { 0x75, 4 });								// jnz 04 (attachRootNode == null)
@@ -58,7 +54,7 @@ namespace ScrambledBugs.Patches
 			assembly.Add(new System.Byte[4] { 0x48, 0x83, 0xC4, 0x28 });				// add rsp, 28
 			assembly.Add(new System.Byte[2] { 0x41, 0x5D });							// pop r13
 			assembly.Add(new System.Byte[2] { 0x41, 0x5C });							// pop r12
-			assembly.Add(new System.Byte[1] { 0xC3 });                                  // ret
+			assembly.Add(new System.Byte[1] { 0xC3 });									// ret
 
 			ScrambledBugs.Plugin.Trampoline.WriteRelativeCallBranch
 			(
@@ -75,6 +71,34 @@ namespace ScrambledBugs.Patches
 					0x74, 0x55	// jz 55
 				}
 			);
+
+			// actor							!= null
+			// modelReferenceEffect				!= null
+			// modelReferenceEffect->Controller	!= null
+
+			/*
+			ReferenceEffectController* controller = modelReferenceEffect->Controller;
+			NiAVObject* attachRoot = ReferenceEffectController.GetAttachRoot(controller);
+
+			if (attachRoot == null)
+			{
+				attachRoot = TESObjectREFR.GetCurrent3D(actor);
+			}
+
+			NiNode* attachRootNode = null;
+
+			if (attachRoot != null)
+			{
+				attachRootNode = NiObject.AsNode(attachRoot);
+
+				if (attachRootNode == null)
+				{
+					attachRootNode = attachRoot->Parent;
+				}
+			}
+
+			return attachRootNode != modelReferenceEffect->HitEffectArtData.AttachRoot;
+			*/
 		}
 	}
 }

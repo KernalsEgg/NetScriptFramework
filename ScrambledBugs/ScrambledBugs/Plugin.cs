@@ -26,8 +26,6 @@ namespace ScrambledBugs
 			{
 				var settings = Newtonsoft.Json.JsonConvert.DeserializeObject<ScrambledBugs.Settings>(System.IO.File.ReadAllText(path));
 				
-
-
 				// Fixes
 				if (settings.fixes.harvestedFlags)
 				{
@@ -73,8 +71,6 @@ namespace ScrambledBugs
 				{
 					new ScrambledBugs.Fixes.WeaponCharge();
 				}
-
-
 
 				// Patches
 				if (settings.patches.applySpellPerkEntryPoints.multipleSpells)
@@ -123,15 +119,11 @@ namespace ScrambledBugs
 					new ScrambledBugs.Patches.UnderfilledSoulGems();
 				}
 
-
-
 				// Fixes
 				if (settings.fixes.applySpellPerkEntryPoints.arrows)
 				{
 					new ScrambledBugs.Fixes.ApplySpellPerkEntryPoints.Arrows();
 				}
-
-
 
 				Plugin.Trampoline.Commit();
 			}
