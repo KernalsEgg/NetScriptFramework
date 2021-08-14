@@ -21,7 +21,9 @@
 
 		private System.Int32 position = 0;
 
-		private System.Action writes = null;
+
+
+		public event System.EventHandler Write;
 
 
 
@@ -76,22 +78,18 @@
 
 
 
-		private System.Int32 Reserve(System.Int32 size)
-		{
-			return System.Threading.Interlocked.Add(ref this.position, size) - size;
-		}
-
-
-
 		public void CaptureContext(System.IntPtr address, Eggstensions.Delegates.Types.Context.CaptureContext function, System.Byte[] before = null, System.Byte[] after = null)
 		{
 			var captureContext = Assembly.CaptureContext(function, before, after);
 			var position = this.Reserve(Memory.Size<System.Byte>.Unmanaged * captureContext.Length);
 
-			this.writes += () =>
+			this.Write += (System.Object sender, System.EventArgs arguments) =>
 			{
-				Memory.SafeWriteArray<System.Byte>(Address + position, captureContext);
-				Memory.WriteRelativeCall(address, Address + position);
+				if (sender is Trampoline trampoline)
+				{
+					Memory.SafeWriteArray<System.Byte>(trampoline.Address + position, captureContext);
+					Memory.WriteRelativeCall(address, trampoline.Address + position);
+				}
 			};
 		}
 
@@ -109,7 +107,7 @@
 				throw new System.InsufficientMemoryException(nameof(Trampoline));
 			}
 
-			this.writes?.Invoke();
+			this.Write?.Invoke(this, System.EventArgs.Empty);
 		}
 
 		public void Dispose()
@@ -118,16 +116,24 @@
 			System.GC.SuppressFinalize(this);
 		}
 
+		public System.Int32 Reserve(System.Int32 size)
+		{
+			return System.Threading.Interlocked.Add(ref this.position, size) - size;
+		}
+
 		public void WriteRelativeCall<T>(System.IntPtr address, T function)
 			where T : System.Delegate
 		{
 			var absoluteJump = Assembly.AbsoluteJump<T>(function);
 			var position = this.Reserve(Memory.Size<AbsoluteJump>.Unmanaged);
 
-			this.writes += () =>
+			this.Write += (System.Object sender, System.EventArgs arguments) =>
 			{
-				Memory.SafeWrite<AbsoluteJump>(Address + position, absoluteJump);
-				Memory.WriteRelativeCall(address, Address + position);
+				if (sender is Trampoline trampoline)
+				{
+					Memory.SafeWrite<AbsoluteJump>(trampoline.Address + position, absoluteJump);
+					Memory.WriteRelativeCall(address, trampoline.Address + position);
+				}
 			};
 		}
 
@@ -141,10 +147,13 @@
 		{
 			var position = this.Reserve(Memory.Size<System.Byte>.Unmanaged * assembly.Length);
 
-			this.writes += () =>
+			this.Write += (System.Object sender, System.EventArgs arguments) =>
 			{
-				Memory.SafeWriteArray<System.Byte>(Address + position, assembly);
-				Memory.WriteRelativeCall(address, Address + position);
+				if (sender is Trampoline trampoline)
+				{
+					Memory.SafeWriteArray<System.Byte>(trampoline.Address + position, assembly);
+					Memory.WriteRelativeCall(address, trampoline.Address + position);
+				}
 			};
 		}
 
@@ -159,10 +168,13 @@
 			var absoluteJump = Assembly.AbsoluteJump<T>(function);
 			var position = this.Reserve(Memory.Size<AbsoluteJump>.Unmanaged);
 
-			this.writes += () =>
+			this.Write += (System.Object sender, System.EventArgs arguments) =>
 			{
-				Memory.SafeWrite<AbsoluteJump>(Address + position, absoluteJump);
-				Memory.WriteRelativeJump(address, Address + position);
+				if (sender is Trampoline trampoline)
+				{
+					Memory.SafeWrite<AbsoluteJump>(trampoline.Address + position, absoluteJump);
+					Memory.WriteRelativeJump(address, trampoline.Address + position);
+				}
 			};
 		}
 
@@ -176,10 +188,13 @@
 		{
 			var position = this.Reserve(Memory.Size<System.Byte>.Unmanaged * assembly.Length);
 
-			this.writes += () =>
+			this.Write += (System.Object sender, System.EventArgs arguments) =>
 			{
-				Memory.SafeWriteArray<System.Byte>(Address + position, assembly);
-				Memory.WriteRelativeJump(address, Address + position);
+				if (sender is Trampoline trampoline)
+				{
+					Memory.SafeWriteArray<System.Byte>(trampoline.Address + position, assembly);
+					Memory.WriteRelativeJump(address, trampoline.Address + position);
+				}
 			};
 		}
 

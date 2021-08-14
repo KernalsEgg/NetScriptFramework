@@ -20,12 +20,12 @@
 
 
 
+			static public event System.EventHandler After;
+			static public event System.EventHandler Before;
+
+
+
 			static private Eggstensions.Delegates.Types.InitTESThread.Initialize initialize;
-
-
-
-			static public event System.EventHandler<System.EventArgs> After;
-			static public event System.EventHandler<System.EventArgs> Before;
 		}
 	}
 }

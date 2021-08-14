@@ -13,17 +13,16 @@ namespace ScrambledBugs.Patches
 				context->Xmm6.Single = System.Single.MinValue;
 			};
 
+			Memory.SafeFill<System.Byte>
+			(
+				ScrambledBugs.Offsets.Patches.EquipBestAmmo.InitializeDamage,
+				8,
+				Assembly.Nop
+			);
 			ScrambledBugs.Plugin.Trampoline.CaptureContext
 			(
 				ScrambledBugs.Offsets.Patches.EquipBestAmmo.InitializeDamage,
 				EquipBestAmmo.InitializeDamage
-			);
-			Memory.SafeFill<System.Byte>
-			(
-				ScrambledBugs.Offsets.Patches.EquipBestAmmo.InitializeDamage,
-				Memory.Size<RelativeCall>.Unmanaged,
-				8 - Memory.Size<RelativeCall>.Unmanaged,
-				Assembly.Nop
 			);
 
 

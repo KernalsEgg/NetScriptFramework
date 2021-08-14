@@ -30,18 +30,8 @@ namespace ScrambledBugs.Fixes
 			assembly.Add(new System.Byte[1] { 0x5A });									// pop rdx
 			assembly.Add(new System.Byte[1] { 0xC3 });                                  // ret
 
-			ScrambledBugs.Plugin.Trampoline.WriteRelativeCallBranch
-			(
-				ScrambledBugs.Offsets.Fixes.HitEffectRaceCondition.ShouldUpdate,
-				assembly
-			);
-			Memory.SafeFill<System.Byte>
-			(
-				ScrambledBugs.Offsets.Fixes.HitEffectRaceCondition.ShouldUpdate,
-				Memory.Size<RelativeCall>.Unmanaged,
-				3 + 3 - Memory.Size<RelativeCall>.Unmanaged,
-				Assembly.Nop
-			);
+			Memory.SafeFill<System.Byte>(ScrambledBugs.Offsets.Fixes.HitEffectRaceCondition.ShouldUpdate, 3 + 3, Assembly.Nop);
+			ScrambledBugs.Plugin.Trampoline.WriteRelativeCallBranch(ScrambledBugs.Offsets.Fixes.HitEffectRaceCondition.ShouldUpdate, assembly);
 		}
 	}
 }

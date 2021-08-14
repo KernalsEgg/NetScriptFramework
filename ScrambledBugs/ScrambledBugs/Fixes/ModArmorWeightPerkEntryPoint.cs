@@ -77,17 +77,16 @@ namespace ScrambledBugs.Fixes
 				context->Xmm6.Single += armorWeight; // totalModifiedArmorWeight
 			};
 
+			Memory.SafeFill<System.Byte>
+			(
+				ScrambledBugs.Offsets.Fixes.ModArmorWeightPerkEntryPoint.ModArmorWeightInventoryChanges,
+				5 + 9 + 4,
+				Assembly.Nop
+			);
 			ScrambledBugs.Plugin.Trampoline.CaptureContext
 			(
 				ScrambledBugs.Offsets.Fixes.ModArmorWeightPerkEntryPoint.ModArmorWeightInventoryChanges,
 				ModArmorWeightPerkEntryPoint.ModArmorWeightInventoryChanges
-			);
-			Memory.SafeFill<System.Byte>
-			(
-				ScrambledBugs.Offsets.Fixes.ModArmorWeightPerkEntryPoint.ModArmorWeightInventoryChanges,
-				Memory.Size<RelativeCall>.Unmanaged,
-				5 + 9 + 4 - Memory.Size<RelativeCall>.Unmanaged,
-				Assembly.Nop
 			);
 
 
@@ -106,7 +105,12 @@ namespace ScrambledBugs.Fixes
 				}
 			};
 
-			Memory.WriteVirtualFunction<Eggstensions.Delegates.Types.BGSPerkEntry.AddPerkEntry>(Eggstensions.Offsets.BGSEntryPointPerkEntry.VirtualFunctionTable, 0xA, ModArmorWeightPerkEntryPoint.AddPerkEntry);
+			Memory.WriteVirtualFunction<Eggstensions.Delegates.Types.BGSPerkEntry.AddPerkEntry>
+			(
+				Eggstensions.Offsets.BGSEntryPointPerkEntry.VirtualFunctionTable,
+				0xA,
+				ModArmorWeightPerkEntryPoint.AddPerkEntry
+			);
 
 
 
@@ -124,7 +128,12 @@ namespace ScrambledBugs.Fixes
 				}
 			};
 
-			Memory.WriteVirtualFunction<Eggstensions.Delegates.Types.BGSPerkEntry.RemovePerkEntry>(Eggstensions.Offsets.BGSEntryPointPerkEntry.VirtualFunctionTable, 0xB, ModArmorWeightPerkEntryPoint.RemovePerkEntry);
+			Memory.WriteVirtualFunction<Eggstensions.Delegates.Types.BGSPerkEntry.RemovePerkEntry>
+			(
+				Eggstensions.Offsets.BGSEntryPointPerkEntry.VirtualFunctionTable,
+				0xB,
+				ModArmorWeightPerkEntryPoint.RemovePerkEntry
+			);
 		}
 
 
