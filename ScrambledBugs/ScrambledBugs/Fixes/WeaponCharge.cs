@@ -4,9 +4,13 @@
 
 namespace ScrambledBugs.Fixes
 {
-	unsafe internal class WeaponCharge
+	unsafe static internal class WeaponCharge
 	{
-		static WeaponCharge()
+		static public ScrambledBugs.Delegates.Types.Fixes.WeaponCharge.HandleEquippedItem HandleEquippedItem { get; set; }
+
+
+
+		static public void Fix()
 		{
 			WeaponCharge.HandleEquippedItem = (Actor* actor, TESBoundObject* item, ExtraDataList* extraDataList, System.Byte leftHand) =>
 			{
@@ -74,9 +78,5 @@ namespace ScrambledBugs.Fixes
 				WeaponCharge.HandleEquippedItem
 			);
 		}
-
-
-
-		static public ScrambledBugs.Delegates.Types.Fixes.WeaponCharge.HandleEquippedItem HandleEquippedItem { get; }
 	}
 }

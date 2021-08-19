@@ -7,7 +7,7 @@ namespace ScrambledBugs
 	public class Plugin : NetScriptFramework.Plugin
 	{
 		override public System.Int32 RequiredLibraryVersion { get; }	= 10;
-		override public System.Int32 Version { get; }					= 12;
+		override public System.Int32 Version { get; }					= 13;
 		override public System.String Author { get; }					= "meh321 and KernalsEgg";
 		override public System.String Key { get; }						= "ScrambledBugs";
 		override public System.String Name { get; }						= "Scrambled Bugs";
@@ -24,105 +24,157 @@ namespace ScrambledBugs
 
 			if (System.IO.File.Exists(path))
 			{
-				var settings = Newtonsoft.Json.JsonConvert.DeserializeObject<ScrambledBugs.Settings>(System.IO.File.ReadAllText(path));
-				
+				var settings							= new
+				{
+					Fixes								= new
+					{
+						ActorValuePercentage			= default(System.Boolean),
+						ApplySpellPerkEntryPoints		= new
+						{
+							Arrows						= default(System.Boolean)
+						},
+						HarvestedFlags					= default(System.Boolean),
+						HitEffectRaceCondition			= default(System.Boolean),
+						MagicEffectConditions			= default(System.Boolean),
+						MagicEffectFlags				= default(System.Boolean),
+						ModArmorWeightPerkEntryPoint	= default(System.Boolean),
+						MovementSpeed					= default(System.Boolean),
+						TerrainDecals					= default(System.Boolean),
+						TrainingMenuText				= default(System.Boolean),
+						WeaponCharge					= default(System.Boolean)
+					},
+					Patches								= new
+					{
+						AlreadyCaughtPickpocketing		= default(System.Boolean),
+						ApplySpellPerkEntryPoints		= new
+						{
+							CastSpells					= default(System.Boolean),
+							MultipleSpells				= default(System.Boolean)
+						},
+						AttachHitEffectArt				= default(System.Boolean),
+						EquipBestAmmo					= default(System.Boolean),
+						LockpickingExperience			= default(System.Boolean),
+						MultipleHitEffects				= default(System.Boolean),
+						PausedGameHitEffects			= default(System.Boolean),
+						ReflectDamage					= default(System.Boolean),
+						TeammateDifficulty				= default(System.Boolean),
+						UnderfilledSoulGems				= default(System.Boolean)
+					}
+				};
+
+				settings = Newtonsoft.Json.JsonConvert.DeserializeAnonymousType(System.IO.File.ReadAllText(path), settings);
+				NetScriptFramework.Main.Log.AppendLine(settings.ToString());
+
 				// Fixes
-				if (settings.fixes.harvestedFlags)
+				if (settings?.Fixes?.ActorValuePercentage ?? default)
 				{
-					new ScrambledBugs.Fixes.HarvestedFlags();
+					ScrambledBugs.Fixes.ActorValuePercentage.Fix();
 				}
 
-				if (settings.fixes.hitEffectRaceCondition)
+				if (settings?.Fixes?.HarvestedFlags ?? default)
 				{
-					new ScrambledBugs.Fixes.HitEffectRaceCondition();
+					ScrambledBugs.Fixes.HarvestedFlags.Fix();
 				}
 
-				if (settings.fixes.magicEffectConditions)
+				if (settings?.Fixes?.HitEffectRaceCondition ?? default)
 				{
-					new ScrambledBugs.Fixes.MagicEffectConditions();
+					ScrambledBugs.Fixes.HitEffectRaceCondition.Fix();
 				}
 
-				if (settings.fixes.magicEffectFlags)
+				if (settings?.Fixes?.MagicEffectConditions ?? default)
 				{
-					new ScrambledBugs.Fixes.MagicEffectFlags();
+					ScrambledBugs.Fixes.MagicEffectConditions.Fix();
 				}
 
-				if (settings.fixes.modArmorWeightPerkEntryPoint)
+				if (settings?.Fixes?.MagicEffectFlags ?? default)
 				{
-					new ScrambledBugs.Fixes.ModArmorWeightPerkEntryPoint();
+					ScrambledBugs.Fixes.MagicEffectFlags.Fix();
 				}
 
-				if (settings.fixes.movementSpeed)
+				if (settings?.Fixes?.ModArmorWeightPerkEntryPoint ?? default)
 				{
-					new ScrambledBugs.Fixes.MovementSpeed();
+					ScrambledBugs.Fixes.ModArmorWeightPerkEntryPoint.Fix();
 				}
 
-				if (settings.fixes.terrainDecals)
+				if (settings?.Fixes?.MovementSpeed ?? default)
 				{
-					new ScrambledBugs.Fixes.TerrainDecals();
+					ScrambledBugs.Fixes.MovementSpeed.Fix();
 				}
 
-				if (settings.fixes.trainingMenuText)
+				if (settings?.Fixes?.TerrainDecals ?? default)
 				{
-					new ScrambledBugs.Fixes.TrainingMenuText();
+					ScrambledBugs.Fixes.TerrainDecals.Fix();
 				}
 
-				if (settings.fixes.weaponCharge)
+				if (settings?.Fixes?.TrainingMenuText ?? default)
 				{
-					new ScrambledBugs.Fixes.WeaponCharge();
+					ScrambledBugs.Fixes.TrainingMenuText.Fix();
+				}
+
+				if (settings?.Fixes?.WeaponCharge ?? default)
+				{
+					ScrambledBugs.Fixes.WeaponCharge.Fix();
 				}
 
 				// Patches
-				if (settings.patches.applySpellPerkEntryPoints.multipleSpells)
+				if (settings?.Patches?.AlreadyCaughtPickpocketing ?? default)
 				{
-					new ScrambledBugs.Patches.ApplySpellPerkEntryPoints.MultipleSpells();
-
-					ScrambledBugs.Patches.ApplySpellPerkEntryPoints.MultipleSpells.CastSpells = settings.patches.applySpellPerkEntryPoints.castSpells;
-				}
-				else if (settings.patches.applySpellPerkEntryPoints.castSpells)
-				{
-					new ScrambledBugs.Patches.ApplySpellPerkEntryPoints.CastSpells();
+					ScrambledBugs.Patches.AlreadyCaughtPickpocketing.Patch();
 				}
 
-				if (settings.patches.attachHitEffectArt)
+				if (settings?.Patches?.ApplySpellPerkEntryPoints?.MultipleSpells ?? default)
 				{
-					new ScrambledBugs.Patches.AttachHitEffectArt();
+					ScrambledBugs.Patches.ApplySpellPerkEntryPoints.MultipleSpells.Patch(settings?.Patches?.ApplySpellPerkEntryPoints?.CastSpells ?? default);
+				}
+				else if (settings?.Patches?.ApplySpellPerkEntryPoints?.CastSpells ?? default)
+				{
+					ScrambledBugs.Patches.ApplySpellPerkEntryPoints.CastSpells.Patch();
 				}
 
-				if (settings.patches.equipBestAmmo)
+				if (settings?.Patches?.AttachHitEffectArt ?? default)
 				{
-					new ScrambledBugs.Patches.EquipBestAmmo();
+					ScrambledBugs.Patches.AttachHitEffectArt.Patch();
 				}
 
-				if (settings.patches.lockpickingExperience)
+				if (settings?.Patches?.EquipBestAmmo ?? default)
 				{
-					new ScrambledBugs.Patches.LockpickingExperience();
+					ScrambledBugs.Patches.EquipBestAmmo.Patch();
 				}
 
-				if (settings.patches.multipleHitEffects)
+				if (settings?.Patches?.LockpickingExperience ?? default)
 				{
-					new ScrambledBugs.Patches.MultipleHitEffects();
+					ScrambledBugs.Patches.LockpickingExperience.Patch();
 				}
 
-				if (settings.patches.pausedGameHitEffects)
+				if (settings?.Patches?.MultipleHitEffects ?? default)
 				{
-					new ScrambledBugs.Patches.PausedGameHitEffects();
+					ScrambledBugs.Patches.MultipleHitEffects.Patch();
 				}
 
-				if (settings.patches.reflectDamage)
+				if (settings?.Patches?.PausedGameHitEffects ?? default)
 				{
-					new ScrambledBugs.Patches.ReflectDamage();
+					ScrambledBugs.Patches.PausedGameHitEffects.Patch();
 				}
 
-				if (settings.patches.underfilledSoulGems)
+				if (settings?.Patches?.ReflectDamage ?? default)
 				{
-					new ScrambledBugs.Patches.UnderfilledSoulGems();
+					ScrambledBugs.Patches.ReflectDamage.Patch();
+				}
+
+				if (settings?.Patches?.TeammateDifficulty ?? default)
+				{
+					ScrambledBugs.Patches.TeammateDifficulty.Patch();
+				}
+
+				if (settings?.Patches?.UnderfilledSoulGems ?? default)
+				{
+					ScrambledBugs.Patches.UnderfilledSoulGems.Patch();
 				}
 
 				// Fixes
-				if (settings.fixes.applySpellPerkEntryPoints.arrows)
+				if (settings?.Fixes?.ApplySpellPerkEntryPoints.Arrows ?? default)
 				{
-					new ScrambledBugs.Fixes.ApplySpellPerkEntryPoints.Arrows();
+					ScrambledBugs.Fixes.ApplySpellPerkEntryPoints.Arrows.Fix();
 				}
 
 				Plugin.Trampoline.Commit();

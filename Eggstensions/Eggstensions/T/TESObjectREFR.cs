@@ -13,6 +13,8 @@
 
 		[System.Runtime.InteropServices.FieldOffset(0x0)] public TESForm TESForm;
 		[System.Runtime.InteropServices.FieldOffset(0x40)] public TESBoundObject* BaseObject;
+		[System.Runtime.InteropServices.FieldOffset(0x4C)] public NiPoint3 Rotation;
+		[System.Runtime.InteropServices.FieldOffset(0x54)] public NiPoint3 Position;
 
 
 

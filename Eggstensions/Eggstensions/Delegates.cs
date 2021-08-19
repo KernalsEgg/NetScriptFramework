@@ -12,6 +12,7 @@
 			static public class Actor
 			{
 				static public Delegates.Types.Actor.AddSpell AddSpell { get; }										= System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.Actor.AddSpell>(Eggstensions.Offsets.Actor.AddSpell);
+				static public Delegates.Types.Actor.GetActorValueModifier GetActorValueModifier { get; }			= System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.Actor.GetActorValueModifier>(Eggstensions.Offsets.Actor.GetActorValueModifier);
 				static public Delegates.Types.Actor.RemoveActorValueModifiers RemoveActorValueModifiers { get; }	= System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.Actor.RemoveActorValueModifiers>(Eggstensions.Offsets.Actor.RemoveActorValueModifiers);
 				static public Delegates.Types.Actor.RevertSelectedSpell RevertSelectedSpell { get; }				= System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.Actor.RevertSelectedSpell>(Eggstensions.Offsets.Actor.RevertSelectedSpell);
 				static public Delegates.Types.Actor.UpdateMovementSpeed UpdateMovementSpeed { get; }				= System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.Actor.UpdateMovementSpeed>(Eggstensions.Offsets.Actor.UpdateMovementSpeed);
@@ -71,6 +72,11 @@
 				static public Delegates.Types.ScriptEventSourceHolder.GetInstance GetInstance { get; } = System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.ScriptEventSourceHolder.GetInstance>(Eggstensions.Offsets.ScriptEventSourceHolder.GetInstance);
 			}
 
+			static public class SpellItem
+			{
+				static public Delegates.Types.SpellItem.ShouldAddSpell ShouldAddSpell { get; } = System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.SpellItem.ShouldAddSpell>(Eggstensions.Offsets.SpellItem.ShouldAddSpell);
+			}
+
 			static public class TESDataHandler
 			{
 				static public Delegates.Types.TESDataHandler.GetForm GetForm { get; } = System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.TESDataHandler.GetForm>(Eggstensions.Offsets.TESDataHandler.GetForm);
@@ -107,6 +113,9 @@
 				[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)]
 				public delegate System.Byte AddSpell(Eggstensions.Actor* actor, Eggstensions.SpellItem* spell);
 
+				[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)]
+				public delegate System.Single GetActorValueModifier(Eggstensions.Actor* actor, System.Int32 actorValueModifier, System.Int32 actorValue);
+
 				[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)] // Virtual
 				public delegate Eggstensions.MagicCaster* GetMagicCaster(Eggstensions.Actor* actor, System.Int32 castingSource);
 
@@ -122,6 +131,12 @@
 
 			unsafe static public class ActorValueOwner
 			{
+				[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)] // Virtual
+				public delegate System.Single GetActorValue(Eggstensions.ActorValueOwner* actorValueOwner, System.Int32 actorValue);
+
+				[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)] // Virtual
+				public delegate System.Single GetPermanentActorValue(Eggstensions.ActorValueOwner* actorValueOwner, System.Int32 actorValue);
+
 				[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)] // Virtual
 				public delegate void RestoreActorValue(Eggstensions.ActorValueOwner* actorValueOwner, System.Int32 actorValueModifier, System.Int32 actorValue, System.Single value);
 
@@ -267,6 +282,12 @@
 			{
 				[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)]
 				public delegate Eggstensions.ScriptEventSourceHolder* GetInstance();
+			}
+
+			unsafe static public class SpellItem
+			{
+				[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)]
+				public delegate System.Byte ShouldAddSpell(Eggstensions.SpellItem* spell);
 			}
 
 			unsafe static public class TESAmmo

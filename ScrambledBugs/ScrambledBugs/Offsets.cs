@@ -19,6 +19,23 @@
 
 
 
+			static internal class ActorValuePercentage
+			{
+				/// <summary>SkyrimSE.exe + 0x2D4C40</summary>
+				static public System.IntPtr Condition { get; } = NetScriptFramework.Main.GameInfo.GetAddressOf
+				(
+					20967, 0x27, 0,		// 0x5
+					"E8 ?? ?? ?? ??"	// call
+				);
+
+				/// <summary>SkyrimSE.exe + 0x94ABB0</summary>
+				static public System.IntPtr Papyrus { get; } = NetScriptFramework.Main.GameInfo.GetAddressOf
+				(
+					53868, 0x4D, 0,		// 0x5
+					"E8 ?? ?? ?? ??"	// call
+				);
+			}
+
 			static internal class HarvestedFlags
 			{
 				/// <summary>TESObjectREFR::Respawn (SkyrimSE.exe + 0x278920)</summary>
@@ -34,10 +51,10 @@
 				/// <summary>ActiveEffect::ShouldUpdate (SkyrimSE.exe + 0x53E670)</summary>
 				static public System.IntPtr ShouldUpdate { get; } = NetScriptFramework.Main.GameInfo.GetAddressOf
 				(
-					33289, 0x68, 0,	// 3 + 3 + 2 = 0x8
-					"C1 E9 12" +	// shr ecx, 12
-					"F6 C1 01" +	// test cl, 1
-					"75 0D"			// jne D
+					33289, 0x5A, 0, // 3 + 3 + 2 = 0x8
+					"C1 E8 07" +	// shr eax, 07
+					"A8 01" +		// test al, 01
+					"75 1C"			// jne 1C
 				);
 			}
 
@@ -275,6 +292,23 @@
 
 
 
+			static internal class AlreadyCaughtPickpocketing
+			{
+				/// <summary>TESNPC::Activate (SkyrimSE.exe + 0x360C10)</summary>
+				static public System.IntPtr IsAttackingOnSight { get; } = NetScriptFramework.Main.GameInfo.GetAddressOf
+				(
+					24211, 0x678, 0,    // 0x2
+					"75 2E"             // jne 2E
+				);
+
+				/// <summary>TESNPC::Activate (SkyrimSE.exe + 0x360C10)</summary>
+				static public System.IntPtr IsNotKnockedDown { get; } = NetScriptFramework.Main.GameInfo.GetAddressOf
+				(
+					24211, 0x684, 0,	// 0x2
+					"75 10"				// jne 10
+				);
+			}
+
 			static internal class AttachHitEffectArt
 			{
 				/// <summary>SkyrimSE.exe + 0x6314F0</summary>
@@ -370,14 +404,24 @@
 				static public System.IntPtr CompareReflectDamage { get; } = NetScriptFramework.Main.GameInfo.GetAddressOf
 				(
 					42842, 0x544, 0,	// 0x2
-					"77 03"				// ja 2E
+					"77 03"				// ja 3
+				);
+			}
+
+			static internal class TeammateDifficulty
+			{
+				/// <summary>SkyrimSE.exe + 0x5E4800/summary>
+				static public System.IntPtr IsPlayer { get; } = NetScriptFramework.Main.GameInfo.GetAddressOf
+				(
+					36506, 0xB, 0,	// 0x5
+					"BA 18000000"	// mov edx, 00000018
 				);
 			}
 
 			static internal class UnderfilledSoulGems
 			{
 				/// <summary>SkyrimSE.exe + 0x1E5050</summary>
-				static public System.IntPtr FindBestSoulGem { get; } = NetScriptFramework.Main.GameInfo.GetAddressOf
+				static public System.IntPtr CompareSoulLevelValue { get; } = NetScriptFramework.Main.GameInfo.GetAddressOf
 				(
 					15854, 0xE6, 0,	// 0x2
 					"72 2E"			// jb 2E

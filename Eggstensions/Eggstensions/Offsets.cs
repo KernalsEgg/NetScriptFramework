@@ -16,6 +16,9 @@
 			/// <summary>SkyrimSE.exe + 0x62F560</summary>
 			static public System.IntPtr AddSpell { get; }					= NetScriptFramework.Main.GameInfo.GetAddressOf(37771);
 
+			/// <summary>SkyrimSE.exe + 0x621350</summary>
+			static public System.IntPtr GetActorValueModifier { get; }		= NetScriptFramework.Main.GameInfo.GetAddressOf(37524);
+
 			/// <summary>SkyrimSE.exe + 0x621590</summary>
 			static public System.IntPtr RemoveActorValueModifiers { get; }	= NetScriptFramework.Main.GameInfo.GetAddressOf(37527);
 
@@ -107,6 +110,12 @@
 		{
 			/// <summary>SkyrimSE.exe + 0x186790</summary>
 			static public System.IntPtr GetInstance { get; } = NetScriptFramework.Main.GameInfo.GetAddressOf(14108);
+		}
+
+		static public class SpellItem
+		{
+			/// <summary>SkyrimSE.exe + 0x1007F0</summary>
+			static public System.IntPtr ShouldAddSpell { get; } = NetScriptFramework.Main.GameInfo.GetAddressOf(11183);
 		}
 
 		static public class TESDataHandler

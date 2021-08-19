@@ -4,9 +4,9 @@
 
 namespace ScrambledBugs.Fixes
 {
-	internal class TrainingMenuText
+	static internal class TrainingMenuText
 	{
-		static TrainingMenuText()
+		static public void Fix()
 		{
 			Memory.SafeWriteArray<System.Byte>(ScrambledBugs.Offsets.Fixes.TrainingMenuText.UpdateText, new System.Byte[3] { 0xFF, 0x50, 0x18 });
 		}

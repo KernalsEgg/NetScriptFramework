@@ -26,6 +26,12 @@ namespace ScrambledBugs
 		{
 			namespace Fixes
 			{
+				unsafe static internal class ActorValuePercentage
+				{
+					[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)]
+					public delegate System.Single GetActorValuePercentage(Eggstensions.Actor* actor, System.Int32 actorValue);
+				}
+
 				unsafe static internal class HarvestedFlags
 				{
 					[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)]

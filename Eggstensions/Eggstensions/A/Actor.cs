@@ -13,6 +13,7 @@
 	{
 		[System.Runtime.InteropServices.FieldOffset(0x0)] public TESObjectREFR TESObjectREFR;
 		[System.Runtime.InteropServices.FieldOffset(0xB0)] public ActorValueOwner ActorValueOwner;
+		[System.Runtime.InteropServices.FieldOffset(0xF0)] public ActorProcess* CurrentProcess;
 
 
 
@@ -30,6 +31,11 @@
 		static public System.Boolean AddSpell(Actor* actor, SpellItem* spell)
 		{
 			return Eggstensions.Delegates.Instances.Actor.AddSpell(actor, spell) != 0;
+		}
+
+		static public System.Single GetActorValueModifier(Actor* actor, ActorValueModifier actorValueModifier, ActorValue actorValue)
+		{
+			return Eggstensions.Delegates.Instances.Actor.GetActorValueModifier(actor, (System.Int32)actorValueModifier, (System.Int32)actorValue);
 		}
 
 		static public void RemoveActorValueModifiers(Actor* actor, ActorValue actorValue)

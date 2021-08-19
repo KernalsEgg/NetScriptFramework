@@ -1,6 +1,7 @@
 {
 	"fixes":
 	{
+		"actorValuePercentage":			true,	/* Calculate percentage using both the permanent and the temporary actor value modifiers. */
 		"applySpellPerkEntryPoints":
 		{
 			"arrows":					true	/* Spells are not applied using a perk entry point when the kill camera simulates the trajectory of an arrow. */
@@ -16,6 +17,7 @@
 	},
 	"patches":
 	{
+		"alreadyCaughtPickpocketing":	false,	/* Pickpocket targets who have already caught you. */
 		"applySpellPerkEntryPoints":
 		{
 			"castSpells":				true,	/* Spells applied using perk entry points are cast by the source on the target. */
@@ -27,6 +29,7 @@
 		"multipleHitEffects":			false,	/* Each of a cloaking spells effects can apply hit effects. */
 		"pausedGameHitEffects":			true,	/* Apply any number of hit effects to the player while the game is paused. */
 		"reflectDamage":				true,	/* Reflect any amount of damage. */
+		"teammateDifficulty":			false,	/* Teammates share the same difficulty multiplier as the player. */
 		"underfilledSoulGems":			false	/* Trap only souls of the appropriate size in soul gems. */
 	}
 }

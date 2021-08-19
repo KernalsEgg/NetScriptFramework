@@ -4,9 +4,18 @@
 
 namespace ScrambledBugs.Patches.ApplySpellPerkEntryPoints
 {
-	unsafe internal class MultipleSpells
+	unsafe static internal class MultipleSpells
 	{
-		static MultipleSpells()
+		static public ScrambledBugs.Delegates.Types.Patches.ApplySpellPerkEntryPoints.MultipleSpells.ApplyBashingSpell ApplyBashingSpell { get; set; }
+		static public ScrambledBugs.Delegates.Types.Patches.ApplySpellPerkEntryPoints.MultipleSpells.ApplyCombatHitSpell ApplyCombatHitSpell { get; set; }
+		static public ScrambledBugs.Delegates.Types.Patches.ApplySpellPerkEntryPoints.MultipleSpells.ApplyReanimateSpell ApplyReanimateSpell { get; set; }
+		static public ScrambledBugs.Delegates.Types.Patches.ApplySpellPerkEntryPoints.MultipleSpells.ApplySneakingSpell ApplySneakingSpell { get; set; }
+		static public ScrambledBugs.Delegates.Types.Patches.ApplySpellPerkEntryPoints.MultipleSpells.ApplyWeaponSwingSpell ApplyWeaponSwingSpell { get; set; }
+		static public ScrambledBugs.Delegates.Types.Patches.ApplySpellPerkEntryPoints.MultipleSpells.EntryPointFunction SelectSpell { get; set; }
+
+
+
+		static public void Patch(System.Boolean castSpells)
 		{
 			MultipleSpells.ApplyBashingSpell = (System.Int32 entryPoint, Actor* perkOwner, Actor* target, SpellItem** result) =>
 			{
@@ -26,7 +35,7 @@ namespace ScrambledBugs.Patches.ApplySpellPerkEntryPoints
 
 						if (bashingSpell != null)
 						{
-							SpellItem.Apply(bashingSpell, MultipleSpells.CastSpells ? perkOwner : target, target);
+							SpellItem.Apply(bashingSpell, castSpells ? perkOwner : target, target);
 						}
 					}
 				}
@@ -63,7 +72,7 @@ namespace ScrambledBugs.Patches.ApplySpellPerkEntryPoints
 
 						if (combatHitSpell != null)
 						{
-							SpellItem.Apply(combatHitSpell, MultipleSpells.CastSpells ? perkOwner : target, target);
+							SpellItem.Apply(combatHitSpell, castSpells ? perkOwner : target, target);
 						}
 					}
 				}
@@ -106,7 +115,7 @@ namespace ScrambledBugs.Patches.ApplySpellPerkEntryPoints
 
 						if (reanimateSpell != null)
 						{
-							SpellItem.Apply(reanimateSpell, MultipleSpells.CastSpells ? perkOwner : target, target);
+							SpellItem.Apply(reanimateSpell, castSpells ? perkOwner : target, target);
 						}
 					}
 				}
@@ -178,7 +187,7 @@ namespace ScrambledBugs.Patches.ApplySpellPerkEntryPoints
 
 						if (weaponSwingSpell != null)
 						{
-							SpellItem.Apply(weaponSwingSpell, MultipleSpells.CastSpells ? attacker : perkOwner, perkOwner);
+							SpellItem.Apply(weaponSwingSpell, castSpells ? attacker : perkOwner, perkOwner);
 						}
 					}
 				}
@@ -229,15 +238,5 @@ namespace ScrambledBugs.Patches.ApplySpellPerkEntryPoints
 				System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate<ScrambledBugs.Delegates.Types.Patches.ApplySpellPerkEntryPoints.MultipleSpells.EntryPointFunction>(MultipleSpells.SelectSpell)
 			);
 		}
-
-
-
-		static public ScrambledBugs.Delegates.Types.Patches.ApplySpellPerkEntryPoints.MultipleSpells.ApplyBashingSpell ApplyBashingSpell { get; }
-		static public ScrambledBugs.Delegates.Types.Patches.ApplySpellPerkEntryPoints.MultipleSpells.ApplyCombatHitSpell ApplyCombatHitSpell { get; }
-		static public ScrambledBugs.Delegates.Types.Patches.ApplySpellPerkEntryPoints.MultipleSpells.ApplyReanimateSpell ApplyReanimateSpell { get; }
-		static public ScrambledBugs.Delegates.Types.Patches.ApplySpellPerkEntryPoints.MultipleSpells.ApplySneakingSpell ApplySneakingSpell { get; }
-		static public ScrambledBugs.Delegates.Types.Patches.ApplySpellPerkEntryPoints.MultipleSpells.ApplyWeaponSwingSpell ApplyWeaponSwingSpell { get; }
-		static public ScrambledBugs.Delegates.Types.Patches.ApplySpellPerkEntryPoints.MultipleSpells.EntryPointFunction SelectSpell { get; }
-		static public System.Boolean CastSpells { get; set; }
 	}
 }

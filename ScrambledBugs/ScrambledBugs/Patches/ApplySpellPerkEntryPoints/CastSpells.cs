@@ -4,9 +4,13 @@
 
 namespace ScrambledBugs.Patches.ApplySpellPerkEntryPoints
 {
-	unsafe internal class CastSpells
+	unsafe static internal class CastSpells
 	{
-		static CastSpells()
+		static public ScrambledBugs.Delegates.Types.Patches.ApplySpellPerkEntryPoints.CastSpells.ApplySpell ApplySpell { get; set; }
+
+
+
+		static public void Patch()
 		{
 			CastSpells.ApplySpell = (Actor* target, SpellItem* spell, Actor* source) =>
 			{
@@ -47,9 +51,5 @@ namespace ScrambledBugs.Patches.ApplySpellPerkEntryPoints
 				CastSpells.ApplySpell
 			);
 		}
-
-
-
-		static public ScrambledBugs.Delegates.Types.Patches.ApplySpellPerkEntryPoints.CastSpells.ApplySpell ApplySpell { get; }
 	}
 }

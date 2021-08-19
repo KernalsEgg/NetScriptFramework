@@ -22,6 +22,20 @@
 	unsafe public struct ActorValueOwner
 	{
 		// Virtual
+		static public System.Single GetActorValue(ActorValueOwner* actorValueOwner, ActorValue actorValue)
+		{
+			var getActorValue = Memory.ReadVirtualFunction<Eggstensions.Delegates.Types.ActorValueOwner.GetActorValue>(*(System.IntPtr*)actorValueOwner, 0x1);
+
+			return getActorValue(actorValueOwner, (System.Int32)actorValue);
+		}
+
+		static public System.Single GetPermanentActorValue(ActorValueOwner* actorValueOwner, ActorValue actorValue)
+		{
+			var getPermanentActorValue = Memory.ReadVirtualFunction<Eggstensions.Delegates.Types.ActorValueOwner.GetPermanentActorValue>(*(System.IntPtr*)actorValueOwner, 0x2);
+
+			return getPermanentActorValue(actorValueOwner, (System.Int32)actorValue);
+		}
+
 		static public void RestoreActorValue(ActorValueOwner* actorValueOwner, ActorValueModifier actorValueModifier, ActorValue actorValue, System.Single value)
 		{
 			var restoreActorValue = Memory.ReadVirtualFunction<Eggstensions.Delegates.Types.ActorValueOwner.RestoreActorValue>(*(System.IntPtr*)actorValueOwner, 0x6);

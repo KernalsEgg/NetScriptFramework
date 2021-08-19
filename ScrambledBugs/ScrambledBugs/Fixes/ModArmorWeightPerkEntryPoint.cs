@@ -4,9 +4,16 @@
 
 namespace ScrambledBugs.Fixes
 {
-	unsafe internal class ModArmorWeightPerkEntryPoint
+	unsafe static internal class ModArmorWeightPerkEntryPoint
 	{
-		static ModArmorWeightPerkEntryPoint()
+		static public Eggstensions.Delegates.Types.BGSPerkEntry.AddPerkEntry AddPerkEntry { get; set; }
+		static public Eggstensions.Delegates.Types.Context.CaptureContext ModArmorWeightContainer { get; set; }
+		static public Eggstensions.Delegates.Types.Context.CaptureContext ModArmorWeightInventoryChanges { get; set; }
+		static public Eggstensions.Delegates.Types.BGSPerkEntry.RemovePerkEntry RemovePerkEntry { get; set; }
+
+
+
+		static public void Fix()
 		{
 			ModArmorWeightPerkEntryPoint.ModArmorWeightContainer = (Context* context) =>
 			{
@@ -135,12 +142,5 @@ namespace ScrambledBugs.Fixes
 				ModArmorWeightPerkEntryPoint.RemovePerkEntry
 			);
 		}
-
-
-
-		static public Eggstensions.Delegates.Types.BGSPerkEntry.AddPerkEntry AddPerkEntry { get; }
-		static public Eggstensions.Delegates.Types.Context.CaptureContext ModArmorWeightContainer { get; }
-		static public Eggstensions.Delegates.Types.Context.CaptureContext ModArmorWeightInventoryChanges { get; }
-		static public Eggstensions.Delegates.Types.BGSPerkEntry.RemovePerkEntry RemovePerkEntry { get; }
 	}
 }

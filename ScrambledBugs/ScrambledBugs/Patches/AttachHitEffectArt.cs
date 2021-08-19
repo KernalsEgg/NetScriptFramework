@@ -4,9 +4,9 @@
 
 namespace ScrambledBugs.Patches
 {
-	internal class AttachHitEffectArt
+	static internal class AttachHitEffectArt
 	{
-		static AttachHitEffectArt()
+		static public void Patch()
 		{
 			Memory.SafeWriteArray<System.Byte>(ScrambledBugs.Offsets.Patches.AttachHitEffectArt.AddNoHitEffectArtFlag, new System.Byte[2 + 2] { 0x24, 0xF8, Assembly.Nop, Assembly.Nop }); // 1 << 2 (NoHitEffectArt), 1 << 4 (NoInitialFlare)
 
@@ -28,7 +28,7 @@ namespace ScrambledBugs.Patches
 			assembly.Add(new System.Byte[3] { 0x48, 0x8B, 0x01 });						// mov rax, [rcx]
 			assembly.Add(new System.Byte[3] { 0xFF, 0x50, 0x78 });						// call [rax+78] (ReferenceEffectController.GetAttachRoot(controller))
 			assembly.Add(new System.Byte[3] { 0x48, 0x85, 0xC0 });						// test rax, rax (attachRoot)
-			assembly.Add(new System.Byte[2] { 0x75, 3 + 3 + 6 });						// jnz 0C (attachRoot == null)
+			assembly.Add(new System.Byte[2] { 0x75, 3 + 3 + 6 });						// jnz C (attachRoot == null)
 
 			assembly.Add(new System.Byte[3] { 0x48, 0x8B, 0xCB });						// mov rcx, rbx (actor)
 			assembly.Add(new System.Byte[3] { 0x48, 0x8B, 0x01 });						// mov rax, [rcx]
@@ -44,7 +44,7 @@ namespace ScrambledBugs.Patches
 			assembly.Add(new System.Byte[3] { 0xFF, 0x50, 0x18 });						// call [rax+18] (NiObject.AsNode(attachRoot))
 			assembly.Add(new System.Byte[3] { 0x4C, 0x8B, 0xE0 });						// mov r12, rax
 			assembly.Add(new System.Byte[3] { 0x4D, 0x85, 0xE4 });						// test r12, r12
-			assembly.Add(new System.Byte[2] { 0x75, 4 });								// jnz 04 (attachRootNode == null)
+			assembly.Add(new System.Byte[2] { 0x75, 4 });								// jnz 4 (attachRootNode == null)
 
 			assembly.Add(new System.Byte[4] { 0x4D, 0x8B, 0x65, 0x30 });				// mov r12, [r13+30] (attachRoot->Parent)
 
@@ -77,8 +77,8 @@ namespace ScrambledBugs.Patches
 			// modelReferenceEffect->Controller	!= null
 
 			/*
-			ReferenceEffectController* controller = modelReferenceEffect->Controller;
-			NiAVObject* attachRoot = ReferenceEffectController.GetAttachRoot(controller);
+			ReferenceEffectController* controller	= modelReferenceEffect->Controller;
+			NiAVObject* attachRoot					= ReferenceEffectController.GetAttachRoot(controller);
 
 			if (attachRoot == null)
 			{

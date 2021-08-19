@@ -4,11 +4,11 @@
 
 namespace ScrambledBugs.Patches
 {
-	internal class UnderfilledSoulGems
+	static internal class UnderfilledSoulGems
 	{
-		static UnderfilledSoulGems()
+		static public void Patch()
 		{
-			Memory.SafeWriteArray<System.Byte>(ScrambledBugs.Offsets.Patches.UnderfilledSoulGems.FindBestSoulGem, new System.Byte[2] { 0x75, 0x2E });
+			Memory.SafeWriteArray<System.Byte>(ScrambledBugs.Offsets.Patches.UnderfilledSoulGems.CompareSoulLevelValue, new System.Byte[2] { 0x75, 0x2E });
 		}
 	}
 }

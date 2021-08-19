@@ -4,9 +4,13 @@
 
 namespace ScrambledBugs.Fixes
 {
-	unsafe internal class HarvestedFlags
+	unsafe static internal class HarvestedFlags
 	{
-		static HarvestedFlags()
+		static public ScrambledBugs.Delegates.Types.Fixes.HarvestedFlags.SetHarvestedFlag RemoveChangeFlag { get; set; }
+
+
+
+		static public void Fix()
 		{
 			var setHarvestedFlag = Memory.ReadRelativeCall<ScrambledBugs.Delegates.Types.Fixes.HarvestedFlags.SetHarvestedFlag>(ScrambledBugs.Offsets.Fixes.HarvestedFlags.RemoveHarvestedFlag);
 
@@ -30,9 +34,5 @@ namespace ScrambledBugs.Fixes
 				HarvestedFlags.RemoveChangeFlag
 			);
 		}
-
-
-
-		static public ScrambledBugs.Delegates.Types.Fixes.HarvestedFlags.SetHarvestedFlag RemoveChangeFlag { get; }
 	}
 }

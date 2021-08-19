@@ -52,6 +52,7 @@
   <ItemGroup>
     <Compile Include="Delegates.cs" />
     <Compile Include="Fixes\ApplySpellPerkEntryPoints\Arrows.cs" />
+    <Compile Include="Fixes\ActorValuePercentage.cs" />
     <Compile Include="Fixes\HarvestedFlags.cs" />
     <Compile Include="Fixes\HitEffectRaceCondition.cs" />
     <Compile Include="Fixes\MagicEffectFlags.cs" />
@@ -66,14 +67,15 @@
     <Compile Include="Fixes\MovementSpeed.cs" />
     <Compile Include="Patches\MultipleHitEffects.cs" />
     <Compile Include="Patches\PausedGameHitEffects.cs" />
+    <Compile Include="Patches\AlreadyCaughtPickpocketing.cs" />
     <Compile Include="Patches\ReflectDamage.cs" />
+    <Compile Include="Patches\TeammateDifficulty.cs" />
     <Compile Include="Patches\UnderfilledSoulGems.cs" />
     <Compile Include="Plugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Fixes\MagicEffectConditions.cs" />
     <Compile Include="Patches\ApplySpellPerkEntryPoints\CastSpells.cs" />
     <Compile Include="Fixes\TerrainDecals.cs" />
-    <Compile Include="Settings.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

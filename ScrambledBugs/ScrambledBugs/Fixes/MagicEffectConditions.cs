@@ -4,9 +4,9 @@
 
 namespace ScrambledBugs.Fixes
 {
-	internal class MagicEffectConditions
+	static internal class MagicEffectConditions
 	{
-		static MagicEffectConditions()
+		static public void Fix()
 		{
 			// RDI: activeEffect
 			// XMM1: activeEffect->ElapsedTime
@@ -31,7 +31,7 @@ namespace ScrambledBugs.Fixes
 			assembly.Add(new System.Byte[3] { 0x0F, 0x2F, 0xD0 });																									// comiss xmm2, xmm0
 			assembly.Add(new System.Byte[2] { 0x76, (5 + 4 + 4 + 3 + 2) + (4 + 8 + 5) });																			// jna 23 (padding8C > 0.0F)
 
-			assembly.Add(new System.Byte[5] { 0xB9, 0x01, 0x00, 0x00, 0x00 });																						// mov ecx, 00000001
+			assembly.Add(new System.Byte[5] { 0xB9, 0x01, 0x00, 0x00, 0x00 });																						// mov ecx, 1
 			assembly.Add(new System.Byte[4] { 0xF3, 0x0F, 0x2A, 0xC1 });																							// cvtsi2ss xmm0, ecx
 			assembly.Add(new System.Byte[4] { 0xF3, 0x0F, 0x5E, 0xC3 });																							// divss xmm0,xmm3
 			assembly.Add(new System.Byte[3] { 0x0F, 0x2F, 0xC2 });																									// comiss xmm0, xmm2

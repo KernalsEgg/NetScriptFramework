@@ -4,9 +4,15 @@
 
 namespace ScrambledBugs.Patches
 {
-	unsafe internal class EquipBestAmmo
+	unsafe static internal class EquipBestAmmo
 	{
-		static EquipBestAmmo()
+		static public Eggstensions.Delegates.Types.Context.CaptureContext CompareDamageContainer { get; set; }
+		static public Eggstensions.Delegates.Types.Context.CaptureContext CompareDamageInventoryChanges { get; set; }
+		static public Eggstensions.Delegates.Types.Context.CaptureContext InitializeDamage { get; set; }
+
+
+
+		static public void Patch()
 		{
 			EquipBestAmmo.InitializeDamage = (Context* context) =>
 			{
@@ -77,11 +83,5 @@ namespace ScrambledBugs.Patches
 				EquipBestAmmo.CompareDamageInventoryChanges
 			);
 		}
-
-
-
-		static public Eggstensions.Delegates.Types.Context.CaptureContext CompareDamageContainer { get; }
-		static public Eggstensions.Delegates.Types.Context.CaptureContext CompareDamageInventoryChanges { get; }
-		static public Eggstensions.Delegates.Types.Context.CaptureContext InitializeDamage { get; }
 	}
 }

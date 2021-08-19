@@ -4,9 +4,13 @@
 
 namespace ScrambledBugs.Fixes
 {
-	unsafe internal class MagicEffectFlags
+	unsafe static internal class MagicEffectFlags
 	{
-		static MagicEffectFlags()
+		static public ScrambledBugs.Delegates.Types.Fixes.MagicEffectFlags.SetEffectiveness SetEffectiveness { get; set; }
+
+
+
+		static public void Fix()
 		{
 			MagicEffectFlags.SetEffectiveness = (ActiveEffect* activeEffect, System.Single effectiveness) =>
 			{
@@ -60,9 +64,5 @@ namespace ScrambledBugs.Fixes
 				MagicEffectFlags.SetEffectiveness
 			);
 		}
-
-
-
-		static public ScrambledBugs.Delegates.Types.Fixes.MagicEffectFlags.SetEffectiveness SetEffectiveness { get; }
 	}
 }

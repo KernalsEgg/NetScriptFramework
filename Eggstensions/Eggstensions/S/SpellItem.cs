@@ -10,10 +10,8 @@
 		// Member
 		/// <summary>SkyrimSE.exe + 0x632180 (VID 37817)</summary>
 		static public void Apply(SpellItem* spell, Actor* source, Actor* target)
-		{
-			var spellType = MagicItem.GetSpellType(&spell->MagicItem);
-				
-			if (((1 << (System.Int32)spellType) & (System.Int32)SpellType.AddSpell) != 0)
+		{	
+			if (SpellItem.ShouldAddSpell(spell))
 			{
 				Actor.AddSpell(target, spell);
 			}
@@ -23,6 +21,11 @@
 
 				MagicCaster.Cast(magicCaster, spell, false, target, 1.0F, false, 0.0F, null);
 			}
+		}
+
+		static public System.Boolean ShouldAddSpell(SpellItem* spell)
+		{
+			return Eggstensions.Delegates.Instances.SpellItem.ShouldAddSpell(spell) != 0;
 		}
 	}
 }

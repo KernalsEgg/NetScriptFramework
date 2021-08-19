@@ -12,8 +12,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)Assembly.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)A\ActiveEffect.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)A\Actor.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)A\ActorMagicCaster.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)A\ActorValueOwner.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)A\AIProcess.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)A\ActorProcess.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)A\ArrowProjectile.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)C\Color.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)E\Effect.cs" />
@@ -21,6 +22,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)E\EnchantmentItem.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)E\ExtraDataList.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)I\InitTESThread.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)N\NiPoint3.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)T\TESAmmo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)T\TESObjectARMO.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UnmanagedArray.cs" />
