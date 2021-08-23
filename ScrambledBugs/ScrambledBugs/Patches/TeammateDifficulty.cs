@@ -8,11 +8,6 @@ namespace ScrambledBugs.Patches
 	{
 		static public void Patch()
 		{
-			// RCX: actor
-
-			// RAX
-			// EFLAGS
-			
 			var assembly = new UnmanagedArray<System.Byte>();
 
 			assembly.Add(Memory.ReadArray<System.Byte>(ScrambledBugs.Offsets.Patches.TeammateDifficulty.IsPlayer, Memory.Size<RelativeCall>.Unmanaged));	// mov edx, 00000018
@@ -27,9 +22,14 @@ namespace ScrambledBugs.Patches
 
 			ScrambledBugs.Plugin.Trampoline.WriteRelativeCallBranch(ScrambledBugs.Offsets.Patches.TeammateDifficulty.IsPlayer, assembly);
 
+			// rax
+			// eflags
+
 			// actor != null
 
 			/*
+			Actor* actor; // rcx
+			
 			return
 				actor == player
 				||

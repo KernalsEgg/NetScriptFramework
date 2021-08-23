@@ -28,6 +28,13 @@
 					"E8 ?? ?? ?? ??"	// call
 				);
 
+				/// <summary>EnemyHealth::Update (SkyrimSE.exe + 0x882520)</summary>
+				static public System.IntPtr EnemyHealth { get; } = NetScriptFramework.Main.GameInfo.GetAddressOf
+				(
+					50776, 0xE1, 0,     // 0x5
+					"E8 ?? ?? ?? ??"    // call
+				);
+
 				/// <summary>SkyrimSE.exe + 0x94ABB0</summary>
 				static public System.IntPtr Papyrus { get; } = NetScriptFramework.Main.GameInfo.GetAddressOf
 				(
@@ -160,8 +167,8 @@
 
 			static internal class TrainingMenuText
 			{
-				/// <summary>SkyrimSE.exe + 0x8CEA30</summary>
-				static public System.IntPtr UpdateText { get; } = NetScriptFramework.Main.GameInfo.GetAddressOf
+				/// <summary>TrainingMenu::UpdateText (SkyrimSE.exe + 0x8CEA30)</summary>
+				static public System.IntPtr GetPermanentActorValue { get; } = NetScriptFramework.Main.GameInfo.GetAddressOf
 				(
 					51794, 0x289, 0,	// 0x3
 					"FF 50 10"			// call [rax+10]
@@ -290,19 +297,63 @@
 				}
 			}
 
+			
 
+			static internal class AccumulatingMagnitude
+			{
+				/// <summary>AccumulatingValueModifierEffect::UpdateActorValue (SkyrimSE.exe + 0x53D770)</summary>
+				static public System.IntPtr GetMaximumWardPower { get; }		= NetScriptFramework.Main.GameInfo.GetAddressOf
+				(
+					33265, 0x91, 0,		// 0x5
+					"E8 ?? ?? ?? ??"	// call
+				);
+
+				/// <summary>FindMaxMagnitudeVisitor::Visit (SkyrimSE.exe + 0x53D910)</summary>
+				static public System.IntPtr GetMaximumMagnitude { get; }		= NetScriptFramework.Main.GameInfo.GetAddressOf
+				(
+					33268, 0x35, 0,			// 0x8
+					"F3 0F10 83 9C000000"	// movss xmm0, [rbx+9C]
+				);
+
+				/// <summary>AccumulatingValueModifierEffect::UpdateActorValue (SkyrimSE.exe + 0x53D770)</summary>
+				static public System.IntPtr GetMaximumMagnitudeAndRate { get; }	= NetScriptFramework.Main.GameInfo.GetAddressOf
+				(
+					33265, 0x7D, 0,			// 3 + 4 + 8 = 0xF
+					"0F28 F0" +				// movaps xmm6, xmm0
+					"F3 0F59 F7" +			// mulss xmm6, xmm7
+					"F3 0F10 BB 9C000000"	// movss xmm7, [rbx+9C]
+				);
+
+				/// <summary>AccumulatingValueModifierEffect::Constructor (SkyrimSE.exe + 0x53D2B0)</summary>
+				static public System.IntPtr SetMaximumMagnitude { get; }		= NetScriptFramework.Main.GameInfo.GetAddressOf
+				(
+					33256, 0x4C, 0,			// 0x8
+					"F3 0F11 87 9C000000"	// movss [rdi+9C], xmm0
+				);
+
+				/// <summary>AccumulatingValueModifierEffect::Constructor (SkyrimSE.exe + 0x53D2B0)</summary>
+				static public System.IntPtr SetRate { get; }					= NetScriptFramework.Main.GameInfo.GetAddressOf
+				(
+					33256, 0x8A, 0,			// 3 + 8 + 6 + 5 + 5 = 0x1B
+					"0F28 D0" +				// movaps xmm2, xmm0
+					"F3 0F10 8F 9C000000" +	// movss xmm1, [rdi+9C]
+					"8B 8F 90000000" +		// mov ecx, [rdi+90]
+					"E8 ?? ?? ?? ??" +		// call
+					"F3 0F11 47 78"			// movss [rdi+78], xmm0
+				);
+			}
 
 			static internal class AlreadyCaughtPickpocketing
 			{
 				/// <summary>TESNPC::Activate (SkyrimSE.exe + 0x360C10)</summary>
-				static public System.IntPtr IsAttackingOnSight { get; } = NetScriptFramework.Main.GameInfo.GetAddressOf
+				static public System.IntPtr IsAttackingOnSight { get; }	= NetScriptFramework.Main.GameInfo.GetAddressOf
 				(
 					24211, 0x678, 0,    // 0x2
 					"75 2E"             // jne 2E
 				);
 
 				/// <summary>TESNPC::Activate (SkyrimSE.exe + 0x360C10)</summary>
-				static public System.IntPtr IsNotKnockedDown { get; } = NetScriptFramework.Main.GameInfo.GetAddressOf
+				static public System.IntPtr IsNotKnockedDown { get; }	= NetScriptFramework.Main.GameInfo.GetAddressOf
 				(
 					24211, 0x684, 0,	// 0x2
 					"75 10"				// jne 10
@@ -312,7 +363,7 @@
 			static internal class AttachHitEffectArt
 			{
 				/// <summary>SkyrimSE.exe + 0x6314F0</summary>
-				static public System.IntPtr AddNoHitEffectArtFlag { get; }		= NetScriptFramework.Main.GameInfo.GetAddressOf
+				static public System.IntPtr AddNoHitEffectArtFlag { get; }	= NetScriptFramework.Main.GameInfo.GetAddressOf
 				(
 					37804, 0x6F, 0,	// 2 + 2 = 0x4
 					"24 F9" +		// and al, F9
@@ -320,7 +371,7 @@
 				);
 
 				/// <summary>ModelReferenceEffect::Attach (SkyrimSE.exe + 0x558F20)</summary>
-				static public System.IntPtr Attach { get; }						= NetScriptFramework.Main.GameInfo.GetAddressOf
+				static public System.IntPtr Attach { get; }					= NetScriptFramework.Main.GameInfo.GetAddressOf
 				(
 					33872, 0x2B, 0,				// 7 + 2 = 0x9
 					"48 3B 05 ?? ?? ?? ??" +	// cmp rax, cs
@@ -328,14 +379,14 @@
 				);
 
 				/// <summary>SkyrimSE.exe + 0x558220</summary>
-				static public System.IntPtr AttachOnPerspectiveChange { get; }	= NetScriptFramework.Main.GameInfo.GetAddressOf
+				static public System.IntPtr IsPerspectiveChange { get; }	= NetScriptFramework.Main.GameInfo.GetAddressOf
 				(
 					33862, 0x9A, 0,	// 0x2
 					"74 08"			// je 08
 				);
 
 				/// <summary>SkyrimSE.exe + 0x558220</summary>
-				static public System.IntPtr AttachToPlayer { get; }				= NetScriptFramework.Main.GameInfo.GetAddressOf
+				static public System.IntPtr IsPlayer { get; }				= NetScriptFramework.Main.GameInfo.GetAddressOf
 				(
 					33862, 0x7C, 0,	// 0x2
 					"75 3B"			// jne 3B

@@ -1,7 +1,7 @@
 {
 	"fixes":
 	{
-		"actorValuePercentage":			true,	/* Calculate percentage using both the permanent and the temporary actor value modifiers. */
+		"actorValuePercentage":			true,	/* Calculate the percentage of an actor value using both the permanent and the temporary modifiers. */
 		"applySpellPerkEntryPoints":
 		{
 			"arrows":					true	/* Spells are not applied using a perk entry point when the kill camera simulates the trajectory of an arrow. */
@@ -17,7 +17,8 @@
 	},
 	"patches":
 	{
-		"alreadyCaughtPickpocketing":	false,	/* Pickpocket targets who have already caught you. */
+		"accumulatingMagnitude":		false,	/* The maximum magnitude of accumulating magnitude magic effects scales with effectiveness instead of the rate of accumulation. */
+		"alreadyCaughtPickpocketing":	false,	/* Pickpocket actors who have already caught you. */
 		"applySpellPerkEntryPoints":
 		{
 			"castSpells":				true,	/* Spells applied using perk entry points are cast by the source on the target. */

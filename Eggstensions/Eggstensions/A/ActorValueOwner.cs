@@ -5,6 +5,7 @@
 		None			= -1,
 		Magicka			= 25,
 		SpeedMult		= 30,
+		WardPower		= 63,
 		RightItemCharge	= 64,
 		LeftItemCharge	= 82
 	}

@@ -12,6 +12,7 @@
 	unsafe public struct Actor
 	{
 		[System.Runtime.InteropServices.FieldOffset(0x0)] public TESObjectREFR TESObjectREFR;
+		[System.Runtime.InteropServices.FieldOffset(0x98)] public MagicTarget MagicTarget;
 		[System.Runtime.InteropServices.FieldOffset(0xB0)] public ActorValueOwner ActorValueOwner;
 		[System.Runtime.InteropServices.FieldOffset(0xF0)] public ActorProcess* CurrentProcess;
 
@@ -38,6 +39,11 @@
 			return Eggstensions.Delegates.Instances.Actor.GetActorValueModifier(actor, (System.Int32)actorValueModifier, (System.Int32)actorValue);
 		}
 
+		static public System.Single GetMaximumWardPower(Actor* actor)
+		{
+			return Eggstensions.Delegates.Instances.Actor.GetMaximumWardPower(actor);
+		}
+
 		static public void RemoveActorValueModifiers(Actor* actor, ActorValue actorValue)
 		{
 			Eggstensions.Delegates.Instances.Actor.RemoveActorValueModifiers(actor, (System.Int32)actorValue);
@@ -46,6 +52,11 @@
 		static public void RevertSelectedSpell(Actor* actor, EquipType equipType, MagicItem* magicItem)
 		{
 			Eggstensions.Delegates.Instances.Actor.RevertSelectedSpell(actor, (System.Int32)equipType, magicItem);
+		}
+
+		static public void SetMaximumWardPower(Actor* actor, System.Single maximumWardPower)
+		{
+			Eggstensions.Delegates.Instances.Actor.SetMaximumWardPower(actor, maximumWardPower);
 		}
 
 		static public void UpdateMovementSpeed(Actor* actor)

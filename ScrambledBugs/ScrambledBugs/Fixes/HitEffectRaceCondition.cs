@@ -8,10 +8,6 @@ namespace ScrambledBugs.Fixes
 	{
 		static public void Fix()
 		{
-			// ECX: activeEffect->Flags
-
-			// EFLAGS
-			
 			var assembly = new UnmanagedArray<System.Byte>();
 
 			assembly.Add(new System.Byte[1] { 0x52 });									// push rdx
@@ -34,7 +30,11 @@ namespace ScrambledBugs.Fixes
 
 			ScrambledBugs.Plugin.Trampoline.WriteRelativeCallBranch(ScrambledBugs.Offsets.Fixes.HitEffectRaceCondition.ShouldUpdate, assembly);
 
+			// eflags
+
 			/*
+			ActiveEffectFlags flags; // ecx
+			
 			return
 				(flags & ActiveEffectFlags.Dispelled) == ActiveEffectFlags.Dispelled
 				||

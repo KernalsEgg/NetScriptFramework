@@ -2,15 +2,21 @@
 {
 	namespace Offsets
 	{
+		static public class AccumulatingValueModifierEffect
+		{
+			/// <summary>SkyrimSE.exe + 0x1636880</summary>
+			static public System.IntPtr VirtualFunctionTable { get; } = NetScriptFramework.Main.GameInfo.GetAddressOf(257549);
+		}
+
 		static public class ActiveEffect
 		{
-			/// <summary>SkyrimSE.exe + 0x2F25CE8</summary>
-			static public System.IntPtr ConditionUpdateFrequency { get; }	= NetScriptFramework.Main.GameInfo.GetAddressOf(516661);
-
 			/// <summary>SkyrimSE.exe + 0x53E380</summary>
-			static public System.IntPtr Dispel { get; }						= NetScriptFramework.Main.GameInfo.GetAddressOf(33286);
+			static public System.IntPtr Dispel { get; }					= NetScriptFramework.Main.GameInfo.GetAddressOf(33286);
+
+			/// <summary>SkyrimSE.exe + 0x53E120</summary>
+			static public System.IntPtr GetCurrentMagnitude { get; }	= NetScriptFramework.Main.GameInfo.GetAddressOf(33282);
 		}
-		
+
 		static public class Actor
 		{
 			/// <summary>SkyrimSE.exe + 0x62F560</summary>
@@ -19,11 +25,17 @@
 			/// <summary>SkyrimSE.exe + 0x621350</summary>
 			static public System.IntPtr GetActorValueModifier { get; }		= NetScriptFramework.Main.GameInfo.GetAddressOf(37524);
 
+			/// <summary>SkyrimSE.exe + 0x6338F0</summary>
+			static public System.IntPtr GetMaximumWardPower { get; }		= NetScriptFramework.Main.GameInfo.GetAddressOf(37837);
+
 			/// <summary>SkyrimSE.exe + 0x621590</summary>
 			static public System.IntPtr RemoveActorValueModifiers { get; }	= NetScriptFramework.Main.GameInfo.GetAddressOf(37527);
 
 			/// <summary>SkyrimSE.exe + 0x632270</summary>
 			static public System.IntPtr RevertSelectedSpell { get; }		= NetScriptFramework.Main.GameInfo.GetAddressOf(37819);
+
+			/// <summary>SkyrimSE.exe + 0x633910</summary>
+			static public System.IntPtr SetMaximumWardPower { get; }		= NetScriptFramework.Main.GameInfo.GetAddressOf(37838);
 
 			/// <summary>SkyrimSE.exe + 0x607FA0</summary>
 			static public System.IntPtr UpdateMovementSpeed { get; }		= NetScriptFramework.Main.GameInfo.GetAddressOf(36916);
@@ -36,6 +48,15 @@
 
 			/// <summary>SkyrimSE.exe + 0x1598610</summary>
 			static public System.IntPtr VirtualFunctionTable { get; }	= NetScriptFramework.Main.GameInfo.GetAddressOf(241053);
+		}
+
+		static public class BSPointerHandle
+		{
+			/// <summary>SkyrimSE.exe + 0x1EE670</summary>
+			static public System.IntPtr GetHandle { get; }			= NetScriptFramework.Main.GameInfo.GetAddressOf(15967);
+
+			/// <summary>SkyrimSE.exe + 0x1329D0</summary>
+			static public System.IntPtr GetSmartPointer { get; }	= NetScriptFramework.Main.GameInfo.GetAddressOf(12204);
 		}
 
 		static public class BSTArray
@@ -73,6 +94,12 @@
 			static public System.IntPtr HasExtraData { get; }	= NetScriptFramework.Main.GameInfo.GetAddressOf(15971);
 		}
 
+		static public class FindMaxMagnitudeVisitor
+		{
+			/// <summary>SkyrimSE.exe + 0x1636990</summary>
+			static public System.IntPtr VirtualFunctionTable { get; } = NetScriptFramework.Main.GameInfo.GetAddressOf(257550);
+		}
+
 		static public class InitTESThread
 		{
 			/// <summary>SkyrimSE.exe + 0x164D900</summary>
@@ -98,6 +125,15 @@
 
 			/// <summary>SkyrimSE.exe + 0x556780</summary>
 			static public System.IntPtr GetCostActorValue { get; }	= NetScriptFramework.Main.GameInfo.GetAddressOf(33817);
+		}
+
+		static public class MagicTarget
+		{
+			/// <summary>SkyrimSE.exe + 0x553E90</summary>
+			static public System.IntPtr GetActor { get; }			= NetScriptFramework.Main.GameInfo.GetAddressOf(33745);
+
+			/// <summary>SkyrimSE.exe + 0x554500</summary>
+			static public System.IntPtr VisitActiveEffects { get; }	= NetScriptFramework.Main.GameInfo.GetAddressOf(33756);
 		}
 
 		static public class PlayerCharacter

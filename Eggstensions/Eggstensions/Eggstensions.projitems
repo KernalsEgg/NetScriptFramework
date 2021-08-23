@@ -10,19 +10,26 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)Assembly.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)A\AccumulatingValueModifierEffect.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)A\ActiveEffect.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)A\Actor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)A\ActorMagicCaster.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)A\ActorValueOwner.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)A\ActorProcess.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)A\ArrowProjectile.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)B\BSHandleRefObject.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)B\BSPointerHandle.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)C\Color.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)E\Effect.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)E\EffectSetting.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)E\EnchantmentItem.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)E\ExtraDataList.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)F\FindMaxMagnitudeVisitor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)I\InitTESThread.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)M\MagicTarget.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)N\NiPoint3.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)N\NiPointer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)N\NiRefObject.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)T\TESAmmo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)T\TESObjectARMO.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UnmanagedArray.cs" />
@@ -74,5 +81,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)T\TESQuest.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)T\TESRace.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)U\UI.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)V\ValueModifierEffect.cs" />
   </ItemGroup>
 </Project>

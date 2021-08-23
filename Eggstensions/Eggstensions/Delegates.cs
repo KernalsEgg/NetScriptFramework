@@ -6,15 +6,18 @@
 		{
 			static public class ActiveEffect
 			{
-				static public Delegates.Types.ActiveEffect.Dispel Dispel { get; } = System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.ActiveEffect.Dispel>(Eggstensions.Offsets.ActiveEffect.Dispel);
+				static public Delegates.Types.ActiveEffect.Dispel Dispel { get; }							= System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.ActiveEffect.Dispel>(Eggstensions.Offsets.ActiveEffect.Dispel);
+				static public Delegates.Types.ActiveEffect.GetCurrentMagnitude GetCurrentMagnitude { get; }	= System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.ActiveEffect.GetCurrentMagnitude>(Eggstensions.Offsets.ActiveEffect.GetCurrentMagnitude);
 			}
 			
 			static public class Actor
 			{
 				static public Delegates.Types.Actor.AddSpell AddSpell { get; }										= System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.Actor.AddSpell>(Eggstensions.Offsets.Actor.AddSpell);
 				static public Delegates.Types.Actor.GetActorValueModifier GetActorValueModifier { get; }			= System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.Actor.GetActorValueModifier>(Eggstensions.Offsets.Actor.GetActorValueModifier);
+				static public Delegates.Types.Actor.GetMaximumWardPower GetMaximumWardPower { get; }				= System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.Actor.GetMaximumWardPower>(Eggstensions.Offsets.Actor.GetMaximumWardPower);
 				static public Delegates.Types.Actor.RemoveActorValueModifiers RemoveActorValueModifiers { get; }	= System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.Actor.RemoveActorValueModifiers>(Eggstensions.Offsets.Actor.RemoveActorValueModifiers);
 				static public Delegates.Types.Actor.RevertSelectedSpell RevertSelectedSpell { get; }				= System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.Actor.RevertSelectedSpell>(Eggstensions.Offsets.Actor.RevertSelectedSpell);
+				static public Delegates.Types.Actor.SetMaximumWardPower SetMaximumWardPower { get; }				= System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.Actor.SetMaximumWardPower>(Eggstensions.Offsets.Actor.SetMaximumWardPower);
 				static public Delegates.Types.Actor.UpdateMovementSpeed UpdateMovementSpeed { get; }				= System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.Actor.UpdateMovementSpeed>(Eggstensions.Offsets.Actor.UpdateMovementSpeed);
 			}
 
@@ -25,6 +28,12 @@
 				static public Delegates.Types.BGSEntryPointPerkEntry.HandleEntryPoints2 HandleEntryPoints2 { get; } = System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.BGSEntryPointPerkEntry.HandleEntryPoints2>(Eggstensions.Offsets.BGSEntryPointPerkEntry.HandleEntryPoints);
 
 				static public Delegates.Types.BGSEntryPointPerkEntry.HandleEntryPoints3 HandleEntryPoints3 { get; } = System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.BGSEntryPointPerkEntry.HandleEntryPoints3>(Eggstensions.Offsets.BGSEntryPointPerkEntry.HandleEntryPoints);
+			}
+
+			static public class BSPointerHandle
+			{
+				static public Delegates.Types.BSPointerHandle.GetHandle GetHandle { get; }				= System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.BSPointerHandle.GetHandle>(Eggstensions.Offsets.BSPointerHandle.GetHandle);
+				static public Delegates.Types.BSPointerHandle.GetSmartPointer GetSmartPointer { get; }	= System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.BSPointerHandle.GetSmartPointer>(Eggstensions.Offsets.BSPointerHandle.GetSmartPointer);
 			}
 
 			static public class BSTArray
@@ -67,6 +76,12 @@
 				static public Delegates.Types.MagicItem.GetCostActorValue GetCostActorValue { get; }	= System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.MagicItem.GetCostActorValue>(Eggstensions.Offsets.MagicItem.GetCostActorValue);
 			}
 
+			static public class MagicTarget
+			{
+				static public Delegates.Types.MagicTarget.GetActor GetActor { get; }						= System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.MagicTarget.GetActor>(Eggstensions.Offsets.MagicTarget.GetActor);
+				static public Delegates.Types.MagicTarget.VisitActiveEffects VisitActiveEffects { get; }	= System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.MagicTarget.VisitActiveEffects>(Eggstensions.Offsets.MagicTarget.VisitActiveEffects);
+			}
+
 			static public class ScriptEventSourceHolder
 			{
 				static public Delegates.Types.ScriptEventSourceHolder.GetInstance GetInstance { get; } = System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.ScriptEventSourceHolder.GetInstance>(Eggstensions.Offsets.ScriptEventSourceHolder.GetInstance);
@@ -106,6 +121,9 @@
 			{
 				[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)]
 				public delegate void Dispel(Eggstensions.ActiveEffect* activeEffect, System.Byte force);
+
+				[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)]
+				public delegate System.Single GetCurrentMagnitude(Eggstensions.ActiveEffect* activeEffect);
 			}
 
 			unsafe static public class Actor
@@ -116,6 +134,9 @@
 				[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)]
 				public delegate System.Single GetActorValueModifier(Eggstensions.Actor* actor, System.Int32 actorValueModifier, System.Int32 actorValue);
 
+				[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)]
+				public delegate System.Single GetMaximumWardPower(Eggstensions.Actor* actor);
+
 				[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)] // Virtual
 				public delegate Eggstensions.MagicCaster* GetMagicCaster(Eggstensions.Actor* actor, System.Int32 castingSource);
 
@@ -124,6 +145,9 @@
 
 				[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)]
 				public delegate void RevertSelectedSpell(Eggstensions.Actor* actor, System.Int32 equipType, Eggstensions.MagicItem* magicItem);
+
+				[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)]
+				public delegate void SetMaximumWardPower(Eggstensions.Actor* actor, System.Single maximumWardPower);
 
 				[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)]
 				public delegate void UpdateMovementSpeed(Eggstensions.Actor* actor);
@@ -180,6 +204,15 @@
 				public delegate void RemovePerkEntry(Eggstensions.BGSPerkEntry* perkEntry, Eggstensions.Actor* perkOwner);
 			}
 
+			unsafe static public class BSPointerHandle
+			{
+				[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)]
+				public delegate Eggstensions.BSPointerHandle* GetHandle(Eggstensions.BSPointerHandle* handle, Eggstensions.NiPointer smartPointer);
+
+				[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)]
+				public delegate System.Byte GetSmartPointer(Eggstensions.BSPointerHandle* handle, Eggstensions.NiPointer* smartPointer);
+			}
+
 			unsafe static public class BSTArray
 			{
 				static public class IntPtr
@@ -227,6 +260,12 @@
 				public delegate System.Byte HasExtraData(Eggstensions.ExtraDataList* extraDataList, System.Int32 extraDataType);
 			}
 
+			unsafe static public class FindMaxMagnitudeVisitor
+			{
+				[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)] // Virtual
+				public delegate System.Int32 Visit(Eggstensions.FindMaxMagnitudeVisitor* findMaxMagnitudeVisitor, Eggstensions.ActiveEffect* activeEffect);
+			}
+
 			unsafe static public class InitTESThread
 			{
 				[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)] // Virtual
@@ -251,6 +290,15 @@
 				public delegate void Cast(Eggstensions.MagicCaster* magicCaster, Eggstensions.SpellItem* spell, System.Byte noHitEffectArt, Eggstensions.Actor* target, System.Single effectiveness, System.Byte hostileEffectivenessOnly, System.Single magnitudeOverride, Eggstensions.Actor* cause);
 			}
 
+			unsafe static public class MagicTarget
+			{
+				[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)]
+				public delegate Eggstensions.Actor* GetActor(Eggstensions.MagicTarget* magicTarget);
+
+				[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)]
+				public delegate void VisitActiveEffects(Eggstensions.MagicTarget* magicTarget, void* visitor);
+			}
+
 			unsafe static public class MagicItem
 			{
 				[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)] // Virtual
@@ -270,6 +318,12 @@
 			{
 				[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)] // Virtual
 				public delegate Eggstensions.NiNode* AsNode(Eggstensions.NiObject* niObject);
+			}
+
+			unsafe static public class NiRefObject
+			{
+				[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)] // Virtual
+				public delegate void Delete(Eggstensions.NiRefObject* referenceObject);
 			}
 
 			unsafe static public class ReferenceEffectController
@@ -336,6 +390,12 @@
 			{
 				[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl, CharSet = System.Runtime.InteropServices.CharSet.Ansi)]
 				public delegate void Notification([System.Runtime.InteropServices.MarshalAs(System.Runtime.InteropServices.UnmanagedType.LPStr)] System.String text, [System.Runtime.InteropServices.MarshalAs(System.Runtime.InteropServices.UnmanagedType.LPStr)] System.String sound, System.Byte queueOnce);
+			}
+
+			unsafe static public class ValueModifierEffect
+			{
+				[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)] // Virtual
+				public delegate void ModifyActorValue(Eggstensions.ValueModifierEffect* valueModifierEffect, Eggstensions.Actor* actor, System.Single magnitude, System.Int32 actorValue);
 			}
 		}
 	}

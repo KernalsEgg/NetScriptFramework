@@ -45,6 +45,7 @@ namespace ScrambledBugs
 					},
 					Patches								= new
 					{
+						AccumulatingMagnitude			= default(System.Boolean),
 						AlreadyCaughtPickpocketing		= default(System.Boolean),
 						ApplySpellPerkEntryPoints		= new
 						{
@@ -117,6 +118,11 @@ namespace ScrambledBugs
 				}
 
 				// Patches
+				if (settings?.Patches?.AccumulatingMagnitude ?? default)
+				{
+					ScrambledBugs.Patches.AccumulatingMagnitude.Patch();
+				}
+
 				if (settings?.Patches?.AlreadyCaughtPickpocketing ?? default)
 				{
 					ScrambledBugs.Patches.AlreadyCaughtPickpocketing.Patch();

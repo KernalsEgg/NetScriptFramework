@@ -49,7 +49,8 @@ namespace ScrambledBugs.Fixes
 
 			Memory.Write<System.IntPtr>
 			(
-				ScrambledBugs.Offsets.Fixes.MovementSpeed.ActorValueSinkFunctionTable + Memory.Size<System.IntPtr>.Unmanaged * (System.Int32)ActorValue.SpeedMult,
+				ScrambledBugs.Offsets.Fixes.MovementSpeed.ActorValueSinkFunctionTable,
+				Memory.Size<System.IntPtr>.Unmanaged * (System.Int32)ActorValue.SpeedMult,
 				System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate<ScrambledBugs.Delegates.Types.Fixes.MovementSpeed.ActorValueSink>(MovementSpeed.SpeedMultSink)
 			);
 		}

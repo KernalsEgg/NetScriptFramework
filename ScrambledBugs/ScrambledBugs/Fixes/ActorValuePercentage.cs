@@ -35,6 +35,12 @@ namespace ScrambledBugs.Fixes
 
 			ScrambledBugs.Plugin.Trampoline.WriteRelativeCall<ScrambledBugs.Delegates.Types.Fixes.ActorValuePercentage.GetActorValuePercentage>
 			(
+				ScrambledBugs.Offsets.Fixes.ActorValuePercentage.EnemyHealth,
+				ActorValuePercentage.GetActorValuePercentage
+			);
+
+			ScrambledBugs.Plugin.Trampoline.WriteRelativeCall<ScrambledBugs.Delegates.Types.Fixes.ActorValuePercentage.GetActorValuePercentage>
+			(
 				ScrambledBugs.Offsets.Fixes.ActorValuePercentage.Papyrus,
 				ActorValuePercentage.GetActorValuePercentage
 			);

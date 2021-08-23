@@ -8,16 +8,6 @@ namespace ScrambledBugs.Fixes
 	{
 		static public void Fix()
 		{
-			// RDI: activeEffect
-			// XMM1: activeEffect->ElapsedTime
-			// XMM3: activeEffectConditionUpdateFrequency
-			// XMM6: frameTime
-
-			// ECX
-			// EFLAGS
-			// XMM0
-			// XMM2
-
 			var assembly = new UnmanagedArray<System.Byte>();
 
 			assembly.Add(new System.Byte[3] { 0x0F, 0x57, 0xC0 });																									// xorps xmm0, xmm0
@@ -47,9 +37,19 @@ namespace ScrambledBugs.Fixes
 			Memory.SafeFill<System.Byte>(ScrambledBugs.Offsets.Fixes.MagicEffectConditions.UpdateConditions, 0x6C, Assembly.Nop);
 			Memory.SafeWriteArray<System.Byte>(ScrambledBugs.Offsets.Fixes.MagicEffectConditions.UpdateConditions, assembly);
 
+			// ecx
+			// eflags
+			// xmm0
+			// xmm2
+
 			// activeEffect != null
 
 			/*
+			ActiveEffect* activeEffect;							// rdi
+			System.Single elapsedTime;							// xmm1
+			System.Single activeEffectConditionUpdateFrequency;	// xmm3
+			System.Single frameTime;							// xmm6
+			
 			if (elapsedTime <= 0.0F)
 			{
 				activeEffect->Padding8C = frameTime;

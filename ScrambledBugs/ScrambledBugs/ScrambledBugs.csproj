@@ -71,6 +71,7 @@
     <Compile Include="Patches\ReflectDamage.cs" />
     <Compile Include="Patches\TeammateDifficulty.cs" />
     <Compile Include="Patches\UnderfilledSoulGems.cs" />
+    <Compile Include="Patches\AccumulatingMagnitude.cs" />
     <Compile Include="Plugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Fixes\MagicEffectConditions.cs" />

@@ -2,6 +2,7 @@
 {
 	public enum EntryPoint : System.Byte
 	{
+		ModSpellMagnitude		= 29,
 		ModArmorWeight			= 32,
 		ApplyCombatHitSpell		= 51,
 		ApplyBashingSpell		= 52,

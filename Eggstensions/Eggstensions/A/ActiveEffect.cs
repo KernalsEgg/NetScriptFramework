@@ -23,8 +23,10 @@
 	[System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Explicit, Size = 0x90)]
 	unsafe public struct ActiveEffect
 	{
+		[System.Runtime.InteropServices.FieldOffset(0x34)] public BSPointerHandle Caster; // Actor
 		[System.Runtime.InteropServices.FieldOffset(0x40)] public MagicItem* Spell;
 		[System.Runtime.InteropServices.FieldOffset(0x48)] public Effect* Effect;
+		[System.Runtime.InteropServices.FieldOffset(0x50)] public MagicTarget* MagicTarget;
 		[System.Runtime.InteropServices.FieldOffset(0x70)] public System.Single ElapsedTime;
 		[System.Runtime.InteropServices.FieldOffset(0x74)] public System.Single Duration;
 		[System.Runtime.InteropServices.FieldOffset(0x78)] public System.Single Magnitude;
@@ -33,20 +35,15 @@
 
 
 
-		static public System.Single ConditionUpdateFrequency
-		{
-			get
-			{
-				return Memory.Read<System.Single>(Eggstensions.Offsets.ActiveEffect.ConditionUpdateFrequency);
-			}
-		}
-
-
-
 		// Member
 		static public void Dispel(ActiveEffect* activeEffect, System.Boolean force)
 		{
 			Eggstensions.Delegates.Instances.ActiveEffect.Dispel(activeEffect, (System.Byte)(force ? 1 : 0));
+		}
+
+		static public System.Single GetCurrentMagnitude(ActiveEffect* activeEffect)
+		{
+			return Eggstensions.Delegates.Instances.ActiveEffect.GetCurrentMagnitude(activeEffect);
 		}
 	}
 }

@@ -16,7 +16,7 @@
 
 
 	[System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Explicit, Size = 0x1D8)]
-	public class Projectile
+	public struct Projectile
 	{
 		[System.Runtime.InteropServices.FieldOffset(0x0)] public TESObjectREFR TESObjectREFR;
 		[System.Runtime.InteropServices.FieldOffset(0x198)] public System.Single Damage;				// SkyrimSE.exe + 0x74A950 (VID 42920) + 0x332
