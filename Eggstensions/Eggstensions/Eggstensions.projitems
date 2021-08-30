@@ -17,6 +17,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)A\ActorValueOwner.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)A\ActorProcess.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)A\ArrowProjectile.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)B\BGSMovementType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)B\BSHandleRefObject.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)B\BSPointerHandle.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)C\Color.cs" />

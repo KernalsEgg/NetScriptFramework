@@ -64,11 +64,12 @@
     <Compile Include="Patches\EquipBestAmmo.cs" />
     <Compile Include="Fixes\WeaponCharge.cs" />
     <Compile Include="Patches\LockpickingExperience.cs" />
-    <Compile Include="Fixes\MovementSpeed.cs" />
+    <Compile Include="Fixes\SpeedMult.cs" />
     <Compile Include="Patches\MultipleHitEffects.cs" />
     <Compile Include="Patches\PausedGameHitEffects.cs" />
     <Compile Include="Patches\AlreadyCaughtPickpocketing.cs" />
     <Compile Include="Patches\ReflectDamage.cs" />
+    <Compile Include="Patches\PowerAttackStamina.cs" />
     <Compile Include="Patches\TeammateDifficulty.cs" />
     <Compile Include="Patches\UnderfilledSoulGems.cs" />
     <Compile Include="Patches\AccumulatingMagnitude.cs" />

@@ -10,9 +10,9 @@ namespace ScrambledBugs
 		{
 			namespace Fixes
 			{
-				static internal class MovementSpeed
+				static internal class SpeedMult
 				{
-					static public Delegates.Types.Fixes.MovementSpeed.RemoveMovementFlags RemoveMovementFlags { get; } = System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.Fixes.MovementSpeed.RemoveMovementFlags>(ScrambledBugs.Offsets.Fixes.MovementSpeed.RemoveMovementFlags);
+					static public Delegates.Types.Fixes.SpeedMult.RemoveMovementFlags RemoveMovementFlags { get; } = System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.Fixes.SpeedMult.RemoveMovementFlags>(ScrambledBugs.Offsets.Fixes.SpeedMult.RemoveMovementFlags);
 				}
 
 				static internal class WeaponCharge
@@ -30,6 +30,12 @@ namespace ScrambledBugs
 				{
 					[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)]
 					public delegate System.Single GetActorValuePercentage(Eggstensions.Actor* actor, System.Int32 actorValue);
+
+					[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)]
+					public delegate System.Single GetHealthPercentage(Eggstensions.Actor* actor);
+
+					[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)]
+					public delegate System.Single GetStaminaPercentage(Eggstensions.Actor* actor);
 				}
 
 				unsafe static internal class HarvestedFlags
@@ -44,7 +50,7 @@ namespace ScrambledBugs
 					public delegate void SetEffectiveness(ActiveEffect* activeEffect, System.Single effectiveness);
 				}
 
-				unsafe static internal class MovementSpeed
+				unsafe static internal class SpeedMult
 				{
 					[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)]
 					public delegate void ActorValueSink(Actor* actor, System.Int32 actorValue, System.Single old, System.Single delta);
@@ -56,10 +62,10 @@ namespace ScrambledBugs
 				unsafe static internal class WeaponCharge
 				{
 					[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)]
-					public delegate void RemoveEquippedItemFlags(PlayerCharacter* player, System.Byte flags);
+					public delegate void HandleEquippedItem(Actor* actor, TESBoundObject* item, ExtraDataList* extraDataList, System.Byte leftHand);
 
 					[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)]
-					public delegate void HandleEquippedItem(Actor* actor, TESBoundObject* item, ExtraDataList* extraDataList, System.Byte leftHand);
+					public delegate void RemoveEquippedItemFlags(PlayerCharacter* player, System.Byte flags);
 				}
 			}
 

@@ -15,6 +15,7 @@
 				static public Delegates.Types.Actor.AddSpell AddSpell { get; }										= System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.Actor.AddSpell>(Eggstensions.Offsets.Actor.AddSpell);
 				static public Delegates.Types.Actor.GetActorValueModifier GetActorValueModifier { get; }			= System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.Actor.GetActorValueModifier>(Eggstensions.Offsets.Actor.GetActorValueModifier);
 				static public Delegates.Types.Actor.GetMaximumWardPower GetMaximumWardPower { get; }				= System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.Actor.GetMaximumWardPower>(Eggstensions.Offsets.Actor.GetMaximumWardPower);
+				static public Delegates.Types.Actor.GetMovementActor GetMovementActor { get; }						= System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.Actor.GetMovementActor>(Eggstensions.Offsets.Actor.GetMovementActor);
 				static public Delegates.Types.Actor.RemoveActorValueModifiers RemoveActorValueModifiers { get; }	= System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.Actor.RemoveActorValueModifiers>(Eggstensions.Offsets.Actor.RemoveActorValueModifiers);
 				static public Delegates.Types.Actor.RevertSelectedSpell RevertSelectedSpell { get; }				= System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.Actor.RevertSelectedSpell>(Eggstensions.Offsets.Actor.RevertSelectedSpell);
 				static public Delegates.Types.Actor.SetMaximumWardPower SetMaximumWardPower { get; }				= System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.Actor.SetMaximumWardPower>(Eggstensions.Offsets.Actor.SetMaximumWardPower);
@@ -24,9 +25,7 @@
 			static public class BGSEntryPointPerkEntry
 			{
 				static public Delegates.Types.BGSEntryPointPerkEntry.HandleEntryPoints1 HandleEntryPoints1 { get; } = System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.BGSEntryPointPerkEntry.HandleEntryPoints1>(Eggstensions.Offsets.BGSEntryPointPerkEntry.HandleEntryPoints);
-
 				static public Delegates.Types.BGSEntryPointPerkEntry.HandleEntryPoints2 HandleEntryPoints2 { get; } = System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.BGSEntryPointPerkEntry.HandleEntryPoints2>(Eggstensions.Offsets.BGSEntryPointPerkEntry.HandleEntryPoints);
-
 				static public Delegates.Types.BGSEntryPointPerkEntry.HandleEntryPoints3 HandleEntryPoints3 { get; } = System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.BGSEntryPointPerkEntry.HandleEntryPoints3>(Eggstensions.Offsets.BGSEntryPointPerkEntry.HandleEntryPoints);
 			}
 
@@ -106,7 +105,8 @@
 
 			static public class TESObjectREFR
 			{
-				static public Delegates.Types.TESObjectREFR.GetInventoryChanges GetInventoryChanges { get; } = System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.TESObjectREFR.GetInventoryChanges>(Eggstensions.Offsets.TESObjectREFR.GetInventoryChanges);
+				static public Delegates.Types.TESObjectREFR.GetFullName GetFullName { get; }					= System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.TESObjectREFR.GetFullName>(Eggstensions.Offsets.TESObjectREFR.GetFullName);
+				static public Delegates.Types.TESObjectREFR.GetInventoryChanges GetInventoryChanges { get; }	= System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.TESObjectREFR.GetInventoryChanges>(Eggstensions.Offsets.TESObjectREFR.GetInventoryChanges);
 			}
 
 			static public class UI
@@ -136,6 +136,9 @@
 
 				[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)]
 				public delegate System.Single GetMaximumWardPower(Eggstensions.Actor* actor);
+
+				[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)]
+				public delegate System.Byte GetMovementActor(Eggstensions.Actor* actor, Eggstensions.NiPointer* movementActor);
 
 				[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)] // Virtual
 				public delegate Eggstensions.MagicCaster* GetMagicCaster(Eggstensions.Actor* actor, System.Int32 castingSource);
@@ -260,12 +263,6 @@
 				public delegate System.Byte HasExtraData(Eggstensions.ExtraDataList* extraDataList, System.Int32 extraDataType);
 			}
 
-			unsafe static public class FindMaxMagnitudeVisitor
-			{
-				[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)] // Virtual
-				public delegate System.Int32 Visit(Eggstensions.FindMaxMagnitudeVisitor* findMaxMagnitudeVisitor, Eggstensions.ActiveEffect* activeEffect);
-			}
-
 			unsafe static public class InitTESThread
 			{
 				[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)] // Virtual
@@ -381,6 +378,9 @@
 			{
 				[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)] // Virtual
 				public delegate Eggstensions.NiAVObject* GetCurrent3D(Eggstensions.TESObjectREFR* reference);
+
+				[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)]
+				public delegate System.IntPtr GetFullName(Eggstensions.TESObjectREFR* form);
 
 				[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)]
 				public delegate Eggstensions.InventoryChanges* GetInventoryChanges(Eggstensions.TESObjectREFR* reference);

@@ -8,7 +8,7 @@ namespace ScrambledBugs.Patches
 	{
 		static public void Patch()
 		{
-			Memory.SafeWriteArray<System.Byte>(ScrambledBugs.Offsets.Patches.UnderfilledSoulGems.CompareSoulLevelValue, new System.Byte[2] { 0x75, 0x2E });
+			Memory.SafeWriteNullableArray<System.Byte>(ScrambledBugs.Offsets.Patches.UnderfilledSoulGems.CompareSoulLevelValue, new System.Byte?[2] { 0x75, null });
 		}
 	}
 }

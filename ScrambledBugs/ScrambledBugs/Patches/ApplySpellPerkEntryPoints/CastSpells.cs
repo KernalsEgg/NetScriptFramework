@@ -35,7 +35,7 @@ namespace ScrambledBugs.Patches.ApplySpellPerkEntryPoints
 
 			ScrambledBugs.Plugin.Trampoline.WriteRelativeCall<ScrambledBugs.Delegates.Types.Patches.ApplySpellPerkEntryPoints.CastSpells.ApplySpell>
 			(
-				ScrambledBugs.Offsets.Patches.ApplySpellPerkEntryPoints.CastSpells.ApplyCombatHitSpellArrow,
+				ScrambledBugs.Offsets.Patches.ApplySpellPerkEntryPoints.CastSpells.ApplyCombatHitSpellArrowProjectile,
 				CastSpells.ApplySpell
 			);
 

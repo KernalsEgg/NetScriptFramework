@@ -90,7 +90,7 @@ namespace ScrambledBugs.Patches.ApplySpellPerkEntryPoints
 
 			ScrambledBugs.Plugin.Trampoline.WriteRelativeCall<ScrambledBugs.Delegates.Types.Patches.ApplySpellPerkEntryPoints.MultipleSpells.ApplyCombatHitSpell>
 			(
-				ScrambledBugs.Offsets.Patches.ApplySpellPerkEntryPoints.MultipleSpells.ApplyCombatHitSpellArrow,
+				ScrambledBugs.Offsets.Patches.ApplySpellPerkEntryPoints.MultipleSpells.ApplyCombatHitSpellArrowProjectile,
 				MultipleSpells.ApplyCombatHitSpell
 			);
 

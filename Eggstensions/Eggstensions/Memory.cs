@@ -430,6 +430,30 @@
 			Memory.SafeWriteArray<T>(address + offset, values);
 		}
 
+		static public void SafeWriteNullableArray<T>(System.IntPtr address, T?[] values)
+			where T : unmanaged
+		{
+			var size = new System.IntPtr(Memory.Size<T>.Unmanaged * values.Length);
+
+			if (Memory.VirtualProtect(address, size, MemoryProtectionConstants.PageExecuteReadWrite, out var oldProtect) != 0)
+			{
+				try
+				{
+					Memory.WriteNullableArray<T>(address, values);
+				}
+				finally
+				{
+					Memory.VirtualProtect(address, size, oldProtect, out oldProtect);
+				}
+			}
+		}
+
+		static public void SafeWriteNullableArray<T>(System.IntPtr address, System.Int32 offset, T?[] values)
+			where T : unmanaged
+		{
+			Memory.SafeWriteNullableArray<T>(address + offset, values);
+		}
+
 		unsafe static public void Write<T>(System.IntPtr address, T value)
 			where T : unmanaged
 		{
@@ -458,6 +482,39 @@
 			where T : unmanaged
 		{
 			Memory.WriteArray<T>(address + offset, values);
+		}
+
+		static public void WriteNullable<T>(System.IntPtr address, T? value)
+			where T : unmanaged
+		{
+			if (value.HasValue)
+			{
+				Memory.Write<T>(address, value.Value);
+			}
+		}
+
+		static public void WriteNullable<T>(System.IntPtr address, System.Int32 offset, T? value)
+			where T : unmanaged
+		{
+			Memory.WriteNullable<T>(address + offset, value);
+		}
+
+		static public void WriteNullableArray<T>(System.IntPtr address, T?[] values)
+			where T : unmanaged
+		{
+			var length	= values.Length;
+			var size	= Memory.Size<T>.Unmanaged;
+
+			for (var index = 0; index < length; index++)
+			{
+				Memory.WriteNullable<T>(address, values[index]);
+			}
+		}
+
+		static public void WriteNullableArray<T>(System.IntPtr address, System.Int32 offset, T?[] values)
+			where T : unmanaged
+		{
+			Memory.WriteNullableArray<T>(address + offset, values);
 		}
 
 		static public void WriteRelativeCall(System.IntPtr address, System.IntPtr function)

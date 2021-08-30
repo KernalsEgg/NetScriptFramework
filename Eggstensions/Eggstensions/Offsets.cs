@@ -28,6 +28,9 @@
 			/// <summary>SkyrimSE.exe + 0x6338F0</summary>
 			static public System.IntPtr GetMaximumWardPower { get; }		= NetScriptFramework.Main.GameInfo.GetAddressOf(37837);
 
+			/// <summary>SkyrimSE.exe + 0x62F170</summary>
+			static public System.IntPtr GetMovementActor { get; }			= NetScriptFramework.Main.GameInfo.GetAddressOf(37762);
+
 			/// <summary>SkyrimSE.exe + 0x621590</summary>
 			static public System.IntPtr RemoveActorValueModifiers { get; }	= NetScriptFramework.Main.GameInfo.GetAddressOf(37527);
 
@@ -175,7 +178,10 @@
 		static public class TESObjectREFR
 		{
 			/// <summary>SkyrimSE.exe + 0x1D8E40</summary>
-			static public System.IntPtr GetInventoryChanges { get; } = NetScriptFramework.Main.GameInfo.GetAddressOf(15802);
+			static public System.IntPtr GetInventoryChanges { get; }	= NetScriptFramework.Main.GameInfo.GetAddressOf(15802);
+
+			/// <summary>SkyrimSE.exe + 0x296460</summary>
+			static public System.IntPtr GetFullName { get; }			= NetScriptFramework.Main.GameInfo.GetAddressOf(19355);
 		}
 
 		static public class TESObjectWEAP

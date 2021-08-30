@@ -26,7 +26,7 @@ namespace ScrambledBugs.Fixes
 			assembly.Add(new System.Byte[3] { 0xF6, 0xC2, 0x01 });						// test dl, 1
 
 			assembly.Add(new System.Byte[1] { 0x5A });									// pop rdx
-			assembly.Add(new System.Byte[1] { 0xC3 });									// ret
+			assembly.Add(new System.Byte[1] { Assembly.Ret });							// ret
 
 			ScrambledBugs.Plugin.Trampoline.WriteRelativeCallBranch(ScrambledBugs.Offsets.Fixes.HitEffectRaceCondition.ShouldUpdate, assembly);
 

@@ -44,6 +44,11 @@
 			return Eggstensions.Delegates.Instances.Actor.GetMaximumWardPower(actor);
 		}
 
+		static public System.Boolean GetMovementActor(Actor* actor, NiPointer* movementActor)
+		{
+			return Eggstensions.Delegates.Instances.Actor.GetMovementActor(actor, movementActor) != 0;
+		}
+
 		static public void RemoveActorValueModifiers(Actor* actor, ActorValue actorValue)
 		{
 			Eggstensions.Delegates.Instances.Actor.RemoveActorValueModifiers(actor, (System.Int32)actorValue);

@@ -38,7 +38,7 @@ namespace ScrambledBugs
 						MagicEffectConditions			= default(System.Boolean),
 						MagicEffectFlags				= default(System.Boolean),
 						ModArmorWeightPerkEntryPoint	= default(System.Boolean),
-						MovementSpeed					= default(System.Boolean),
+						SpeedMult						= default(System.Boolean),
 						TerrainDecals					= default(System.Boolean),
 						TrainingMenuText				= default(System.Boolean),
 						WeaponCharge					= default(System.Boolean)
@@ -57,6 +57,7 @@ namespace ScrambledBugs
 						LockpickingExperience			= default(System.Boolean),
 						MultipleHitEffects				= default(System.Boolean),
 						PausedGameHitEffects			= default(System.Boolean),
+						PowerAttackStamina				= default(System.Boolean),
 						ReflectDamage					= default(System.Boolean),
 						TeammateDifficulty				= default(System.Boolean),
 						UnderfilledSoulGems				= default(System.Boolean)
@@ -97,9 +98,9 @@ namespace ScrambledBugs
 					ScrambledBugs.Fixes.ModArmorWeightPerkEntryPoint.Fix();
 				}
 
-				if (settings?.Fixes?.MovementSpeed ?? default)
+				if (settings?.Fixes?.SpeedMult ?? default)
 				{
-					ScrambledBugs.Fixes.MovementSpeed.Fix();
+					ScrambledBugs.Fixes.SpeedMult.Fix();
 				}
 
 				if (settings?.Fixes?.TerrainDecals ?? default)
@@ -160,6 +161,11 @@ namespace ScrambledBugs
 				if (settings?.Patches?.PausedGameHitEffects ?? default)
 				{
 					ScrambledBugs.Patches.PausedGameHitEffects.Patch();
+				}
+
+				if (settings?.Patches?.PowerAttackStamina ?? default)
+				{
+					ScrambledBugs.Patches.PowerAttackStamina.Patch();
 				}
 
 				if (settings?.Patches?.ReflectDamage ?? default)

@@ -3,7 +3,9 @@
 	public enum ActorValue : System.Int32
 	{
 		None			= -1,
+		Health			= 24,
 		Magicka			= 25,
+		Stamina			= 26,
 		SpeedMult		= 30,
 		WardPower		= 63,
 		RightItemCharge	= 64,

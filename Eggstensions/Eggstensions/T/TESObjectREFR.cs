@@ -30,6 +30,11 @@
 
 
 		// Member
+		static public System.String GetFullName(TESObjectREFR* form)
+		{
+			return Memory.ReadString(Eggstensions.Delegates.Instances.TESObjectREFR.GetFullName(form));
+		}
+
 		static public InventoryChanges* GetInventoryChanges(TESObjectREFR* reference)
 		{
 			return Eggstensions.Delegates.Instances.TESObjectREFR.GetInventoryChanges(reference);
