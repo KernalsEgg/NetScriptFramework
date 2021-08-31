@@ -1,7 +1,7 @@
 {
 	"fixes":
 	{
-		"actorValuePercentage":			true,	/* Calculate the percentage of an actor value using both the permanent and the temporary modifiers. */
+		"actorValuePercentage":			true,	/* Calculate the percentage of an actor value using both permanent and temporary modifiers. */
 		"applySpellPerkEntryPoints":
 		{
 			"arrows":					true	/* Spells are not applied using a perk entry point when the kill camera simulates the trajectory of an arrow. */
@@ -11,28 +11,27 @@
 		"magicEffectConditions":		true,	/* Eliminate floating-point error from the elapsed time of magic effects so that updates to their conditions will not be skipped. Disable this if Bug Fixes SSE is installed and FixAbilityConditionBug is enabled. */
 		"magicEffectFlags":				true,	/* The effectiveness of magic effects is set correctly using their flags. */
 		"modArmorWeightPerkEntryPoint":	true,	/* Modify the weight of only worn armor using a perk entry point. */
-		"speedMult":					true,
 		"terrainDecals":				true,	/* Apply decals to terrain in cells that have been partially unloaded. */
 		"trainingMenuText":				true,	/* Display the correct cost of a lesson in the training menu when the relevant skill is buffed or debuffed. */
 		"weaponCharge":					true	/* The charge of equipped enchanted weapons can always be fully restored. */
 	},
 	"patches":
 	{
-		"accumulatingMagnitude":		true,	/* The maximum magnitude of accumulating magnitude magic effects scales with effectiveness instead of the rate of accumulation. */
-		"alreadyCaughtPickpocketing":	true,	/* Pickpocket actors who have already caught you. */
+		"accumulatingMagnitude":		false,	/* The maximum magnitude of accumulating magnitude magic effects scales with effectiveness instead of the rate of accumulation. */
+		"alreadyCaughtPickpocketing":	false,	/* Pickpocket even if you have already been caught. */
 		"applySpellPerkEntryPoints":
 		{
 			"castSpells":				true,	/* Spells applied using perk entry points are cast by the source on the target. */
-			"multipleSpells":			true	/* Apply any number of spells at once using perk entry points. */
+			"multipleSpells":			false	/* Apply any number of spells at once using perk entry points. */
 		},
-		"attachHitEffectArt":			true,	/* Hit effect art is attached when an actor is loaded. */
-		"equipBestAmmo":				true,	/* Automatically equip your best playable arrows or bolts when you equip a bow or crossbow. */
+		"attachHitEffectArt":			false,	/* Hit effect art is attached when an actor is loaded. */
+		"equipBestAmmo":				false,	/* Automatically equip your best playable arrows or bolts when you equip a bow or crossbow. */
 		"lockpickingExperience":		true,	/* Earn experience each time you pick a lock. */
-		"multipleHitEffects":			true,	/* Each of a cloaking spells effects can apply hit effects. */
+		"multipleHitEffects":			false,	/* Each of a cloaking spells effects can apply hit effects. */
 		"pausedGameHitEffects":			true,	/* Apply any number of hit effects to the player while the game is paused. */
-		"powerAttackStamina":			true,	/* Power attacks and bashes can only be performed with the required stamina. */
+		"powerAttackStamina":			false,	/* Power attacks and bashes can only be performed with the required stamina. */
 		"reflectDamage":				true,	/* Reflect any amount of damage. */
-		"teammateDifficulty":			true,	/* Teammates share the same difficulty multiplier as the player. */
-		"underfilledSoulGems":			true	/* Trap only souls of the appropriate size in soul gems. */
+		"teammateDifficulty":			false,	/* Teammates share the same difficulty multiplier as the player. */
+		"underfilledSoulGems":			false	/* Trap only souls of the appropriate size in soul gems. */
 	}
 }

@@ -507,7 +507,7 @@
 
 			for (var index = 0; index < length; index++)
 			{
-				Memory.WriteNullable<T>(address, values[index]);
+				Memory.WriteNullable<T>(address, size * index, values[index]);
 			}
 		}
 
