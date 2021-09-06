@@ -4,13 +4,13 @@
 		"actorValuePercentage":			true,	/* Calculate the percentage of an actor value using both permanent and temporary modifiers. */
 		"applySpellPerkEntryPoints":
 		{
-			"arrows":					true	/* Spells are not applied using a perk entry point when the kill camera simulates the trajectory of an arrow. */
+			"arrows":					true	/* The kill camera will not fire the Apply Combat Hit Spell perk entry point when simulating the trajectory of an arrow. */
 		},
 		"harvestedFlags":				true,	/* Flora and trees are saved when they respawn. */
 		"hitEffectRaceCondition":		true,	/* Eliminate a race condition that can prevent hit effects from being applied when an actors mesh is loaded after their magic effects. */
 		"magicEffectConditions":		true,	/* Eliminate floating-point error from the elapsed time of magic effects so that updates to their conditions will not be skipped. Disable this if Bug Fixes SSE is installed and FixAbilityConditionBug is enabled. */
-		"magicEffectFlags":				true,	/* The effectiveness of magic effects is set correctly using their flags. */
-		"modArmorWeightPerkEntryPoint":	true,	/* Modify the weight of only worn armor using a perk entry point. */
+		"magicEffectFlags":				true,	/* Flags are respected when scaling the duration and magnitude of a magic effect with its effectiveness. */
+		"modArmorWeightPerkEntryPoint":	true,	/* The Mod Armor Weight perk entry point will modify the weight of only worn armor. */
 		"quickShot":					true,	/* Account for the Quick Shot perk when calculating the power of an arrow fired by the player. */
 		"quickShotPlaybackSpeed":		2.0,	/* The playback speed of the nocking animation when the player has the Quick Shot perk. */
 		"terrainDecals":				true,	/* Apply decals to terrain in cells that have been partially unloaded. */
@@ -23,7 +23,7 @@
 		"alreadyCaughtPickpocketing":	false,	/* Pickpocket even if you have already been caught. */
 		"applySpellPerkEntryPoints":
 		{
-			"castSpells":				true,	/* Spells applied using perk entry points are cast by the source on the target. */
+			"castSpells":				true,	/* Spells applied by perk entry points are cast by the source on the target. */
 			"multipleSpells":			false	/* Apply any number of spells at once using perk entry points. */
 		},
 		"attachHitEffectArt":			false,	/* Hit effect art is attached when an actor is loaded. */
@@ -33,7 +33,7 @@
 		"pausedGameHitEffects":			true,	/* Apply any number of hit effects to the player while the game is paused. */
 		"powerAttackStamina":			false,	/* Power attacks and bashes can only be performed with the required stamina. */
 		"reflectDamage":				true,	/* Reflect any amount of damage. */
-		"teammateDifficulty":			false,	/* Teammates share the same difficulty multiplier as the player. */
+		"teammateDifficulty":			false,	/* Teammates use the same difficulty multipliers as the player. */
 		"underfilledSoulGems":			false	/* Trap only souls of the appropriate size in soul gems. */
 	}
 }
