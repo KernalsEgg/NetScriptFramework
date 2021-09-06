@@ -40,7 +40,7 @@ namespace ScrambledBugs.Patches
 
 				if (damage > highestDamage)
 				{
-					var ammo = (TESAmmo*)context->R8.IntPtr.ToPointer();
+					var ammo = (TESAmmo*)context->R8.IntPtr;
 
 					if (TESAmmo.IsPlayable(ammo))
 					{
@@ -66,7 +66,7 @@ namespace ScrambledBugs.Patches
 
 				if (damage > highestDamage)
 				{
-					var ammo = (TESAmmo*)context->Rbp.IntPtr.ToPointer();
+					var ammo = (TESAmmo*)context->Rbp.IntPtr;
 
 					if (TESAmmo.IsPlayable(ammo))
 					{

@@ -264,7 +264,7 @@
 		unsafe static public T Read<T>(System.IntPtr address)
 			where T : unmanaged
 		{
-			return *(T*)address.ToPointer();
+			return *(T*)address;
 		}
 
 		static public T Read<T>(System.IntPtr address, System.Int32 offset)
@@ -457,7 +457,7 @@
 		unsafe static public void Write<T>(System.IntPtr address, T value)
 			where T : unmanaged
 		{
-			*(T*)address.ToPointer() = value;
+			*(T*)address = value;
 		}
 
 		static public void Write<T>(System.IntPtr address, System.Int32 offset, T value)

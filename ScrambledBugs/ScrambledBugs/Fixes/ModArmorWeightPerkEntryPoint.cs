@@ -21,7 +21,7 @@ namespace ScrambledBugs.Fixes
 				// itemWeight			!= null
 				// actor				!= null
 
-				var inventoryEntryData	= (InventoryEntryData*)context->Rbp.IntPtr.ToPointer();
+				var inventoryEntryData	= (InventoryEntryData*)context->Rbp.IntPtr;
 				var item				= inventoryEntryData->Item;
 
 				if (item != null)
@@ -30,7 +30,7 @@ namespace ScrambledBugs.Fixes
 
 					if (itemWeight > 0.0F)
 					{
-						var actor = (Actor*)Memory.Read<System.IntPtr>(context->Rsp.IntPtr, 0xB8).ToPointer();
+						var actor = (Actor*)Memory.Read<System.IntPtr>(context->Rsp.IntPtr, 0xB8);
 
 						if (actor != null)
 						{
@@ -73,8 +73,8 @@ namespace ScrambledBugs.Fixes
 				// armor		!= null
 				// armorWeight	!= null
 
-				var actor		= (Actor*)context->Rdx.IntPtr.ToPointer();
-				var armor		= (TESObjectARMO*)context->R8.IntPtr.ToPointer();
+				var actor		= (Actor*)context->Rdx.IntPtr;
+				var armor		= (TESObjectARMO*)context->R8.IntPtr;
 				var armorWeight	= Memory.Read<System.Single>(context->R9.IntPtr);
 
 				context->Xmm1.Single = armorWeight; // armorWeight

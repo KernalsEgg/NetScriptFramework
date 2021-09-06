@@ -10,7 +10,7 @@
 	[System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Explicit, Size = 0x8)]
 	public struct SettingValue
 	{
-		[System.Runtime.InteropServices.FieldOffset(0x0)] public System.Byte Byte; // Boolean
+		[System.Runtime.InteropServices.FieldOffset(0x0)] public System.Byte Byte; // bool
 		[System.Runtime.InteropServices.FieldOffset(0x0)] public Color Color;
 		[System.Runtime.InteropServices.FieldOffset(0x0)] public System.Int32 Int32;
 		[System.Runtime.InteropServices.FieldOffset(0x0)] public System.IntPtr String; // char*

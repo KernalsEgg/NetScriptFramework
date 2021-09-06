@@ -10,9 +10,9 @@ namespace ScrambledBugs
 		{
 			namespace Fixes
 			{
-				static internal class SpeedMult
+				static internal class MovementSpeed
 				{
-					static public Delegates.Types.Fixes.SpeedMult.RemoveMovementFlags RemoveMovementFlags { get; } = System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.Fixes.SpeedMult.RemoveMovementFlags>(ScrambledBugs.Offsets.Fixes.SpeedMult.RemoveMovementFlags);
+					static public Delegates.Types.Fixes.MovementSpeed.RemoveMovementFlags RemoveMovementFlags { get; } = System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.Fixes.MovementSpeed.RemoveMovementFlags>(ScrambledBugs.Offsets.Fixes.MovementSpeed.RemoveMovementFlags);
 				}
 
 				static internal class WeaponCharge
@@ -50,13 +50,19 @@ namespace ScrambledBugs
 					public delegate void SetEffectiveness(ActiveEffect* activeEffect, System.Single effectiveness);
 				}
 
-				unsafe static internal class SpeedMult
+				unsafe static internal class MovementSpeed
 				{
 					[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)]
 					public delegate void ActorValueSink(Actor* actor, System.Int32 actorValue, System.Single old, System.Single delta);
 
 					[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)]
 					public delegate void RemoveMovementFlags(Actor* actor);
+				}
+
+				static internal class QuickShot
+				{
+					[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)]
+					public delegate System.Single GetArrowPower(System.Single drawTime, System.Single bowSpeed);
 				}
 
 				unsafe static internal class WeaponCharge

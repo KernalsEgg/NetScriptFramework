@@ -11,7 +11,7 @@
 		{
 			get
 			{
-				return (PlayerCharacter*)Memory.Read<System.IntPtr>(Eggstensions.Offsets.PlayerCharacter.Instance).ToPointer();
+				return (PlayerCharacter*)Memory.Read<System.IntPtr>(Eggstensions.Offsets.PlayerCharacter.Instance);
 			}
 		}
 	}

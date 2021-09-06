@@ -100,14 +100,17 @@
 
 		public void Commit()
 		{
-			Address = Trampoline.Allocate(ProcessModule, this.position);
-
-			if (Address == System.IntPtr.Zero)
+			if (this.position > 0)
 			{
-				throw new System.InsufficientMemoryException(nameof(Trampoline));
-			}
+				Address = Trampoline.Allocate(ProcessModule, this.position);
 
-			this.Write?.Invoke(this, System.EventArgs.Empty);
+				if (Address == System.IntPtr.Zero)
+				{
+					throw new System.InsufficientMemoryException(nameof(Trampoline));
+				}
+
+				this.Write?.Invoke(this, System.EventArgs.Empty);
+			}
 		}
 
 		public void Dispose()

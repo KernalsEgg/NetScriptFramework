@@ -157,7 +157,7 @@
 				);
 			}
 
-			static internal class SpeedMult
+			static internal class MovementSpeed
 			{
 				/// <summary>SkyrimSE.exe + 0x2F39A40</summary>
 				static public System.IntPtr ActorValueSinkFunctionTable { get; }	= NetScriptFramework.Main.GameInfo.GetAddressOf(517376);
@@ -167,6 +167,23 @@
 
 				/// <summary>SkyrimSE.exe + 0x2F266F8</summary>
 				static public System.IntPtr SaveManager { get; }					= NetScriptFramework.Main.GameInfo.GetAddressOf(516851);
+			}
+
+			static internal class QuickShot
+			{
+				/// <summary>SkyrimSE.exe + 0x74B170</summary>
+				static public System.IntPtr CreateProjectile { get; }	= NetScriptFramework.Main.GameInfo.GetAddressOf
+				(
+					42928, 0x604, 0, // 0x5
+					"E8 ?? ?? ?? ??" // call
+				);
+
+				/// <summary>SkyrimSE.exe + 0x6CE720</summary>
+				static public System.IntPtr KillCamera { get; }			= NetScriptFramework.Main.GameInfo.GetAddressOf
+				(
+					40230, 0x87C, 0, // 0x5
+					"E8 ?? ?? ?? ??" // call
+				);
 			}
 
 			static internal class TerrainDecals
@@ -384,23 +401,23 @@
 					"0C 01"			// or al, 1
 				);
 
-				/// <summary>ModelReferenceEffect::Attach (SkyrimSE.exe + 0x558F20)</summary>
-				static public System.IntPtr Attach { get; }					= NetScriptFramework.Main.GameInfo.GetAddressOf
-				(
-					33872, 0x2B, 0,				// 7 + 2 = 0x9
-					"48 3B 05 ?? ?? ?? ??" +	// cmp rax, cs
-					"75 55"						// jne 55
-				);
-
-				/// <summary>SkyrimSE.exe + 0x558220</summary>
+				/// <summary>ModelReferenceEffect::UpdatePosition (SkyrimSE.exe + 0x558220)</summary>
 				static public System.IntPtr IsPerspectiveChange { get; }	= NetScriptFramework.Main.GameInfo.GetAddressOf
 				(
 					33862, 0x9A, 0,	// 0x2
 					"74 08"			// je 8
 				);
 
-				/// <summary>SkyrimSE.exe + 0x558220</summary>
-				static public System.IntPtr IsPlayer { get; }				= NetScriptFramework.Main.GameInfo.GetAddressOf
+				/// <summary>ModelReferenceEffect::Attach (SkyrimSE.exe + 0x558F20)</summary>
+				static public System.IntPtr IsPlayerAttach { get; }			= NetScriptFramework.Main.GameInfo.GetAddressOf
+				(
+					33872, 0x2B, 0,				// 7 + 2 = 0x9
+					"48 3B 05 ?? ?? ?? ??" +	// cmp rax, cs
+					"75 55"						// jne 55
+				);
+
+				/// <summary>ModelReferenceEffect::UpdatePosition (SkyrimSE.exe + 0x558220)</summary>
+				static public System.IntPtr IsPlayerUpdatePosition { get; }	= NetScriptFramework.Main.GameInfo.GetAddressOf
 				(
 					33862, 0x7C, 0,	// 0x2
 					"75 3B"			// jne 3B

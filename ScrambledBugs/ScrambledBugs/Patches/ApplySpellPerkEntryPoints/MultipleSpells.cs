@@ -31,7 +31,7 @@ namespace ScrambledBugs.Patches.ApplySpellPerkEntryPoints
 
 					for (var index = 0; index < bashingSpells.Length; index++)
 					{
-						var bashingSpell = (SpellItem*)Memory.Read<System.IntPtr>(bashingSpells.Elements, Memory.Size<System.IntPtr>.Unmanaged * index).ToPointer();
+						var bashingSpell = (SpellItem*)Memory.Read<System.IntPtr>(bashingSpells.Elements, Memory.Size<System.IntPtr>.Unmanaged * index);
 
 						if (bashingSpell != null)
 						{
@@ -68,7 +68,7 @@ namespace ScrambledBugs.Patches.ApplySpellPerkEntryPoints
 
 					for (var index = 0; index < combatHitSpells.Length; index++)
 					{
-						var combatHitSpell = (SpellItem*)Memory.Read<System.IntPtr>(combatHitSpells.Elements, Memory.Size<System.IntPtr>.Unmanaged * index).ToPointer();
+						var combatHitSpell = (SpellItem*)Memory.Read<System.IntPtr>(combatHitSpells.Elements, Memory.Size<System.IntPtr>.Unmanaged * index);
 
 						if (combatHitSpell != null)
 						{
@@ -111,7 +111,7 @@ namespace ScrambledBugs.Patches.ApplySpellPerkEntryPoints
 
 					for (var index = 0; index < reanimateSpells.Length; index++)
 					{
-						var reanimateSpell = (SpellItem*)Memory.Read<System.IntPtr>(reanimateSpells.Elements, Memory.Size<System.IntPtr>.Unmanaged * index).ToPointer();
+						var reanimateSpell = (SpellItem*)Memory.Read<System.IntPtr>(reanimateSpells.Elements, Memory.Size<System.IntPtr>.Unmanaged * index);
 
 						if (reanimateSpell != null)
 						{
@@ -146,7 +146,7 @@ namespace ScrambledBugs.Patches.ApplySpellPerkEntryPoints
 
 					for (var index = 0; index < sneakingSpells.Length; index++)
 					{
-						var sneakingSpell = (SpellItem*)Memory.Read<System.IntPtr>(sneakingSpells.Elements, Memory.Size<System.IntPtr>.Unmanaged * index).ToPointer();
+						var sneakingSpell = (SpellItem*)Memory.Read<System.IntPtr>(sneakingSpells.Elements, Memory.Size<System.IntPtr>.Unmanaged * index);
 
 						if (sneakingSpell != null)
 						{
@@ -183,7 +183,7 @@ namespace ScrambledBugs.Patches.ApplySpellPerkEntryPoints
 
 					for (var index = 0; index < weaponSwingSpells.Length; index++)
 					{
-						var weaponSwingSpell = (SpellItem*)Memory.Read<System.IntPtr>(weaponSwingSpells.Elements, Memory.Size<System.IntPtr>.Unmanaged * index).ToPointer();
+						var weaponSwingSpell = (SpellItem*)Memory.Read<System.IntPtr>(weaponSwingSpells.Elements, Memory.Size<System.IntPtr>.Unmanaged * index);
 
 						if (weaponSwingSpell != null)
 						{
@@ -226,7 +226,7 @@ namespace ScrambledBugs.Patches.ApplySpellPerkEntryPoints
 					return;
 				}
 
-				var spells	= (BSTArray*)Memory.Read<System.IntPtr>(results).ToPointer();
+				var spells	= (BSTArray*)Memory.Read<System.IntPtr>(results);
 				var spell	= ((BGSEntryPointFunctionDataSpellItem*)entryPointFunctionData)->Spell;
 
 				BSTArray.Push(spells, new System.IntPtr(&spell));

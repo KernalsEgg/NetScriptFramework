@@ -11,7 +11,7 @@
 		{
 			get
 			{
-				return (TESObjectWEAP*)Memory.Read<System.IntPtr>(Eggstensions.Offsets.TESObjectWEAP.Unarmed).ToPointer();
+				return (TESObjectWEAP*)Memory.Read<System.IntPtr>(Eggstensions.Offsets.TESObjectWEAP.Unarmed);
 			}
 		}
 	}

@@ -14,6 +14,7 @@
 			{
 				static public Delegates.Types.Actor.AddSpell AddSpell { get; }										= System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.Actor.AddSpell>(Eggstensions.Offsets.Actor.AddSpell);
 				static public Delegates.Types.Actor.GetActorValueModifier GetActorValueModifier { get; }			= System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.Actor.GetActorValueModifier>(Eggstensions.Offsets.Actor.GetActorValueModifier);
+				static public Delegates.Types.Actor.GetEquippedWeapon GetEquippedWeapon { get; }					= System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.Actor.GetEquippedWeapon>(Eggstensions.Offsets.Actor.GetEquippedWeapon);
 				static public Delegates.Types.Actor.GetMaximumWardPower GetMaximumWardPower { get; }				= System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.Actor.GetMaximumWardPower>(Eggstensions.Offsets.Actor.GetMaximumWardPower);
 				static public Delegates.Types.Actor.GetMovementActor GetMovementActor { get; }						= System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.Actor.GetMovementActor>(Eggstensions.Offsets.Actor.GetMovementActor);
 				static public Delegates.Types.Actor.RemoveActorValueModifiers RemoveActorValueModifiers { get; }	= System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.Actor.RemoveActorValueModifiers>(Eggstensions.Offsets.Actor.RemoveActorValueModifiers);
@@ -27,6 +28,12 @@
 				static public Delegates.Types.BGSEntryPointPerkEntry.HandleEntryPoints1 HandleEntryPoints1 { get; } = System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.BGSEntryPointPerkEntry.HandleEntryPoints1>(Eggstensions.Offsets.BGSEntryPointPerkEntry.HandleEntryPoints);
 				static public Delegates.Types.BGSEntryPointPerkEntry.HandleEntryPoints2 HandleEntryPoints2 { get; } = System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.BGSEntryPointPerkEntry.HandleEntryPoints2>(Eggstensions.Offsets.BGSEntryPointPerkEntry.HandleEntryPoints);
 				static public Delegates.Types.BGSEntryPointPerkEntry.HandleEntryPoints3 HandleEntryPoints3 { get; } = System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.BGSEntryPointPerkEntry.HandleEntryPoints3>(Eggstensions.Offsets.BGSEntryPointPerkEntry.HandleEntryPoints);
+			}
+
+			static public class BSFixedString
+			{
+				static public Delegates.Types.BSFixedString.Initialize Initialize { get; }	= System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.BSFixedString.Initialize>(Eggstensions.Offsets.BSFixedString.Initialize);
+				static public Delegates.Types.BSFixedString.Release Release { get; }		= System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<Delegates.Types.BSFixedString.Release>(Eggstensions.Offsets.BSFixedString.Release);
 			}
 
 			static public class BSPointerHandle
@@ -135,6 +142,9 @@
 				public delegate System.Single GetActorValueModifier(Eggstensions.Actor* actor, System.Int32 actorValueModifier, System.Int32 actorValue);
 
 				[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)]
+				public delegate Eggstensions.TESObjectWEAP* GetEquippedWeapon(Eggstensions.Actor* actor, System.Byte leftHand);
+
+				[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)]
 				public delegate System.Single GetMaximumWardPower(Eggstensions.Actor* actor);
 
 				[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)]
@@ -207,6 +217,15 @@
 				public delegate void RemovePerkEntry(Eggstensions.BGSPerkEntry* perkEntry, Eggstensions.Actor* perkOwner);
 			}
 
+			unsafe static public class BSFixedString
+			{
+				[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl, CharSet = System.Runtime.InteropServices.CharSet.Ansi)]
+				public delegate Eggstensions.BSFixedString* Initialize(Eggstensions.BSFixedString* fixedString, [System.Runtime.InteropServices.MarshalAs(System.Runtime.InteropServices.UnmanagedType.LPStr)] System.String text);
+
+				[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)]
+				public delegate void Release(Eggstensions.BSFixedString* fixedString);
+			}
+
 			unsafe static public class BSPointerHandle
 			{
 				[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)]
@@ -261,6 +280,18 @@
 
 				[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)]
 				public delegate System.Byte HasExtraData(Eggstensions.ExtraDataList* extraDataList, System.Int32 extraDataType);
+			}
+
+			unsafe static public class IAnimationGraphManagerHolder
+			{
+				[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)] // Virtual
+				public delegate System.Byte GetAnimationVariableBool(Eggstensions.IAnimationGraphManagerHolder* animationGraphManagerHolder, Eggstensions.BSFixedString* variableName, System.Byte* variable);
+
+				[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)] // Virtual
+				public delegate System.Byte GetAnimationVariableFloat(Eggstensions.IAnimationGraphManagerHolder* animationGraphManagerHolder, Eggstensions.BSFixedString* variableName, System.Single* variable);
+
+				[System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)] // Virtual
+				public delegate System.Byte GetAnimationVariableInt(Eggstensions.IAnimationGraphManagerHolder* animationGraphManagerHolder, Eggstensions.BSFixedString* variableName, System.Int32* variable);
 			}
 
 			unsafe static public class InitTESThread

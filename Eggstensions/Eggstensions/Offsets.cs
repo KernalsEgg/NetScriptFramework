@@ -25,6 +25,9 @@
 			/// <summary>SkyrimSE.exe + 0x621350</summary>
 			static public System.IntPtr GetActorValueModifier { get; }		= NetScriptFramework.Main.GameInfo.GetAddressOf(37524);
 
+			/// <summary>SkyrimSE.exe + 0x625EB0</summary>
+			static public System.IntPtr GetEquippedWeapon { get; }			= NetScriptFramework.Main.GameInfo.GetAddressOf(37621);
+
 			/// <summary>SkyrimSE.exe + 0x6338F0</summary>
 			static public System.IntPtr GetMaximumWardPower { get; }		= NetScriptFramework.Main.GameInfo.GetAddressOf(37837);
 
@@ -51,6 +54,15 @@
 
 			/// <summary>SkyrimSE.exe + 0x1598610</summary>
 			static public System.IntPtr VirtualFunctionTable { get; }	= NetScriptFramework.Main.GameInfo.GetAddressOf(241053);
+		}
+
+		static public class BSFixedString
+		{
+			/// <summary>SkyrimSE.exe + 0xC28BF0</summary>
+			static public System.IntPtr Initialize { get; }	= NetScriptFramework.Main.GameInfo.GetAddressOf(67819);
+
+			/// <summary>SkyrimSE.exe + 0xC28D40</summary>
+			static public System.IntPtr Release { get; }	= NetScriptFramework.Main.GameInfo.GetAddressOf(67822);
 		}
 
 		static public class BSPointerHandle
@@ -149,6 +161,21 @@
 		{
 			/// <summary>SkyrimSE.exe + 0x186790</summary>
 			static public System.IntPtr GetInstance { get; } = NetScriptFramework.Main.GameInfo.GetAddressOf(14108);
+		}
+
+		static public class SettingT
+		{
+			static public class GameSettingCollection
+			{
+				/// <summary>SkyrimSE.exe + 0x1DE0D88</summary>
+				static public System.IntPtr ArrowBowMinTime { get; }	= NetScriptFramework.Main.GameInfo.GetAddressOf(505061);
+
+				/// <summary>SkyrimSE.exe + 0x1DE0DE8</summary>
+				static public System.IntPtr ArrowMinPower { get; }		= NetScriptFramework.Main.GameInfo.GetAddressOf(505069);
+
+				/// <summary>SkyrimSE.exe + 0x1DE0DD0</summary>
+				static public System.IntPtr BowDrawTime { get; }		= NetScriptFramework.Main.GameInfo.GetAddressOf(505067);
+			}
 		}
 
 		static public class SpellItem

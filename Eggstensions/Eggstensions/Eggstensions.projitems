@@ -26,6 +26,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)E\EnchantmentItem.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)E\ExtraDataList.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)F\FindMaxMagnitudeVisitor.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)I\IAnimationGraphManagerHolder.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)I\InitTESThread.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)M\MagicTarget.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)N\NiPoint3.cs" />

@@ -39,6 +39,11 @@
 			return Eggstensions.Delegates.Instances.Actor.GetActorValueModifier(actor, (System.Int32)actorValueModifier, (System.Int32)actorValue);
 		}
 
+		static public TESObjectWEAP* GetEquippedWeapon(Actor* actor, System.Boolean leftHand)
+		{
+			return Eggstensions.Delegates.Instances.Actor.GetEquippedWeapon(actor, (System.Byte)(leftHand ? 1 : 0));
+		}
+
 		static public System.Single GetMaximumWardPower(Actor* actor)
 		{
 			return Eggstensions.Delegates.Instances.Actor.GetMaximumWardPower(actor);

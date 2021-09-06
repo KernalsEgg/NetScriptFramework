@@ -11,6 +11,8 @@
 		"magicEffectConditions":		true,	/* Eliminate floating-point error from the elapsed time of magic effects so that updates to their conditions will not be skipped. Disable this if Bug Fixes SSE is installed and FixAbilityConditionBug is enabled. */
 		"magicEffectFlags":				true,	/* The effectiveness of magic effects is set correctly using their flags. */
 		"modArmorWeightPerkEntryPoint":	true,	/* Modify the weight of only worn armor using a perk entry point. */
+		"quickShot":					true,	/* Account for the Quick Shot perk when calculating the power of an arrow fired by the player. */
+		"quickShotPlaybackSpeed":		2.0,	/* The playback speed of the nocking animation when the player has the Quick Shot perk. */
 		"terrainDecals":				true,	/* Apply decals to terrain in cells that have been partially unloaded. */
 		"trainingMenuText":				true,	/* Display the correct cost of a lesson in the training menu when the relevant skill is buffed or debuffed. */
 		"weaponCharge":					true	/* The charge of equipped enchanted weapons can always be fully restored. */

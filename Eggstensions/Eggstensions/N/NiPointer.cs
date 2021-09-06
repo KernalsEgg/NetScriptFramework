@@ -27,27 +27,22 @@
 
 		public void Attach()
 		{
-			var reference = Reference;
-			
-			if (reference != null)
+			if (Reference != null)
 			{
-				BSHandleRefObject.IncrementReferenceCount(&reference->BSHandleRefObject);
+				BSHandleRefObject.IncrementReferenceCount(&Reference->BSHandleRefObject);
 			}
 		}
 
 		public void Dispose()
 		{
 			Detach();
-			System.GC.SuppressFinalize(this);
 		}
 
 		public void Detach()
 		{
-			var reference = Reference;
-			
-			if (reference != null)
+			if (Reference != null)
 			{
-				BSHandleRefObject.DecrementReferenceCount(&reference->BSHandleRefObject);
+				BSHandleRefObject.DecrementReferenceCount(&Reference->BSHandleRefObject);
 			}
 		}
 	}

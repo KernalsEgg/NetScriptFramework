@@ -56,6 +56,7 @@
     <Compile Include="Fixes\HarvestedFlags.cs" />
     <Compile Include="Fixes\HitEffectRaceCondition.cs" />
     <Compile Include="Fixes\MagicEffectFlags.cs" />
+    <Compile Include="Fixes\QuickShot.cs" />
     <Compile Include="Offsets.cs" />
     <Compile Include="Patches\ApplySpellPerkEntryPoints\MultipleSpells.cs" />
     <Compile Include="Patches\AttachHitEffectArt.cs" />
@@ -64,7 +65,7 @@
     <Compile Include="Patches\EquipBestAmmo.cs" />
     <Compile Include="Fixes\WeaponCharge.cs" />
     <Compile Include="Patches\LockpickingExperience.cs" />
-    <Compile Include="Fixes\SpeedMult.cs" />
+    <Compile Include="Fixes\MovementSpeed.cs" />
     <Compile Include="Patches\MultipleHitEffects.cs" />
     <Compile Include="Patches\PausedGameHitEffects.cs" />
     <Compile Include="Patches\AlreadyCaughtPickpocketing.cs" />
