@@ -13,7 +13,7 @@ namespace ScrambledBugs.Fixes
 			assembly.Add(new System.Byte[3] { 0x0F, 0x57, 0xC0 });																									// xorps xmm0, xmm0
 			assembly.Add(new System.Byte[3] { 0x0F, 0x2F, 0xC8 });																									// comiss xmm1, xmm0
 			assembly.Add(new System.Byte[2] { 0x77, 5 + 8 });																										// ja D (elapsedTime <= 0.0F)
-			
+
 			assembly.Add(new System.Byte[8] { 0xF3, 0x0F, 0x11, 0xB7, 0x8C, 0x00, 0x00, 0x00 });																	// movss [rdi+8C], xmm6 (padding8C = frameTime)
 			assembly.Add(new System.Byte[5] { 0xE9, 0x6C - ((3 + 3 + 2) + (8 + 5)) + 0x87, 0x00, 0x00, 0x00 });														// jmp DE (Skip)
 
@@ -49,7 +49,7 @@ namespace ScrambledBugs.Fixes
 			System.Single elapsedTime;							// xmm1
 			System.Single activeEffectConditionUpdateFrequency;	// xmm3
 			System.Single frameTime;							// xmm6
-			
+
 			if (elapsedTime <= 0.0F)
 			{
 				activeEffect->Padding8C = frameTime;

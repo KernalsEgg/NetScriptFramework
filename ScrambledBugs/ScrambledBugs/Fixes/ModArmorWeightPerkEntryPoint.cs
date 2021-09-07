@@ -90,6 +90,7 @@ namespace ScrambledBugs.Fixes
 				5 + 9 + 4,
 				Assembly.Nop
 			);
+
 			ScrambledBugs.Plugin.Trampoline.CaptureContext
 			(
 				ScrambledBugs.Offsets.Fixes.ModArmorWeightPerkEntryPoint.ModArmorWeightInventoryChanges,

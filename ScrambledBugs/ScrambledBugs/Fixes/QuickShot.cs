@@ -19,6 +19,7 @@ namespace ScrambledBugs.Fixes
 					bowSpeed = 1.0F;
 				}
 
+				System.Byte animationVariable;
 				System.Single pullTime;
 
 				var animationVariableName	= new BSFixedString();
@@ -27,8 +28,6 @@ namespace ScrambledBugs.Fixes
 
 				try
 				{
-					System.Byte animationVariable;
-					
 					BSFixedString.Initialize(&animationVariableName, "bPerkQuickDraw");
 
 					if (IAnimationGraphManagerHolder.GetAnimationVariableBool(&player->Actor.TESObjectREFR.IAnimationGraphManagerHolder, &animationVariableName, &animationVariable) && (animationVariable != 0))

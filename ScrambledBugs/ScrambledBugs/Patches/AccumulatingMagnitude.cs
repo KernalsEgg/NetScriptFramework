@@ -19,7 +19,7 @@ namespace ScrambledBugs.Patches
 				assembly.Add(new System.Byte[5] { 0xF3, 0x0F, 0x10, 0x4F, 0x78 });																																				// movss xmm1, [rdi+78]
 				assembly.Add(new System.Byte[6] { 0x8B, 0x8F, 0x90, 0x00, 0x00, 0x00 });																																		// mov ecx, [rdi+90]
 				assembly.Add(Assembly.RelativeCall(ScrambledBugs.Offsets.Patches.AccumulatingMagnitude.SetRate, 3 + 5 + 6, Memory.ReadRelativeCall(ScrambledBugs.Offsets.Patches.AccumulatingMagnitude.SetRate, 3 + 8 + 6)));	// call
-			
+
 				assembly.Add(new System.Byte[8] { 0xF3, 0x0F, 0x11, 0x87, 0x9C, 0x00, 0x00, 0x00 });																															// movss [rdi+9C], xmm0
 
 				Memory.SafeWriteArray<System.Byte>(ScrambledBugs.Offsets.Patches.AccumulatingMagnitude.SetRate, assembly);
@@ -27,7 +27,7 @@ namespace ScrambledBugs.Patches
 			/*
 			AccumulatingValueModifierEffect* accumulatingValueModifierEffect;	// rdi
 			System.Single magicSkill;											// xmm0
-			
+
 			accumulatingValueModifierEffect->MaximumMagnitude = AccumulatingValueModifierEffect.GetRate
 			(
 				accumulatingValueModifierEffect->ValueModifierEffect.ActorValue,
@@ -49,7 +49,7 @@ namespace ScrambledBugs.Patches
 			/*
 			AccumulatingValueModifierEffect* accumulatingValueModifierEffect;	// rbx
 			System.Single maximumMagnitude;										// xmm0
-			
+
 			var maximumMagnitude = ActiveEffect.GetCurrentMagnitude(&accumulatingValueModifierEffect->ValueModifierEffect.ActiveEffect);
 			*/
 
@@ -68,7 +68,7 @@ namespace ScrambledBugs.Patches
 			AccumulatingValueModifierEffect* accumulatingValueModifierEffect;	// rbx
 			System.Single frameTime;											// xmm7
 			System.Single maximumMagnitude;										// xmm0
-			
+
 			var rate = accumulatingValueModifierEffect->MaximumMagnitude * frameTime;
 			var maximumMagnitude = ActiveEffect.GetCurrentMagnitude(&accumulatingValueModifierEffect->ValueModifierEffect.ActiveEffect);
 			*/
@@ -90,7 +90,7 @@ namespace ScrambledBugs.Patches
 				assembly.Add(new System.Byte[5] { 0x48, 0x8D, 0x54, 0x24, 0x20 });																		// lea rdx, [rsp+20]
 				assembly.Add(new System.Byte[7] { 0x48, 0x81, 0xC1, 0x98, 0x00, 0x00, 0x00 });															// add rcx, 98
 				assembly.Add(Assembly.AbsoluteCall(Eggstensions.Offsets.MagicTarget.VisitActiveEffects));												// call
-				
+
 				assembly.Add(new System.Byte[6] { 0xF3, 0x0F, 0x10, 0x4C, 0x24, 0x30 });																// movss xmm1, [rsp+30]
 				assembly.Add(new System.Byte[5] { 0x48, 0x8B, 0x4C, 0x24, 0x40 });																		// mov rcx, [rsp+40]
 				assembly.Add(Assembly.AbsoluteCall(Eggstensions.Offsets.Actor.SetMaximumWardPower));													// call
@@ -105,7 +105,7 @@ namespace ScrambledBugs.Patches
 			}
 			/*
 			Actor* actor; // rcx
-			
+
 			var findMaxMagnitudeVisitor						= new FindMaxMagnitudeVisitor();
 			*(System.IntPtr*)&findMaxMagnitudeVisitor		= Eggstensions.Offsets.FindMaxMagnitudeVisitor.VirtualFunctionTable;
 			findMaxMagnitudeVisitor.FinishedActiveEffect	= null;

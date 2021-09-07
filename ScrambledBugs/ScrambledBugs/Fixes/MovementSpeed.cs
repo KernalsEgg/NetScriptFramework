@@ -13,9 +13,9 @@ namespace ScrambledBugs.Fixes
 		{
 			Loaded = 1 << 1
 		}
-		
-		
-		
+
+
+
 		static public ScrambledBugs.Delegates.Types.Fixes.MovementSpeed.ActorValueSink SpeedMultSink { get; set; }
 
 

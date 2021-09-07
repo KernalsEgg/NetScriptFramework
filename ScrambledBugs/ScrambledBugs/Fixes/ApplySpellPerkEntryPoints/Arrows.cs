@@ -20,11 +20,11 @@ namespace ScrambledBugs.Fixes.ApplySpellPerkEntryPoints
 					assembly.Add(new System.Byte[4] { 0x41, 0xC1, 0xEA, 0x08 });																									// shr r10d, 8 (ProjectileFlags.Is3DLoaded)
 					assembly.Add(new System.Byte[4] { 0x41, 0xF6, 0xC2, 0x01 });																									// test r10b, 1
 					assembly.Add(new System.Byte[2] { 0x74, (System.Byte)Memory.Size<AbsoluteJump>.Unmanaged });																	// je E
-					
+
 					assembly.Add(Assembly.AbsoluteJump(Memory.ReadRelativeCall(ScrambledBugs.Offsets.Fixes.ApplySpellPerkEntryPoints.Arrows.ApplyCombatHitSpellArrowProjectile)));	// call
-					
+
 					assembly.Add(new System.Byte[1] { Assembly.Ret });																												// ret
-					
+
 					Memory.SafeWriteArray<System.Byte>(trampoline.Address + position, assembly);
 					Memory.WriteRelativeCall(ScrambledBugs.Offsets.Fixes.ApplySpellPerkEntryPoints.Arrows.ApplyCombatHitSpellArrowProjectile, trampoline.Address + position);
 

@@ -67,7 +67,7 @@ namespace ScrambledBugs.Fixes
 				using (var movementActor = new NiPointer())
 				{
 					Actor.GetMovementActor(actor, &movementActor);
-					
+
 					return ActorValuePercentage.GetActorValuePercentage(movementActor.Actor, (System.Int32)ActorValue.Stamina);
 				}
 			};

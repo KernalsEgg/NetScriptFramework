@@ -16,7 +16,7 @@ namespace ScrambledBugs.Patches
 			{
 				var assembly = new UnmanagedArray<System.Byte>();
 
-				assembly.Add(new System.Byte[2] { 0x24, 0xF8 });    // and al, F8 (1 << 2 (NoHitEffectArt), 1 << 4 (NoInitialFlare))
+				assembly.Add(new System.Byte[2] { 0x24, 0xF8 });	// and al, F8 (1 << 2 (NoHitEffectArt), 1 << 4 (NoInitialFlare))
 				assembly.Add(new System.Byte[1] { Assembly.Nop });	// nop
 				assembly.Add(new System.Byte[1] { Assembly.Nop });	// nop
 
@@ -27,7 +27,7 @@ namespace ScrambledBugs.Patches
 
 			{
 				var assembly = new UnmanagedArray<System.Byte>();
-			
+
 				assembly.Add(new System.Byte[2] { 0x41, 0x54 });							// push r12
 				assembly.Add(new System.Byte[2] { 0x41, 0x55 });							// push r13
 				assembly.Add(new System.Byte[4] { 0x48, 0x83, 0xEC, 0x28 });				// sub rsp, 28

@@ -17,7 +17,7 @@ namespace ScrambledBugs.Patches
 			assembly.Add(new System.Byte[3] { 0xC1, 0xE8, 0x1A });																							// shr eax, 1A
 			assembly.Add(new System.Byte[2] { 0xF6, 0xD0 });																								// not al
 			assembly.Add(new System.Byte[2] { 0xA8, 0x01 });																								// test al, 1
-			
+
 			assembly.Add(new System.Byte[1] { Assembly.Ret });																								// ret
 
 			ScrambledBugs.Plugin.Trampoline.WriteRelativeCallBranch(ScrambledBugs.Offsets.Patches.TeammateDifficulty.IsPlayer, assembly);
@@ -29,7 +29,7 @@ namespace ScrambledBugs.Patches
 
 			/*
 			Actor* actor; // rcx
-			
+
 			return
 				actor == player
 				||

@@ -71,6 +71,7 @@ namespace ScrambledBugs.Patches
 				ScrambledBugs.Offsets.Patches.PowerAttackStamina.GetStaminaCostActor,
 				PowerAttackStamina.CanPowerAttack(Memory.ReadRelativeCall(ScrambledBugs.Offsets.Patches.PowerAttackStamina.GetStaminaCostActor))
 			);
+
 			ScrambledBugs.Plugin.Trampoline.WriteRelativeCallBranch
 			(
 				ScrambledBugs.Offsets.Patches.PowerAttackStamina.GetStaminaCostPlayerCharacter,

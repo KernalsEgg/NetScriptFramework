@@ -34,7 +34,7 @@ namespace ScrambledBugs.Fixes
 
 			/*
 			ActiveEffectFlags flags; // ecx
-			
+
 			return
 				(flags & ActiveEffectFlags.Dispelled) == ActiveEffectFlags.Dispelled
 				||

@@ -25,6 +25,7 @@ namespace ScrambledBugs.Patches
 				8,
 				Assembly.Nop
 			);
+
 			ScrambledBugs.Plugin.Trampoline.CaptureContext
 			(
 				ScrambledBugs.Offsets.Patches.EquipBestAmmo.InitializeDamage,
