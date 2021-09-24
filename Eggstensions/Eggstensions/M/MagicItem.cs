@@ -38,40 +38,97 @@
 
 
 
-	[System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Explicit, Size = 0x90)]
-	unsafe public struct MagicItem
+	public interface IMagicItem : ITESBoundObject
 	{
-		[System.Runtime.InteropServices.FieldOffset(0x0)] public TESBoundObject TESBoundObject;
-		[System.Runtime.InteropServices.FieldOffset(0x30)] public TESFullName TESFullName;
+	}
+
+	public struct MagicItem : IMagicItem
+	{
+	}
 
 
 
-		// Virtual
-		static public SpellType GetSpellType(MagicItem* magicItem)
+	namespace ExtensionMethods
+	{
+		unsafe static public class IMagicItem
 		{
-			var getSpellType = Memory.ReadVirtualFunction<Eggstensions.Delegates.Types.MagicItem.GetSpellType>(*(System.IntPtr*)magicItem, 0x53);
-
-			return (SpellType)getSpellType(magicItem);
-		}
-
-		static public CastingType GetCastingType(MagicItem* magicItem)
-		{
-			var getCastingType = Memory.ReadVirtualFunction<Eggstensions.Delegates.Types.MagicItem.GetCastingType>(*(System.IntPtr*)magicItem, 0x55);
-
-			return (CastingType)getCastingType(magicItem);
-		}
+			// Inheritance
+			static public TESFullName* TESFullName<TMagicItem>(this ref TMagicItem magicItem)
+				where TMagicItem : unmanaged, Eggstensions.IMagicItem
+			{
+				return (TESFullName*)magicItem.AddByteOffset(0x30);
+			}
 
 
 
-		// Member
-		static public System.Single GetCost(MagicItem* magicItem, Actor* caster)
-		{
-			return Eggstensions.Delegates.Instances.MagicItem.GetCost(magicItem, caster);
-		}
+			// Virtual
+			static public SpellType GetSpellType<TMagicItem>(this ref TMagicItem magicItem)
+				where TMagicItem : unmanaged, Eggstensions.IMagicItem
+			{
+				var getSpellType = (delegate* unmanaged[Cdecl]<TMagicItem*, System.Int32>)magicItem.VirtualFunction(0x53);
 
-		static public ActorValue GetCostActorValue(MagicItem* magicItem, System.Boolean rightHand)
-		{
-			return (ActorValue)Eggstensions.Delegates.Instances.MagicItem.GetCostActorValue(magicItem, rightHand ? 1 : 0);
+				return (SpellType)GetSpellType(magicItem.AsPointer());
+
+
+
+				[System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.NoInlining)]
+				System.Int32 GetSpellType(TMagicItem* magicItem)
+				{
+					return getSpellType(magicItem);
+				}
+			}
+
+			static public CastingType GetCastingType<TMagicItem>(this ref TMagicItem magicItem)
+				where TMagicItem : unmanaged, Eggstensions.IMagicItem
+			{
+				var getCastingType = (delegate* unmanaged[Cdecl]<TMagicItem*, System.Int32>)magicItem.VirtualFunction(0x55);
+
+				return (CastingType)GetCastingType(magicItem.AsPointer());
+
+
+
+				[System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.NoInlining)]
+				System.Int32 GetCastingType(TMagicItem* magicItem)
+				{
+					return getCastingType(magicItem);
+				}
+			}
+
+
+
+			// Member
+			static public System.Single GetCost<TMagicItem, TActor>(this ref TMagicItem magicItem, TActor* caster)
+				where TMagicItem : unmanaged, Eggstensions.IMagicItem
+				where TActor : unmanaged, Eggstensions.IActor
+			{
+				var getCost = (delegate* unmanaged[Cdecl]<TMagicItem*, TActor*, System.Single>)Eggstensions.Offsets.MagicItem.GetCost;
+
+				return GetCost(magicItem.AsPointer(), caster);
+
+
+
+				[System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.NoInlining)]
+				System.Single GetCost(TMagicItem* magicItem, TActor* caster)
+				{
+					return getCost(magicItem, caster);
+				}
+			}
+
+			static public ActorValue GetCostActorValue<TMagicItem>(this ref TMagicItem magicItem, System.Boolean rightHand)
+				where TMagicItem : unmanaged, Eggstensions.IMagicItem
+			{
+				var getCostActorValue = (delegate* unmanaged[Cdecl]<TMagicItem*, System.Int32, System.Int32>)Eggstensions.Offsets.MagicItem.GetCostActorValue;
+
+				return (ActorValue)GetCostActorValue(magicItem.AsPointer(), rightHand ? 1 : 0);
+
+
+
+				[System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.NoInlining)]
+				System.Int32 GetCostActorValue(TMagicItem* magicItem, System.Int32 rightHand)
+				{
+					return getCostActorValue(magicItem, rightHand);
+				}
+			}
 		}
 	}
 }

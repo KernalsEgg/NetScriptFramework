@@ -12,13 +12,13 @@
 
 
 
-	[System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Sequential, Size = 0x20)]
+	[System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Explicit, Size = 0x20)]
 	unsafe public struct TESHitEvent
 	{
-		public TESObjectREFR* Target;		// 0x0
-		public TESObjectREFR* Cause;		// 0x8
-		public System.UInt32 Source;		// 0x10 (FormID)
-		public System.UInt32 Projectile;	// 0x14 (FormID)
-		public TESHitEventFlags Flags;		// 0x18
+		[System.Runtime.InteropServices.FieldOffset(0x0)] public TESObjectREFR* Target;
+		[System.Runtime.InteropServices.FieldOffset(0x8)] public TESObjectREFR* Cause;
+		[System.Runtime.InteropServices.FieldOffset(0x10)] public System.UInt32 Source; // FormId
+		[System.Runtime.InteropServices.FieldOffset(0x14)] public System.UInt32 Projectile; // FormId
+		[System.Runtime.InteropServices.FieldOffset(0x18)] public TESHitEventFlags Flags;
 	}
 }

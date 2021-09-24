@@ -20,7 +20,7 @@ namespace ScrambledBugs.Patches
 				assembly.Add(new System.Byte[1] { Assembly.Nop });	// nop
 				assembly.Add(new System.Byte[1] { Assembly.Nop });	// nop
 
-				Memory.SafeWriteArray<System.Byte>(ScrambledBugs.Offsets.Patches.AttachHitEffectArt.AddNoHitEffectArtFlag, assembly);
+				Memory.SafeWrite<System.Byte>(ScrambledBugs.Offsets.Patches.AttachHitEffectArt.AddNoHitEffectArtFlag, assembly);
 			}
 
 
@@ -62,7 +62,7 @@ namespace ScrambledBugs.Patches
 				assembly.Add(new System.Byte[2] { 0x41, 0x5C });							// pop r12
 				assembly.Add(new System.Byte[1] { Assembly.Ret });							// ret
 
-				ScrambledBugs.Plugin.Trampoline.WriteRelativeCallBranch(ScrambledBugs.Offsets.Patches.AttachHitEffectArt.IsPlayerAttach, assembly);
+				Trampoline.WriteRelativeCallBranch(ScrambledBugs.Offsets.Patches.AttachHitEffectArt.IsPlayerAttach, assembly);
 			}
 			{
 				var assembly = new UnmanagedArray<System.Byte>();
@@ -70,7 +70,7 @@ namespace ScrambledBugs.Patches
 				assembly.Add(new System.Byte[2] { 0x84, 0xC0 }); // test al, al
 				assembly.Add(new System.Byte[2] { 0x74, 0x55 }); // jz 55
 
-				Memory.SafeWriteArray<System.Byte>(ScrambledBugs.Offsets.Patches.AttachHitEffectArt.IsPlayerAttach, Memory.Size<RelativeCall>.Unmanaged, assembly);
+				Memory.SafeWrite<System.Byte>(ScrambledBugs.Offsets.Patches.AttachHitEffectArt.IsPlayerAttach, System.Runtime.CompilerServices.Unsafe.SizeOf<RelativeCall>(), assembly);
 			}
 			// Volatile registers
 
@@ -82,27 +82,27 @@ namespace ScrambledBugs.Patches
 			ModelReferenceEffect* modelReferenceEffect;	// rsi
 			Actor* actor;								// rbx
 
-			ReferenceEffectController* controller	= modelReferenceEffect->Controller;
-			NiAVObject* attachRoot					= ReferenceEffectController.GetAttachRoot(controller);
+			ReferenceEffectController* controller	= modelReferenceEffect->Controller();
+			NiAVObject* attachRoot					= controller->GetAttachRoot();
 
 			if (attachRoot == null)
 			{
-				attachRoot = TESObjectREFR.GetCurrent3D(actor);
+				attachRoot = actor->GetCurrent3D();
 			}
 
 			NiNode* attachRootNode = null;
 
 			if (attachRoot != null)
 			{
-				attachRootNode = NiObject.AsNode(attachRoot);
+				attachRootNode = attachRoot->AsNode();
 
 				if (attachRootNode == null)
 				{
-					attachRootNode = attachRoot->Parent;
+					attachRootNode = attachRoot->Parent();
 				}
 			}
 
-			return attachRootNode != modelReferenceEffect->HitEffectArtData.AttachRoot;
+			return attachRootNode != modelReferenceEffect->HitEffectArtData()->AttachRoot();
 			*/
 		}
 	}

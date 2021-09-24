@@ -8,70 +8,210 @@
 
 
 
-	[System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Explicit, Size = 0x2B0)]
-	unsafe public struct Actor
+	public interface IActor : ITESObjectREFR
 	{
-		[System.Runtime.InteropServices.FieldOffset(0x0)] public TESObjectREFR TESObjectREFR;
-		[System.Runtime.InteropServices.FieldOffset(0x98)] public MagicTarget MagicTarget;
-		[System.Runtime.InteropServices.FieldOffset(0xB0)] public ActorValueOwner ActorValueOwner;
-		[System.Runtime.InteropServices.FieldOffset(0xF0)] public ActorProcess* CurrentProcess;
+	}
+
+	public struct Actor : IActor
+	{
+	}
 
 
 
-		// Virtual
-		static public MagicCaster* GetMagicCaster(Actor* actor, CastingSource castingSource)
+	namespace ExtensionMethods
+	{
+		unsafe static public class IActor
 		{
-			var getMagicCaster = Memory.ReadVirtualFunction<Eggstensions.Delegates.Types.Actor.GetMagicCaster>(*(System.IntPtr*)actor, 0x5C);
+			// Inheritance
+			static public MagicTarget* MagicTarget<TActor>(this ref TActor actor)
+				where TActor : unmanaged, Eggstensions.IActor
+			{
+				return (MagicTarget*)actor.AddByteOffset(0x98);
+			}
 
-			return getMagicCaster(actor, (System.Int32)castingSource);
-		}
+			static public ActorValueOwner* ActorValueOwner<TActor>(this ref TActor actor)
+				where TActor : unmanaged, Eggstensions.IActor
+			{
+				return (ActorValueOwner*)actor.AddByteOffset(0xB0);
+			}
 
 
 
-		// Member
-		static public System.Boolean AddSpell(Actor* actor, SpellItem* spell)
-		{
-			return Eggstensions.Delegates.Instances.Actor.AddSpell(actor, spell) != 0;
-		}
+			// Field
+			static public ActorProcess* CurrentProcess<TActor>(this ref TActor actor)
+				where TActor : unmanaged, Eggstensions.IActor
+			{
+				return *(ActorProcess**)actor.AddByteOffset(0xF0);
+			}
 
-		static public System.Single GetActorValueModifier(Actor* actor, ActorValueModifier actorValueModifier, ActorValue actorValue)
-		{
-			return Eggstensions.Delegates.Instances.Actor.GetActorValueModifier(actor, (System.Int32)actorValueModifier, (System.Int32)actorValue);
-		}
 
-		static public TESObjectWEAP* GetEquippedWeapon(Actor* actor, System.Boolean leftHand)
-		{
-			return Eggstensions.Delegates.Instances.Actor.GetEquippedWeapon(actor, (System.Byte)(leftHand ? 1 : 0));
-		}
 
-		static public System.Single GetMaximumWardPower(Actor* actor)
-		{
-			return Eggstensions.Delegates.Instances.Actor.GetMaximumWardPower(actor);
-		}
+			// Virtual
+			static public MagicCaster* GetMagicCaster<TActor>(this ref TActor actor, CastingSource castingSource)
+				where TActor : unmanaged, Eggstensions.IActor
+			{
+				var getMagicCaster = (delegate* unmanaged[Cdecl]<TActor*, System.Int32, MagicCaster*>)actor.VirtualFunction(0x5C);
 
-		static public System.Boolean GetMovementActor(Actor* actor, NiPointer* movementActor)
-		{
-			return Eggstensions.Delegates.Instances.Actor.GetMovementActor(actor, movementActor) != 0;
-		}
+				return GetMagicCaster(actor.AsPointer(), (System.Int32)castingSource);
 
-		static public void RemoveActorValueModifiers(Actor* actor, ActorValue actorValue)
-		{
-			Eggstensions.Delegates.Instances.Actor.RemoveActorValueModifiers(actor, (System.Int32)actorValue);
-		}
 
-		static public void RevertSelectedSpell(Actor* actor, EquipType equipType, MagicItem* magicItem)
-		{
-			Eggstensions.Delegates.Instances.Actor.RevertSelectedSpell(actor, (System.Int32)equipType, magicItem);
-		}
 
-		static public void SetMaximumWardPower(Actor* actor, System.Single maximumWardPower)
-		{
-			Eggstensions.Delegates.Instances.Actor.SetMaximumWardPower(actor, maximumWardPower);
-		}
+				[System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.NoInlining)]
+				MagicCaster* GetMagicCaster(TActor* actor, System.Int32 castingSource)
+				{
+					return getMagicCaster(actor, castingSource);
+				}
+			}
 
-		static public void UpdateMovementSpeed(Actor* actor)
-		{
-			Eggstensions.Delegates.Instances.Actor.UpdateMovementSpeed(actor);
+
+
+			// Member
+			static public System.Boolean AddSpell<TActor, TSpellItem>(this ref TActor actor, TSpellItem* spell)
+				where TActor : unmanaged, Eggstensions.IActor
+				where TSpellItem : unmanaged, Eggstensions.ISpellItem
+			{
+				var addSpell = (delegate* unmanaged[Cdecl]<TActor*, TSpellItem*, System.Byte>)Eggstensions.Offsets.Actor.AddSpell;
+
+				return AddSpell(actor.AsPointer(), spell) != 0;
+
+
+
+				[System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.NoInlining)]
+				System.Byte AddSpell(TActor* actor, TSpellItem* spell)
+				{
+					return addSpell(actor, spell);
+				}
+			}
+
+			static public System.Single GetActorValueModifier<TActor>(this ref TActor actor, ActorValueModifier actorValueModifier, ActorValue actorValue)
+				where TActor : unmanaged, Eggstensions.IActor
+			{
+				var getActorValueModifier = (delegate* unmanaged[Cdecl]<TActor*, System.Int32, System.Int32, System.Single>)Eggstensions.Offsets.Actor.GetActorValueModifier;
+
+				return GetActorValueModifier(actor.AsPointer(), (System.Int32)actorValueModifier, (System.Int32)actorValue);
+
+
+
+				[System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.NoInlining)]
+				System.Single GetActorValueModifier(TActor* actor, System.Int32 actorValueModifier, System.Int32 actorValue)
+				{
+					return getActorValueModifier(actor, actorValueModifier, actorValue);
+				}
+			}
+
+			static public TESObjectWEAP* GetEquippedWeapon<TActor>(this ref TActor actor, System.Boolean leftHand)
+				where TActor : unmanaged, Eggstensions.IActor
+			{
+				var getEquippedWeapon = (delegate* unmanaged[Cdecl]<TActor*, System.Byte, TESObjectWEAP*>)Eggstensions.Offsets.Actor.GetEquippedWeapon;
+
+				return GetEquippedWeapon(actor.AsPointer(), (System.Byte)(leftHand ? 1 : 0));
+
+
+
+				[System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.NoInlining)]
+				TESObjectWEAP* GetEquippedWeapon(TActor* actor, System.Byte leftHand)
+				{
+					return getEquippedWeapon(actor, leftHand);
+				}
+			}
+
+			static public System.Single GetMaximumWardPower<TActor>(this ref TActor actor)
+				where TActor : unmanaged, Eggstensions.IActor
+			{
+				var getMaximumWardPower = (delegate* unmanaged[Cdecl]<TActor*, System.Single>)Eggstensions.Offsets.Actor.GetMaximumWardPower;
+
+				return GetMaximumWardPower(actor.AsPointer());
+
+
+
+				[System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.NoInlining)]
+				System.Single GetMaximumWardPower(TActor* actor)
+				{
+					return getMaximumWardPower(actor);
+				}
+			}
+
+			static public System.Boolean GetMovementActor<TActor1, TActor2>(this ref TActor1 actor, NiPointer<TActor2>* movementActor)
+				where TActor1 : unmanaged, Eggstensions.IActor
+				where TActor2 : unmanaged, Eggstensions.IActor
+			{
+				var getMovementActor = (delegate* unmanaged[Cdecl]<TActor1*, NiPointer<TActor2>*, System.Byte>)Eggstensions.Offsets.Actor.GetMovementActor;
+
+				return GetMovementActor(actor.AsPointer(), movementActor) != 0;
+
+
+
+				[System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.NoInlining)]
+				System.Byte GetMovementActor(TActor1* actor, NiPointer<TActor2>* movementActor)
+				{
+					return getMovementActor(actor, movementActor);
+				}
+			}
+
+			static public void RemoveActorValueModifiers<TActor>(this ref TActor actor, ActorValue actorValue)
+				where TActor : unmanaged, Eggstensions.IActor
+			{
+				var removeActorValueModifiers = (delegate* unmanaged[Cdecl]<TActor*, System.Int32, void>)Eggstensions.Offsets.Actor.RemoveActorValueModifiers;
+
+				RemoveActorValueModifiers(actor.AsPointer(), (System.Int32)actorValue);
+
+
+
+				[System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.NoInlining)]
+				void RemoveActorValueModifiers(TActor* actor, System.Int32 actorValue)
+				{
+					removeActorValueModifiers(actor, actorValue);
+				}
+			}
+
+			static public void RevertSelectedSpell<TActor, TMagicItem>(this ref TActor actor, EquipType equipType, TMagicItem* magicItem)
+				where TActor : unmanaged, Eggstensions.IActor
+				where TMagicItem : unmanaged, Eggstensions.IMagicItem
+			{
+				var revertSelectedSpell = (delegate* unmanaged[Cdecl]<TActor*, System.Int32, TMagicItem*, void>)Eggstensions.Offsets.Actor.RevertSelectedSpell;
+
+				RevertSelectedSpell(actor.AsPointer(), (System.Int32)equipType, magicItem);
+
+
+
+				[System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.NoInlining)]
+				void RevertSelectedSpell(TActor* actor, System.Int32 equipType, TMagicItem* magicItem)
+				{
+					revertSelectedSpell(actor, equipType, magicItem);
+				}
+			}
+
+			static public void SetMaximumWardPower<TActor>(this ref TActor actor, System.Single maximumWardPower)
+				where TActor : unmanaged, Eggstensions.IActor
+			{
+				var setMaximumWardPower = (delegate* unmanaged[Cdecl]<TActor*, System.Single, void>)Eggstensions.Offsets.Actor.SetMaximumWardPower;
+
+				SetMaximumWardPower(actor.AsPointer(), maximumWardPower);
+
+
+
+				[System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.NoInlining)]
+				void SetMaximumWardPower(TActor* actor, System.Single maximumWardPower)
+				{
+					setMaximumWardPower(actor, maximumWardPower);
+				}
+			}
+
+			static public void UpdateMovementSpeed<TActor>(this ref TActor actor)
+				where TActor : unmanaged, Eggstensions.IActor
+			{
+				var updateMovementSpeed = (delegate* unmanaged[Cdecl]<TActor*, void>)Eggstensions.Offsets.Actor.UpdateMovementSpeed;
+
+				UpdateMovementSpeed(actor.AsPointer());
+
+
+
+				[System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.NoInlining)]
+				void UpdateMovementSpeed(TActor* actor)
+				{
+					updateMovementSpeed(actor);
+				}
+			}
 		}
 	}
 }

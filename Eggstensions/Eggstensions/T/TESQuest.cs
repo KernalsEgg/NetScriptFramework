@@ -1,9 +1,25 @@
 ﻿namespace Eggstensions
 {
-	[System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Explicit, Size = 0x268)]
-	public struct TESQuest
+	public interface ITESQuest : ITESForm
 	{
-		[System.Runtime.InteropServices.FieldOffset(0x0)] public TESForm TESForm;
-		[System.Runtime.InteropServices.FieldOffset(0x28)] public TESFullName TESFullName;
+	}
+
+	public struct TESQuest : ITESQuest
+	{
+	}
+
+
+
+	namespace ExtensionMethods
+	{
+		unsafe static public class ITESQuest
+		{
+			// Inheritance
+			static public TESFullName* TESFullName<TTESQuest>(this ref TTESQuest quest)
+				where TTESQuest : unmanaged, Eggstensions.ITESObjectARMO
+			{
+				return (TESFullName*)quest.AddByteOffset(0x28);
+			}
+		}
 	}
 }

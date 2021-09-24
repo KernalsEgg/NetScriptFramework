@@ -1,7 +1,10 @@
 ﻿namespace Eggstensions
 {
-	[System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Explicit, Size = 0x50)]
-	public struct InitTESThread
+	public interface IInitTESThread : IVirtualObject
+	{
+	}
+
+	public struct InitTESThread : IInitTESThread
 	{
 	}
 }

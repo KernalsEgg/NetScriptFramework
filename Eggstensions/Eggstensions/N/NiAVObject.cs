@@ -1,9 +1,25 @@
 ﻿namespace Eggstensions
 {
-	[System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Explicit, Size = 0x110)]
-	unsafe public struct NiAVObject
+	public interface INiAVObject : INiObject
 	{
-		[System.Runtime.InteropServices.FieldOffset(0x0)] public NiObject NiObject;
-		[System.Runtime.InteropServices.FieldOffset(0x30)] public NiNode* Parent;
+	}
+
+	public struct NiAVObject : INiAVObject
+	{
+	}
+
+
+
+	namespace ExtensionMethods
+	{
+		unsafe static public class INiAVObject
+		{
+			// Field
+			static public NiNode* Parent<TNiAVObject>(this ref TNiAVObject avObject)
+				where TNiAVObject : unmanaged, Eggstensions.INiAVObject
+			{
+				return *(NiNode**)avObject.AddByteOffset(0x30);
+			}
+		}
 	}
 }

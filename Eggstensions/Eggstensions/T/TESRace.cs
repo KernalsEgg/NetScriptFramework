@@ -1,8 +1,10 @@
 ﻿namespace Eggstensions
 {
-	[System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Explicit, Size = 0x4B8)]
-	public struct TESRace
+	public interface ITESRace : ITESForm
 	{
-		[System.Runtime.InteropServices.FieldOffset(0x0)] public TESForm TESForm;
+	}
+
+	public struct TESRace : ITESRace
+	{
 	}
 }

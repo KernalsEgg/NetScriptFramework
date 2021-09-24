@@ -1,7 +1,10 @@
 ﻿namespace Eggstensions
 {
-	[System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Explicit, Size = 0x140)]
-	unsafe public struct ActorProcess
+	public interface IActorProcess
+	{
+	}
+
+	public struct ActorProcess : IActorProcess
 	{
 	}
 }

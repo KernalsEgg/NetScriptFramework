@@ -28,7 +28,7 @@ namespace ScrambledBugs.Fixes
 			assembly.Add(new System.Byte[1] { 0x5A });									// pop rdx
 			assembly.Add(new System.Byte[1] { Assembly.Ret });							// ret
 
-			ScrambledBugs.Plugin.Trampoline.WriteRelativeCallBranch(ScrambledBugs.Offsets.Fixes.HitEffectRaceCondition.ShouldUpdate, assembly);
+			Trampoline.WriteRelativeCallBranch(ScrambledBugs.Offsets.Fixes.HitEffectRaceCondition.ShouldUpdate, assembly);
 
 			// eflags
 

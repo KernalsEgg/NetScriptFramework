@@ -1,4 +1,5 @@
 ﻿using Eggstensions;
+using Eggstensions.ExtensionMethods;
 
 
 
@@ -6,13 +7,16 @@ namespace ScrambledBugs.Fixes
 {
 	unsafe static internal class WeaponCharge
 	{
-		static public ScrambledBugs.Delegates.Types.Fixes.WeaponCharge.HandleEquippedItem HandleEquippedItem { get; set; }
-
-
-
 		static public void Fix()
 		{
-			WeaponCharge.HandleEquippedItem = (Actor* actor, TESBoundObject* item, ExtraDataList* extraDataList, System.Byte leftHand) =>
+			var handleEquippedItem = (delegate* unmanaged[Cdecl]<Actor*, TESBoundObject*, ExtraDataList*, System.Byte, void>)&HandleEquippedItem;
+
+			Trampoline.WriteRelativeCall(ScrambledBugs.Offsets.Fixes.WeaponCharge.Enchant, handleEquippedItem);
+			Trampoline.WriteRelativeCall(ScrambledBugs.Offsets.Fixes.WeaponCharge.Equip, handleEquippedItem);
+			Trampoline.WriteRelativeCall(ScrambledBugs.Offsets.Fixes.WeaponCharge.Recharge, handleEquippedItem);
+
+			[System.Runtime.InteropServices.UnmanagedCallersOnly(CallConvs = new[] { typeof(System.Runtime.CompilerServices.CallConvCdecl) })]
+			static void HandleEquippedItem(Actor* actor, TESBoundObject* item, ExtraDataList* extraDataList, System.Byte leftHand)
 			{
 				if (item == null)
 				{
@@ -24,59 +28,59 @@ namespace ScrambledBugs.Fixes
 
 				if (actor == player)
 				{
-					ScrambledBugs.Delegates.Instances.Fixes.WeaponCharge.RemoveEquippedItemFlags(player, (System.Byte)((rightHand ? 1 : 0) + 1));
+					player->RemoveEquippedItemFlags((System.Byte)((rightHand ? 1 : 0) + 1));
 				}
 
-				var enchantment = TESForm.GetEnchantment(&item->TESForm, extraDataList);
+				var enchantment = item->GetEnchantment(extraDataList);
 
 				if (enchantment == null)
 				{
 					return;
 				}
 
-				var castingType = MagicItem.GetCastingType(&enchantment->MagicItem);
+				var castingType = enchantment->GetCastingType();
 
 				if (castingType == CastingType.ConstantEffect)
 				{
 					return;
 				}
 
-				var actorValue = MagicItem.GetCostActorValue(&enchantment->MagicItem, rightHand);
+				var actorValue = enchantment->GetCostActorValue(rightHand);
 
 				if (actorValue != ActorValue.None)
 				{
-					Actor.RemoveActorValueModifiers(actor, actorValue);
+					actor->RemoveActorValueModifiers(actorValue);
 
-					var maximumCharge = TESForm.GetMaximumCharge(&item->TESForm, extraDataList);
-					ActorValueOwner.SetActorValue(&actor->ActorValueOwner, actorValue, maximumCharge);
+					var maximumCharge = item->GetMaximumCharge(extraDataList);
+					actor->ActorValueOwner()->SetActorValue(actorValue, maximumCharge);
 
-					if (extraDataList != null && ExtraDataList.HasExtraData(extraDataList, ExtraDataType.Charge))
+					if (extraDataList != null && extraDataList->HasExtraData(ExtraDataType.Charge))
 					{
-						var charge = ExtraDataList.GetCharge(extraDataList);
-						ActorValueOwner.RestoreActorValue(&actor->ActorValueOwner, ActorValueModifier.Damage, actorValue, -(maximumCharge - charge));
+						var charge = extraDataList->GetCharge();
+						actor->ActorValueOwner()->RestoreActorValue(ActorValueModifier.Damage, actorValue, -(maximumCharge - charge));
 					}
 				}
 
-				Actor.RevertSelectedSpell(actor, (EquipType)(rightHand ? 1 : 0), &enchantment->MagicItem);
-			};
+				actor->RevertSelectedSpell((EquipType)(rightHand ? 1 : 0), enchantment);
+			}
+		}
 
-			ScrambledBugs.Plugin.Trampoline.WriteRelativeCall<ScrambledBugs.Delegates.Types.Fixes.WeaponCharge.HandleEquippedItem>
-			(
-				ScrambledBugs.Offsets.Fixes.WeaponCharge.Enchant,
-				WeaponCharge.HandleEquippedItem
-			);
 
-			ScrambledBugs.Plugin.Trampoline.WriteRelativeCall<ScrambledBugs.Delegates.Types.Fixes.WeaponCharge.HandleEquippedItem>
-			(
-				ScrambledBugs.Offsets.Fixes.WeaponCharge.Equip,
-				WeaponCharge.HandleEquippedItem
-			);
 
-			ScrambledBugs.Plugin.Trampoline.WriteRelativeCall<ScrambledBugs.Delegates.Types.Fixes.WeaponCharge.HandleEquippedItem>
-			(
-				ScrambledBugs.Offsets.Fixes.WeaponCharge.Recharge,
-				WeaponCharge.HandleEquippedItem
-			);
+		static void RemoveEquippedItemFlags<TPlayerCharacter>(this ref TPlayerCharacter player, System.Byte flags)
+			where TPlayerCharacter : unmanaged, IPlayerCharacter
+		{
+			var removeEquippedItemFlags = (delegate* unmanaged[Cdecl]<TPlayerCharacter*, System.Byte, void>)ScrambledBugs.Offsets.Fixes.WeaponCharge.RemoveEquippedItemFlags;
+
+			RemoveEquippedItemFlags(player.AsPointer(), flags);
+
+
+
+			[System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.NoInlining)]
+			void RemoveEquippedItemFlags(TPlayerCharacter* player, System.Byte flags)
+			{
+				removeEquippedItemFlags(player, flags);
+			}
 		}
 	}
 }

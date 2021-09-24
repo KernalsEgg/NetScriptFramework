@@ -14,15 +14,36 @@
 
 
 
-	[System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Explicit, Size = 0x8)]
-	unsafe public struct BGSEntryPointFunctionData
+	public interface IBGSEntryPointFunctionData : IVirtualObject
 	{
-		// Virtual
-		static public EntryPointFunctionDataType GetType(BGSEntryPointFunctionData* entryPointFunctionData)
-		{
-			var getType = Memory.ReadVirtualFunction<Eggstensions.Delegates.Types.BGSEntryPointFunctionData.GetType>(*(System.IntPtr*)entryPointFunctionData, 0x1);
+	}
 
-			return (EntryPointFunctionDataType)getType(entryPointFunctionData);
+	public struct BGSEntryPointFunctionData : IBGSEntryPointFunctionData
+	{
+	}
+
+
+
+	namespace ExtensionMethods
+	{
+		unsafe static public class IBGSEntryPointFunctionData
+		{
+			// Virtual
+			static public EntryPointFunctionDataType GetDataType<TBGSEntryPointFunctionData>(this ref TBGSEntryPointFunctionData entryPointFunctionData)
+				where TBGSEntryPointFunctionData : unmanaged, Eggstensions.IBGSEntryPointFunctionData
+			{
+				var getDataType = (delegate* unmanaged[Cdecl]<TBGSEntryPointFunctionData*, System.Int32>)entryPointFunctionData.VirtualFunction(0x1);
+
+				return (EntryPointFunctionDataType)GetDataType(entryPointFunctionData.AsPointer());
+
+
+
+				[System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.NoInlining)]
+				System.Int32 GetDataType(TBGSEntryPointFunctionData* entryPointFunctionData)
+				{
+					return getDataType(entryPointFunctionData);
+				}
+			}
 		}
 	}
 }

@@ -8,7 +8,7 @@ namespace ScrambledBugs.Fixes
 	{
 		static public void Fix()
 		{
-			Memory.SafeWriteNullableArray<System.Byte>(ScrambledBugs.Offsets.Fixes.TrainingMenuText.GetPermanentActorValue, new System.Byte?[3] { null, null, 0x18 });
+			Memory.SafeWrite<System.Byte>(ScrambledBugs.Offsets.Fixes.TrainingMenuText.GetPermanentActorValue, new System.Byte?[3] { null, null, 0x18 });
 		}
 	}
 }

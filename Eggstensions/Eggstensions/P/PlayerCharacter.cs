@@ -1,17 +1,16 @@
 ﻿namespace Eggstensions
 {
-	[System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Explicit, Size = 0xBE0)]
-	unsafe public struct PlayerCharacter
+	public interface IPlayerCharacter : IActor
 	{
-		[System.Runtime.InteropServices.FieldOffset(0x0)] public Actor Actor;
+	}
 
-
-
+	unsafe public struct PlayerCharacter : IPlayerCharacter
+	{
 		static public PlayerCharacter* Instance
 		{
 			get
 			{
-				return (PlayerCharacter*)Memory.Read<System.IntPtr>(Eggstensions.Offsets.PlayerCharacter.Instance);
+				return *(PlayerCharacter**)Eggstensions.Offsets.PlayerCharacter.Instance;
 			}
 		}
 	}

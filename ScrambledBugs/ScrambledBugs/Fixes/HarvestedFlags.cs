@@ -1,4 +1,5 @@
 ﻿using Eggstensions;
+using Eggstensions.ExtensionMethods;
 
 
 
@@ -6,33 +7,42 @@ namespace ScrambledBugs.Fixes
 {
 	unsafe static internal class HarvestedFlags
 	{
-		static public ScrambledBugs.Delegates.Types.Fixes.HarvestedFlags.SetHarvestedFlag RemoveChangeFlag { get; set; }
+		static private delegate* unmanaged[Cdecl]<TESObjectREFR*, System.Byte, void> setHarvestedFlag;
 
 
 
 		static public void Fix()
 		{
-			var setHarvestedFlag = Memory.ReadRelativeCall<ScrambledBugs.Delegates.Types.Fixes.HarvestedFlags.SetHarvestedFlag>(ScrambledBugs.Offsets.Fixes.HarvestedFlags.RemoveHarvestedFlag);
+			HarvestedFlags.setHarvestedFlag = (delegate* unmanaged[Cdecl]<TESObjectREFR*, System.Byte, void>)Memory.ReadRelativeCall(ScrambledBugs.Offsets.Fixes.HarvestedFlags.RemoveHarvestedFlag);
 
-			HarvestedFlags.RemoveChangeFlag = (TESObjectREFR* reference, System.Byte harvested) =>
+
+
+			var removeChangeFlag = (delegate* unmanaged[Cdecl]<TESObjectREFR*, System.Byte, void>)&RemoveChangeFlag;
+
+			Trampoline.WriteRelativeCall(ScrambledBugs.Offsets.Fixes.HarvestedFlags.RemoveHarvestedFlag, removeChangeFlag);
+
+			[System.Runtime.InteropServices.UnmanagedCallersOnly(CallConvs = new[] { typeof(System.Runtime.CompilerServices.CallConvCdecl) })]
+			static void RemoveChangeFlag(TESObjectREFR* reference, System.Byte harvested)
 			{
 				// reference != null
 
-				var formType = reference->BaseObject->TESForm.FormType;
+				var formType = reference->BaseObject()->FormType();
 
 				if (formType == FormType.Flora || formType == FormType.Tree)
 				{
-					TESForm.RemoveChanges(&reference->TESForm, (System.UInt32)TESObjectREFR.ChangeFlags.Empty);
+					reference->RemoveChanges((System.UInt32)TESObjectREFR.ChangeFlags.Empty);
 				}
 
-				setHarvestedFlag(reference, harvested);
-			};
+				SetHarvestedFlag(reference, harvested);
 
-			ScrambledBugs.Plugin.Trampoline.WriteRelativeCall<ScrambledBugs.Delegates.Types.Fixes.HarvestedFlags.SetHarvestedFlag>
-			(
-				ScrambledBugs.Offsets.Fixes.HarvestedFlags.RemoveHarvestedFlag,
-				HarvestedFlags.RemoveChangeFlag
-			);
+
+
+				[System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.NoInlining)]
+				static void SetHarvestedFlag(TESObjectREFR* reference, System.Byte harvested)
+				{
+					HarvestedFlags.setHarvestedFlag(reference, harvested);
+				}
+			}
 		}
 	}
 }

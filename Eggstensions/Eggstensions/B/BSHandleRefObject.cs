@@ -1,26 +1,34 @@
 ﻿namespace Eggstensions
 {
-	[System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Explicit, Size = 0x10)]
-	unsafe public struct BSHandleRefObject
+	public interface IBSHandleRefObject : INiRefObject
 	{
-		[System.Runtime.InteropServices.FieldOffset(0x0)] public NiRefObject NiRefObject;
+	}
+	
+	public struct BSHandleRefObject : IBSHandleRefObject
+	{
+	}
 
 
 
-		// Member
-		static public void DecrementReferenceCount(BSHandleRefObject* handleReferenceObject)
+	namespace ExtensionMethods
+	{
+		unsafe static public class IBSHandleRefObject
 		{
-			var referenceObject = &handleReferenceObject->NiRefObject;
-
-			if (System.Threading.Interlocked.Decrement(ref referenceObject->ReferenceCount) == 0)
+			// Member
+			static public void DecrementReferenceCount<TBSHandleRefObject>(this ref TBSHandleRefObject handleReferenceObject)
+				where TBSHandleRefObject : unmanaged, Eggstensions.IBSHandleRefObject
 			{
-				NiRefObject.Delete(referenceObject);
+				if (System.Threading.Interlocked.Decrement(ref handleReferenceObject.ReferenceCount()->AsRef()) == 0)
+				{
+					handleReferenceObject.Delete();
+				}
 			}
-		}
 
-		static public void IncrementReferenceCount(BSHandleRefObject* handleReferenceObject)
-		{
-			System.Threading.Interlocked.Increment(ref handleReferenceObject->NiRefObject.ReferenceCount);
+			static public void IncrementReferenceCount<TBSHandleRefObject>(this ref TBSHandleRefObject handleReferenceObject)
+				where TBSHandleRefObject : unmanaged, Eggstensions.IBSHandleRefObject
+			{
+				System.Threading.Interlocked.Increment(ref handleReferenceObject.ReferenceCount()->AsRef());
+			}
 		}
 	}
 }

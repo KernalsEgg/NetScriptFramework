@@ -1,11 +1,37 @@
 ﻿namespace Eggstensions
 {
-	[System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Explicit, Size = 0xA8)]
-	public struct AccumulatingValueModifierEffect
+	public interface IAccumulatingValueModifierEffect : IValueModifierEffect
 	{
-		[System.Runtime.InteropServices.FieldOffset(0x0)] public ValueModifierEffect ValueModifierEffect;
-		[System.Runtime.InteropServices.FieldOffset(0x98)] public System.Single CurrentMagnitude;
-		[System.Runtime.InteropServices.FieldOffset(0x9C)] public System.Single MaximumMagnitude;
-		[System.Runtime.InteropServices.FieldOffset(0xA0)] public System.Single HoldDuration;
+	}
+
+	public struct AccumulatingValueModifierEffect : IAccumulatingValueModifierEffect
+	{
+	}
+
+
+
+	namespace ExtensionMethods
+	{
+		unsafe static public class IAccumulatingValueModifierEffect
+		{
+			// Field
+			static public System.Single CurrentMagnitude<TAccumulatingValueModifierEffect>(this ref TAccumulatingValueModifierEffect accumulatingValueModifierEffect)
+				where TAccumulatingValueModifierEffect : unmanaged, Eggstensions.IAccumulatingValueModifierEffect
+			{
+				return *(System.Single*)accumulatingValueModifierEffect.AddByteOffset(0x98);
+			}
+
+			static public System.Single MaximumMagnitude<TAccumulatingValueModifierEffect>(this ref TAccumulatingValueModifierEffect accumulatingValueModifierEffect)
+				where TAccumulatingValueModifierEffect : unmanaged, Eggstensions.IAccumulatingValueModifierEffect
+			{
+				return *(System.Single*)accumulatingValueModifierEffect.AddByteOffset(0x9C);
+			}
+
+			static public System.Single HoldDuration<TAccumulatingValueModifierEffect>(this ref TAccumulatingValueModifierEffect accumulatingValueModifierEffect)
+				where TAccumulatingValueModifierEffect : unmanaged, Eggstensions.IAccumulatingValueModifierEffect
+			{
+				return *(System.Single*)accumulatingValueModifierEffect.AddByteOffset(0xA0);
+			}
+		}
 	}
 }

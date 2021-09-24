@@ -1,4 +1,5 @@
 ﻿using Eggstensions;
+using Eggstensions.ExtensionMethods;
 
 
 
@@ -6,206 +7,160 @@ namespace ScrambledBugs.Patches.ApplySpellPerkEntryPoints
 {
 	unsafe static internal class MultipleSpells
 	{
-		static public ScrambledBugs.Delegates.Types.Patches.ApplySpellPerkEntryPoints.MultipleSpells.ApplyBashingSpell ApplyBashingSpell { get; set; }
-		static public ScrambledBugs.Delegates.Types.Patches.ApplySpellPerkEntryPoints.MultipleSpells.ApplyCombatHitSpell ApplyCombatHitSpell { get; set; }
-		static public ScrambledBugs.Delegates.Types.Patches.ApplySpellPerkEntryPoints.MultipleSpells.ApplyReanimateSpell ApplyReanimateSpell { get; set; }
-		static public ScrambledBugs.Delegates.Types.Patches.ApplySpellPerkEntryPoints.MultipleSpells.ApplySneakingSpell ApplySneakingSpell { get; set; }
-		static public ScrambledBugs.Delegates.Types.Patches.ApplySpellPerkEntryPoints.MultipleSpells.ApplyWeaponSwingSpell ApplyWeaponSwingSpell { get; set; }
-		static public ScrambledBugs.Delegates.Types.Patches.ApplySpellPerkEntryPoints.MultipleSpells.EntryPointFunction SelectSpell { get; set; }
-
-
-
+		static private System.Boolean castSpells;
+		
+		
+		
 		static public void Patch(System.Boolean castSpells)
 		{
-			MultipleSpells.ApplyBashingSpell = (System.Int32 entryPoint, Actor* perkOwner, Actor* target, SpellItem** result) =>
+			MultipleSpells.castSpells = castSpells;
+			
+			
+			
+			var applyBashingSpell = (delegate* unmanaged[Cdecl]<System.Int32, Actor*, Actor*, SpellItem**, void>)&ApplyBashingSpell;
+
+			Trampoline.WriteRelativeCall(ScrambledBugs.Offsets.Patches.ApplySpellPerkEntryPoints.MultipleSpells.ApplyBashingSpell, applyBashingSpell);
+
+			[System.Runtime.InteropServices.UnmanagedCallersOnly(CallConvs = new[] { typeof(System.Runtime.CompilerServices.CallConvCdecl) })]
+			static void ApplyBashingSpell(System.Int32 entryPoint, Actor* perkOwner, Actor* target, SpellItem** result)
 			{
 				// perkOwner	!= null
 				// target		!= null
 				// result		!= null
 
-				var bashingSpells = new BSTArray();
+				using var bashingSpells = new BSTArray();
+				BGSEntryPointPerkEntry.HandleEntryPoints((EntryPoint)entryPoint, perkOwner, target, &bashingSpells);
 
-				try
+				for (var index = 0; index < bashingSpells.Length; index++)
 				{
-					BGSEntryPointPerkEntry.HandleEntryPoints((EntryPoint)entryPoint, perkOwner, target, &bashingSpells);
+					var bashingSpell = ((SpellItem**)bashingSpells.Elements)[index];
 
-					for (var index = 0; index < bashingSpells.Length; index++)
+					if (bashingSpell != null)
 					{
-						var bashingSpell = (SpellItem*)Memory.Read<System.IntPtr>(bashingSpells.Elements, Memory.Size<System.IntPtr>.Unmanaged * index);
-
-						if (bashingSpell != null)
-						{
-							SpellItem.Apply(bashingSpell, castSpells ? perkOwner : target, target);
-						}
+						bashingSpell->Apply(MultipleSpells.castSpells ? perkOwner : target, target);
 					}
 				}
-				finally
-				{
-					BSTArray.Deallocate(&bashingSpells);
-				}
-			};
-
-			ScrambledBugs.Plugin.Trampoline.WriteRelativeCall<ScrambledBugs.Delegates.Types.Patches.ApplySpellPerkEntryPoints.MultipleSpells.ApplyBashingSpell>
-			(
-				ScrambledBugs.Offsets.Patches.ApplySpellPerkEntryPoints.MultipleSpells.ApplyBashingSpell,
-				MultipleSpells.ApplyBashingSpell
-			);
+			}
 
 
-			
-			MultipleSpells.ApplyCombatHitSpell = (System.Int32 entryPoint, Actor* perkOwner, TESObjectWEAP* weapon, Actor* target, SpellItem** result) =>
+
+			var applyCombatHitSpell = (delegate* unmanaged[Cdecl]<System.Int32, Actor*, TESObjectWEAP*, Actor*, SpellItem**, void>)&ApplyCombatHitSpell;
+
+			Trampoline.WriteRelativeCall(ScrambledBugs.Offsets.Patches.ApplySpellPerkEntryPoints.MultipleSpells.ApplyCombatHitSpell, applyCombatHitSpell);
+			Trampoline.WriteRelativeCall(ScrambledBugs.Offsets.Patches.ApplySpellPerkEntryPoints.MultipleSpells.ApplyCombatHitSpellArrowProjectile, applyCombatHitSpell);
+
+			[System.Runtime.InteropServices.UnmanagedCallersOnly(CallConvs = new[] { typeof(System.Runtime.CompilerServices.CallConvCdecl) })]
+			static void ApplyCombatHitSpell(System.Int32 entryPoint, Actor* perkOwner, TESObjectWEAP* weapon, Actor* target, SpellItem** result)
 			{
 				// perkOwner	!= null
 				// weapon		!= null
 				// target		!= null
 				// result		!= null
 
-				var combatHitSpells = new BSTArray();
+				using var combatHitSpells = new BSTArray();
+				BGSEntryPointPerkEntry.HandleEntryPoints((EntryPoint)entryPoint, perkOwner, weapon, target, &combatHitSpells);
 
-				try
+				for (var index = 0; index < combatHitSpells.Length; index++)
 				{
-					BGSEntryPointPerkEntry.HandleEntryPoints((EntryPoint)entryPoint, perkOwner, weapon, target, &combatHitSpells);
+					var combatHitSpell = ((SpellItem**)combatHitSpells.Elements)[index];
 
-					for (var index = 0; index < combatHitSpells.Length; index++)
+					if (combatHitSpell != null)
 					{
-						var combatHitSpell = (SpellItem*)Memory.Read<System.IntPtr>(combatHitSpells.Elements, Memory.Size<System.IntPtr>.Unmanaged * index);
-
-						if (combatHitSpell != null)
-						{
-							SpellItem.Apply(combatHitSpell, castSpells ? perkOwner : target, target);
-						}
+						combatHitSpell->Apply(MultipleSpells.castSpells ? perkOwner : target, target);
 					}
 				}
-				finally
-				{
-					BSTArray.Deallocate(&combatHitSpells);
-				}
-			};
-
-			ScrambledBugs.Plugin.Trampoline.WriteRelativeCall<ScrambledBugs.Delegates.Types.Patches.ApplySpellPerkEntryPoints.MultipleSpells.ApplyCombatHitSpell>
-			(
-				ScrambledBugs.Offsets.Patches.ApplySpellPerkEntryPoints.MultipleSpells.ApplyCombatHitSpell,
-				MultipleSpells.ApplyCombatHitSpell
-			);
-
-			ScrambledBugs.Plugin.Trampoline.WriteRelativeCall<ScrambledBugs.Delegates.Types.Patches.ApplySpellPerkEntryPoints.MultipleSpells.ApplyCombatHitSpell>
-			(
-				ScrambledBugs.Offsets.Patches.ApplySpellPerkEntryPoints.MultipleSpells.ApplyCombatHitSpellArrowProjectile,
-				MultipleSpells.ApplyCombatHitSpell
-			);
+			}
 
 
 
-			MultipleSpells.ApplyReanimateSpell = (System.Int32 entryPoint, Actor* perkOwner, SpellItem* spell, Actor* target, SpellItem** result) =>
+			var applyReanimateSpell = (delegate* unmanaged[Cdecl]<System.Int32, Actor*, SpellItem*, Actor*, SpellItem**, void>)&ApplyReanimateSpell;
+
+			Trampoline.WriteRelativeCall(ScrambledBugs.Offsets.Patches.ApplySpellPerkEntryPoints.MultipleSpells.ApplyReanimateSpell, applyReanimateSpell);
+
+			[System.Runtime.InteropServices.UnmanagedCallersOnly(CallConvs = new[] { typeof(System.Runtime.CompilerServices.CallConvCdecl) })]
+			static void ApplyReanimateSpell(System.Int32 entryPoint, Actor* perkOwner, SpellItem* spell, Actor* target, SpellItem** result)
 			{
 				// perkOwner	!= null
 				// spell		!= null
 				// target		!= null
 				// result		!= null
 
-				var reanimateSpells = new BSTArray();
+				using var reanimateSpells = new BSTArray();
+				BGSEntryPointPerkEntry.HandleEntryPoints((EntryPoint)entryPoint, perkOwner, spell, target, &reanimateSpells);
 
-				try
+				for (var index = 0; index < reanimateSpells.Length; index++)
 				{
-					BGSEntryPointPerkEntry.HandleEntryPoints((EntryPoint)entryPoint, perkOwner, spell, target, &reanimateSpells);
+					var reanimateSpell = ((SpellItem**)reanimateSpells.Elements)[index];
 
-					for (var index = 0; index < reanimateSpells.Length; index++)
+					if (reanimateSpell != null)
 					{
-						var reanimateSpell = (SpellItem*)Memory.Read<System.IntPtr>(reanimateSpells.Elements, Memory.Size<System.IntPtr>.Unmanaged * index);
-
-						if (reanimateSpell != null)
-						{
-							SpellItem.Apply(reanimateSpell, castSpells ? perkOwner : target, target);
-						}
+						reanimateSpell->Apply(MultipleSpells.castSpells ? perkOwner : target, target);
 					}
 				}
-				finally
-				{
-					BSTArray.Deallocate(&reanimateSpells);
-				}
-			};
-
-			ScrambledBugs.Plugin.Trampoline.WriteRelativeCall<ScrambledBugs.Delegates.Types.Patches.ApplySpellPerkEntryPoints.MultipleSpells.ApplyReanimateSpell>
-			(
-				ScrambledBugs.Offsets.Patches.ApplySpellPerkEntryPoints.MultipleSpells.ApplyReanimateSpell,
-				MultipleSpells.ApplyReanimateSpell
-			);
+			}
 
 
 
-			MultipleSpells.ApplySneakingSpell = (System.Int32 entryPoint, Actor* perkOwner, SpellItem** result) =>
+			var applySneakingSpell = (delegate* unmanaged[Cdecl]<System.Int32, Actor*, SpellItem**, void>)&ApplySneakingSpell;
+
+			Trampoline.WriteRelativeCall(ScrambledBugs.Offsets.Patches.ApplySpellPerkEntryPoints.MultipleSpells.ApplySneakingSpell, applySneakingSpell);
+
+			[System.Runtime.InteropServices.UnmanagedCallersOnly(CallConvs = new[] { typeof(System.Runtime.CompilerServices.CallConvCdecl) })]
+			static void ApplySneakingSpell(System.Int32 entryPoint, Actor* perkOwner, SpellItem** result)
 			{
 				// perkOwner	!= null
 				// result		!= null
 
-				var sneakingSpells = new BSTArray();
+				using var sneakingSpells = new BSTArray();
+				BGSEntryPointPerkEntry.HandleEntryPoints((EntryPoint)entryPoint, perkOwner, &sneakingSpells);
 
-				try
+				for (var index = 0; index < sneakingSpells.Length; index++)
 				{
-					BGSEntryPointPerkEntry.HandleEntryPoints((EntryPoint)entryPoint, perkOwner, &sneakingSpells);
+					var sneakingSpell = ((SpellItem**)sneakingSpells.Elements)[index];
 
-					for (var index = 0; index < sneakingSpells.Length; index++)
+					if (sneakingSpell != null)
 					{
-						var sneakingSpell = (SpellItem*)Memory.Read<System.IntPtr>(sneakingSpells.Elements, Memory.Size<System.IntPtr>.Unmanaged * index);
-
-						if (sneakingSpell != null)
-						{
-							SpellItem.Apply(sneakingSpell, perkOwner, perkOwner);
-						}
+						sneakingSpell->Apply(perkOwner, perkOwner);
 					}
 				}
-				finally
-				{
-					BSTArray.Deallocate(&sneakingSpells);
-				}
-			};
-
-			ScrambledBugs.Plugin.Trampoline.WriteRelativeCall<ScrambledBugs.Delegates.Types.Patches.ApplySpellPerkEntryPoints.MultipleSpells.ApplySneakingSpell>
-			(
-				ScrambledBugs.Offsets.Patches.ApplySpellPerkEntryPoints.MultipleSpells.ApplySneakingSpell,
-				MultipleSpells.ApplySneakingSpell
-			);
+			}
 
 
 
-			MultipleSpells.ApplyWeaponSwingSpell = (System.Int32 entryPoint, Actor* perkOwner, Actor* attacker, TESObjectWEAP* attackerWeapon, SpellItem** result) =>
+			var applyWeaponSwingSpell = (delegate* unmanaged[Cdecl]<System.Int32, Actor*, Actor*, TESObjectWEAP*, SpellItem**, void>)&ApplyWeaponSwingSpell;
+
+			Trampoline.WriteRelativeCall(ScrambledBugs.Offsets.Patches.ApplySpellPerkEntryPoints.MultipleSpells.ApplyWeaponSwingSpell, applyWeaponSwingSpell);
+
+			[System.Runtime.InteropServices.UnmanagedCallersOnly(CallConvs = new[] { typeof(System.Runtime.CompilerServices.CallConvCdecl) })]
+			static void ApplyWeaponSwingSpell(System.Int32 entryPoint, Actor* perkOwner, Actor* attacker, TESObjectWEAP* attackerWeapon, SpellItem** result)
 			{
 				// perkOwner		!= null
 				// attacker			!= null
 				// attackerWeapon	!= null
 				// result			!= null
 
-				var weaponSwingSpells = new BSTArray();
+				using var weaponSwingSpells = new BSTArray();
+				BGSEntryPointPerkEntry.HandleEntryPoints((EntryPoint)entryPoint, perkOwner, attacker, attackerWeapon, &weaponSwingSpells);
 
-				try
+				for (var index = 0; index < weaponSwingSpells.Length; index++)
 				{
-					BGSEntryPointPerkEntry.HandleEntryPoints((EntryPoint)entryPoint, perkOwner, attacker, attackerWeapon, &weaponSwingSpells);
+					var weaponSwingSpell = ((SpellItem**)weaponSwingSpells.Elements)[index];
 
-					for (var index = 0; index < weaponSwingSpells.Length; index++)
+					if (weaponSwingSpell != null)
 					{
-						var weaponSwingSpell = (SpellItem*)Memory.Read<System.IntPtr>(weaponSwingSpells.Elements, Memory.Size<System.IntPtr>.Unmanaged * index);
-
-						if (weaponSwingSpell != null)
-						{
-							SpellItem.Apply(weaponSwingSpell, castSpells ? attacker : perkOwner, perkOwner);
-						}
+						weaponSwingSpell->Apply(MultipleSpells.castSpells ? attacker : perkOwner, perkOwner);
 					}
 				}
-				finally
-				{
-					BSTArray.Deallocate(&weaponSwingSpells);
-				}
-			};
-
-			ScrambledBugs.Plugin.Trampoline.WriteRelativeCall<ScrambledBugs.Delegates.Types.Patches.ApplySpellPerkEntryPoints.MultipleSpells.ApplyWeaponSwingSpell>
-			(
-				ScrambledBugs.Offsets.Patches.ApplySpellPerkEntryPoints.MultipleSpells.ApplyWeaponSwingSpell,
-				MultipleSpells.ApplyWeaponSwingSpell
-			);
+			}
 
 
 
-			MultipleSpells.SelectSpell = (Actor* perkOwner, System.Int32 result, System.Byte resultCount, System.IntPtr results, BGSEntryPointFunctionData* entryPointFunctionData) =>
+			var selectSpell = (delegate* unmanaged[Cdecl]<Actor*, System.Int32, System.Byte, System.IntPtr, BGSEntryPointFunctionData*, void>)&SelectSpell;
+
+			*(delegate* unmanaged[Cdecl]<Actor*, System.Int32, System.Byte, System.IntPtr, BGSEntryPointFunctionData*, void>*)ScrambledBugs.Offsets.Patches.ApplySpellPerkEntryPoints.MultipleSpells.SelectSpell = selectSpell;
+
+			[System.Runtime.InteropServices.UnmanagedCallersOnly(CallConvs = new[] { typeof(System.Runtime.CompilerServices.CallConvCdecl) })]
+			static void SelectSpell(Actor* perkOwner, System.Int32 result, System.Byte resultCount, System.IntPtr results, BGSEntryPointFunctionData* entryPointFunctionData)
 			{
 				// perkOwner				!= null
 				// results					!= System.IntPtr.Zero
@@ -216,27 +171,21 @@ namespace ScrambledBugs.Patches.ApplySpellPerkEntryPoints
 					return;
 				}
 
-				if (resultCount != Memory.Read<System.UInt32>(ScrambledBugs.Offsets.Patches.ApplySpellPerkEntryPoints.MultipleSpells.SelectSpellResultCount))
+				if (resultCount != *(System.UInt32*)ScrambledBugs.Offsets.Patches.ApplySpellPerkEntryPoints.MultipleSpells.SelectSpellResultCount)
 				{
 					return;
 				}
 
-				if (BGSEntryPointFunctionData.GetType(entryPointFunctionData) != EntryPointFunctionDataType.SpellItem)
+				if (entryPointFunctionData->GetDataType() != EntryPointFunctionDataType.SpellItem)
 				{
 					return;
 				}
 
-				var spells	= (BSTArray*)Memory.Read<System.IntPtr>(results);
-				var spell	= ((BGSEntryPointFunctionDataSpellItem*)entryPointFunctionData)->Spell;
+				var spells	= *(BSTArray**)results;
+				var spell	= ((BGSEntryPointFunctionDataSpellItem*)entryPointFunctionData)->Spell();
 
-				BSTArray.Push(spells, new System.IntPtr(&spell));
-			};
-
-			Memory.Write<System.IntPtr>
-			(
-				ScrambledBugs.Offsets.Patches.ApplySpellPerkEntryPoints.MultipleSpells.SelectSpell,
-				System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate<ScrambledBugs.Delegates.Types.Patches.ApplySpellPerkEntryPoints.MultipleSpells.EntryPointFunction>(MultipleSpells.SelectSpell)
-			);
+				spells->Push(&spell);
+			}
 		}
 	}
 }

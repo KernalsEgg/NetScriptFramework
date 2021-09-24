@@ -20,30 +20,121 @@
 
 
 
-	[System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Explicit, Size = 0x90)]
-	unsafe public struct ActiveEffect
+	public interface IActiveEffect : IVirtualObject
 	{
-		[System.Runtime.InteropServices.FieldOffset(0x34)] public BSPointerHandle Caster; // Actor
-		[System.Runtime.InteropServices.FieldOffset(0x40)] public MagicItem* Spell;
-		[System.Runtime.InteropServices.FieldOffset(0x48)] public Effect* Effect;
-		[System.Runtime.InteropServices.FieldOffset(0x50)] public MagicTarget* MagicTarget;
-		[System.Runtime.InteropServices.FieldOffset(0x70)] public System.Single ElapsedTime;
-		[System.Runtime.InteropServices.FieldOffset(0x74)] public System.Single Duration;
-		[System.Runtime.InteropServices.FieldOffset(0x78)] public System.Single Magnitude;
-		[System.Runtime.InteropServices.FieldOffset(0x7C)] public ActiveEffectFlags Flags;
-		[System.Runtime.InteropServices.FieldOffset(0x88)] public CastingSource CastingSource;
+	}
+
+	public struct ActiveEffect : IActiveEffect
+	{
+	}
 
 
 
-		// Member
-		static public void Dispel(ActiveEffect* activeEffect, System.Boolean force)
+	namespace ExtensionMethods
+	{
+		unsafe static public class IActiveEffect
 		{
-			Eggstensions.Delegates.Instances.ActiveEffect.Dispel(activeEffect, (System.Byte)(force ? 1 : 0));
-		}
+			// Field
+			static public BSPointerHandle<Actor> Caster<TActiveEffect>(this ref TActiveEffect activeEffect)
+				where TActiveEffect : unmanaged, Eggstensions.IActiveEffect
+			{
+				return *(BSPointerHandle<Actor>*)activeEffect.AddByteOffset(0x34);
+			}
 
-		static public System.Single GetCurrentMagnitude(ActiveEffect* activeEffect)
-		{
-			return Eggstensions.Delegates.Instances.ActiveEffect.GetCurrentMagnitude(activeEffect);
+			static public MagicItem* Spell<TActiveEffect>(this ref TActiveEffect activeEffect)
+				where TActiveEffect : unmanaged, Eggstensions.IActiveEffect
+			{
+				return *(MagicItem**)activeEffect.AddByteOffset(0x40);
+			}
+
+			static public Effect* Effect<TActiveEffect>(this ref TActiveEffect activeEffect)
+				where TActiveEffect : unmanaged, Eggstensions.IActiveEffect
+			{
+				return *(Effect**)activeEffect.AddByteOffset(0x48);
+			}
+
+			static public MagicTarget* MagicTarget<TActiveEffect>(this ref TActiveEffect activeEffect)
+				where TActiveEffect : unmanaged, Eggstensions.IActiveEffect
+			{
+				return *(MagicTarget**)activeEffect.AddByteOffset(0x50);
+			}
+
+			static public System.Single ElapsedTime<TActiveEffect>(this ref TActiveEffect activeEffect)
+				where TActiveEffect : unmanaged, Eggstensions.IActiveEffect
+			{
+				return *(System.Single*)activeEffect.AddByteOffset(0x70);
+			}
+
+			static public System.Single Duration<TActiveEffect>(this ref TActiveEffect activeEffect)
+				where TActiveEffect : unmanaged, Eggstensions.IActiveEffect
+			{
+				return *(System.Single*)activeEffect.AddByteOffset(0x74);
+			}
+
+			static public void Duration<TActiveEffect>(this ref TActiveEffect activeEffect, System.Single duration)
+				where TActiveEffect : unmanaged, Eggstensions.IActiveEffect
+			{
+				*(System.Single*)activeEffect.AddByteOffset(0x74) = duration;
+			}
+
+			static public System.Single Magnitude<TActiveEffect>(this ref TActiveEffect activeEffect)
+				where TActiveEffect : unmanaged, Eggstensions.IActiveEffect
+			{
+				return *(System.Single*)activeEffect.AddByteOffset(0x78);
+			}
+
+			static public void Magnitude<TActiveEffect>(this ref TActiveEffect activeEffect, System.Single magnitude)
+				where TActiveEffect : unmanaged, Eggstensions.IActiveEffect
+			{
+				*(System.Single*)activeEffect.AddByteOffset(0x78) = magnitude;
+			}
+
+			static public ActiveEffectFlags Flags<TActiveEffect>(this ref TActiveEffect activeEffect)
+				where TActiveEffect : unmanaged, Eggstensions.IActiveEffect
+			{
+				return (ActiveEffectFlags)(*(System.UInt32*)activeEffect.AddByteOffset(0x7C));
+			}
+
+			static public CastingSource CastingSource<TActiveEffect>(this ref TActiveEffect activeEffect)
+				where TActiveEffect : unmanaged, Eggstensions.IActiveEffect
+			{
+				return (CastingSource)(*(System.Int32*)activeEffect.AddByteOffset(0x88));
+			}
+
+
+
+			// Member
+			static public void Dispel<TActiveEffect>(this ref TActiveEffect activeEffect, System.Boolean force)
+				where TActiveEffect : unmanaged, Eggstensions.IActiveEffect
+			{
+				var dispel = (delegate* unmanaged[Cdecl]<TActiveEffect*, System.Byte, void>)Eggstensions.Offsets.ActiveEffect.Dispel;
+
+				Dispel(activeEffect.AsPointer(), (System.Byte)(force ? 1 : 0));
+
+
+
+				[System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.NoInlining)]
+				void Dispel(TActiveEffect* activeEffect, System.Byte force)
+				{
+					dispel(activeEffect, force);
+				}
+			}
+
+			static public System.Single GetCurrentMagnitude<TActiveEffect>(this ref TActiveEffect activeEffect)
+				where TActiveEffect : unmanaged, Eggstensions.IActiveEffect
+			{
+				var getCurrentMagnitude = (delegate* unmanaged[Cdecl]<TActiveEffect*, System.Single>)Eggstensions.Offsets.ActiveEffect.GetCurrentMagnitude;
+
+				return GetCurrentMagnitude(activeEffect.AsPointer());
+
+
+
+				[System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.NoInlining)]
+				System.Single GetCurrentMagnitude(TActiveEffect* activeEffect)
+				{
+					return getCurrentMagnitude(activeEffect);
+				}
+			}
 		}
 	}
 }

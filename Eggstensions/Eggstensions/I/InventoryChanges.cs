@@ -1,12 +1,24 @@
-﻿namespace Eggstensions
+﻿using Eggstensions.ExtensionMethods;
+
+
+
+namespace Eggstensions
 {
-	[System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Explicit, Size = 0x20)]
 	unsafe public struct InventoryChanges
 	{
-		// Member
-		static public void ResetWeight(InventoryChanges* inventoryChanges)
+		public void ResetWeight()
 		{
-			Eggstensions.Delegates.Instances.InventoryChanges.ResetWeight(inventoryChanges);
+			var resetWeight = (delegate* unmanaged[Cdecl]<InventoryChanges*, void>)Eggstensions.Offsets.InventoryChanges.ResetWeight;
+
+			ResetWeight(this.AsPointer());
+
+
+
+			[System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.NoInlining)]
+			void ResetWeight(InventoryChanges* inventoryChanges)
+			{
+				resetWeight(inventoryChanges);
+			}
 		}
 	}
 }

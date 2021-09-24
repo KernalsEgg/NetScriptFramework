@@ -1,36 +1,31 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
-VisualStudioVersion = 16.0.31112.23
+VisualStudioVersion = 16.0.31702.278
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScrambledBugs", "ScrambledBugs\ScrambledBugs.csproj", "{B6B5C747-0A51-4E42-A441-D4A287B35C62}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScrambledBugs", "ScrambledBugs\ScrambledBugs.csproj", "{F231D35C-6EA9-4616-B620-195E261543D2}"
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Eggstensions", "..\Eggstensions\Eggstensions\Eggstensions.shproj", "{740EFF05-9743-47CE-B6EA-09584EAF1EDF}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{15F6EBDA-40CA-4333-9AB7-265006F80F6A}"
-	ProjectSection(SolutionItems) = preProject
-		.editorconfig = .editorconfig
-	EndProjectSection
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		..\Eggstensions\Eggstensions\Eggstensions.projitems*{740eff05-9743-47ce-b6ea-09584eaf1edf}*SharedItemsImports = 13
-		..\Eggstensions\Eggstensions\Eggstensions.projitems*{b6b5c747-0a51-4e42-a441-d4a287b35c62}*SharedItemsImports = 4
+		..\Eggstensions\Eggstensions\Eggstensions.projitems*{f231d35c-6ea9-4616-b620-195e261543d2}*SharedItemsImports = 5
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{B6B5C747-0A51-4E42-A441-D4A287B35C62}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B6B5C747-0A51-4E42-A441-D4A287B35C62}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B6B5C747-0A51-4E42-A441-D4A287B35C62}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B6B5C747-0A51-4E42-A441-D4A287B35C62}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F231D35C-6EA9-4616-B620-195E261543D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F231D35C-6EA9-4616-B620-195E261543D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F231D35C-6EA9-4616-B620-195E261543D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F231D35C-6EA9-4616-B620-195E261543D2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {DC67D563-5507-46DA-8D3C-2196CCE4BC0C}
+		SolutionGuid = {7F285C5C-AD26-4D4B-A277-96E250D1093F}
 	EndGlobalSection
 EndGlobal

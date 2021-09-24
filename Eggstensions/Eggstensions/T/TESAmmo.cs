@@ -1,18 +1,35 @@
 ﻿namespace Eggstensions
 {
-	[System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Explicit, Size = 0x128)]
-	unsafe public struct TESAmmo
+	public interface ITESAmmo : ITESBoundObject
 	{
-		[System.Runtime.InteropServices.FieldOffset(0x0)] public TESBoundObject TESBoundObject;
+	}
+
+	public struct TESAmmo : ITESAmmo
+	{
+	}
 
 
 
-		// Virtual
-		static public System.Boolean IsPlayable(TESAmmo* ammo)
+	namespace ExtensionMethods
+	{
+		unsafe static public class ITESAmmo
 		{
-			var isPlayable = Memory.ReadVirtualFunction<Eggstensions.Delegates.Types.TESAmmo.IsPlayable>(*(System.IntPtr*)ammo, 0x19);
+			// Virtual
+			static public System.Boolean IsPlayable<TTESAmmo>(this ref TTESAmmo ammo)
+				where TTESAmmo : unmanaged, Eggstensions.ITESAmmo
+			{
+				var isPlayable = (delegate* unmanaged[Cdecl]<TTESAmmo*, System.Byte>)ammo.VirtualFunction(0x19);
 
-			return isPlayable(ammo) != 0;
+				return IsPlayable(ammo.AsPointer()) != 0;
+
+
+
+				[System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.NoInlining)]
+				System.Byte IsPlayable(TTESAmmo* ammo)
+				{
+					return isPlayable(ammo);
+				}
+			}
 		}
 	}
 }

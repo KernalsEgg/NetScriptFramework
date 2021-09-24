@@ -1,8 +1,25 @@
 ﻿namespace Eggstensions
 {
-	[System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Explicit, Size = 0x48)]
-	unsafe public struct ReferenceEffect
+	public interface IReferenceEffect : INiObject
 	{
-		[System.Runtime.InteropServices.FieldOffset(0x30)] public ReferenceEffectController* Controller;
+	}
+
+	public struct ReferenceEffect : IReferenceEffect
+	{
+	}
+
+
+
+	namespace ExtensionMethods
+	{
+		unsafe static public class IReferenceEffect
+		{
+			// Field
+			static public ReferenceEffectController* Controller<TReferenceEffect>(this ref TReferenceEffect referenceEffect)
+				where TReferenceEffect : unmanaged, Eggstensions.IReferenceEffect
+			{
+				return *(ReferenceEffectController**)referenceEffect.AddByteOffset(0x30);
+			}
+		}
 	}
 }

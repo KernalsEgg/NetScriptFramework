@@ -1,8 +1,10 @@
 ﻿namespace Eggstensions
 {
-	[System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Explicit, Size = 0x60)]
-	public struct BGSMovementType
+	public interface IBGSMovementType : ITESForm
 	{
-		[System.Runtime.InteropServices.FieldOffset(0x0)] public TESForm TESForm;
+	}
+
+	public struct BGSMovementType : IBGSMovementType
+	{
 	}
 }

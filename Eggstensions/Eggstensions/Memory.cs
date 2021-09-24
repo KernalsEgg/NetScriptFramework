@@ -42,7 +42,7 @@
 
 
 
-	[System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Sequential, Size = 0x30)]
+	[System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Explicit, Size = 0x30)]
 	public struct MemoryBasicInformation
 	{
 		[System.Flags]
@@ -63,45 +63,36 @@
 
 
 
-		public System.IntPtr BaseAddress;			// 0x0
-		public System.IntPtr AllocationBase;		// 0x8
-		public System.UInt32 AllocationProtect;		// 0x10
-		public System.UInt16 PartitionId;			// 0x14
-		public System.IntPtr RegionSize;			// 0x18
-		public MemoryBasicInformation.States State;	// 0x20
-		public System.UInt32 Protect;				// 0x24
-		public MemoryBasicInformation.Types Type;	// 0x28
+		[System.Runtime.InteropServices.FieldOffset(0x0)] public System.IntPtr BaseAddress;
+		[System.Runtime.InteropServices.FieldOffset(0x8)] public System.IntPtr AllocationBase;
+		[System.Runtime.InteropServices.FieldOffset(0x10)] public System.UInt32 AllocationProtect;
+		[System.Runtime.InteropServices.FieldOffset(0x14)] public System.UInt16 PartitionId;
+		[System.Runtime.InteropServices.FieldOffset(0x18)] public System.IntPtr RegionSize;
+		[System.Runtime.InteropServices.FieldOffset(0x20)] public MemoryBasicInformation.States State;
+		[System.Runtime.InteropServices.FieldOffset(0x24)] public System.UInt32 Protect;
+		[System.Runtime.InteropServices.FieldOffset(0x28)] public MemoryBasicInformation.Types Type;
 	}
 
-	[System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Sequential, Size = 0x30)]
+	[System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Explicit, Size = 0x30)]
 	public struct SystemInfo
 	{
-		public System.UInt16 ProcessorArchitecture;		// 0x0
-		public System.UInt16 Reserved;					// 0x2
-		public System.UInt32 PageSize;					// 0x4
-		public System.IntPtr MinimumApplicationAddress;	// 0x8
-		public System.IntPtr MaximumApplicationAddress;	// 0x10
-		public System.IntPtr ActiveProcessorMask;		// 0x18 (System.UInt32*)
-		public System.UInt32 NumberOfProcessors;		// 0x20
-		public System.UInt32 ProcessorType;				// 0x24
-		public System.UInt32 AllocationGranularity;		// 0x28
-		public System.UInt16 ProcessorLevel;			// 0x2C
-		public System.UInt16 ProcessorRevision;			// 0x2E
+		[System.Runtime.InteropServices.FieldOffset(0x0)] public System.UInt16 ProcessorArchitecture;
+		[System.Runtime.InteropServices.FieldOffset(0x2)] public System.UInt16 Reserved;
+		[System.Runtime.InteropServices.FieldOffset(0x4)] public System.UInt32 PageSize;
+		[System.Runtime.InteropServices.FieldOffset(0x8)] public System.IntPtr MinimumApplicationAddress;
+		[System.Runtime.InteropServices.FieldOffset(0x10)] public System.IntPtr MaximumApplicationAddress;
+		[System.Runtime.InteropServices.FieldOffset(0x18)] public System.IntPtr ActiveProcessorMask; // System.UInt32*
+		[System.Runtime.InteropServices.FieldOffset(0x20)] public System.UInt32 NumberOfProcessors;
+		[System.Runtime.InteropServices.FieldOffset(0x24)] public System.UInt32 ProcessorType;
+		[System.Runtime.InteropServices.FieldOffset(0x28)] public System.UInt32 AllocationGranularity;
+		[System.Runtime.InteropServices.FieldOffset(0x2C)] public System.UInt16 ProcessorLevel;
+		[System.Runtime.InteropServices.FieldOffset(0x2E)] public System.UInt16 ProcessorRevision;
 	}
 
 
 
-	static public class Memory
+	unsafe static public class Memory
 	{
-		static public class Size<T>
-			where T : unmanaged
-		{
-			unsafe static public System.Int32 Managed { get; }	= sizeof(T);
-			static public System.Int32 Unmanaged { get; }		= System.Runtime.InteropServices.Marshal.SizeOf<T>();
-		}
-
-
-
 		[System.Runtime.InteropServices.DllImport("Kernel32.dll", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, SetLastError = true)]
 		static public extern void GetSystemInfo(out SystemInfo systemInfo);
 
@@ -137,11 +128,11 @@
 			return Memory.Compare<T>(address + offset, value);
 		}
 
-		static public System.Boolean CompareArray<T>(System.IntPtr address, T[] values)
+		static public System.Boolean Compare<T>(System.IntPtr address, T[] values)
 			where T : unmanaged, System.IEquatable<T>
 		{
 			var length	= values.Length;
-			var size	= Memory.Size<T>.Unmanaged;
+			var size	= System.Runtime.CompilerServices.Unsafe.SizeOf<T>();
 
 			for (var index = 0; index < length; index++)
 			{
@@ -154,17 +145,17 @@
 			return true;
 		}
 
-		static public System.Boolean CompareArray<T>(System.IntPtr address, System.Int32 offset, T[] values)
+		static public System.Boolean Compare<T>(System.IntPtr address, System.Int32 offset, T[] values)
 			where T : unmanaged, System.IEquatable<T>
 		{
-			return Memory.CompareArray<T>(address + offset, values);
+			return Memory.Compare<T>(address + offset, values);
 		}
 
-		static public System.Boolean CompareNullableArray<T>(System.IntPtr address, T?[] values)
+		static public System.Boolean Compare<T>(System.IntPtr address, T?[] values)
 			where T : unmanaged, System.IEquatable<T>
 		{
 			var length	= values.Length;
-			var size	= Memory.Size<T>.Unmanaged;
+			var size	= System.Runtime.CompilerServices.Unsafe.SizeOf<T>();
 
 			for (var index = 0; index < length; index++)
 			{
@@ -182,24 +173,24 @@
 			return true;
 		}
 
-		static public System.Boolean CompareNullableArray<T>(System.IntPtr address, System.Int32 offset, T?[] values)
+		static public System.Boolean Compare<T>(System.IntPtr address, System.Int32 offset, T?[] values)
 			where T : unmanaged, System.IEquatable<T>
 		{
-			return Memory.CompareNullableArray<T>(address + offset, values);
+			return Memory.Compare<T>(address + offset, values);
 		}
 
-		unsafe static public TTo ConvertTo<TFrom, TTo>(TFrom value)
+		static public TTo ConvertTo<TFrom, TTo>(TFrom value)
 			where TFrom : unmanaged
 			where TTo : unmanaged
 		{
 			return *(TTo*)&value;
 		}
 
-		unsafe static public TTo[] ConvertToArray<TFrom, TTo>(TFrom value)
+		static public TTo[] ConvertToArray<TFrom, TTo>(TFrom value)
 			where TFrom : unmanaged
 			where TTo : unmanaged
 		{
-			var length	= Memory.Size<TFrom>.Unmanaged / Memory.Size<TTo>.Unmanaged;
+			var length	= System.Runtime.CompilerServices.Unsafe.SizeOf<TFrom>() / System.Runtime.CompilerServices.Unsafe.SizeOf<TTo>();
 			var array	= new TTo[length];
 			var pointer	= (TTo*)&value;
 
@@ -211,11 +202,11 @@
 			return array;
 		}
 
-		unsafe static public TTo[] ConvertArrayToArray<TFrom, TTo>(TFrom[] values)
+		static public TTo[] ConvertToArray<TFrom, TTo>(TFrom[] values)
 			where TFrom : unmanaged
 			where TTo : unmanaged
 		{
-			var length	= (Memory.Size<TFrom>.Unmanaged * values.Length) / Memory.Size<TTo>.Unmanaged;
+			var length	= (System.Runtime.CompilerServices.Unsafe.SizeOf<TFrom>() * values.Length) / System.Runtime.CompilerServices.Unsafe.SizeOf<TTo>();
 			var array	= new TTo[length];
 
 			fixed (TFrom* fromPointer = values)
@@ -234,7 +225,7 @@
 		static public void Fill<T>(System.IntPtr address, System.Int32 count, T value)
 			where T : unmanaged
 		{
-			var size = Memory.Size<T>.Unmanaged;
+			var size = System.Runtime.CompilerServices.Unsafe.SizeOf<T>();
 			
 			for (var index = 0; index < count; index++)
 			{
@@ -248,11 +239,11 @@
 			Memory.Fill<T>(address + offset, count, value);
 		}
 
-		static public System.Diagnostics.ProcessModule GetProcessModule(System.String name)
+		static public System.Diagnostics.ProcessModule GetProcessModule(System.String moduleName)
 		{
 			foreach (System.Diagnostics.ProcessModule processModule in System.Diagnostics.Process.GetCurrentProcess().Modules)
 			{
-				if (name.Equals(processModule.ModuleName, System.StringComparison.OrdinalIgnoreCase))
+				if (moduleName.Equals(processModule.ModuleName, System.StringComparison.OrdinalIgnoreCase))
 				{
 					return processModule;
 				}
@@ -261,7 +252,7 @@
 			return null;
 		}
 
-		unsafe static public T Read<T>(System.IntPtr address)
+		static public T Read<T>(System.IntPtr address)
 			where T : unmanaged
 		{
 			return *(T*)address;
@@ -277,7 +268,7 @@
 			where T : unmanaged
 		{
 			var array	= new T[length];
-			var size	= Memory.Size<T>.Unmanaged;
+			var size	= System.Runtime.CompilerServices.Unsafe.SizeOf<T>();
 
 			for (var index = 0; index < length; index++)
 			{
@@ -293,48 +284,36 @@
 			return Memory.ReadArray<T>(address + offset, length);
 		}
 
-		static public System.IntPtr ReadRelativeCall(System.IntPtr address)
+		static public ref T ReadReference<T>(System.IntPtr address)
+			where T : unmanaged
 		{
-			return address + Memory.Read<RelativeCall>(address).Relative32 + Memory.Size<RelativeCall>.Unmanaged;
+			return ref *(T*)address;
 		}
 
-		static public System.IntPtr ReadRelativeCall(System.IntPtr address, System.Int32 offset)
+		static public ref T ReadReference<T>(System.IntPtr address, System.Int32 offset)
+			where T : unmanaged
+		{
+			return ref Memory.ReadReference<T>(address + offset);
+		}
+
+		static public void* ReadRelativeCall(System.IntPtr address)
+		{
+			return (address + Memory.Read<RelativeCall>(address).Relative32 + System.Runtime.CompilerServices.Unsafe.SizeOf<RelativeCall>()).ToPointer();
+		}
+
+		static public void* ReadRelativeCall(System.IntPtr address, System.Int32 offset)
 		{
 			return Memory.ReadRelativeCall(address + offset);
 		}
 
-		static public T ReadRelativeCall<T>(System.IntPtr address)
-			where T : System.Delegate
+		static public void* ReadRelativeJump(System.IntPtr address)
 		{
-			return System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<T>(Memory.ReadRelativeCall(address));
+			return (address + Memory.Read<RelativeJump>(address).Relative32 + System.Runtime.CompilerServices.Unsafe.SizeOf<RelativeJump>()).ToPointer();
 		}
 
-		static public T ReadRelativeCall<T>(System.IntPtr address, System.Int32 offset)
-			where T : System.Delegate
-		{
-			return Memory.ReadRelativeCall<T>(address + offset);
-		}
-
-		static public System.IntPtr ReadRelativeJump(System.IntPtr address)
-		{
-			return address + Memory.Read<RelativeJump>(address).Relative32 + Memory.Size<RelativeJump>.Unmanaged;
-		}
-
-		static public System.IntPtr ReadRelativeJump(System.IntPtr address, System.Int32 offset)
+		static public void* ReadRelativeJump(System.IntPtr address, System.Int32 offset)
 		{
 			return Memory.ReadRelativeJump(address + offset);
-		}
-
-		static public T ReadRelativeJump<T>(System.IntPtr address)
-			where T : System.Delegate
-		{
-			return System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<T>(Memory.ReadRelativeJump(address));
-		}
-
-		static public T ReadRelativeJump<T>(System.IntPtr address, System.Int32 offset)
-			where T : System.Delegate
-		{
-			return Memory.ReadRelativeJump<T>(address + offset);
 		}
 
 		static public System.String ReadString(System.IntPtr address)
@@ -347,21 +326,15 @@
 			return Memory.ReadString(address + offset);
 		}
 
-		static public System.IntPtr ReadVirtualFunction(System.IntPtr address, System.Int32 index)
+		static public void* ReadVirtualFunction(System.IntPtr address, System.Int32 index)
 		{
-			return Memory.Read<System.IntPtr>(address, Memory.Size<System.IntPtr>.Unmanaged * index);
-		}
-
-		static public T ReadVirtualFunction<T>(System.IntPtr address, System.Int32 index)
-			where T : System.Delegate
-		{
-			return System.Runtime.InteropServices.Marshal.GetDelegateForFunctionPointer<T>(Memory.ReadVirtualFunction(address, index));
+			return ((System.IntPtr*)address)[index].ToPointer();
 		}
 
 		static public void SafeFill<T>(System.IntPtr address, System.Int32 count, T value)
 			where T : unmanaged
 		{
-			var size = new System.IntPtr(Memory.Size<T>.Unmanaged * count);
+			var size = new System.IntPtr(System.Runtime.CompilerServices.Unsafe.SizeOf<T>() * count);
 
 			if (Memory.VirtualProtect(address, size, MemoryProtectionConstants.PageExecuteReadWrite, out var oldProtect) != 0)
 			{
@@ -385,7 +358,7 @@
 		static public void SafeWrite<T>(System.IntPtr address, T value)
 			where T : unmanaged
 		{
-			var size = new System.IntPtr(Memory.Size<T>.Unmanaged);
+			var size = new System.IntPtr(System.Runtime.CompilerServices.Unsafe.SizeOf<T>());
 
 			if (Memory.VirtualProtect(address, size, MemoryProtectionConstants.PageExecuteReadWrite, out var oldProtect) != 0)
 			{
@@ -406,16 +379,16 @@
 			Memory.SafeWrite<T>(address + offset, value);
 		}
 
-		static public void SafeWriteArray<T>(System.IntPtr address, T[] values)
+		static public void SafeWrite<T>(System.IntPtr address, T[] values)
 			where T : unmanaged
 		{
-			var size = new System.IntPtr(Memory.Size<T>.Unmanaged * values.Length);
+			var size = new System.IntPtr(System.Runtime.CompilerServices.Unsafe.SizeOf<T>() * values.Length);
 
 			if (Memory.VirtualProtect(address, size, MemoryProtectionConstants.PageExecuteReadWrite, out var oldProtect) != 0)
 			{
 				try
 				{
-					Memory.WriteArray<T>(address, values);
+					Memory.Write<T>(address, values);
 				}
 				finally
 				{
@@ -424,22 +397,22 @@
 			}
 		}
 
-		static public void SafeWriteArray<T>(System.IntPtr address, System.Int32 offset, T[] values)
+		static public void SafeWrite<T>(System.IntPtr address, System.Int32 offset, T[] values)
 			where T : unmanaged
 		{
-			Memory.SafeWriteArray<T>(address + offset, values);
+			Memory.SafeWrite<T>(address + offset, values);
 		}
 
-		static public void SafeWriteNullableArray<T>(System.IntPtr address, T?[] values)
+		static public void SafeWrite<T>(System.IntPtr address, T?[] values)
 			where T : unmanaged
 		{
-			var size = new System.IntPtr(Memory.Size<T>.Unmanaged * values.Length);
+			var size = new System.IntPtr(System.Runtime.CompilerServices.Unsafe.SizeOf<T>() * values.Length);
 
 			if (Memory.VirtualProtect(address, size, MemoryProtectionConstants.PageExecuteReadWrite, out var oldProtect) != 0)
 			{
 				try
 				{
-					Memory.WriteNullableArray<T>(address, values);
+					Memory.Write<T>(address, values);
 				}
 				finally
 				{
@@ -448,13 +421,13 @@
 			}
 		}
 
-		static public void SafeWriteNullableArray<T>(System.IntPtr address, System.Int32 offset, T?[] values)
+		static public void SafeWrite<T>(System.IntPtr address, System.Int32 offset, T?[] values)
 			where T : unmanaged
 		{
-			Memory.SafeWriteNullableArray<T>(address + offset, values);
+			Memory.SafeWrite<T>(address + offset, values);
 		}
 
-		unsafe static public void Write<T>(System.IntPtr address, T value)
+		static public void Write<T>(System.IntPtr address, T value)
 			where T : unmanaged
 		{
 			*(T*)address = value;
@@ -466,25 +439,7 @@
 			Memory.Write<T>(address + offset, value);
 		}
 
-		static public void WriteArray<T>(System.IntPtr address, T[] values)
-			where T : unmanaged
-		{
-			var length	= values.Length;
-			var size	= Memory.Size<T>.Unmanaged;
-
-			for (var index = 0; index < length; index++)
-			{
-				Memory.Write<T>(address, size * index, values[index]);
-			}
-		}
-
-		static public void WriteArray<T>(System.IntPtr address, System.Int32 offset, T[] values)
-			where T : unmanaged
-		{
-			Memory.WriteArray<T>(address + offset, values);
-		}
-
-		static public void WriteNullable<T>(System.IntPtr address, T? value)
+		static public void Write<T>(System.IntPtr address, T? value)
 			where T : unmanaged
 		{
 			if (value.HasValue)
@@ -493,83 +448,71 @@
 			}
 		}
 
-		static public void WriteNullable<T>(System.IntPtr address, System.Int32 offset, T? value)
+		static public void Write<T>(System.IntPtr address, System.Int32 offset, T? value)
 			where T : unmanaged
 		{
-			Memory.WriteNullable<T>(address + offset, value);
+			Memory.Write<T>(address + offset, value);
 		}
 
-		static public void WriteNullableArray<T>(System.IntPtr address, T?[] values)
+		static public void Write<T>(System.IntPtr address, T[] values)
 			where T : unmanaged
 		{
 			var length	= values.Length;
-			var size	= Memory.Size<T>.Unmanaged;
+			var size	= System.Runtime.CompilerServices.Unsafe.SizeOf<T>();
 
 			for (var index = 0; index < length; index++)
 			{
-				Memory.WriteNullable<T>(address, size * index, values[index]);
+				Memory.Write<T>(address, size * index, values[index]);
 			}
 		}
 
-		static public void WriteNullableArray<T>(System.IntPtr address, System.Int32 offset, T?[] values)
+		static public void Write<T>(System.IntPtr address, System.Int32 offset, T[] values)
 			where T : unmanaged
 		{
-			Memory.WriteNullableArray<T>(address + offset, values);
+			Memory.Write<T>(address + offset, values);
 		}
 
-		static public void WriteRelativeCall(System.IntPtr address, System.IntPtr function)
+		static public void Write<T>(System.IntPtr address, T?[] values)
+			where T : unmanaged
+		{
+			var length	= values.Length;
+			var size	= System.Runtime.CompilerServices.Unsafe.SizeOf<T>();
+
+			for (var index = 0; index < length; index++)
+			{
+				Memory.Write<T>(address, size * index, values[index]);
+			}
+		}
+
+		static public void Write<T>(System.IntPtr address, System.Int32 offset, T?[] values)
+			where T : unmanaged
+		{
+			Memory.Write<T>(address + offset, values);
+		}
+
+		static public void WriteRelativeCall(System.IntPtr address, void* function)
 		{
 			Memory.SafeWrite<RelativeCall>(address, Assembly.RelativeCall(address, function));
 		}
 
-		static public void WriteRelativeCall(System.IntPtr address, System.Int32 offset, System.IntPtr function)
+		static public void WriteRelativeCall(System.IntPtr address, System.Int32 offset, void* function)
 		{
 			Memory.WriteRelativeCall(address + offset, function);
 		}
 
-		static public void WriteRelativeCall<T>(System.IntPtr address, T function)
-			where T : System.Delegate
-		{
-			Memory.WriteRelativeCall(address, System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate<T>(function));
-		}
-
-		static public void WriteRelativeCall<T>(System.IntPtr address, System.Int32 offset, T function)
-			where T : System.Delegate
-		{
-			Memory.WriteRelativeCall<T>(address + offset, function);
-		}
-
-		static public void WriteRelativeJump(System.IntPtr address, System.IntPtr function)
+		static public void WriteRelativeJump(System.IntPtr address, void* function)
 		{
 			Memory.SafeWrite<RelativeJump>(address, Assembly.RelativeJump(address, function));
 		}
 
-		static public void WriteRelativeJump(System.IntPtr address, System.Int32 offset, System.IntPtr function)
+		static public void WriteRelativeJump(System.IntPtr address, System.Int32 offset, void* function)
 		{
 			Memory.WriteRelativeJump(address + offset, function);
 		}
 
-		static public void WriteRelativeJump<T>(System.IntPtr address, T function)
-			where T : System.Delegate
+		static public void WriteVirtualFunction(System.IntPtr address, System.Int32 index, void* virtualFunction)
 		{
-			Memory.WriteRelativeJump(address, System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate<T>(function));
-		}
-
-		static public void WriteRelativeJump<T>(System.IntPtr address, System.Int32 offset, T function)
-			where T : System.Delegate
-		{
-			Memory.WriteRelativeJump<T>(address + offset, function);
-		}
-
-		static public void WriteVirtualFunction(System.IntPtr address, System.Int32 index, System.IntPtr virtualFunction)
-		{
-			Memory.SafeWrite<System.IntPtr>(address, Memory.Size<System.IntPtr>.Unmanaged * index, virtualFunction);
-		}
-
-		static public void WriteVirtualFunction<T>(System.IntPtr address, System.Int32 index, T virtualFunction)
-			where T : System.Delegate
-		{
-			Memory.WriteVirtualFunction(address, index, System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate<T>(virtualFunction));
+			Memory.SafeWrite<System.IntPtr>(address, System.Runtime.CompilerServices.Unsafe.SizeOf<System.IntPtr>() * index, new System.IntPtr(virtualFunction));
 		}
 	}
 }

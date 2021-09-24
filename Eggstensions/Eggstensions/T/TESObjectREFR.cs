@@ -1,44 +1,111 @@
 ﻿namespace Eggstensions
 {
-	[System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Explicit, Size = 0x98)]
-	unsafe public struct TESObjectREFR
+	public interface ITESObjectREFR : ITESForm
+	{
+	}
+
+	public struct TESObjectREFR : ITESObjectREFR
 	{
 		[System.Flags]
 		public enum ChangeFlags : System.UInt32
 		{
 			Empty = 1U << 21
 		}
+	}
 
 
 
-		[System.Runtime.InteropServices.FieldOffset(0x0)] public TESForm TESForm;
-		[System.Runtime.InteropServices.FieldOffset(0x20)] public BSHandleRefObject BSHandleRefObject;
-		[System.Runtime.InteropServices.FieldOffset(0x38)] public IAnimationGraphManagerHolder IAnimationGraphManagerHolder;
-		[System.Runtime.InteropServices.FieldOffset(0x40)] public TESBoundObject* BaseObject;
-		[System.Runtime.InteropServices.FieldOffset(0x4C)] public NiPoint3 Rotation;
-		[System.Runtime.InteropServices.FieldOffset(0x54)] public NiPoint3 Position;
-
-
-
-		// Virtual
-		static public NiAVObject* GetCurrent3D(TESObjectREFR* reference)
+	namespace ExtensionMethods
+	{
+		unsafe static public class ITESObjectREFR
 		{
-			var getCurrent3D = Memory.ReadVirtualFunction<Eggstensions.Delegates.Types.TESObjectREFR.GetCurrent3D>(*(System.IntPtr*)reference, 0x8D);
+			// Inheritance
+			static public BSHandleRefObject* BSHandleRefObject<TTESObjectREFR>(this ref TTESObjectREFR reference)
+				where TTESObjectREFR : unmanaged, Eggstensions.ITESObjectREFR
+			{
+				return (BSHandleRefObject*)reference.AddByteOffset(0x20);
+			}
 
-			return getCurrent3D(reference);
-		}
+			static public IAnimationGraphManagerHolder* IAnimationGraphManagerHolder<TTESObjectREFR>(this ref TTESObjectREFR reference)
+				where TTESObjectREFR : unmanaged, Eggstensions.ITESObjectREFR
+			{
+				return (IAnimationGraphManagerHolder*)reference.AddByteOffset(0x38);
+			}
 
 
 
-		// Member
-		static public System.String GetFullName(TESObjectREFR* form)
-		{
-			return Memory.ReadString(Eggstensions.Delegates.Instances.TESObjectREFR.GetFullName(form));
-		}
+			// Field
+			static public TESBoundObject* BaseObject<TTESObjectREFR>(this ref TTESObjectREFR reference)
+				where TTESObjectREFR : unmanaged, Eggstensions.ITESObjectREFR
+			{
+				return *(TESBoundObject**)reference.AddByteOffset(0x40);
+			}
 
-		static public InventoryChanges* GetInventoryChanges(TESObjectREFR* reference)
-		{
-			return Eggstensions.Delegates.Instances.TESObjectREFR.GetInventoryChanges(reference);
+			static public NiPoint3* Rotation<TTESObjectREFR>(this ref TTESObjectREFR reference)
+				where TTESObjectREFR : unmanaged, Eggstensions.ITESObjectREFR
+			{
+				return (NiPoint3*)reference.AddByteOffset(0x4C);
+			}
+
+			static public NiPoint3* Position<TTESObjectREFR>(this ref TTESObjectREFR reference)
+				where TTESObjectREFR : unmanaged, Eggstensions.ITESObjectREFR
+			{
+				return (NiPoint3*)reference.AddByteOffset(0x54);
+			}
+
+
+
+			// Virtual
+			static public NiAVObject* GetCurrent3D<TTESObjectREFR>(this ref TTESObjectREFR reference)
+				where TTESObjectREFR : unmanaged, Eggstensions.ITESObjectREFR
+			{
+				var getCurrent3D = (delegate* unmanaged[Cdecl]<TTESObjectREFR*, NiAVObject*>)reference.VirtualFunction(0x8D);
+
+				return GetCurrent3D(reference.AsPointer());
+
+
+
+				[System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.NoInlining)]
+				NiAVObject* GetCurrent3D(TTESObjectREFR* reference)
+				{
+					return getCurrent3D(reference);
+				}
+			}
+
+
+
+			// Member
+			static public InventoryChanges* GetInventoryChanges<TTESObjectREFR>(this ref TTESObjectREFR reference)
+				where TTESObjectREFR : unmanaged, Eggstensions.ITESObjectREFR
+			{
+				var getInventoryChanges = (delegate* unmanaged[Cdecl]<TTESObjectREFR*, InventoryChanges*>)Eggstensions.Offsets.TESObjectREFR.GetInventoryChanges;
+
+				return GetInventoryChanges(reference.AsPointer());
+
+
+
+				[System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.NoInlining)]
+				InventoryChanges* GetInventoryChanges(TTESObjectREFR* reference)
+				{
+					return getInventoryChanges(reference);
+				}
+			}
+
+			static public System.String GetReferenceName<TTESObjectREFR>(this ref TTESObjectREFR reference)
+				where TTESObjectREFR : unmanaged, Eggstensions.ITESObjectREFR
+			{
+				var getReferenceName = (delegate* unmanaged[Cdecl]<TTESObjectREFR*, System.IntPtr>)Eggstensions.Offsets.TESObjectREFR.GetReferenceName;
+
+				return Memory.ReadString(GetReferenceName(reference.AsPointer()));
+
+
+
+				[System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.NoInlining)]
+				System.IntPtr GetReferenceName(TTESObjectREFR* reference)
+				{
+					return getReferenceName(reference);
+				}
+			}
 		}
 	}
 }

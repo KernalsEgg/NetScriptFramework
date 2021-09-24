@@ -35,7 +35,7 @@ namespace ScrambledBugs.Fixes
 			assembly.Add(new System.Byte[2] { 0xEB, 0x6C - ((3 + 3 + 2) + (8 + 5) + (8 + 3 + 2) + (5 + 4 + 4 + 3 + 2) + (4 + 8 + 5) + (8 + 2)) });					// jmp 1D (Update)
 
 			Memory.SafeFill<System.Byte>(ScrambledBugs.Offsets.Fixes.MagicEffectConditions.UpdateConditions, 0x6C, Assembly.Nop);
-			Memory.SafeWriteArray<System.Byte>(ScrambledBugs.Offsets.Fixes.MagicEffectConditions.UpdateConditions, assembly);
+			Memory.SafeWrite<System.Byte>(ScrambledBugs.Offsets.Fixes.MagicEffectConditions.UpdateConditions, assembly);
 
 			// ecx
 			// eflags
@@ -52,12 +52,12 @@ namespace ScrambledBugs.Fixes
 
 			if (elapsedTime <= 0.0F)
 			{
-				activeEffect->Padding8C = frameTime;
+				activeEffect->Padding8C(frameTime);
 
 				goto Skip;
 			}
 
-			System.Single padding8C = activeEffect->Padding8C;
+			System.Single padding8C = activeEffect->Padding8C();
 
 			if (padding8C > 0.0F)
 			{
@@ -65,13 +65,13 @@ namespace ScrambledBugs.Fixes
 
 				if (padding8C < activeEffectConditionUpdateInterval)
 				{
-					activeEffect->Padding8C += frameTime;
+					activeEffect->Padding8C(padding8C + frameTime);
 
 					goto Skip;
 				}
 			}
 
-			activeEffect->Padding8C = frameTime;
+			activeEffect->Padding8C(frameTime);
 
 			goto Update;
 			*/

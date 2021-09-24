@@ -1,18 +1,44 @@
 ﻿namespace Eggstensions
 {
-	[System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Explicit, Size = 0x10)]
-	unsafe public struct NiRefObject
+	public interface INiRefObject : IVirtualObject
 	{
-		[System.Runtime.InteropServices.FieldOffset(0x8)] volatile public System.Int32 ReferenceCount;
+	}
+
+	public struct NiRefObject : INiRefObject
+	{
+	}
 
 
 
-		// Virtual
-		static public void Delete(NiRefObject* referenceObject)
+	namespace ExtensionMethods
+	{
+		unsafe static public class INiRefObject
 		{
-			var delete = Memory.ReadVirtualFunction<Eggstensions.Delegates.Types.NiRefObject.Delete>(*(System.IntPtr*)referenceObject, 0x1);
+			// Field
+			static public System.UInt32* ReferenceCount<TNiRefObject>(this ref TNiRefObject referenceObject)
+				where TNiRefObject : unmanaged, Eggstensions.INiRefObject
+			{
+				return (System.UInt32*)referenceObject.AddByteOffset(0x8);
+			}
 
-			delete(referenceObject);
+
+
+			// Virtual
+			static public void Delete<TNiRefObject>(this ref TNiRefObject referenceObject)
+				where TNiRefObject : unmanaged, Eggstensions.INiRefObject
+			{
+				var delete = (delegate* unmanaged[Cdecl]<TNiRefObject*, void>)referenceObject.VirtualFunction(0x1);
+
+				Delete(referenceObject.AsPointer());
+
+
+
+				[System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.NoInlining)]
+				void Delete(TNiRefObject* referenceObject)
+				{
+					delete(referenceObject);
+				}
+			}
 		}
 	}
 }

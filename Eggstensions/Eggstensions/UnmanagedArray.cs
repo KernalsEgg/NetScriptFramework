@@ -115,7 +115,7 @@
 		public void Add<TSource>(TSource[] elements)
 			where TSource : unmanaged
 		{
-			this.Add(Memory.ConvertArrayToArray<TSource, TDestination>(elements));
+			this.Add(Memory.ConvertToArray<TSource, TDestination>(elements));
 		}
 
 		public void Clear()

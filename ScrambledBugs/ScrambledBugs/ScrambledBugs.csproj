@@ -1,94 +1,23 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{B6B5C747-0A51-4E42-A441-D4A287B35C62}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ScrambledBugs</RootNamespace>
-    <AssemblyName>ScrambledBugs</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <Deterministic>true</Deterministic>
+    <TargetFramework>net5.0</TargetFramework>
+	<EnableDynamicLoading>true</EnableDynamicLoading>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <PlatformTarget>x64</PlatformTarget>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <PlatformTarget>x64</PlatformTarget>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="NetScriptFramework">
-      <HintPath>..\..\..\Program Files (x86)\Steam\steamapps\common\Skyrim Special Edition\Data\NetScriptFramework\NetScriptFramework.dll</HintPath>
-    </Reference>
-    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Delegates.cs" />
-    <Compile Include="Fixes\ApplySpellPerkEntryPoints\Arrows.cs" />
-    <Compile Include="Fixes\ActorValuePercentage.cs" />
-    <Compile Include="Fixes\HarvestedFlags.cs" />
-    <Compile Include="Fixes\HitEffectRaceCondition.cs" />
-    <Compile Include="Fixes\MagicEffectFlags.cs" />
-    <Compile Include="Fixes\QuickShot.cs" />
-    <Compile Include="Offsets.cs" />
-    <Compile Include="Patches\ApplySpellPerkEntryPoints\MultipleSpells.cs" />
-    <Compile Include="Patches\AttachHitEffectArt.cs" />
-    <Compile Include="Fixes\ModArmorWeightPerkEntryPoint.cs" />
-    <Compile Include="Fixes\TrainingMenuText.cs" />
-    <Compile Include="Patches\EquipBestAmmo.cs" />
-    <Compile Include="Fixes\WeaponCharge.cs" />
-    <Compile Include="Patches\LockpickingExperience.cs" />
-    <Compile Include="Fixes\MovementSpeed.cs" />
-    <Compile Include="Patches\MultipleHitEffects.cs" />
-    <Compile Include="Patches\PausedGameHitEffects.cs" />
-    <Compile Include="Patches\AlreadyCaughtPickpocketing.cs" />
-    <Compile Include="Patches\ReflectDamage.cs" />
-    <Compile Include="Patches\PowerAttackStamina.cs" />
-    <Compile Include="Patches\TeammateDifficulty.cs" />
-    <Compile Include="Patches\UnderfilledSoulGems.cs" />
-    <Compile Include="Patches\AccumulatingMagnitude.cs" />
-    <Compile Include="Plugin.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Fixes\MagicEffectConditions.cs" />
-    <Compile Include="Patches\ApplySpellPerkEntryPoints\CastSpells.cs" />
-    <Compile Include="Fixes\TerrainDecals.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup />
+
   <Import Project="..\..\Eggstensions\Eggstensions\Eggstensions.projitems" Label="Shared" />
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <PropertyGroup>
-    <PostBuildEvent>copy /Y "$(TargetDir)$(TargetName).dll" "$(Skyrim64Path)\Data\NetScriptFramework\Plugins\$(TargetName).dll"
-copy /Y "$(TargetDir)$(TargetName).pdb" "$(Skyrim64Path)\Data\NetScriptFramework\Plugins\$(TargetName).pdb"
-copy /Y "$(SolutionDir)$(TargetName).json" "$(Skyrim64Path)\Data\NetScriptFramework\Plugins\$(TargetName).json"</PostBuildEvent>
-  </PropertyGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="copy /Y &quot;$(TargetDir)$(TargetName).deps.json&quot; &quot;$(Skyrim64Path)\Data\DLLPlugins\$(TargetName).deps.json&quot;&#xD;&#xA;copy /Y &quot;$(TargetDir)$(TargetName).dll&quot; &quot;$(Skyrim64Path)\Data\DLLPlugins\$(TargetName).dll&quot;&#xD;&#xA;copy /Y &quot;$(SolutionDir)$(TargetName).json&quot; &quot;$(Skyrim64Path)\Data\DLLPlugins\$(TargetName).json&quot;&#xD;&#xA;copy /Y &quot;$(SolutionDir)$(TargetName).log&quot; &quot;$(Skyrim64Path)\Data\DLLPlugins\$(TargetName).log&quot;&#xD;&#xA;copy /Y &quot;$(TargetDir)$(TargetName).pdb&quot; &quot;$(Skyrim64Path)\Data\DLLPlugins\$(TargetName).pdb&quot;&#xD;&#xA;copy /Y &quot;$(TargetDir)$(TargetName).runtimeconfig.json&quot; &quot;$(Skyrim64Path)\Data\DLLPlugins\$(TargetName).runtimeconfig.json&quot;&#xD;&#xA;copy /Y &quot;$(TargetDir)$(TargetName)NE.dll&quot; &quot;$(Skyrim64Path)\Data\DLLPlugins\$(TargetName)NE.dll&quot;" />
+  </Target>
+
+  <ItemGroup>
+    <PackageReference Include="DNNE" Version="1.0.24" />
+  </ItemGroup>
+
 </Project>

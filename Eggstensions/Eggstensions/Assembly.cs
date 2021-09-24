@@ -1,42 +1,42 @@
 ﻿namespace Eggstensions
 {
-	[System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Sequential, Pack = 0x1, Size = 0x10)]
+	[System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Explicit, Pack = 0x1, Size = 0x10)]
 	public struct AbsoluteCall
 	{
-		public System.Byte Call;		// 0x0
-		public System.Byte ModRm;		// 0x1
-		public System.Int32 Relative32;	// 0x2
-		public System.Byte Jump;		// 0x6
-		public System.SByte Relative8;	// 0x7
-		public System.Int64 Relative64;	// 0x8
+		[System.Runtime.InteropServices.FieldOffset(0x0)] public System.Byte Call;
+		[System.Runtime.InteropServices.FieldOffset(0x1)] public System.Byte ModRm;
+		[System.Runtime.InteropServices.FieldOffset(0x2)] public System.Int32 Relative32;
+		[System.Runtime.InteropServices.FieldOffset(0x6)] public System.Byte Jump;
+		[System.Runtime.InteropServices.FieldOffset(0x7)] public System.SByte Relative8;
+		[System.Runtime.InteropServices.FieldOffset(0x8)] public System.Int64 Relative64;
 	}
 
-	[System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Sequential, Pack = 0x1, Size = 0xE)]
+	[System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Explicit, Pack = 0x1, Size = 0xE)]
 	public struct AbsoluteJump
 	{
-		public System.Byte Jump;		// 0x0
-		public System.Byte ModRm;		// 0x1
-		public System.Int32 Relative32;	// 0x2
-		public System.Int64 Relative64;	// 0x6
+		[System.Runtime.InteropServices.FieldOffset(0x0)] public System.Byte Jump;
+		[System.Runtime.InteropServices.FieldOffset(0x1)] public System.Byte ModRm;
+		[System.Runtime.InteropServices.FieldOffset(0x2)] public System.Int32 Relative32;
+		[System.Runtime.InteropServices.FieldOffset(0x6)] public System.Int64 Relative64;
 	}
 
-	[System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Sequential, Pack = 0x1, Size = 0x5)]
+	[System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Explicit, Pack = 0x1, Size = 0x5)]
 	public struct RelativeCall
 	{
-		public System.Byte Call;		// 0x0
-		public System.Int32 Relative32;	// 0x1
+		[System.Runtime.InteropServices.FieldOffset(0x0)] public System.Byte Call;
+		[System.Runtime.InteropServices.FieldOffset(0x1)] public System.Int32 Relative32;
 	}
 
-	[System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Sequential, Pack = 0x1, Size = 0x5)]
+	[System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Explicit, Pack = 0x1, Size = 0x5)]
 	public struct RelativeJump
 	{
-		public System.Byte Jump;		// 0x0
-		public System.Int32 Relative32;	// 0x1
+		[System.Runtime.InteropServices.FieldOffset(0x0)] public System.Byte Jump;
+		[System.Runtime.InteropServices.FieldOffset(0x1)] public System.Int32 Relative32;
 	}
 
 
 
-	static public class Assembly
+	unsafe static public class Assembly
 	{
 		static public System.Byte Int3 { get; }	= 0xCC;
 		static public System.Byte Nop { get; }	= 0x90;
@@ -44,7 +44,7 @@
 
 
 
-		static public AbsoluteCall AbsoluteCall(System.IntPtr function)
+		static public AbsoluteCall AbsoluteCall(void* function)
 		{
 			return new AbsoluteCall()
 			{
@@ -53,31 +53,19 @@
 				Relative32	= 0x2,
 				Jump		= 0xEB,
 				Relative8	= 0x8,
-				Relative64	= function.ToInt64()
+				Relative64	= new System.IntPtr(function).ToInt64()
 			};
 		}
 
-		static public AbsoluteCall AbsoluteCall<T>(T function)
-			where T : System.Delegate
-		{
-			return Assembly.AbsoluteCall(System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate<T>(function));
-		}
-
-		static public AbsoluteJump AbsoluteJump(System.IntPtr function)
+		static public AbsoluteJump AbsoluteJump(void* function)
 		{
 			return new AbsoluteJump()
 			{
 				Jump		= 0xFF,
 				ModRm		= 0x25,
 				Relative32	= 0x0,
-				Relative64	= function.ToInt64()
+				Relative64	= new System.IntPtr(function).ToInt64()
 			};
-		}
-
-		static public AbsoluteJump AbsoluteJump<T>(T function)
-			where T : System.Delegate
-		{
-			return Assembly.AbsoluteJump(System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate<T>(function));
 		}
 
 		// EFLAGS
@@ -87,7 +75,7 @@
 		// XMM0:XMM3
 		// XMM4:XMM5
 
-		static public System.Byte[] CaptureContext(System.IntPtr function, System.Byte[] before = null, System.Byte[] after = null)
+		static public System.Byte[] CaptureContext(delegate* unmanaged[Cdecl]<Context*, void> function, System.Byte[] before = null, System.Byte[] after = null)
 		{
 			var assembly = new UnmanagedArray<System.Byte>();
 
@@ -118,7 +106,7 @@
 				assembly.Add(new System.Byte[4] { 0x4D, 0x8B, 0x53, 0x18 });									// mov r10, [r11+18] (rip)
 				assembly.Add(new System.Byte[5] { 0x4C, 0x89, 0x54, 0x24, 0x28 });								// mov [rsp+28], r10
 			}
-			
+
 			assembly.Add(new System.Byte[5] { 0x83, 0x44, 0x24, 0x20, 0x08 });									// add [rsp+20], 8
 			assembly.Add(new System.Byte[5] { 0x48, 0x8B, 0x6C, 0x24, 0x20 });									// mov rbp, [rsp+20] (rsp)
 
@@ -208,61 +196,32 @@
 			return assembly;
 		}
 
-		static public System.Byte[] CaptureContext(Eggstensions.Delegates.Types.Context.CaptureContext function, System.Byte[] before = null, System.Byte[] after = null)
-		{
-			return Assembly.CaptureContext(System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate<Eggstensions.Delegates.Types.Context.CaptureContext>(function), before, after);
-		}
-
-		static public RelativeCall RelativeCall(System.IntPtr address, System.IntPtr function)
+		static public RelativeCall RelativeCall(System.IntPtr address, void* function)
 		{
 			return new RelativeCall()
 			{
 				Call		= 0xE8,
-				Relative32	= (System.Int32)(function.ToInt64() - (address.ToInt64() + Memory.Size<RelativeCall>.Unmanaged))
+				Relative32	= (System.Int32)(new System.IntPtr(function).ToInt64() - (address.ToInt64() + System.Runtime.CompilerServices.Unsafe.SizeOf<RelativeCall>()))
 			};
 		}
 
-		static public RelativeCall RelativeCall(System.IntPtr address, System.Int32 offset, System.IntPtr function)
+		static public RelativeCall RelativeCall(System.IntPtr address, System.Int32 offset, void* function)
 		{
 			return Assembly.RelativeCall(address + offset, function);
 		}
 
-		static public RelativeCall RelativeCall<T>(System.IntPtr address, T function)
-			where T : System.Delegate
-		{
-			return Assembly.RelativeCall(address, System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate<T>(function));
-		}
-
-		static public RelativeCall RelativeCall<T>(System.IntPtr address, System.Int32 offset, T function)
-			where T : System.Delegate
-		{
-			return Assembly.RelativeCall<T>(address + offset, function);
-		}
-
-		static public RelativeJump RelativeJump(System.IntPtr address, System.IntPtr function)
+		static public RelativeJump RelativeJump(System.IntPtr address, void* function)
 		{
 			return new RelativeJump()
 			{
 				Jump		= 0xE9,
-				Relative32	= (System.Int32)(function.ToInt64() - (address.ToInt64() + Memory.Size<RelativeJump>.Unmanaged))
+				Relative32	= (System.Int32)(new System.IntPtr(function).ToInt64() - (address.ToInt64() + System.Runtime.CompilerServices.Unsafe.SizeOf<RelativeJump>()))
 			};
 		}
 
-		static public RelativeJump RelativeJump(System.IntPtr address, System.Int32 offset, System.IntPtr function)
+		static public RelativeJump RelativeJump(System.IntPtr address, System.Int32 offset, void* function)
 		{
 			return Assembly.RelativeJump(address + offset, function);
-		}
-
-		static public RelativeJump RelativeJump<T>(System.IntPtr address, T function)
-			where T : System.Delegate
-		{
-			return Assembly.RelativeJump(address, System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate<T>(function));
-		}
-
-		static public RelativeJump RelativeJump<T>(System.IntPtr address, System.Int32 offset, T function)
-			where T : System.Delegate
-		{
-			return Assembly.RelativeJump<T>(address + offset, function);
 		}
 	}
 }

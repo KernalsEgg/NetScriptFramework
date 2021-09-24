@@ -2,20 +2,13 @@
 {
 	namespace Events
 	{
-		unsafe static public class Initialize
+		unsafe static public class InitializeThread
 		{
-			static Initialize()
+			static InitializeThread()
 			{
-				var initialize = Memory.ReadVirtualFunction<Eggstensions.Delegates.Types.InitTESThread.Initialize>(Eggstensions.Offsets.InitTESThread.VirtualFunctionTable, 0x1);
-
-				Initialize.initialize = (InitTESThread* initTESThread) =>
-				{
-					Initialize.Before?.Invoke(null, System.EventArgs.Empty);
-					initialize(initTESThread);
-					Initialize.After?.Invoke(null, System.EventArgs.Empty);
-				};
+				InitializeThread.initializeThread = (delegate* unmanaged[Cdecl]<InitTESThread*, void>)((System.IntPtr*)Eggstensions.Offsets.InitTESThread.VirtualFunctionTable)[0x1];
 				
-				Memory.WriteVirtualFunction<Eggstensions.Delegates.Types.InitTESThread.Initialize>(Eggstensions.Offsets.InitTESThread.VirtualFunctionTable, 0x1, Initialize.initialize);
+				Memory.WriteVirtualFunction(Eggstensions.Offsets.InitTESThread.VirtualFunctionTable, 0x1, (delegate* unmanaged[Cdecl]<InitTESThread*, void>)&InitializeThread.OnInitializeThread);
 			}
 
 
@@ -25,7 +18,17 @@
 
 
 
-			static private Eggstensions.Delegates.Types.InitTESThread.Initialize initialize;
+			static private delegate* unmanaged[Cdecl]<InitTESThread*, void> initializeThread;
+
+
+
+			[System.Runtime.InteropServices.UnmanagedCallersOnly(CallConvs = new[] { typeof(System.Runtime.CompilerServices.CallConvCdecl) })]
+			static private void OnInitializeThread(InitTESThread* initializeThread)
+			{
+				InitializeThread.Before?.Invoke(null, System.EventArgs.Empty);
+				InitializeThread.initializeThread(initializeThread);
+				InitializeThread.After?.Invoke(null, System.EventArgs.Empty);
+			}
 		}
 	}
 }

@@ -1,19 +1,45 @@
 ﻿namespace Eggstensions
 {
-	[System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Explicit, Size = 0x98)]
-	unsafe public struct ValueModifierEffect
+	public interface IValueModifierEffect : IActiveEffect
 	{
-		[System.Runtime.InteropServices.FieldOffset(0x0)] public ActiveEffect ActiveEffect;
-		[System.Runtime.InteropServices.FieldOffset(0x90)] public ActorValue ActorValue;
+	}
+
+	public struct ValueModifierEffect : IValueModifierEffect
+	{
+	}
 
 
 
-		// Virtual
-		static public void ModifyActorValue(ValueModifierEffect* valueModifierEffect, Actor* actor, System.Single magnitude, ActorValue actorValue)
+	namespace ExtensionMethods
+	{
+		unsafe static public class IValueModifierEffect
 		{
-			var modifyActorValue = Memory.ReadVirtualFunction<Eggstensions.Delegates.Types.ValueModifierEffect.ModifyActorValue>(*(System.IntPtr*)valueModifierEffect, 0x20);
+			// Field
+			static public ActorValue ActorValue<TValueModifierEffect>(this ref TValueModifierEffect valueModifierEffect)
+				where TValueModifierEffect : unmanaged, Eggstensions.IValueModifierEffect
+			{
+				return (ActorValue)(*(System.Int32*)valueModifierEffect.AddByteOffset(0x90));
+			}
 
-			modifyActorValue(valueModifierEffect, actor, magnitude, (System.Int32)actorValue);
+
+
+			// Virtual
+			static public void ModifyActorValue<TValueModifierEffect, TActor>(this ref TValueModifierEffect valueModifierEffect, TActor* actor, System.Single magnitude, ActorValue actorValue)
+				where TValueModifierEffect : unmanaged, Eggstensions.IValueModifierEffect
+				where TActor : unmanaged, Eggstensions.IActor
+			{
+				var modifyActorValue = (delegate* unmanaged[Cdecl]<TValueModifierEffect*, TActor*, System.Single, System.Int32, void>)valueModifierEffect.VirtualFunction(0x20);
+
+				ModifyActorValue(valueModifierEffect.AsPointer(), actor, magnitude, (System.Int32)actorValue);
+
+
+
+				[System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.NoInlining)]
+				void ModifyActorValue(TValueModifierEffect* valueModifierEffect, TActor* actor, System.Single magnitude, System.Int32 actorValue)
+				{
+					modifyActorValue(valueModifierEffect, actor, magnitude, actorValue);
+				}
+			}
 		}
 	}
 }

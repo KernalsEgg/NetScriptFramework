@@ -9,6 +9,7 @@
     <Import_RootNamespace>Eggstensions</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)AddressLibrary.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Assembly.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)A\AccumulatingValueModifierEffect.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)A\ActiveEffect.cs" />
@@ -21,6 +22,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)B\BSHandleRefObject.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)B\BSPointerHandle.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)C\Color.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DNNE.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethods.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)E\Effect.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)E\EffectSetting.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)E\EnchantmentItem.cs" />
@@ -28,10 +31,14 @@
     <Compile Include="$(MSBuildThisFileDirectory)F\FindMaxMagnitudeVisitor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)I\IAnimationGraphManagerHolder.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)I\InitTESThread.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Json.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Log.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Main.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)M\MagicTarget.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)N\NiPoint3.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)N\NiPointer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)N\NiRefObject.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SKSE.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)T\TESAmmo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)T\TESObjectARMO.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UnmanagedArray.cs" />
@@ -46,7 +53,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)B\BSTEventSink.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)B\BSTEventSource.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Context.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Delegates.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Events.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)H\HandleEntryPointVisitor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)I\InventoryChanges.cs" />
@@ -82,7 +88,10 @@
     <Compile Include="$(MSBuildThisFileDirectory)T\TESObjectWEAP.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)T\TESQuest.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)T\TESRace.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UnmanagedObject.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UnmanagedType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)U\UI.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)VirtualObject.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)V\ValueModifierEffect.cs" />
   </ItemGroup>
 </Project>

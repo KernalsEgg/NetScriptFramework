@@ -1,34 +1,16 @@
 ﻿namespace Eggstensions
 {
-	public class Trampoline : System.IDisposable
+	unsafe static public class Trampoline
 	{
-		public Trampoline(System.Diagnostics.ProcessModule processModule)
-		{
-			ProcessModule = processModule;
-
-			if (ProcessModule == null)
-			{
-				throw new System.NullReferenceException(nameof(Trampoline.ProcessModule));
-			}
-		}
-
-		~Trampoline()
-		{
-			this.Dispose(false);
-		}
+		static public event System.EventHandler Write;
 
 
 
-		private System.Int32 position = 0;
+		static private System.Int32 position = 0;
 
 
 
-		public event System.EventHandler Write;
-
-
-
-		public System.IntPtr Address { get; private set; }
-		public System.Diagnostics.ProcessModule ProcessModule { get; }
+		static public System.IntPtr Address { get; private set; }
 
 
 
@@ -42,7 +24,7 @@
 
 			while (minimum.ToInt64() < maximum.ToInt64())
 			{
-				if (Memory.VirtualQuery(minimum, out var memoryBasicInformation, new System.IntPtr(Memory.Size<MemoryBasicInformation>.Unmanaged)) == System.IntPtr.Zero)
+				if (Memory.VirtualQuery(minimum, out var memoryBasicInformation, new System.IntPtr(System.Runtime.CompilerServices.Unsafe.SizeOf<MemoryBasicInformation>())) == System.IntPtr.Zero)
 				{
 					return System.IntPtr.Zero;
 				}
@@ -69,141 +51,112 @@
 			return System.IntPtr.Zero;
 		}
 
-
-
-		virtual public void Dispose(System.Boolean disposing)
-		{
-			Memory.VirtualFree(Address, System.IntPtr.Zero, FreeTypes.MemRelease);
-		}
-
-
-
-		public void CaptureContext(System.IntPtr address, Eggstensions.Delegates.Types.Context.CaptureContext function, System.Byte[] before = null, System.Byte[] after = null)
+		static public void CaptureContext(System.IntPtr address, delegate* unmanaged[Cdecl]<Context*, void> function, System.Byte[] before = null, System.Byte[] after = null)
 		{
 			var captureContext = Assembly.CaptureContext(function, before, after);
-			var position = this.Reserve(Memory.Size<System.Byte>.Unmanaged * captureContext.Length);
+			var position = Trampoline.Reserve(System.Runtime.CompilerServices.Unsafe.SizeOf<System.Byte>() * captureContext.Length);
 
-			this.Write += (System.Object sender, System.EventArgs arguments) =>
+			Trampoline.Write += (System.Object sender, System.EventArgs arguments) =>
 			{
-				if (sender is Trampoline trampoline)
-				{
-					Memory.SafeWriteArray<System.Byte>(trampoline.Address + position, captureContext);
-					Memory.WriteRelativeCall(address, trampoline.Address + position);
-				}
+				Memory.SafeWrite<System.Byte>(Trampoline.Address + position, captureContext);
+				Memory.WriteRelativeCall(address, (Trampoline.Address + position).ToPointer());
 			};
 		}
 
-		public void CaptureContext(System.IntPtr address, System.Int32 offset, Eggstensions.Delegates.Types.Context.CaptureContext function, System.Byte[] before = null, System.Byte[] after = null)
+		static public void CaptureContext(System.IntPtr address, System.Int32 offset, delegate* unmanaged[Cdecl]<Context*, void> function, System.Byte[] before = null, System.Byte[] after = null)
 		{
-			this.CaptureContext(address + offset, function, before, after);
+			Trampoline.CaptureContext(address + offset, function, before, after);
 		}
 
-		public void Commit()
+		static public void Commit()
 		{
-			if (this.position > 0)
+			if (Trampoline.position > 0)
 			{
-				Address = Trampoline.Allocate(ProcessModule, this.position);
+				Trampoline.Address = Trampoline.Allocate(Main.MainModule, Trampoline.position);
 
-				if (Address == System.IntPtr.Zero)
+				if (Trampoline.Address == System.IntPtr.Zero)
 				{
 					throw new System.InsufficientMemoryException(nameof(Trampoline));
 				}
 
-				this.Write?.Invoke(this, System.EventArgs.Empty);
+				Trampoline.Write?.Invoke(null, System.EventArgs.Empty);
 			}
 		}
 
-		public void Dispose()
+		static public void Free(System.IntPtr address)
 		{
-			this.Dispose(true);
-			System.GC.SuppressFinalize(this);
+			Memory.VirtualFree(address, System.IntPtr.Zero, FreeTypes.MemRelease);
 		}
 
-		public System.Int32 Reserve(System.Int32 size)
+		static public System.Int32 Reserve(System.Int32 size)
 		{
-			return System.Threading.Interlocked.Add(ref this.position, size) - size;
+			return System.Threading.Interlocked.Add(ref Trampoline.position, size) - size;
 		}
 
-		public void WriteRelativeCall<T>(System.IntPtr address, T function)
-			where T : System.Delegate
+		static public void WriteRelativeCall(System.IntPtr address, void* function)
 		{
-			var absoluteJump = Assembly.AbsoluteJump<T>(function);
-			var position = this.Reserve(Memory.Size<AbsoluteJump>.Unmanaged);
+			var absoluteJump = Assembly.AbsoluteJump(function);
+			var position = Trampoline.Reserve(System.Runtime.CompilerServices.Unsafe.SizeOf<AbsoluteJump>());
 
-			this.Write += (System.Object sender, System.EventArgs arguments) =>
+			Trampoline.Write += (System.Object sender, System.EventArgs arguments) =>
 			{
-				if (sender is Trampoline trampoline)
-				{
-					Memory.SafeWrite<AbsoluteJump>(trampoline.Address + position, absoluteJump);
-					Memory.WriteRelativeCall(address, trampoline.Address + position);
-				}
+				Memory.SafeWrite<AbsoluteJump>(Trampoline.Address + position, absoluteJump);
+				Memory.WriteRelativeCall(address, (Trampoline.Address + position).ToPointer());
 			};
 		}
 
-		public void WriteRelativeCall<T>(System.IntPtr address, System.Int32 offset, T function)
-			where T : System.Delegate
+		static public void WriteRelativeCall(System.IntPtr address, System.Int32 offset, void* function)
 		{
-			this.WriteRelativeCall<T>(address + offset, function);
+			Trampoline.WriteRelativeCall(address + offset, function);
 		}
 
-		public void WriteRelativeCallBranch(System.IntPtr address, System.Byte[] assembly)
+		static public void WriteRelativeCallBranch(System.IntPtr address, System.Byte[] assembly)
 		{
-			var position = this.Reserve(Memory.Size<System.Byte>.Unmanaged * assembly.Length);
+			var position = Trampoline.Reserve(System.Runtime.CompilerServices.Unsafe.SizeOf<System.Byte>() * assembly.Length);
 
-			this.Write += (System.Object sender, System.EventArgs arguments) =>
+			Trampoline.Write += (System.Object sender, System.EventArgs arguments) =>
 			{
-				if (sender is Trampoline trampoline)
-				{
-					Memory.SafeWriteArray<System.Byte>(trampoline.Address + position, assembly);
-					Memory.WriteRelativeCall(address, trampoline.Address + position);
-				}
+				Memory.SafeWrite<System.Byte>(Trampoline.Address + position, assembly);
+				Memory.WriteRelativeCall(address, (Trampoline.Address + position).ToPointer());
 			};
 		}
 
-		public void WriteRelativeCallBranch(System.IntPtr address, System.Int32 offset, System.Byte[] assembly)
+		static public void WriteRelativeCallBranch(System.IntPtr address, System.Int32 offset, System.Byte[] assembly)
 		{
-			this.WriteRelativeCallBranch(address + offset, assembly);
+			Trampoline.WriteRelativeCallBranch(address + offset, assembly);
 		}
 
-		public void WriteRelativeJump<T>(System.IntPtr address, T function)
-			where T : System.Delegate
+		static public void WriteRelativeJump(System.IntPtr address, void* function)
 		{
-			var absoluteJump = Assembly.AbsoluteJump<T>(function);
-			var position = this.Reserve(Memory.Size<AbsoluteJump>.Unmanaged);
+			var absoluteJump = Assembly.AbsoluteJump(function);
+			var position = Trampoline.Reserve(System.Runtime.CompilerServices.Unsafe.SizeOf<AbsoluteJump>());
 
-			this.Write += (System.Object sender, System.EventArgs arguments) =>
+			Trampoline.Write += (System.Object sender, System.EventArgs arguments) =>
 			{
-				if (sender is Trampoline trampoline)
-				{
-					Memory.SafeWrite<AbsoluteJump>(trampoline.Address + position, absoluteJump);
-					Memory.WriteRelativeJump(address, trampoline.Address + position);
-				}
+				Memory.SafeWrite<AbsoluteJump>(Trampoline.Address + position, absoluteJump);
+				Memory.WriteRelativeJump(address, (Trampoline.Address + position).ToPointer());
 			};
 		}
 
-		public void WriteRelativeJump<T>(System.IntPtr address, System.Int32 offset, T function)
-			where T : System.Delegate
+		static public void WriteRelativeJump(System.IntPtr address, System.Int32 offset, void* function)
 		{
-			this.WriteRelativeJump<T>(address + offset, function);
+			Trampoline.WriteRelativeJump(address + offset, function);
 		}
 
-		public void WriteRelativeJumpBranch(System.IntPtr address, System.Byte[] assembly)
+		static public void WriteRelativeJumpBranch(System.IntPtr address, System.Byte[] assembly)
 		{
-			var position = this.Reserve(Memory.Size<System.Byte>.Unmanaged * assembly.Length);
+			var position = Trampoline.Reserve(System.Runtime.CompilerServices.Unsafe.SizeOf<System.Byte>() * assembly.Length);
 
-			this.Write += (System.Object sender, System.EventArgs arguments) =>
+			Trampoline.Write += (System.Object sender, System.EventArgs arguments) =>
 			{
-				if (sender is Trampoline trampoline)
-				{
-					Memory.SafeWriteArray<System.Byte>(trampoline.Address + position, assembly);
-					Memory.WriteRelativeJump(address, trampoline.Address + position);
-				}
+				Memory.SafeWrite<System.Byte>(Trampoline.Address + position, assembly);
+				Memory.WriteRelativeJump(address, (Trampoline.Address + position).ToPointer());
 			};
 		}
 
-		public void WriteRelativeJumpBranch(System.IntPtr address, System.Int32 offset, System.Byte[] assembly)
+		static public void WriteRelativeJumpBranch(System.IntPtr address, System.Int32 offset, System.Byte[] assembly)
 		{
-			this.WriteRelativeJumpBranch(address + offset, assembly);
+			Trampoline.WriteRelativeJumpBranch(address + offset, assembly);
 		}
 	}
 }

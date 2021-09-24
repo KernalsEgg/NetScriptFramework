@@ -4,9 +4,19 @@
 	unsafe public struct TESDataHandler
 	{
 		// Static
-		static public TESForm* GetForm(System.UInt32 formID)
+		static public TESForm* GetForm(System.UInt32 formId)
 		{
-			return Eggstensions.Delegates.Instances.TESDataHandler.GetForm(formID);
+			var getForm = (delegate* unmanaged[Cdecl]<System.UInt32, TESForm*>)Eggstensions.Offsets.TESDataHandler.GetForm;
+
+			return GetForm(formId);
+
+
+
+			[System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.NoInlining)]
+			TESForm* GetForm(System.UInt32 formId)
+			{
+				return getForm(formId);
+			}
 		}
 	}
 }

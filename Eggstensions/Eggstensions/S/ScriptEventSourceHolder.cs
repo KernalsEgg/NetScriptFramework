@@ -11,7 +11,9 @@
 		{
 			get
 			{
-				return Eggstensions.Delegates.Instances.ScriptEventSourceHolder.GetInstance();
+				var getInstance = (delegate* unmanaged[Cdecl]<ScriptEventSourceHolder*>)Eggstensions.Offsets.ScriptEventSourceHolder.GetInstance;
+
+				return getInstance();
 			}
 		}
 	}

@@ -1,11 +1,37 @@
 ﻿namespace Eggstensions
 {
-	[System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Explicit, Size = 0x48)]
-	unsafe public struct RefAttachTechniqueInput
+	public interface IRefAttachTechniqueInput : BSAttachTechniques.IAttachTechniqueInput
 	{
-		[System.Runtime.InteropServices.FieldOffset(0x0)] public BSAttachTechniques.AttachTechniqueInput AttachTechniqueInput;
-		[System.Runtime.InteropServices.FieldOffset(0x28)] public TESRace* Race;
-		[System.Runtime.InteropServices.FieldOffset(0x30)] public bhkWorld* HavokWorld;
-		[System.Runtime.InteropServices.FieldOffset(0x40)] public BSFixedString NodeName;
+	}
+
+	public struct RefAttachTechniqueInput
+	{
+	}
+
+
+
+	namespace ExtensionMethods
+	{
+		unsafe static public class IRefAttachTechniqueInput
+		{
+			// Field
+			static public TESRace* Race<TRefAttachTechniqueInput>(this ref TRefAttachTechniqueInput referenceAttachTechniqueInput)
+				where TRefAttachTechniqueInput : unmanaged, Eggstensions.IRefAttachTechniqueInput
+			{
+				return *(TESRace**)referenceAttachTechniqueInput.AddByteOffset(0x28);
+			}
+
+			static public bhkWorld* HavokWorld<TRefAttachTechniqueInput>(this ref TRefAttachTechniqueInput referenceAttachTechniqueInput)
+				where TRefAttachTechniqueInput : unmanaged, Eggstensions.IRefAttachTechniqueInput
+			{
+				return *(bhkWorld**)referenceAttachTechniqueInput.AddByteOffset(0x30);
+			}
+
+			static public BSFixedString* NodeName<TRefAttachTechniqueInput>(this ref TRefAttachTechniqueInput referenceAttachTechniqueInput)
+				where TRefAttachTechniqueInput : unmanaged, Eggstensions.IRefAttachTechniqueInput
+			{
+				return (BSFixedString*)referenceAttachTechniqueInput.AddByteOffset(0x40);
+			}
+		}
 	}
 }

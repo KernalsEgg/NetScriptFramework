@@ -1,9 +1,25 @@
 ﻿namespace Eggstensions
 {
-	[System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Explicit, Size = 0x150)]
-	public struct TESActorBase
+	public interface ITESActorBase : ITESBoundObject
 	{
-		[System.Runtime.InteropServices.FieldOffset(0x0)] public TESBoundObject TESBoundObject;
-		[System.Runtime.InteropServices.FieldOffset(0xD8)] public TESFullName TESFullName;
+	}
+
+	public struct TESActorBase : ITESActorBase
+	{
+	}
+
+
+
+	namespace ExtensionMethods
+	{
+		unsafe static public class ITESActorBase
+		{
+			// Inheritance
+			static public TESFullName* TESFullName<TTESActorBase>(this ref TTESActorBase actorBase)
+				where TTESActorBase : unmanaged, Eggstensions.ITESActorBase
+			{
+				return (TESFullName*)actorBase.AddByteOffset(0xD8);
+			}
+		}
 	}
 }

@@ -1,31 +1,53 @@
 ﻿namespace Eggstensions
 {
-	[System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Explicit, Size = 0xE8)]
-	unsafe public struct SpellItem
+	public interface ISpellItem : IMagicItem
 	{
-		[System.Runtime.InteropServices.FieldOffset(0x0)] public MagicItem MagicItem;
+	}
+
+	public struct SpellItem : ISpellItem
+	{
+	}
 
 
 
-		// Member
-		/// <summary>SkyrimSE.exe + 0x632180 (VID 37817)</summary>
-		static public void Apply(SpellItem* spell, Actor* source, Actor* target)
-		{	
-			if (SpellItem.ShouldAddSpell(spell))
-			{
-				Actor.AddSpell(target, spell);
-			}
-			else
-			{
-				var magicCaster = Actor.GetMagicCaster(source, CastingSource.Instant);
-
-				MagicCaster.Cast(magicCaster, spell, false, target, 1.0F, false, 0.0F, null);
-			}
-		}
-
-		static public System.Boolean ShouldAddSpell(SpellItem* spell)
+	namespace ExtensionMethods
+	{
+		unsafe static public class ISpellItem
 		{
-			return Eggstensions.Delegates.Instances.SpellItem.ShouldAddSpell(spell) != 0;
+			// Member
+			/// <summary>SkyrimSE.exe + 0x632180 (VID 37817)</summary>
+			static public void Apply<TSpellItem, TActor1, TActor2>(this ref TSpellItem spell, TActor1* source, TActor2* target)
+				where TSpellItem : unmanaged, Eggstensions.ISpellItem
+				where TActor1 : unmanaged, Eggstensions.IActor
+				where TActor2 : unmanaged, Eggstensions.IActor
+			{
+				if (spell.ShouldAddSpell())
+				{
+					target->AddSpell(spell.AsPointer());
+				}
+				else
+				{
+					var magicCaster = source->GetMagicCaster(CastingSource.Instant);
+
+					magicCaster->Cast(spell.AsPointer(), false, target, 1.0F, false, 0.0F, (Actor*)null);
+				}
+			}
+
+			static public System.Boolean ShouldAddSpell<TSpellItem>(this ref TSpellItem spell)
+				where TSpellItem : unmanaged, Eggstensions.ISpellItem
+			{
+				var shouldAddSpell = (delegate* unmanaged[Cdecl]<TSpellItem*, System.Byte>)Eggstensions.Offsets.SpellItem.ShouldAddSpell;
+
+				return ShouldAddSpell(spell.AsPointer()) != 0;
+
+
+
+				[System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.NoInlining)]
+				System.Byte ShouldAddSpell(TSpellItem* spell)
+				{
+					return shouldAddSpell(spell);
+				}
+			}
 		}
 	}
 }

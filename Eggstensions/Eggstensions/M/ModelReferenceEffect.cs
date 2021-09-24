@@ -1,9 +1,25 @@
 ﻿namespace Eggstensions
 {
-	[System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Explicit, Size = 0xD8)]
-	public struct ModelReferenceEffect
+	public interface IModelReferenceEffect : IReferenceEffect
 	{
-		[System.Runtime.InteropServices.FieldOffset(0x0)] public ReferenceEffect ReferenceEffect;
-		[System.Runtime.InteropServices.FieldOffset(0x68)] public RefAttachTechniqueInput HitEffectArtData;
+	}
+
+	public struct ModelReferenceEffect : IModelReferenceEffect
+	{
+	}
+
+
+
+	namespace ExtensionMethods
+	{
+		unsafe static public class IModelReferenceEffect
+		{
+			// Field
+			static public RefAttachTechniqueInput* HitEffectArtData<TModelReferenceEffect>(this ref TModelReferenceEffect modelReferenceEffect)
+				where TModelReferenceEffect : unmanaged, Eggstensions.IModelReferenceEffect
+			{
+				return (RefAttachTechniqueInput*)modelReferenceEffect.AddByteOffset(0x68);
+			}
+		}
 	}
 }

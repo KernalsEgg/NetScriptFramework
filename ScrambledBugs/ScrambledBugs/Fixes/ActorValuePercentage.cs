@@ -1,4 +1,5 @@
 ﻿using Eggstensions;
+using Eggstensions.ExtensionMethods;
 
 
 
@@ -6,77 +7,63 @@ namespace ScrambledBugs.Fixes
 {
 	unsafe static internal class ActorValuePercentage
 	{
-		static public ScrambledBugs.Delegates.Types.Fixes.ActorValuePercentage.GetActorValuePercentage GetActorValuePercentage { get; set; }
-		static public ScrambledBugs.Delegates.Types.Fixes.ActorValuePercentage.GetHealthPercentage GetHealthPercentage { get; set; }
-		static public ScrambledBugs.Delegates.Types.Fixes.ActorValuePercentage.GetStaminaPercentage GetStaminaPercentage { get; set; }
-
-
-
 		static public void Fix()
 		{
-			ActorValuePercentage.GetActorValuePercentage = (Actor* actor, System.Int32 actorValue) =>
+			var getActorValuePercentage = (delegate* unmanaged[Cdecl]<Actor*, System.Int32, System.Single>)&GetActorValuePercentage;
+
+			Trampoline.WriteRelativeCall(ScrambledBugs.Offsets.Fixes.ActorValuePercentage.ActorValueCondition, getActorValuePercentage);
+			Trampoline.WriteRelativeCall(ScrambledBugs.Offsets.Fixes.ActorValuePercentage.ActorValueEnemyHealth, getActorValuePercentage);
+			Trampoline.WriteRelativeCall(ScrambledBugs.Offsets.Fixes.ActorValuePercentage.ActorValuePapyrus, getActorValuePercentage);
+
+			[System.Runtime.InteropServices.UnmanagedCallersOnly(CallConvs = new[] { typeof(System.Runtime.CompilerServices.CallConvCdecl) })]
+			static System.Single GetActorValuePercentage(Actor* actor, System.Int32 actorValue)
 			{
-				var permanentValue = ActorValueOwner.GetPermanentActorValue(&actor->ActorValueOwner, (ActorValue)actorValue);
-				var temporaryValue = Actor.GetActorValueModifier(actor, ActorValueModifier.Temporary, (ActorValue)actorValue);
-
-				if (permanentValue + temporaryValue == 0.0F)
-				{
-					return 1.0F;
-				}
-
-				var value = ActorValueOwner.GetActorValue(&actor->ActorValueOwner, (ActorValue)actorValue);
-
-				return value / (permanentValue + temporaryValue);
-			};
-
-			ScrambledBugs.Plugin.Trampoline.WriteRelativeCall<ScrambledBugs.Delegates.Types.Fixes.ActorValuePercentage.GetActorValuePercentage>
-			(
-				ScrambledBugs.Offsets.Fixes.ActorValuePercentage.ActorValueCondition,
-				ActorValuePercentage.GetActorValuePercentage
-			);
-
-			ScrambledBugs.Plugin.Trampoline.WriteRelativeCall<ScrambledBugs.Delegates.Types.Fixes.ActorValuePercentage.GetActorValuePercentage>
-			(
-				ScrambledBugs.Offsets.Fixes.ActorValuePercentage.ActorValueEnemyHealth,
-				ActorValuePercentage.GetActorValuePercentage
-			);
-
-			ScrambledBugs.Plugin.Trampoline.WriteRelativeCall<ScrambledBugs.Delegates.Types.Fixes.ActorValuePercentage.GetActorValuePercentage>
-			(
-				ScrambledBugs.Offsets.Fixes.ActorValuePercentage.ActorValuePapyrus,
-				ActorValuePercentage.GetActorValuePercentage
-			);
+				return ActorValuePercentage.GetActorValuePercentage(actor, (ActorValue)actorValue);
+			}
 
 
 
-			ActorValuePercentage.GetHealthPercentage = (Actor* actor) =>
+			var getHealthPercentage = (delegate* unmanaged[Cdecl]<Actor*, System.Single>)&GetHealthPercentage;
+
+			Trampoline.WriteRelativeCall(ScrambledBugs.Offsets.Fixes.ActorValuePercentage.HealthCondition, getHealthPercentage);
+
+			[System.Runtime.InteropServices.UnmanagedCallersOnly(CallConvs = new[] { typeof(System.Runtime.CompilerServices.CallConvCdecl) })]
+			static System.Single GetHealthPercentage(Actor* actor)
 			{
-				return ActorValuePercentage.GetActorValuePercentage(actor, (System.Int32)ActorValue.Health);
-			};
-
-			ScrambledBugs.Plugin.Trampoline.WriteRelativeCall<ScrambledBugs.Delegates.Types.Fixes.ActorValuePercentage.GetHealthPercentage>
-			(
-				ScrambledBugs.Offsets.Fixes.ActorValuePercentage.HealthCondition,
-				ActorValuePercentage.GetHealthPercentage
-			);
+				return ActorValuePercentage.GetActorValuePercentage(actor, ActorValue.Health);
+			}
 
 
 
-			ActorValuePercentage.GetStaminaPercentage = (Actor* actor) =>
+			var getStaminaPercentage = (delegate* unmanaged[Cdecl]<Actor*, System.Single>)&GetStaminaPercentage;
+
+			Trampoline.WriteRelativeCall(ScrambledBugs.Offsets.Fixes.ActorValuePercentage.StaminaCondition, getStaminaPercentage);
+
+			[System.Runtime.InteropServices.UnmanagedCallersOnly(CallConvs = new[] { typeof(System.Runtime.CompilerServices.CallConvCdecl) })]
+			static System.Single GetStaminaPercentage(Actor* actor)
 			{
-				using (var movementActor = new NiPointer())
-				{
-					Actor.GetMovementActor(actor, &movementActor);
+				using var movementActor = new NiPointer<Actor>();
+				actor->GetMovementActor(&movementActor);
 
-					return ActorValuePercentage.GetActorValuePercentage(movementActor.Actor, (System.Int32)ActorValue.Stamina);
-				}
-			};
+				return ActorValuePercentage.GetActorValuePercentage(movementActor.Reference, ActorValue.Stamina);
+			}
+		}
 
-			ScrambledBugs.Plugin.Trampoline.WriteRelativeCall<ScrambledBugs.Delegates.Types.Fixes.ActorValuePercentage.GetStaminaPercentage>
-			(
-				ScrambledBugs.Offsets.Fixes.ActorValuePercentage.StaminaCondition,
-				ActorValuePercentage.GetStaminaPercentage
-			);
+
+
+		static System.Single GetActorValuePercentage(Actor* actor, ActorValue actorValue)
+		{
+			var permanentValue = actor->ActorValueOwner()->GetPermanentActorValue(actorValue);
+			var temporaryValue = actor->GetActorValueModifier(ActorValueModifier.Temporary, actorValue);
+
+			if (permanentValue + temporaryValue == 0.0F)
+			{
+				return 1.0F;
+			}
+
+			var value = actor->ActorValueOwner()->GetActorValue(actorValue);
+
+			return value / (permanentValue + temporaryValue);
 		}
 	}
 }

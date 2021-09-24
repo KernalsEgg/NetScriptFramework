@@ -1,4 +1,5 @@
 ﻿using Eggstensions;
+using Eggstensions.ExtensionMethods;
 
 
 
@@ -6,13 +7,15 @@ namespace ScrambledBugs.Fixes
 {
 	unsafe static internal class MagicEffectFlags
 	{
-		static public ScrambledBugs.Delegates.Types.Fixes.MagicEffectFlags.SetEffectiveness SetEffectiveness { get; set; }
-
-
-
 		static public void Fix()
 		{
-			MagicEffectFlags.SetEffectiveness = (ActiveEffect* activeEffect, System.Single effectiveness) =>
+			var setEffectiveness = (delegate* unmanaged[Cdecl]<ActiveEffect*, System.Single, void>)&SetEffectiveness;
+
+			Trampoline.WriteRelativeCall(ScrambledBugs.Offsets.Fixes.MagicEffectFlags.ResetEffectiveness, setEffectiveness);
+			Trampoline.WriteRelativeCall(ScrambledBugs.Offsets.Fixes.MagicEffectFlags.SetEffectiveness, setEffectiveness);
+
+			[System.Runtime.InteropServices.UnmanagedCallersOnly(CallConvs = new[] { typeof(System.Runtime.CompilerServices.CallConvCdecl) })]
+			static void SetEffectiveness(ActiveEffect* activeEffect, System.Single effectiveness)
 			{
 				// activeEffect != null
 
@@ -21,16 +24,16 @@ namespace ScrambledBugs.Fixes
 					return;
 				}
 
-				var flags = activeEffect->Effect->BaseEffect->Data.Flags;
+				var flags = activeEffect->Effect()->BaseEffect->Data()->Flags;
 
-				if ((flags & EffectSettingFlags.NoDuration) != EffectSettingFlags.NoDuration && (flags & EffectSettingFlags.PowerAffectsDuration) == EffectSettingFlags.PowerAffectsDuration)
+				if ((flags & EffectSettingDataFlags.NoDuration) != EffectSettingDataFlags.NoDuration && (flags & EffectSettingDataFlags.PowerAffectsDuration) == EffectSettingDataFlags.PowerAffectsDuration)
 				{
-					activeEffect->Duration *= effectiveness;
+					activeEffect->Duration(activeEffect->Duration() * effectiveness);
 				}
 
-				if ((flags & EffectSettingFlags.NoMagnitude) != EffectSettingFlags.NoMagnitude && (flags & EffectSettingFlags.PowerAffectsMagnitude) == EffectSettingFlags.PowerAffectsMagnitude)
+				if ((flags & EffectSettingDataFlags.NoMagnitude) != EffectSettingDataFlags.NoMagnitude && (flags & EffectSettingDataFlags.PowerAffectsMagnitude) == EffectSettingDataFlags.PowerAffectsMagnitude)
 				{
-					var oldMagnitude = activeEffect->Magnitude;
+					var oldMagnitude = activeEffect->Magnitude();
 					var newMagnitude = oldMagnitude * effectiveness;
 
 					if (oldMagnitude > 0.0F)
@@ -48,21 +51,9 @@ namespace ScrambledBugs.Fixes
 						}
 					}
 
-					activeEffect->Magnitude = newMagnitude;
+					activeEffect->Magnitude(newMagnitude);
 				}
-			};
-
-			ScrambledBugs.Plugin.Trampoline.WriteRelativeCall<ScrambledBugs.Delegates.Types.Fixes.MagicEffectFlags.SetEffectiveness>
-			(
-				ScrambledBugs.Offsets.Fixes.MagicEffectFlags.ResetEffectiveness,
-				MagicEffectFlags.SetEffectiveness
-			);
-
-			ScrambledBugs.Plugin.Trampoline.WriteRelativeCall<ScrambledBugs.Delegates.Types.Fixes.MagicEffectFlags.SetEffectiveness>
-			(
-				ScrambledBugs.Offsets.Fixes.MagicEffectFlags.SetEffectiveness,
-				MagicEffectFlags.SetEffectiveness
-			);
+			}
 		}
 	}
 }

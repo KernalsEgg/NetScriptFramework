@@ -11,38 +11,102 @@
 
 
 
-	[System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Explicit, Size = 0x20)]
-	unsafe public struct TESForm
+	public interface ITESForm : IVirtualObject
 	{
-		[System.Runtime.InteropServices.FieldOffset(0x14)] public System.UInt32 FormId;
-		[System.Runtime.InteropServices.FieldOffset(0x1A)] public FormType FormType;
+	}
+
+	public struct TESForm : ITESForm
+	{
+	}
 
 
 
-		// Virtual
-		static public void RemoveChanges(TESForm* form, System.UInt32 changeFlags)
+	namespace ExtensionMethods
+	{
+		unsafe static public class ITESForm
 		{
-			var removeChanges = Memory.ReadVirtualFunction<Eggstensions.Delegates.Types.TESForm.RemoveChanges>(*(System.IntPtr*)form, 0xB);
+			// Field
+			static public System.UInt32 FormId<TTESForm>(this ref TTESForm form)
+				where TTESForm : unmanaged, Eggstensions.ITESForm
+			{
+				return *(System.UInt32*)form.AddByteOffset(0x14);
+			}
 
-			removeChanges(form, changeFlags);
-		}
+			static public FormType FormType<TTESForm>(this ref TTESForm form)
+				where TTESForm : unmanaged, Eggstensions.ITESForm
+			{
+				return (FormType)(*(System.Byte*)form.AddByteOffset(0x1A));
+			}
 
 
 
-		// Member
-		static public EnchantmentItem* GetEnchantment(TESForm* form, ExtraDataList* extraDataList)
-		{
-			return Eggstensions.Delegates.Instances.TESForm.GetEnchantment(form, extraDataList);
-		}
+			// Virtual
+			static public void RemoveChanges<TTESForm>(this ref TTESForm form, System.UInt32 changeFlags)
+				where TTESForm : unmanaged, Eggstensions.ITESForm
+			{
+				var removeChanges = (delegate* unmanaged[Cdecl]<TTESForm*, System.UInt32, void>)form.VirtualFunction(0xB);
 
-		static public System.String GetFullName(TESForm* form)
-		{
-			return Memory.ReadString(Eggstensions.Delegates.Instances.TESForm.GetFullName(form));
-		}
+				RemoveChanges(form.AsPointer(), changeFlags);
 
-		static public System.UInt16 GetMaximumCharge(TESForm* form, ExtraDataList* extraDataList)
-		{
-			return Eggstensions.Delegates.Instances.TESForm.GetMaximumCharge(form, extraDataList);
+
+
+				[System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.NoInlining)]
+				void RemoveChanges(TTESForm* form, System.UInt32 changeFlags)
+				{
+					removeChanges(form, changeFlags);
+				}
+			}
+
+
+
+			// Member
+			static public EnchantmentItem* GetEnchantment<TTESForm>(this ref TTESForm form, ExtraDataList* extraDataList)
+				where TTESForm : unmanaged, Eggstensions.ITESForm
+			{
+				var getEnchantment = (delegate* unmanaged[Cdecl]<TTESForm*, ExtraDataList*, EnchantmentItem*>)Eggstensions.Offsets.TESForm.GetEnchantment;
+
+				return GetEnchantment(form.AsPointer(), extraDataList);
+
+
+
+				[System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.NoInlining)]
+				EnchantmentItem* GetEnchantment(TTESForm* form, ExtraDataList* extraDataList)
+				{
+					return getEnchantment(form, extraDataList);
+				}
+			}
+
+			static public System.String GetFormName<TTESForm>(this ref TTESForm form)
+				where TTESForm : unmanaged, Eggstensions.ITESForm
+			{
+				var getFormName = (delegate* unmanaged[Cdecl]<TTESForm*, System.IntPtr>)Eggstensions.Offsets.TESForm.GetFormName;
+
+				return Memory.ReadString(GetFormName(form.AsPointer()));
+
+
+
+				[System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.NoInlining)]
+				System.IntPtr GetFormName(TTESForm* form)
+				{
+					return getFormName(form);
+				}
+			}
+
+			static public System.UInt16 GetMaximumCharge<TTESForm>(this ref TTESForm form, ExtraDataList* extraDataList)
+				where TTESForm : unmanaged, Eggstensions.ITESForm
+			{
+				var getMaximumCharge = (delegate* unmanaged[Cdecl]<TTESForm*, ExtraDataList*, System.UInt16>)Eggstensions.Offsets.TESForm.GetMaximumCharge;
+
+				return GetMaximumCharge(form.AsPointer(), extraDataList);
+
+
+
+				[System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.NoInlining)]
+				System.UInt16 GetMaximumCharge(TTESForm* form, ExtraDataList* extraDataList)
+				{
+					return getMaximumCharge(form, extraDataList);
+				}
+			}
 		}
 	}
 }

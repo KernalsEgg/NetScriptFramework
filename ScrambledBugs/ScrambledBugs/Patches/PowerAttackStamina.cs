@@ -4,9 +4,72 @@
 
 namespace ScrambledBugs.Patches
 {
-	static internal class PowerAttackStamina
+	unsafe static internal class PowerAttackStamina
 	{
-		static public System.Byte[] CanPowerAttack(System.IntPtr getStaminaCost)
+		static public void Patch()
+		{
+			Memory.SafeFill<System.Byte>(ScrambledBugs.Offsets.Patches.PowerAttackStamina.HasStaminaActor, 2, Assembly.Nop);
+			Memory.SafeFill<System.Byte>(ScrambledBugs.Offsets.Patches.PowerAttackStamina.HasStaminaPlayerCharacter, 2, Assembly.Nop);
+
+
+
+			{
+				var assembly = new UnmanagedArray<System.Byte>();
+
+				assembly.Add(new System.Byte[2] { 0x84, 0xC0 });	// test al, al
+				assembly.Add(new System.Byte[1] { Assembly.Nop });	// nop
+				assembly.Add(new System.Byte[2] { 0x74, 0x6E });	// jz 6E
+
+				Memory.SafeWrite<System.Byte>(ScrambledBugs.Offsets.Patches.PowerAttackStamina.HasStaminaCostActor, assembly);
+			}
+			{
+				var assembly = new UnmanagedArray<System.Byte>();
+
+				assembly.Add(new System.Byte[2] { 0x84, 0xC0 });	// test al, al
+				assembly.Add(new System.Byte[1] { Assembly.Nop });	// nop
+				assembly.Add(new System.Byte[2] { 0x75, 0x34 });	// jnz 34
+
+				Memory.SafeWrite<System.Byte>(ScrambledBugs.Offsets.Patches.PowerAttackStamina.HasStaminaCostPlayerCharacter, assembly);
+			}
+
+
+
+			Trampoline.WriteRelativeCallBranch
+			(
+				ScrambledBugs.Offsets.Patches.PowerAttackStamina.GetStaminaCostActor,
+				PowerAttackStamina.CanPowerAttack(Memory.ReadRelativeCall(ScrambledBugs.Offsets.Patches.PowerAttackStamina.GetStaminaCostActor))
+			);
+
+			Trampoline.WriteRelativeCallBranch
+			(
+				ScrambledBugs.Offsets.Patches.PowerAttackStamina.GetStaminaCostPlayerCharacter,
+				PowerAttackStamina.CanPowerAttack(Memory.ReadRelativeCall(ScrambledBugs.Offsets.Patches.PowerAttackStamina.GetStaminaCostPlayerCharacter))
+			);
+			/*
+			ActorValueOwner* actorValueOwner;	// rcx
+			BGSAttackData* attackData;			// rdx
+			
+			var staminaCost = actorValueOwner->GetStaminaCost(attackData);
+
+			if (staminaCost <= 0.0F)
+			{
+				return true;
+			}
+
+			var stamina = actorValueOwner->GetActorValue(ActorValue.Stamina);
+
+			if (stamina >= staminaCost)
+			{
+				return true;
+			}
+
+			return false;
+			*/
+		}
+
+
+
+		static public System.Byte[] CanPowerAttack(void* getStaminaCost)
 		{
 			var assembly = new UnmanagedArray<System.Byte>();
 
@@ -36,67 +99,6 @@ namespace ScrambledBugs.Patches
 			assembly.Add(new System.Byte[1] { Assembly.Ret });									// ret
 
 			return assembly;
-		}
-		
-		static public void Patch()
-		{
-			Memory.SafeFill<System.Byte>(ScrambledBugs.Offsets.Patches.PowerAttackStamina.HasStaminaActor, 2, Assembly.Nop);
-			Memory.SafeFill<System.Byte>(ScrambledBugs.Offsets.Patches.PowerAttackStamina.HasStaminaPlayerCharacter, 2, Assembly.Nop);
-
-
-
-			{
-				var assembly = new UnmanagedArray<System.Byte>();
-
-				assembly.Add(new System.Byte[2] { 0x84, 0xC0 });	// test al, al
-				assembly.Add(new System.Byte[1] { Assembly.Nop });	// nop
-				assembly.Add(new System.Byte[2] { 0x74, 0x6E });	// jz 6E
-
-				Memory.SafeWriteArray<System.Byte>(ScrambledBugs.Offsets.Patches.PowerAttackStamina.HasStaminaCostActor, assembly);
-			}
-			{
-				var assembly = new UnmanagedArray<System.Byte>();
-
-				assembly.Add(new System.Byte[2] { 0x84, 0xC0 });	// test al, al
-				assembly.Add(new System.Byte[1] { Assembly.Nop });	// nop
-				assembly.Add(new System.Byte[2] { 0x75, 0x34 });	// jnz 34
-
-				Memory.SafeWriteArray<System.Byte>(ScrambledBugs.Offsets.Patches.PowerAttackStamina.HasStaminaCostPlayerCharacter, assembly);
-			}
-
-
-
-			ScrambledBugs.Plugin.Trampoline.WriteRelativeCallBranch
-			(
-				ScrambledBugs.Offsets.Patches.PowerAttackStamina.GetStaminaCostActor,
-				PowerAttackStamina.CanPowerAttack(Memory.ReadRelativeCall(ScrambledBugs.Offsets.Patches.PowerAttackStamina.GetStaminaCostActor))
-			);
-
-			ScrambledBugs.Plugin.Trampoline.WriteRelativeCallBranch
-			(
-				ScrambledBugs.Offsets.Patches.PowerAttackStamina.GetStaminaCostPlayerCharacter,
-				PowerAttackStamina.CanPowerAttack(Memory.ReadRelativeCall(ScrambledBugs.Offsets.Patches.PowerAttackStamina.GetStaminaCostPlayerCharacter))
-			);
-			/*
-			ActorValueOwner* actorValueOwner;	// rcx
-			BGSAttackData* attackData;			// rdx
-			
-			var powerAttackStamina = ActorValueOwner.GetPowerAttackStamina(actorValueOwner, attackData);
-
-			if (powerAttackStamina <= 0.0F)
-			{
-				return true;
-			}
-
-			var stamina = ActorValueOwner.GetActorValue(actorValueOwner, ActorValue.Stamina);
-
-			if (stamina >= powerAttackStamina)
-			{
-				return true;
-			}
-
-			return false;
-			*/
 		}
 	}
 }

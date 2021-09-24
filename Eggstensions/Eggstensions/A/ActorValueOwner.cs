@@ -21,36 +21,84 @@
 
 
 
-	[System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Explicit, Size = 0x8)]
-	unsafe public struct ActorValueOwner
+	public interface IActorValueOwner : IVirtualObject
 	{
-		// Virtual
-		static public System.Single GetActorValue(ActorValueOwner* actorValueOwner, ActorValue actorValue)
+	}
+
+	public struct ActorValueOwner : IActorValueOwner
+	{
+	}
+
+
+
+	namespace ExtensionMethods
+	{
+		unsafe static public class IActorValueOwner
 		{
-			var getActorValue = Memory.ReadVirtualFunction<Eggstensions.Delegates.Types.ActorValueOwner.GetActorValue>(*(System.IntPtr*)actorValueOwner, 0x1);
+			// Virtual
+			static public System.Single GetActorValue<TActorValueOwner>(this ref TActorValueOwner actorValueOwner, ActorValue actorValue)
+				where TActorValueOwner : unmanaged, Eggstensions.IActorValueOwner
+			{
+				var getActorValue = (delegate* unmanaged[Cdecl]<TActorValueOwner*, System.Int32, System.Single>)actorValueOwner.VirtualFunction(0x1);
 
-			return getActorValue(actorValueOwner, (System.Int32)actorValue);
-		}
+				return GetActorValue(actorValueOwner.AsPointer(), (System.Int32)actorValue);
 
-		static public System.Single GetPermanentActorValue(ActorValueOwner* actorValueOwner, ActorValue actorValue)
-		{
-			var getPermanentActorValue = Memory.ReadVirtualFunction<Eggstensions.Delegates.Types.ActorValueOwner.GetPermanentActorValue>(*(System.IntPtr*)actorValueOwner, 0x2);
 
-			return getPermanentActorValue(actorValueOwner, (System.Int32)actorValue);
-		}
 
-		static public void RestoreActorValue(ActorValueOwner* actorValueOwner, ActorValueModifier actorValueModifier, ActorValue actorValue, System.Single value)
-		{
-			var restoreActorValue = Memory.ReadVirtualFunction<Eggstensions.Delegates.Types.ActorValueOwner.RestoreActorValue>(*(System.IntPtr*)actorValueOwner, 0x6);
+				[System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.NoInlining)]
+				System.Single GetActorValue(TActorValueOwner* actorValueOwner, System.Int32 actorValue)
+				{
+					return getActorValue(actorValueOwner, actorValue);
+				}
+			}
 
-			restoreActorValue(actorValueOwner, (System.Int32)actorValueModifier, (System.Int32)actorValue, value);
-		}
+			static public System.Single GetPermanentActorValue<TActorValueOwner>(this ref TActorValueOwner actorValueOwner, ActorValue actorValue)
+				where TActorValueOwner : unmanaged, Eggstensions.IActorValueOwner
+			{
+				var getPermanentActorValue = (delegate* unmanaged[Cdecl]<TActorValueOwner*, System.Int32, System.Single>)actorValueOwner.VirtualFunction(0x2);
 
-		static public void SetActorValue(ActorValueOwner* actorValueOwner, ActorValue actorValue, System.Single value)
-		{
-			var setActorValue = Memory.ReadVirtualFunction<Eggstensions.Delegates.Types.ActorValueOwner.SetActorValue>(*(System.IntPtr*)actorValueOwner, 0x7);
+				return GetPermanentActorValue(actorValueOwner.AsPointer(), (System.Int32)actorValue);
 
-			setActorValue(actorValueOwner, (System.Int32)actorValue, value);
+
+
+				[System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.NoInlining)]
+				System.Single GetPermanentActorValue(TActorValueOwner* actorValueOwner, System.Int32 actorValue)
+				{
+					return getPermanentActorValue(actorValueOwner, actorValue);
+				}
+			}
+
+			static public void RestoreActorValue<TActorValueOwner>(this ref TActorValueOwner actorValueOwner, ActorValueModifier actorValueModifier, ActorValue actorValue, System.Single value)
+				where TActorValueOwner : unmanaged, Eggstensions.IActorValueOwner
+			{
+				var restoreActorValue = (delegate* unmanaged[Cdecl]<TActorValueOwner*, System.Int32, System.Int32, System.Single, void>)actorValueOwner.VirtualFunction(0x6);
+
+				RestoreActorValue(actorValueOwner.AsPointer(), (System.Int32)actorValueModifier, (System.Int32)actorValue, value);
+
+
+
+				[System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.NoInlining)]
+				void RestoreActorValue(TActorValueOwner* actorValueOwner, System.Int32 actorValueModifier, System.Int32 actorValue, System.Single value)
+				{
+					restoreActorValue(actorValueOwner, actorValueModifier, actorValue, value);
+				}
+			}
+
+			static public void SetActorValue<TActorValueOwner>(this ref TActorValueOwner actorValueOwner, ActorValue actorValue, System.Single value)
+				where TActorValueOwner : unmanaged, Eggstensions.IActorValueOwner
+			{
+				var setActorValue = (delegate* unmanaged[Cdecl]<TActorValueOwner*, System.Int32, System.Single, void>)actorValueOwner.VirtualFunction(0x7);
+
+				SetActorValue(actorValueOwner.AsPointer(), (System.Int32)actorValue, value);
+
+
+
+				[System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.NoInlining)]
+				void SetActorValue(TActorValueOwner* actorValueOwner, System.Int32 actorValue, System.Single value)
+				{
+					setActorValue(actorValueOwner, actorValue, value);
+				}
+			}
 		}
 	}
 }

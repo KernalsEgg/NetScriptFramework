@@ -1,9 +1,24 @@
 ﻿namespace Eggstensions
 {
-	[System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Explicit, Size = 0x10)]
-	unsafe public struct BGSEntryPointFunctionDataSpellItem
+	public interface IBGSEntryPointFunctionDataSpellItem : IBGSEntryPointFunctionData
 	{
-		[System.Runtime.InteropServices.FieldOffset(0x0)] public BGSEntryPointFunctionData BGSEntryPointFunctionData;
-		[System.Runtime.InteropServices.FieldOffset(0x8)] public SpellItem* Spell;
+	}
+
+	public struct BGSEntryPointFunctionDataSpellItem : IBGSEntryPointFunctionDataSpellItem
+	{
+	}
+
+
+
+	namespace ExtensionMethods
+	{
+		unsafe static public class IBGSEntryPointFunctionDataSpellItem
+		{
+			static public SpellItem* Spell<TBGSEntryPointFunctionDataSpellItem>(this ref TBGSEntryPointFunctionDataSpellItem entryPointFunctionDataSpellItem)
+				where TBGSEntryPointFunctionDataSpellItem : unmanaged, Eggstensions.IBGSEntryPointFunctionDataSpellItem
+			{
+				return *(SpellItem**)entryPointFunctionDataSpellItem.AddByteOffset(0x8);
+			}
+		}
 	}
 }

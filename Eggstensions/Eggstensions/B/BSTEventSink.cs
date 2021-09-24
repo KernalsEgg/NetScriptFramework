@@ -8,62 +8,45 @@
 
 
 
-	public class BSTEventSink : System.IDisposable
+	unsafe public class BSTEventSink
 	{
-		public BSTEventSink(Eggstensions.Delegates.Types.BSTEventSink.ProcessEvent processEvent)
+		/// <param name="processEvent">BSEventNotifyControl ProcessEvent(System.IntPtr eventSink, void* eventArguments, void* eventSource)</param>
+		public BSTEventSink(delegate* unmanaged[Cdecl]<System.IntPtr, void*, void*, System.Int32> processEvent)
 		{
-			Destructor		= eventSink => this.Dispose();
-			ProcessEvent	= processEvent;
+			VirtualFunctionTable	= System.Runtime.InteropServices.Marshal.AllocHGlobal(0x2 * System.Runtime.CompilerServices.Unsafe.SizeOf<System.IntPtr>());
+			Address					= System.Runtime.InteropServices.Marshal.AllocHGlobal(0x1 * System.Runtime.CompilerServices.Unsafe.SizeOf<System.IntPtr>());
 
-			Address					= System.Runtime.InteropServices.Marshal.AllocHGlobal(0x1 * Memory.Size<System.IntPtr>.Unmanaged);
-			VirtualFunctionTable	= System.Runtime.InteropServices.Marshal.AllocHGlobal(0x2 * Memory.Size<System.IntPtr>.Unmanaged);
-
-			Memory.Write<System.IntPtr>
+			System.Runtime.CompilerServices.Unsafe.Write<System.IntPtr>
 			(
-				Address,
-				0x0 * Memory.Size<System.IntPtr>.Unmanaged,
+				(VirtualFunctionTable + 0x0 * System.Runtime.CompilerServices.Unsafe.SizeOf<System.IntPtr>()).ToPointer(),
+				new System.IntPtr((delegate* unmanaged[Cdecl]<System.IntPtr, void>)&Destructor)
+			);
+
+			System.Runtime.CompilerServices.Unsafe.Write<System.IntPtr>
+			(
+				(VirtualFunctionTable + 0x1 * System.Runtime.CompilerServices.Unsafe.SizeOf<System.IntPtr>()).ToPointer(),
+				new System.IntPtr(processEvent)
+			);
+
+			System.Runtime.CompilerServices.Unsafe.Write<System.IntPtr>
+			(
+				(Address + 0x0 * System.Runtime.CompilerServices.Unsafe.SizeOf<System.IntPtr>()).ToPointer(),
 				VirtualFunctionTable
 			);
-			Memory.Write<System.IntPtr>
-			(
-				VirtualFunctionTable,
-				0x0 * Memory.Size<System.IntPtr>.Unmanaged,
-				System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate<Eggstensions.Delegates.Types.BSTEventSink.Destructor>(Destructor)
-			);
-			Memory.Write<System.IntPtr>
-			(
-				VirtualFunctionTable,
-				0x1 * Memory.Size<System.IntPtr>.Unmanaged,
-				System.Runtime.InteropServices.Marshal.GetFunctionPointerForDelegate<Eggstensions.Delegates.Types.BSTEventSink.ProcessEvent>(ProcessEvent)
-			);
-		}
-
-		~BSTEventSink()
-		{
-			this.Dispose(false);
 		}
 
 
 
-		public Eggstensions.Delegates.Types.BSTEventSink.Destructor Destructor { get; }
-		public Eggstensions.Delegates.Types.BSTEventSink.ProcessEvent ProcessEvent { get; }
 		public System.IntPtr Address { get; }
 		public System.IntPtr VirtualFunctionTable { get; }
 
 
 
-		virtual public void Dispose(System.Boolean disposing)
+		[System.Runtime.InteropServices.UnmanagedCallersOnly(CallConvs = new[] { typeof(System.Runtime.CompilerServices.CallConvCdecl) })]
+		static public void Destructor(System.IntPtr eventSink)
 		{
-			System.Runtime.InteropServices.Marshal.FreeHGlobal(Address);
-			System.Runtime.InteropServices.Marshal.FreeHGlobal(VirtualFunctionTable);
-		}
-
-
-
-		public void Dispose()
-		{
-			this.Dispose(true);
-			System.GC.SuppressFinalize(this);
+			System.Runtime.InteropServices.Marshal.FreeHGlobal(eventSink);					// Address
+			System.Runtime.InteropServices.Marshal.FreeHGlobal(*(System.IntPtr*)eventSink);	// VirtualFunctionTable
 		}
 	}
 }

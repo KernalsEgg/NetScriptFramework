@@ -1,4 +1,5 @@
 ﻿using Eggstensions;
+using Eggstensions.ExtensionMethods;
 
 
 
@@ -6,16 +7,28 @@ namespace ScrambledBugs.Fixes
 {
 	unsafe static internal class ModArmorWeightPerkEntryPoint
 	{
-		static public Eggstensions.Delegates.Types.BGSPerkEntry.AddPerkEntry AddPerkEntry { get; set; }
-		static public Eggstensions.Delegates.Types.Context.CaptureContext ModArmorWeightContainer { get; set; }
-		static public Eggstensions.Delegates.Types.Context.CaptureContext ModArmorWeightInventoryChanges { get; set; }
-		static public Eggstensions.Delegates.Types.BGSPerkEntry.RemovePerkEntry RemovePerkEntry { get; set; }
+		static private delegate* unmanaged[Cdecl]<BGSPerkEntry*, Actor*, void> addPerkEntry;
+		static private delegate* unmanaged[Cdecl]<BGSPerkEntry*, Actor*, void> removePerkEntry;
 
 
 
 		static public void Fix()
 		{
-			ModArmorWeightPerkEntryPoint.ModArmorWeightContainer = (Context* context) =>
+			var modArmorWeightContainer = (delegate* unmanaged[Cdecl]<Context*, void>)&ModArmorWeightContainer;
+
+			Trampoline.CaptureContext
+			(
+				ScrambledBugs.Offsets.Fixes.ModArmorWeightPerkEntryPoint.ModArmorWeightContainer,
+				modArmorWeightContainer,
+				Memory.ReadArray<System.Byte>
+				(
+					ScrambledBugs.Offsets.Fixes.ModArmorWeightPerkEntryPoint.ModArmorWeightContainer,
+					System.Runtime.CompilerServices.Unsafe.SizeOf<RelativeCall>()
+				)
+			);
+
+			[System.Runtime.InteropServices.UnmanagedCallersOnly(CallConvs = new[] { typeof(System.Runtime.CompilerServices.CallConvCdecl) })]
+			static void ModArmorWeightContainer(Context* context)
 			{
 				// inventoryEntryData	!= null
 				// itemWeight			!= null
@@ -26,21 +39,21 @@ namespace ScrambledBugs.Fixes
 
 				if (item != null)
 				{
-					var itemWeight = Memory.Read<System.Single>(context->Rsp.IntPtr, 0xB0);
+					var itemWeight = *(System.Single*)(context->Rsp.IntPtr + 0xB0);
 
 					if (itemWeight > 0.0F)
 					{
-						var actor = (Actor*)Memory.Read<System.IntPtr>(context->Rsp.IntPtr, 0xB8);
+						var actor = *(Actor**)(context->Rsp.IntPtr + 0xB8);
 
 						if (actor != null)
 						{
-							if (item->TESForm.FormType == FormType.Armor)
+							if (item->FormType() == FormType.Armor)
 							{
 								var itemCount = context->Rdx.Int32 + context->Rax.Int32; // inventoryChangesItemCount + containerItemCount
 
 								if (itemCount > 0)
 								{
-									if (InventoryEntryData.IsWorn(inventoryEntryData))
+									if (inventoryEntryData->IsWorn())
 									{
 										BGSEntryPointPerkEntry.HandleEntryPoints(EntryPoint.ModArmorWeight, actor, item, &itemWeight);
 
@@ -52,22 +65,17 @@ namespace ScrambledBugs.Fixes
 						}
 					}
 				}
-			};
-
-			ScrambledBugs.Plugin.Trampoline.CaptureContext
-			(
-				ScrambledBugs.Offsets.Fixes.ModArmorWeightPerkEntryPoint.ModArmorWeightContainer,
-				ModArmorWeightPerkEntryPoint.ModArmorWeightContainer,
-				Memory.ReadArray<System.Byte>
-				(
-					ScrambledBugs.Offsets.Fixes.ModArmorWeightPerkEntryPoint.ModArmorWeightContainer,
-					Memory.Size<RelativeCall>.Unmanaged
-				)
-			);
+			}
 
 
 
-			ModArmorWeightPerkEntryPoint.ModArmorWeightInventoryChanges = (Context* context) =>
+			var modArmorWeightInventoryChanges = (delegate* unmanaged[Cdecl]<Context*, void>)&ModArmorWeightInventoryChanges;
+
+			Memory.SafeFill<System.Byte>(ScrambledBugs.Offsets.Fixes.ModArmorWeightPerkEntryPoint.ModArmorWeightInventoryChanges, 5 + 9 + 4, Assembly.Nop);
+			Trampoline.CaptureContext(ScrambledBugs.Offsets.Fixes.ModArmorWeightPerkEntryPoint.ModArmorWeightInventoryChanges, modArmorWeightInventoryChanges);
+
+			[System.Runtime.InteropServices.UnmanagedCallersOnly(CallConvs = new[] { typeof(System.Runtime.CompilerServices.CallConvCdecl) })]
+			static void ModArmorWeightInventoryChanges(Context* context)
 			{
 				// actor		!= null
 				// armor		!= null
@@ -75,73 +83,72 @@ namespace ScrambledBugs.Fixes
 
 				var actor		= (Actor*)context->Rdx.IntPtr;
 				var armor		= (TESObjectARMO*)context->R8.IntPtr;
-				var armorWeight	= Memory.Read<System.Single>(context->R9.IntPtr);
+				var armorWeight	= *(System.Single*)context->R9.IntPtr;
 
 				context->Xmm1.Single = armorWeight; // armorWeight
 
 				BGSEntryPointPerkEntry.HandleEntryPoints(EntryPoint.ModArmorWeight, actor, armor, &armorWeight);
 
 				context->Xmm6.Single += armorWeight; // totalModifiedArmorWeight
-			};
-
-			Memory.SafeFill<System.Byte>
-			(
-				ScrambledBugs.Offsets.Fixes.ModArmorWeightPerkEntryPoint.ModArmorWeightInventoryChanges,
-				5 + 9 + 4,
-				Assembly.Nop
-			);
-
-			ScrambledBugs.Plugin.Trampoline.CaptureContext
-			(
-				ScrambledBugs.Offsets.Fixes.ModArmorWeightPerkEntryPoint.ModArmorWeightInventoryChanges,
-				ModArmorWeightPerkEntryPoint.ModArmorWeightInventoryChanges
-			);
+			}
 
 
 
-			var addPerkEntry = Memory.ReadVirtualFunction<Eggstensions.Delegates.Types.BGSPerkEntry.AddPerkEntry>(Eggstensions.Offsets.BGSEntryPointPerkEntry.VirtualFunctionTable, 0xA);
+			ModArmorWeightPerkEntryPoint.addPerkEntry = (delegate* unmanaged[Cdecl]<BGSPerkEntry*, Actor*, void>)Memory.ReadVirtualFunction(Eggstensions.Offsets.BGSEntryPointPerkEntry.VirtualFunctionTable, 0xA);
 
-			ModArmorWeightPerkEntryPoint.AddPerkEntry = (BGSPerkEntry* perkEntry, Actor* perkOwner) =>
+			var addPerkEntry = (delegate* unmanaged[Cdecl]<BGSPerkEntry*, Actor*, void>)&AddPerkEntry;
+
+			Memory.WriteVirtualFunction(Eggstensions.Offsets.BGSEntryPointPerkEntry.VirtualFunctionTable, 0xA, addPerkEntry);
+
+			[System.Runtime.InteropServices.UnmanagedCallersOnly(CallConvs = new[] { typeof(System.Runtime.CompilerServices.CallConvCdecl) })]
+			static void AddPerkEntry(BGSPerkEntry* perkEntry, Actor* perkOwner)
 			{
-				addPerkEntry(perkEntry, perkOwner);
+				AddPerkEntry(perkEntry, perkOwner);
 
-				var inventoryChanges = TESObjectREFR.GetInventoryChanges(&perkOwner->TESObjectREFR);
+				var inventoryChanges = perkOwner->GetInventoryChanges();
 
 				if (inventoryChanges != null)
 				{
-					InventoryChanges.ResetWeight(inventoryChanges);
+					inventoryChanges->ResetWeight();
 				}
-			};
-
-			Memory.WriteVirtualFunction<Eggstensions.Delegates.Types.BGSPerkEntry.AddPerkEntry>
-			(
-				Eggstensions.Offsets.BGSEntryPointPerkEntry.VirtualFunctionTable,
-				0xA,
-				ModArmorWeightPerkEntryPoint.AddPerkEntry
-			);
 
 
 
-			var removePerkEntry = Memory.ReadVirtualFunction<Eggstensions.Delegates.Types.BGSPerkEntry.RemovePerkEntry>(Eggstensions.Offsets.BGSEntryPointPerkEntry.VirtualFunctionTable, 0xB);
+				[System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.NoInlining)]
+				void AddPerkEntry(BGSPerkEntry* perkEntry, Actor* perkOwner)
+				{
+					ModArmorWeightPerkEntryPoint.addPerkEntry(perkEntry, perkOwner);
+				}
+			}
 
-			ModArmorWeightPerkEntryPoint.RemovePerkEntry = (BGSPerkEntry* perkEntry, Actor* perkOwner) =>
+
+
+			ModArmorWeightPerkEntryPoint.removePerkEntry = (delegate* unmanaged[Cdecl]<BGSPerkEntry*, Actor*, void>)Memory.ReadVirtualFunction(Eggstensions.Offsets.BGSEntryPointPerkEntry.VirtualFunctionTable, 0xB);
+
+			var removePerkEntry = (delegate* unmanaged[Cdecl]<BGSPerkEntry*, Actor*, void>)&RemovePerkEntry;
+
+			Memory.WriteVirtualFunction(Eggstensions.Offsets.BGSEntryPointPerkEntry.VirtualFunctionTable, 0xB, removePerkEntry);
+
+			[System.Runtime.InteropServices.UnmanagedCallersOnly(CallConvs = new[] { typeof(System.Runtime.CompilerServices.CallConvCdecl) })]
+			static void RemovePerkEntry(BGSPerkEntry* perkEntry, Actor* perkOwner)
 			{
-				removePerkEntry(perkEntry, perkOwner);
+				RemovePerkEntry(perkEntry, perkOwner);
 
-				var inventoryChanges = TESObjectREFR.GetInventoryChanges(&perkOwner->TESObjectREFR);
+				var inventoryChanges = perkOwner->GetInventoryChanges();
 
 				if (inventoryChanges != null)
 				{
-					InventoryChanges.ResetWeight(inventoryChanges);
+					inventoryChanges->ResetWeight();
 				}
-			};
 
-			Memory.WriteVirtualFunction<Eggstensions.Delegates.Types.BGSPerkEntry.RemovePerkEntry>
-			(
-				Eggstensions.Offsets.BGSEntryPointPerkEntry.VirtualFunctionTable,
-				0xB,
-				ModArmorWeightPerkEntryPoint.RemovePerkEntry
-			);
+
+
+				[System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.NoInlining)]
+				void RemovePerkEntry(BGSPerkEntry* perkEntry, Actor* perkOwner)
+				{
+					ModArmorWeightPerkEntryPoint.removePerkEntry(perkEntry, perkOwner);
+				}
+			}
 		}
 	}
 }

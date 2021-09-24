@@ -1,4 +1,8 @@
-﻿namespace Eggstensions
+﻿using Eggstensions.ExtensionMethods;
+
+
+
+namespace Eggstensions
 {
 	public enum ExtraDataType : System.Int32
 	{
@@ -8,18 +12,36 @@
 
 
 
-	[System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Explicit, Size = 0x18)]
 	unsafe public struct ExtraDataList
 	{
-		// Member
-		static public System.Single GetCharge(ExtraDataList* extraDataList)
+		public System.Single GetCharge()
 		{
-			return Eggstensions.Delegates.Instances.ExtraDataList.GetCharge(extraDataList);
+			var getCharge = (delegate* unmanaged[Cdecl]<ExtraDataList*, System.Single>)Eggstensions.Offsets.ExtraDataList.GetCharge;
+
+			return GetCharge(this.AsPointer());
+
+
+
+			[System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.NoInlining)]
+			System.Single GetCharge(ExtraDataList* extraDataList)
+			{
+				return getCharge(extraDataList);
+			}
 		}
 
-		static public System.Boolean HasExtraData(ExtraDataList* extraDataList, ExtraDataType extraDataType)
+		public System.Boolean HasExtraData(ExtraDataType extraDataType)
 		{
-			return Eggstensions.Delegates.Instances.ExtraDataList.HasExtraData(extraDataList, (System.Int32)extraDataType) != 0;
+			var hasExtraData = (delegate* unmanaged[Cdecl]<ExtraDataList*, System.Int32, System.Byte>)Eggstensions.Offsets.ExtraDataList.HasExtraData;
+
+			return HasExtraData(this.AsPointer(), (System.Int32)extraDataType) != 0;
+
+
+
+			[System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.NoInlining)]
+			System.Byte HasExtraData(ExtraDataList* extraDataList, System.Int32 extraDataType)
+			{
+				return hasExtraData(extraDataList, extraDataType);
+			}
 		}
 	}
 }

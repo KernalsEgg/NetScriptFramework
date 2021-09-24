@@ -1,4 +1,5 @@
 ﻿using Eggstensions;
+using Eggstensions.ExtensionMethods;
 
 
 
@@ -6,13 +7,23 @@ namespace ScrambledBugs.Fixes
 {
 	unsafe static internal class QuickShot
 	{
-		static public ScrambledBugs.Delegates.Types.Fixes.QuickShot.GetArrowPower GetArrowPower { get; set; }
-
-
-
+		static public System.Single quickShotPlaybackSpeed;
+		
+		
+		
 		static public void Fix(System.Single quickShotPlaybackSpeed)
 		{
-			QuickShot.GetArrowPower = (System.Single drawTime, System.Single bowSpeed) =>
+			QuickShot.quickShotPlaybackSpeed = quickShotPlaybackSpeed;
+			
+
+
+			var getArrowPower = (delegate* unmanaged[Cdecl]<System.Single, System.Single, System.Single>)&GetArrowPower;
+
+			Trampoline.WriteRelativeCall(ScrambledBugs.Offsets.Fixes.QuickShot.CreateProjectile, getArrowPower);
+			Trampoline.WriteRelativeCall(ScrambledBugs.Offsets.Fixes.QuickShot.KillCamera, getArrowPower);
+
+			[System.Runtime.InteropServices.UnmanagedCallersOnly(CallConvs = new[] { typeof(System.Runtime.CompilerServices.CallConvCdecl) })]
+			static System.Single GetArrowPower(System.Single drawTime, System.Single bowSpeed)
 			{
 				if (bowSpeed <= 0.0F)
 				{
@@ -22,26 +33,18 @@ namespace ScrambledBugs.Fixes
 				System.Byte animationVariable;
 				System.Single pullTime;
 
-				var animationVariableName	= new BSFixedString();
-				var player					= PlayerCharacter.Instance;
-				var arrowBowMinTime			= SettingT.GameSettingCollection.ArrowBowMinTime->Setting.Value.Single;
+				var player			= PlayerCharacter.Instance;
+				var arrowBowMinTime	= SettingT.GameSettingCollection.ArrowBowMinTime->Setting.Value.Single;
 
-				try
+				using var animationVariableName = new BSFixedString("bPerkQuickDraw");
+
+				if (player->IAnimationGraphManagerHolder()->GetAnimationVariableBool(&animationVariableName, &animationVariable) && (animationVariable != 0))
 				{
-					BSFixedString.Initialize(&animationVariableName, "bPerkQuickDraw");
-
-					if (IAnimationGraphManagerHolder.GetAnimationVariableBool(&player->Actor.TESObjectREFR.IAnimationGraphManagerHolder, &animationVariableName, &animationVariable) && (animationVariable != 0))
-					{
-						pullTime = drawTime - (arrowBowMinTime / quickShotPlaybackSpeed);
-					}
-					else
-					{
-						pullTime = drawTime - arrowBowMinTime;
-					}
+					pullTime = drawTime - (arrowBowMinTime / QuickShot.quickShotPlaybackSpeed);
 				}
-				finally
+				else
 				{
-					BSFixedString.Release(&animationVariableName);
+					pullTime = drawTime - arrowBowMinTime;
 				}
 
 				var arrowMinPower = SettingT.GameSettingCollection.ArrowMinPower->Setting.Value.Single;
@@ -62,19 +65,7 @@ namespace ScrambledBugs.Fixes
 				{
 					return arrowMinPower + ((pullTime / maximumPullTime) * (1.0F - arrowMinPower));
 				}
-			};
-
-			ScrambledBugs.Plugin.Trampoline.WriteRelativeCall<ScrambledBugs.Delegates.Types.Fixes.QuickShot.GetArrowPower>
-			(
-				ScrambledBugs.Offsets.Fixes.QuickShot.CreateProjectile,
-				QuickShot.GetArrowPower
-			);
-
-			ScrambledBugs.Plugin.Trampoline.WriteRelativeCall<ScrambledBugs.Delegates.Types.Fixes.QuickShot.GetArrowPower>
-			(
-				ScrambledBugs.Offsets.Fixes.QuickShot.KillCamera,
-				QuickShot.GetArrowPower
-			);
+			}
 		}
 	}
 }
