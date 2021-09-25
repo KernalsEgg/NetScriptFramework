@@ -35,10 +35,10 @@
 		unsafe static public class IActiveEffect
 		{
 			// Field
-			static public BSPointerHandle<Actor> Caster<TActiveEffect>(this ref TActiveEffect activeEffect)
+			static public BSPointerHandle Caster<TActiveEffect>(this ref TActiveEffect activeEffect)
 				where TActiveEffect : unmanaged, Eggstensions.IActiveEffect
 			{
-				return *(BSPointerHandle<Actor>*)activeEffect.AddByteOffset(0x34);
+				return *(BSPointerHandle*)activeEffect.AddByteOffset(0x34); // Actor
 			}
 
 			static public MagicItem* Spell<TActiveEffect>(this ref TActiveEffect activeEffect)

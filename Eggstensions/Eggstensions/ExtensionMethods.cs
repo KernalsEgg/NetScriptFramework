@@ -15,12 +15,6 @@
 			{
 				return (T*)System.Runtime.CompilerServices.Unsafe.AsPointer(ref value);
 			}
-
-			static public ref T AsRef<T>(this ref T value)
-				where T : unmanaged
-			{
-				return ref value;
-			}
 		}
 	}
 }

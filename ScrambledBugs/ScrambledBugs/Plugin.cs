@@ -4,7 +4,7 @@
 
 namespace ScrambledBugs
 {
-	unsafe public class Plugin
+	static public class Plugin
 	{
 		[System.Runtime.InteropServices.UnmanagedCallersOnly(CallConvs = new[] { typeof(System.Runtime.CompilerServices.CallConvCdecl) }, EntryPoint = "Initialize")]
 		static public void Initialize()
@@ -202,7 +202,7 @@ namespace ScrambledBugs
 				}
 				catch (System.Text.Json.JsonException jsonException)
 				{
-					Log.WriteLine($"\n{jsonException}");
+					Log.WriteLine($"{jsonException}");
 				}
 			}
 		}

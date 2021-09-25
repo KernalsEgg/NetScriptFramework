@@ -14,6 +14,7 @@
 	{
 		unsafe static public class IBGSEntryPointFunctionDataSpellItem
 		{
+			// Field
 			static public SpellItem* Spell<TBGSEntryPointFunctionDataSpellItem>(this ref TBGSEntryPointFunctionDataSpellItem entryPointFunctionDataSpellItem)
 				where TBGSEntryPointFunctionDataSpellItem : unmanaged, Eggstensions.IBGSEntryPointFunctionDataSpellItem
 			{

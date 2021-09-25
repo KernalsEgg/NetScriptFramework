@@ -131,18 +131,17 @@
 				}
 			}
 
-			static public System.Boolean GetMovementActor<TActor1, TActor2>(this ref TActor1 actor, NiPointer<TActor2>* movementActor)
-				where TActor1 : unmanaged, Eggstensions.IActor
-				where TActor2 : unmanaged, Eggstensions.IActor
+			static public System.Boolean GetMovementActor<TActor>(this ref TActor actor, NiPointer* movementActor)
+				where TActor : unmanaged, Eggstensions.IActor
 			{
-				var getMovementActor = (delegate* unmanaged[Cdecl]<TActor1*, NiPointer<TActor2>*, System.Byte>)Eggstensions.Offsets.Actor.GetMovementActor;
+				var getMovementActor = (delegate* unmanaged[Cdecl]<TActor*, NiPointer*, System.Byte>)Eggstensions.Offsets.Actor.GetMovementActor;
 
 				return GetMovementActor(actor.AsPointer(), movementActor) != 0;
 
 
 
 				[System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.NoInlining)]
-				System.Byte GetMovementActor(TActor1* actor, NiPointer<TActor2>* movementActor)
+				System.Byte GetMovementActor(TActor* actor, NiPointer* movementActor)
 				{
 					return getMovementActor(actor, movementActor);
 				}

@@ -18,7 +18,7 @@ namespace ScrambledBugs.Fixes
 
 
 		[System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Explicit)]
-		unsafe public struct SaveManager
+		public struct SaveManager
 		{
 			[System.Runtime.InteropServices.FieldOffset(0x340)] public SaveManagerFlags Flags;
 

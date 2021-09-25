@@ -4,12 +4,10 @@
 
 namespace Eggstensions
 {
-	// LayoutKind.Explicit does not support generic types
-	[System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Sequential, Size = 0x8)]
-	unsafe public struct NiPointer<T> : System.IDisposable
-		where T : unmanaged, ITESObjectREFR
+	[System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Explicit, Size = 0x8)]
+	unsafe public struct NiPointer : System.IDisposable
 	{
-		public NiPointer(T* reference) : this()
+		public NiPointer(TESObjectREFR* reference) : this()
 		{
 			Reference = reference;
 			Attach();
@@ -17,7 +15,7 @@ namespace Eggstensions
 
 
 
-		public T* Reference;
+		[System.Runtime.InteropServices.FieldOffset(0x0)] public TESObjectREFR* Reference;
 
 
 

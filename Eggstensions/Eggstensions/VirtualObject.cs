@@ -10,7 +10,6 @@
 	{
 		unsafe static public class IVirtualObject
 		{
-			[System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining | System.Runtime.CompilerServices.MethodImplOptions.AggressiveOptimization)]
 			static public void* VirtualFunction<TVirtualObject>(this ref TVirtualObject virtualObject, System.Int32 index)
 				where TVirtualObject : unmanaged, Eggstensions.IVirtualObject
 			{

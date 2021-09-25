@@ -42,10 +42,10 @@ namespace ScrambledBugs.Fixes
 			[System.Runtime.InteropServices.UnmanagedCallersOnly(CallConvs = new[] { typeof(System.Runtime.CompilerServices.CallConvCdecl) })]
 			static System.Single GetStaminaPercentage(Actor* actor)
 			{
-				using var movementActor = new NiPointer<Actor>();
+				using var movementActor = new NiPointer();
 				actor->GetMovementActor(&movementActor);
 
-				return ActorValuePercentage.GetActorValuePercentage(movementActor.Reference, ActorValue.Stamina);
+				return ActorValuePercentage.GetActorValuePercentage((Actor*)movementActor.Reference, ActorValue.Stamina);
 			}
 		}
 

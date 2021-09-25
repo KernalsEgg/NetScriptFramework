@@ -54,7 +54,7 @@
 	}
 
 	[System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Explicit, Size = 0x8)]
-	unsafe public struct IntegerRegister
+	public struct IntegerRegister
 	{
 		[System.Runtime.InteropServices.FieldOffset(0x0)] public System.Byte Byte;
 		[System.Runtime.InteropServices.FieldOffset(0x0)] public System.Double Double;

@@ -76,7 +76,16 @@
 
 				if (Trampoline.Address == System.IntPtr.Zero)
 				{
-					throw new System.InsufficientMemoryException(nameof(Trampoline));
+					try
+					{
+						throw new System.InsufficientMemoryException(nameof(Trampoline));
+					}
+					catch (System.Exception exception)
+					{
+						Log.WriteLine($"{exception}");
+
+						throw;
+					}
 				}
 
 				Trampoline.Write?.Invoke(null, System.EventArgs.Empty);

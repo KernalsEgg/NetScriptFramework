@@ -122,7 +122,16 @@
 					}
 					default:
 					{
-						throw new System.InvalidOperationException(nameof(identifierType));
+						try
+						{
+							throw new System.InvalidOperationException(nameof(identifierType));
+						}
+						catch (System.Exception exception)
+						{
+							Log.WriteLine($"{exception}");
+
+							throw;
+						}
 					}
 				}
 
@@ -180,7 +189,16 @@
 					}
 					default:
 					{
-						throw new System.InvalidOperationException(nameof(offsetType));
+						try
+						{
+							throw new System.InvalidOperationException(nameof(offsetType));
+						}
+						catch (System.Exception exception)
+						{
+							Log.WriteLine($"{exception}");
+
+							throw;
+						}
 					}
 				}
 
@@ -205,35 +223,80 @@
 
 			if (header.Format != 1)
 			{
-				throw new System.NotSupportedException(nameof(header.Format));
+				try
+				{
+					throw new System.NotSupportedException(nameof(header.Format));
+				}
+				catch (System.Exception exception)
+				{
+					Log.WriteLine($"{exception}");
+
+					throw;
+				}
 			}
 
 			header.VersionMajor = binaryReader.ReadInt32();
 
 			if (header.VersionMajor != Main.ProductVersionMajor)
 			{
-				throw new System.NotSupportedException(nameof(header.VersionMajor));
+				try
+				{
+					throw new System.NotSupportedException(nameof(header.VersionMajor));
+				}
+				catch (System.Exception exception)
+				{
+					Log.WriteLine($"{exception}");
+
+					throw;
+				}
 			}
 
 			header.VersionMinor = binaryReader.ReadInt32();
 
 			if (header.VersionMinor != Main.ProductVersionMinor)
 			{
-				throw new System.NotSupportedException(nameof(header.VersionMinor));
+				try
+				{
+					throw new System.NotSupportedException(nameof(header.VersionMinor));
+				}
+				catch (System.Exception exception)
+				{
+					Log.WriteLine($"{exception}");
+
+					throw;
+				}
 			}
 
 			header.VersionBuild = binaryReader.ReadInt32();
 
 			if (header.VersionBuild != Main.ProductVersionBuild)
 			{
-				throw new System.NotSupportedException(nameof(header.VersionBuild));
+				try
+				{
+					throw new System.NotSupportedException(nameof(header.VersionBuild));
+				}
+				catch (System.Exception exception)
+				{
+					Log.WriteLine($"{exception}");
+
+					throw;
+				}
 			}
 
 			header.VersionPrivate = binaryReader.ReadInt32();
 
 			if (header.VersionPrivate != Main.ProductVersionPrivate)
 			{
-				throw new System.NotSupportedException(nameof(header.VersionPrivate));
+				try
+				{
+					throw new System.NotSupportedException(nameof(header.VersionPrivate));
+				}
+				catch (System.Exception exception)
+				{
+					Log.WriteLine($"{exception}");
+
+					throw;
+				}
 			}
 
 			header.NameLength = binaryReader.ReadInt32();
@@ -241,7 +304,16 @@
 
 			if (header.Name != Main.MainModuleName)
 			{
-				throw new System.NotSupportedException(nameof(header.Name));
+				try
+				{
+					throw new System.NotSupportedException(nameof(header.Name));
+				}
+				catch (System.Exception exception)
+				{
+					Log.WriteLine($"{exception}");
+
+					throw;
+				}
 			}
 
 			header.PointerSize = binaryReader.ReadInt32();
@@ -268,7 +340,16 @@
 
 			if (!Memory.Compare(address, patternOffset, pattern))
 			{
-				throw new System.InvalidProgramException(nameof(address));
+				try
+				{
+					throw new System.InvalidProgramException(nameof(address));
+				}
+				catch (System.Exception exception)
+				{
+					Log.WriteLine($"{exception}");
+
+					throw;
+				}
 			}
 
 			return address;
@@ -280,7 +361,16 @@
 
 			if (!Memory.Compare(address, patternOffset, pattern))
 			{
-				throw new System.InvalidProgramException(nameof(address));
+				try
+				{
+					throw new System.InvalidProgramException(nameof(address));
+				}
+				catch (System.Exception exception)
+				{
+					Log.WriteLine($"{exception}");
+
+					throw;
+				}
 			}
 
 			return address;
