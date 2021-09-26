@@ -1,6 +1,6 @@
 # NetScriptFramework
 ## Build Dependencies
-* [.NET 5.0 SDK](https://dotnet.microsoft.com/download)
+* [.NET 5.0 SDK x64](https://dotnet.microsoft.com/download)
 * [DNNE](https://github.com/AaronRobinsonMSFT/DNNE)
 
 ## End-User Dependencies
