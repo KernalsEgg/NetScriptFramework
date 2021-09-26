@@ -10,4 +10,4 @@
 
 ## Credits
 * [CommonLibSSE](https://github.com/Ryan-rsm-McKenzie/CommonLibSSE)
-* [NetScriptFramework](https://www.nexusmods.com/skyrimspecialedition/mods/21294)
+* [.NET Script Framework](https://www.nexusmods.com/skyrimspecialedition/mods/21294)
