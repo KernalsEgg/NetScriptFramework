@@ -35,10 +35,12 @@ namespace ScrambledBugs.Fixes
 
 
 
-		static public void Fix()
+		static public System.Boolean Fix()
 		{
 			Events.InitializeThread.After -= MovementSpeed.OnInitializeThread;
 			Events.InitializeThread.After += MovementSpeed.OnInitializeThread;
+
+			return true;
 		}
 
 
@@ -48,6 +50,11 @@ namespace ScrambledBugs.Fixes
 			Events.InitializeThread.After -= MovementSpeed.OnInitializeThread;
 
 
+
+			if (!ScrambledBugs.Patterns.Fixes.MovementSpeed.SpeedMultSink)
+			{
+				return;
+			}
 
 			var speedMultSink = (delegate* unmanaged[Cdecl]<Actor*, System.Int32, System.Single, System.Single, void>)&SpeedMultSink;
 

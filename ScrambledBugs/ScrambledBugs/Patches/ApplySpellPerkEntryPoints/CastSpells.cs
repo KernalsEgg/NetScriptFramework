@@ -7,8 +7,24 @@ namespace ScrambledBugs.Patches.ApplySpellPerkEntryPoints
 {
 	unsafe static internal class CastSpells
 	{
-		static public void Patch()
+		static public System.Boolean Patch()
 		{
+			if
+			(
+				!ScrambledBugs.Patterns.Patches.ApplySpellPerkEntryPoints.CastSpells.ApplyBashingSpell
+				||
+				!ScrambledBugs.Patterns.Patches.ApplySpellPerkEntryPoints.CastSpells.ApplyCombatHitSpell
+				||
+				!ScrambledBugs.Patterns.Patches.ApplySpellPerkEntryPoints.CastSpells.ApplyCombatHitSpellArrowProjectile
+				||
+				!ScrambledBugs.Patterns.Patches.ApplySpellPerkEntryPoints.CastSpells.ApplyReanimateSpell
+				||
+				!ScrambledBugs.Patterns.Patches.ApplySpellPerkEntryPoints.CastSpells.ApplyWeaponSwingSpell
+			)
+			{
+				return false;
+			}
+
 			var applySpell = (delegate* unmanaged[Cdecl]<Actor*, SpellItem*, Actor*, void>)&ApplySpell;
 
 			Trampoline.WriteRelativeCall(ScrambledBugs.Offsets.Patches.ApplySpellPerkEntryPoints.CastSpells.ApplyBashingSpell, applySpell);
@@ -26,6 +42,8 @@ namespace ScrambledBugs.Patches.ApplySpellPerkEntryPoints
 
 				spell->Apply(source, target);
 			}
+
+			return true;
 		}
 	}
 }

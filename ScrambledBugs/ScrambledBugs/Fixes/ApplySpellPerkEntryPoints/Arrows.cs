@@ -6,8 +6,13 @@ namespace ScrambledBugs.Fixes.ApplySpellPerkEntryPoints
 {
 	unsafe static internal class Arrows
 	{
-		static public void Fix()
+		static public System.Boolean Fix()
 		{
+			if (!ScrambledBugs.Patterns.Fixes.ApplySpellPerkEntryPoints.Arrows.ApplyCombatHitSpellArrowProjectile)
+			{
+				return false;
+			}
+			
 			var position = Trampoline.Reserve((7 + 4 + 4 + 2) + System.Runtime.CompilerServices.Unsafe.SizeOf<AbsoluteJump>() + 1);
 
 			Trampoline.Write += (System.Object sender, System.EventArgs arguments) =>
@@ -39,6 +44,8 @@ namespace ScrambledBugs.Fixes.ApplySpellPerkEntryPoints
 				return;
 				*/
 			};
+
+			return true;
 		}
 	}
 }

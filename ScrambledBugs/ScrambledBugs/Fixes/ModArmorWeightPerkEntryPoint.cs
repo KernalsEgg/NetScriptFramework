@@ -7,13 +7,20 @@ namespace ScrambledBugs.Fixes
 {
 	unsafe static internal class ModArmorWeightPerkEntryPoint
 	{
-		static private delegate* unmanaged[Cdecl]<BGSPerkEntry*, Actor*, void> addPerkEntry;
-		static private delegate* unmanaged[Cdecl]<BGSPerkEntry*, Actor*, void> removePerkEntry;
-
-
-
-		static public void Fix()
+		static public System.Boolean Fix()
 		{
+			if
+			(
+				!ScrambledBugs.Patterns.Fixes.ModArmorWeightPerkEntryPoint.ModArmorWeightContainer
+				||
+				!ScrambledBugs.Patterns.Fixes.ModArmorWeightPerkEntryPoint.ModArmorWeightInventoryChanges
+			)
+			{
+				return false;
+			}
+			
+			
+			
 			var modArmorWeightContainer = (delegate* unmanaged[Cdecl]<Context*, void>)&ModArmorWeightContainer;
 
 			Trampoline.CaptureContext
@@ -149,6 +156,15 @@ namespace ScrambledBugs.Fixes
 					ModArmorWeightPerkEntryPoint.removePerkEntry(perkEntry, perkOwner);
 				}
 			}
+
+
+
+			return true;
 		}
+
+
+
+		static private delegate* unmanaged[Cdecl]<BGSPerkEntry*, Actor*, void> addPerkEntry;
+		static private delegate* unmanaged[Cdecl]<BGSPerkEntry*, Actor*, void> removePerkEntry;
 	}
 }

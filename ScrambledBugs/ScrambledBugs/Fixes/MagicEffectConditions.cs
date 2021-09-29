@@ -6,8 +6,13 @@ namespace ScrambledBugs.Fixes
 {
 	static internal class MagicEffectConditions
 	{
-		static public void Fix()
+		static public System.Boolean Fix()
 		{
+			if (!ScrambledBugs.Patterns.Fixes.MagicEffectConditions.UpdateConditions)
+			{
+				return false;
+			}
+			
 			var assembly = new UnmanagedArray<System.Byte>();
 
 			assembly.Add(new System.Byte[3] { 0x0F, 0x57, 0xC0 });																									// xorps xmm0, xmm0
@@ -75,6 +80,8 @@ namespace ScrambledBugs.Fixes
 
 			goto Update;
 			*/
+
+			return true;
 		}
 	}
 }

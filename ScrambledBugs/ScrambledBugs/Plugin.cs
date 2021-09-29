@@ -6,61 +6,18 @@ namespace ScrambledBugs
 {
 	static public class Plugin
 	{
-		[System.Runtime.InteropServices.UnmanagedCallersOnly(CallConvs = new[] { typeof(System.Runtime.CompilerServices.CallConvCdecl) }, EntryPoint = "Initialize")]
+		[System.Runtime.InteropServices.UnmanagedCallersOnly(CallConvs = new[] { typeof(System.Runtime.CompilerServices.CallConvCdecl) })]
 		static public void Initialize()
 		{
 			var path = System.IO.Path.Combine(Main.ExecutingAssemblyDirectoryName, $"{Main.ExecutingAssemblyName}.json");
 
 			if (System.IO.File.Exists(path))
 			{
-				var settings							= new
-				{
-					Fixes								= new
-					{
-						ActorValuePercentage			= default(System.Boolean?),
-						ApplySpellPerkEntryPoints		= new
-						{
-							Arrows						= default(System.Boolean?)
-						},
-						HarvestedFlags					= default(System.Boolean?),
-						HitEffectRaceCondition			= default(System.Boolean?),
-						MagicEffectConditions			= default(System.Boolean?),
-						MagicEffectFlags				= default(System.Boolean?),
-						ModArmorWeightPerkEntryPoint	= default(System.Boolean?),
-						MovementSpeed					= default(System.Boolean?),
-						QuickShot						= default(System.Boolean?),
-						QuickShotPlaybackSpeed			= default(System.Single?),
-						TerrainDecals					= default(System.Boolean?),
-						TrainingMenuText				= default(System.Boolean?),
-						WeaponCharge					= default(System.Boolean?)
-					},
-					Patches								= new
-					{
-						AccumulatingMagnitude			= default(System.Boolean?),
-						AlreadyCaughtPickpocketing		= default(System.Boolean?),
-						ApplySpellPerkEntryPoints		= new
-						{
-							CastSpells					= default(System.Boolean?),
-							MultipleSpells				= default(System.Boolean?)
-						},
-						AttachHitEffectArt				= default(System.Boolean?),
-						EquipBestAmmo					= default(System.Boolean?),
-						LockpickingExperience			= default(System.Boolean?),
-						MultipleHitEffects				= default(System.Boolean?),
-						PausedGameHitEffects			= default(System.Boolean?),
-						PowerAttackStamina				= default(System.Boolean?),
-						ReflectDamage					= default(System.Boolean?),
-						TeammateDifficulty				= default(System.Boolean?),
-						UnderfilledSoulGems				= default(System.Boolean?)
-					}
-				};
-
 				try
 				{
-					settings = Json.DeserializeAnonymousType
+					var settings = System.Text.Json.JsonSerializer.Deserialize<ScrambledBugs.JsonSettings>
 					(
 						System.IO.File.ReadAllText(path),
-						settings,
 						new System.Text.Json.JsonSerializerOptions()
 						{
 							AllowTrailingCommas			= true,
@@ -69,140 +26,142 @@ namespace ScrambledBugs
 						}
 					);
 
-					Log.WriteLine($"{settings}");
+					Log.Information($"In:\n{System.Text.Json.JsonSerializer.Serialize<ScrambledBugs.JsonSettings>(settings, new System.Text.Json.JsonSerializerOptions() { PropertyNamingPolicy = System.Text.Json.JsonNamingPolicy.CamelCase, WriteIndented = true })}");
 
 					// Fixes
 					if (settings?.Fixes?.ActorValuePercentage ?? false)
 					{
-						ScrambledBugs.Fixes.ActorValuePercentage.Fix();
+						settings.Fixes.ActorValuePercentage = ScrambledBugs.Fixes.ActorValuePercentage.Fix();
 					}
 
 					if (settings?.Fixes?.HarvestedFlags ?? false)
 					{
-						ScrambledBugs.Fixes.HarvestedFlags.Fix();
+						settings.Fixes.HarvestedFlags = ScrambledBugs.Fixes.HarvestedFlags.Fix();
 					}
 
 					if (settings?.Fixes?.HitEffectRaceCondition ?? false)
 					{
-						ScrambledBugs.Fixes.HitEffectRaceCondition.Fix();
+						settings.Fixes.HitEffectRaceCondition = ScrambledBugs.Fixes.HitEffectRaceCondition.Fix();
 					}
 
 					if (settings?.Fixes?.MagicEffectConditions ?? false)
 					{
-						ScrambledBugs.Fixes.MagicEffectConditions.Fix();
+						settings.Fixes.MagicEffectConditions = ScrambledBugs.Fixes.MagicEffectConditions.Fix();
 					}
 
 					if (settings?.Fixes?.MagicEffectFlags ?? false)
 					{
-						ScrambledBugs.Fixes.MagicEffectFlags.Fix();
+						settings.Fixes.MagicEffectFlags = ScrambledBugs.Fixes.MagicEffectFlags.Fix();
 					}
 
 					if (settings?.Fixes?.ModArmorWeightPerkEntryPoint ?? false)
 					{
-						ScrambledBugs.Fixes.ModArmorWeightPerkEntryPoint.Fix();
+						settings.Fixes.ModArmorWeightPerkEntryPoint = ScrambledBugs.Fixes.ModArmorWeightPerkEntryPoint.Fix();
 					}
 
 					if (settings?.Fixes?.MovementSpeed ?? false)
 					{
-						ScrambledBugs.Fixes.MovementSpeed.Fix();
+						settings.Fixes.MovementSpeed = ScrambledBugs.Fixes.MovementSpeed.Fix();
 					}
 
 					if ((settings?.Fixes?.QuickShot ?? false) && (settings?.Fixes?.QuickShotPlaybackSpeed.HasValue ?? false))
 					{
-						ScrambledBugs.Fixes.QuickShot.Fix(settings.Fixes.QuickShotPlaybackSpeed.Value);
+						settings.Fixes.QuickShot = ScrambledBugs.Fixes.QuickShot.Fix(settings.Fixes.QuickShotPlaybackSpeed.Value);
 					}
 
 					if (settings?.Fixes?.TerrainDecals ?? false)
 					{
-						ScrambledBugs.Fixes.TerrainDecals.Fix();
+						settings.Fixes.TerrainDecals = ScrambledBugs.Fixes.TerrainDecals.Fix();
 					}
 
 					if (settings?.Fixes?.TrainingMenuText ?? false)
 					{
-						ScrambledBugs.Fixes.TrainingMenuText.Fix();
+						settings.Fixes.TrainingMenuText = ScrambledBugs.Fixes.TrainingMenuText.Fix();
 					}
 
 					if (settings?.Fixes?.WeaponCharge ?? false)
 					{
-						ScrambledBugs.Fixes.WeaponCharge.Fix();
+						settings.Fixes.WeaponCharge = ScrambledBugs.Fixes.WeaponCharge.Fix();
 					}
 
 					// Patches
 					if (settings?.Patches?.AccumulatingMagnitude ?? false)
 					{
-						ScrambledBugs.Patches.AccumulatingMagnitude.Patch();
+						settings.Patches.AccumulatingMagnitude = ScrambledBugs.Patches.AccumulatingMagnitude.Patch();
 					}
 
 					if (settings?.Patches?.AlreadyCaughtPickpocketing ?? false)
 					{
-						ScrambledBugs.Patches.AlreadyCaughtPickpocketing.Patch();
+						settings.Patches.AlreadyCaughtPickpocketing = ScrambledBugs.Patches.AlreadyCaughtPickpocketing.Patch();
 					}
 
 					if (settings?.Patches?.ApplySpellPerkEntryPoints?.MultipleSpells ?? false)
 					{
-						ScrambledBugs.Patches.ApplySpellPerkEntryPoints.MultipleSpells.Patch(settings?.Patches?.ApplySpellPerkEntryPoints?.CastSpells ?? false);
+						settings.Patches.ApplySpellPerkEntryPoints.MultipleSpells = ScrambledBugs.Patches.ApplySpellPerkEntryPoints.MultipleSpells.Patch(settings?.Patches?.ApplySpellPerkEntryPoints?.CastSpells ?? false);
 					}
 					else if (settings?.Patches?.ApplySpellPerkEntryPoints?.CastSpells ?? false)
 					{
-						ScrambledBugs.Patches.ApplySpellPerkEntryPoints.CastSpells.Patch();
+						settings.Patches.ApplySpellPerkEntryPoints.CastSpells = ScrambledBugs.Patches.ApplySpellPerkEntryPoints.CastSpells.Patch();
 					}
 
 					if (settings?.Patches?.AttachHitEffectArt ?? false)
 					{
-						ScrambledBugs.Patches.AttachHitEffectArt.Patch();
+						settings.Patches.AttachHitEffectArt = ScrambledBugs.Patches.AttachHitEffectArt.Patch();
 					}
 
 					if (settings?.Patches?.EquipBestAmmo ?? false)
 					{
-						ScrambledBugs.Patches.EquipBestAmmo.Patch();
+						settings.Patches.EquipBestAmmo = ScrambledBugs.Patches.EquipBestAmmo.Patch();
 					}
 
 					if (settings?.Patches?.LockpickingExperience ?? false)
 					{
-						ScrambledBugs.Patches.LockpickingExperience.Patch();
+						settings.Patches.LockpickingExperience = ScrambledBugs.Patches.LockpickingExperience.Patch();
 					}
 
 					if (settings?.Patches?.MultipleHitEffects ?? false)
 					{
-						ScrambledBugs.Patches.MultipleHitEffects.Patch();
+						settings.Patches.MultipleHitEffects = ScrambledBugs.Patches.MultipleHitEffects.Patch();
 					}
 
 					if (settings?.Patches?.PausedGameHitEffects ?? false)
 					{
-						ScrambledBugs.Patches.PausedGameHitEffects.Patch();
+						settings.Patches.PausedGameHitEffects = ScrambledBugs.Patches.PausedGameHitEffects.Patch();
 					}
 
 					if (settings?.Patches?.PowerAttackStamina ?? false)
 					{
-						ScrambledBugs.Patches.PowerAttackStamina.Patch();
+						settings.Patches.PowerAttackStamina = ScrambledBugs.Patches.PowerAttackStamina.Patch();
 					}
 
 					if (settings?.Patches?.ReflectDamage ?? false)
 					{
-						ScrambledBugs.Patches.ReflectDamage.Patch();
+						settings.Patches.ReflectDamage = ScrambledBugs.Patches.ReflectDamage.Patch();
 					}
 
 					if (settings?.Patches?.TeammateDifficulty ?? false)
 					{
-						ScrambledBugs.Patches.TeammateDifficulty.Patch();
+						settings.Patches.TeammateDifficulty = ScrambledBugs.Patches.TeammateDifficulty.Patch();
 					}
 
 					if (settings?.Patches?.UnderfilledSoulGems ?? false)
 					{
-						ScrambledBugs.Patches.UnderfilledSoulGems.Patch();
+						settings.Patches.UnderfilledSoulGems = ScrambledBugs.Patches.UnderfilledSoulGems.Patch();
 					}
 
 					// Fixes
 					if (settings?.Fixes?.ApplySpellPerkEntryPoints?.Arrows ?? false)
 					{
-						ScrambledBugs.Fixes.ApplySpellPerkEntryPoints.Arrows.Fix();
+						settings.Fixes.ApplySpellPerkEntryPoints.Arrows = ScrambledBugs.Fixes.ApplySpellPerkEntryPoints.Arrows.Fix();
 					}
+
+					Log.Information($"Out:\n{System.Text.Json.JsonSerializer.Serialize<ScrambledBugs.JsonSettings>(settings, new System.Text.Json.JsonSerializerOptions() { PropertyNamingPolicy = System.Text.Json.JsonNamingPolicy.CamelCase, WriteIndented = true })}");
 
 					Trampoline.Commit();
 				}
 				catch (System.Text.Json.JsonException jsonException)
 				{
-					Log.WriteLine($"{jsonException}");
+					Log.Information($"{jsonException}");
 				}
 			}
 		}

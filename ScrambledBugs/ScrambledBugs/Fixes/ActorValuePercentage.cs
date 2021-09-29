@@ -7,8 +7,26 @@ namespace ScrambledBugs.Fixes
 {
 	unsafe static internal class ActorValuePercentage
 	{
-		static public void Fix()
+		static public System.Boolean Fix()
 		{
+			if
+			(
+				!ScrambledBugs.Patterns.Fixes.ActorValuePercentage.ActorValueCondition
+				||
+				!ScrambledBugs.Patterns.Fixes.ActorValuePercentage.ActorValueEnemyHealth
+				||
+				!ScrambledBugs.Patterns.Fixes.ActorValuePercentage.ActorValuePapyrus
+				||
+				!ScrambledBugs.Patterns.Fixes.ActorValuePercentage.HealthCondition
+				||
+				!ScrambledBugs.Patterns.Fixes.ActorValuePercentage.StaminaCondition
+			)
+			{
+				return false;
+			}
+
+
+
 			var getActorValuePercentage = (delegate* unmanaged[Cdecl]<Actor*, System.Int32, System.Single>)&GetActorValuePercentage;
 
 			Trampoline.WriteRelativeCall(ScrambledBugs.Offsets.Fixes.ActorValuePercentage.ActorValueCondition, getActorValuePercentage);
@@ -47,6 +65,10 @@ namespace ScrambledBugs.Fixes
 
 				return ActorValuePercentage.GetActorValuePercentage((Actor*)movementActor.Reference, ActorValue.Stamina);
 			}
+
+
+
+			return true;
 		}
 
 

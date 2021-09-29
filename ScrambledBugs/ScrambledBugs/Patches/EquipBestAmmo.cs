@@ -7,8 +7,22 @@ namespace ScrambledBugs.Patches
 {
 	unsafe static internal class EquipBestAmmo
 	{
-		static public void Patch()
+		static public System.Boolean Patch()
 		{
+			if
+			(
+				!ScrambledBugs.Patterns.Patches.EquipBestAmmo.CompareDamageContainer
+				||
+				!ScrambledBugs.Patterns.Patches.EquipBestAmmo.CompareDamageInventoryChanges
+				||
+				!ScrambledBugs.Patterns.Patches.EquipBestAmmo.InitializeDamage
+			)
+			{
+				return false;
+			}
+
+
+
 			var initializeDamage = (delegate* unmanaged[Cdecl]<Context*, void>)&InitializeDamage;
 
 			Memory.SafeFill<System.Byte>(ScrambledBugs.Offsets.Patches.EquipBestAmmo.InitializeDamage, 8, Assembly.Nop);
@@ -69,6 +83,10 @@ namespace ScrambledBugs.Patches
 
 				context->Rip.IntPtr += 0x10;
 			}
+
+
+
+			return true;
 		}
 	}
 }

@@ -7,12 +7,28 @@ namespace ScrambledBugs.Patches.ApplySpellPerkEntryPoints
 {
 	unsafe static internal class MultipleSpells
 	{
-		static private System.Boolean castSpells;
-		
-		
-		
-		static public void Patch(System.Boolean castSpells)
+		static public System.Boolean Patch(System.Boolean castSpells)
 		{
+			if
+			(
+				!ScrambledBugs.Patterns.Patches.ApplySpellPerkEntryPoints.MultipleSpells.ApplyBashingSpell
+				||
+				!ScrambledBugs.Patterns.Patches.ApplySpellPerkEntryPoints.MultipleSpells.ApplyCombatHitSpell
+				||
+				!ScrambledBugs.Patterns.Patches.ApplySpellPerkEntryPoints.MultipleSpells.ApplyCombatHitSpellArrowProjectile
+				||
+				!ScrambledBugs.Patterns.Patches.ApplySpellPerkEntryPoints.MultipleSpells.ApplyReanimateSpell
+				||
+				!ScrambledBugs.Patterns.Patches.ApplySpellPerkEntryPoints.MultipleSpells.ApplySneakingSpell
+				||
+				!ScrambledBugs.Patterns.Patches.ApplySpellPerkEntryPoints.MultipleSpells.ApplyWeaponSwingSpell
+			)
+			{
+				return false;
+			}
+
+
+
 			MultipleSpells.castSpells = castSpells;
 			
 			
@@ -186,6 +202,14 @@ namespace ScrambledBugs.Patches.ApplySpellPerkEntryPoints
 
 				spells->Push(&spell);
 			}
+
+
+
+			return true;
 		}
+
+
+
+		static private System.Boolean castSpells;
 	}
 }

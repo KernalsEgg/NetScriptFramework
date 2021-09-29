@@ -2,11 +2,11 @@
 {
 	unsafe static public class Trampoline
 	{
-		static public event System.EventHandler Write;
-
-
-
 		static private System.Int32 position = 0;
+
+
+
+		static public event System.EventHandler Write;
 
 
 
@@ -53,8 +53,8 @@
 
 		static public void CaptureContext(System.IntPtr address, delegate* unmanaged[Cdecl]<Context*, void> function, System.Byte[] before = null, System.Byte[] after = null)
 		{
-			var captureContext = Assembly.CaptureContext(function, before, after);
-			var position = Trampoline.Reserve(System.Runtime.CompilerServices.Unsafe.SizeOf<System.Byte>() * captureContext.Length);
+			var captureContext	= Assembly.CaptureContext(function, before, after);
+			var position		= Trampoline.Reserve(System.Runtime.CompilerServices.Unsafe.SizeOf<System.Byte>() * captureContext.Length);
 
 			Trampoline.Write += (System.Object sender, System.EventArgs arguments) =>
 			{
@@ -78,11 +78,11 @@
 				{
 					try
 					{
-						throw new System.InsufficientMemoryException(nameof(Trampoline));
+						throw new System.InsufficientMemoryException($"{nameof(Trampoline)}: Failed to allocate {Trampoline.position:X} bytes of memory.");
 					}
 					catch (System.Exception exception)
 					{
-						Log.WriteLine($"{exception}");
+						Log.Information($"{exception}");
 
 						throw;
 					}
@@ -104,8 +104,8 @@
 
 		static public void WriteRelativeCall(System.IntPtr address, void* function)
 		{
-			var absoluteJump = Assembly.AbsoluteJump(function);
-			var position = Trampoline.Reserve(System.Runtime.CompilerServices.Unsafe.SizeOf<AbsoluteJump>());
+			var absoluteJump	= Assembly.AbsoluteJump(function);
+			var position		= Trampoline.Reserve(System.Runtime.CompilerServices.Unsafe.SizeOf<AbsoluteJump>());
 
 			Trampoline.Write += (System.Object sender, System.EventArgs arguments) =>
 			{
@@ -137,8 +137,8 @@
 
 		static public void WriteRelativeJump(System.IntPtr address, void* function)
 		{
-			var absoluteJump = Assembly.AbsoluteJump(function);
-			var position = Trampoline.Reserve(System.Runtime.CompilerServices.Unsafe.SizeOf<AbsoluteJump>());
+			var absoluteJump	= Assembly.AbsoluteJump(function);
+			var position		= Trampoline.Reserve(System.Runtime.CompilerServices.Unsafe.SizeOf<AbsoluteJump>());
 
 			Trampoline.Write += (System.Object sender, System.EventArgs arguments) =>
 			{

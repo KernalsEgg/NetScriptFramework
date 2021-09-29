@@ -109,13 +109,13 @@
 		public void Add<TSource>(TSource element)
 			where TSource : unmanaged
 		{
-			this.Add(Memory.ConvertToArray<TSource, TDestination>(element));
+			this.Add(Memory.ToArray<TSource, TDestination>(element));
 		}
 
 		public void Add<TSource>(TSource[] elements)
 			where TSource : unmanaged
 		{
-			this.Add(Memory.ConvertToArray<TSource, TDestination>(elements));
+			this.Add(Memory.ToArray<TSource, TDestination>(elements));
 		}
 
 		public void Clear()

@@ -6,8 +6,28 @@ namespace ScrambledBugs.Patches
 {
 	unsafe static internal class PowerAttackStamina
 	{
-		static public void Patch()
+		static public System.Boolean Patch()
 		{
+			if
+			(
+				!ScrambledBugs.Patterns.Patches.PowerAttackStamina.GetStaminaCostActor
+				||
+				!ScrambledBugs.Patterns.Patches.PowerAttackStamina.GetStaminaCostPlayerCharacter
+				||
+				!ScrambledBugs.Patterns.Patches.PowerAttackStamina.HasStaminaActor
+				||
+				!ScrambledBugs.Patterns.Patches.PowerAttackStamina.HasStaminaCostActor
+				||
+				!ScrambledBugs.Patterns.Patches.PowerAttackStamina.HasStaminaCostPlayerCharacter
+				||
+				!ScrambledBugs.Patterns.Patches.PowerAttackStamina.HasStaminaPlayerCharacter
+			)
+			{
+				return false;
+			}
+
+
+
 			Memory.SafeFill<System.Byte>(ScrambledBugs.Offsets.Patches.PowerAttackStamina.HasStaminaActor, 2, Assembly.Nop);
 			Memory.SafeFill<System.Byte>(ScrambledBugs.Offsets.Patches.PowerAttackStamina.HasStaminaPlayerCharacter, 2, Assembly.Nop);
 
@@ -65,6 +85,10 @@ namespace ScrambledBugs.Patches
 
 			return false;
 			*/
+
+
+
+			return true;
 		}
 
 

@@ -116,19 +116,19 @@
 
 
 
-		static public System.Boolean Compare<T>(System.IntPtr address, T value)
+		static public System.Boolean Equals<T>(System.IntPtr address, T value)
 			where T : unmanaged, System.IEquatable<T>
 		{
 			return Memory.Read<T>(address).Equals(value);
 		}
 
-		static public System.Boolean Compare<T>(System.IntPtr address, System.Int32 offset, T value)
+		static public System.Boolean Equals<T>(System.IntPtr address, System.Int32 offset, T value)
 			where T : unmanaged, System.IEquatable<T>
 		{
-			return Memory.Compare<T>(address + offset, value);
+			return Memory.Equals<T>(address + offset, value);
 		}
 
-		static public System.Boolean Compare<T>(System.IntPtr address, T[] values)
+		static public System.Boolean Equals<T>(System.IntPtr address, T[] values)
 			where T : unmanaged, System.IEquatable<T>
 		{
 			var length	= values.Length;
@@ -136,7 +136,7 @@
 
 			for (var index = 0; index < length; index++)
 			{
-				if (!Memory.Compare<T>(address, size * index, values[index]))
+				if (!Memory.Equals<T>(address, size * index, values[index]))
 				{
 					return false;
 				}
@@ -145,13 +145,13 @@
 			return true;
 		}
 
-		static public System.Boolean Compare<T>(System.IntPtr address, System.Int32 offset, T[] values)
+		static public System.Boolean Equals<T>(System.IntPtr address, System.Int32 offset, T[] values)
 			where T : unmanaged, System.IEquatable<T>
 		{
-			return Memory.Compare<T>(address + offset, values);
+			return Memory.Equals<T>(address + offset, values);
 		}
 
-		static public System.Boolean Compare<T>(System.IntPtr address, T?[] values)
+		static public System.Boolean Equals<T>(System.IntPtr address, T?[] values)
 			where T : unmanaged, System.IEquatable<T>
 		{
 			var length	= values.Length;
@@ -163,7 +163,7 @@
 				
 				if (value.HasValue)
 				{
-					if (!Memory.Compare<T>(address, size * index, value.Value))
+					if (!Memory.Equals<T>(address, size * index, value.Value))
 					{
 						return false;
 					}
@@ -173,53 +173,10 @@
 			return true;
 		}
 
-		static public System.Boolean Compare<T>(System.IntPtr address, System.Int32 offset, T?[] values)
+		static public System.Boolean Equals<T>(System.IntPtr address, System.Int32 offset, T?[] values)
 			where T : unmanaged, System.IEquatable<T>
 		{
-			return Memory.Compare<T>(address + offset, values);
-		}
-
-		static public TTo ConvertTo<TFrom, TTo>(TFrom value)
-			where TFrom : unmanaged
-			where TTo : unmanaged
-		{
-			return *(TTo*)&value;
-		}
-
-		static public TTo[] ConvertToArray<TFrom, TTo>(TFrom value)
-			where TFrom : unmanaged
-			where TTo : unmanaged
-		{
-			var length	= System.Runtime.CompilerServices.Unsafe.SizeOf<TFrom>() / System.Runtime.CompilerServices.Unsafe.SizeOf<TTo>();
-			var array	= new TTo[length];
-			var pointer	= (TTo*)&value;
-
-			for (var index = 0; index < length; index++)
-			{
-				array[index] = pointer[index];
-			}
-
-			return array;
-		}
-
-		static public TTo[] ConvertToArray<TFrom, TTo>(TFrom[] values)
-			where TFrom : unmanaged
-			where TTo : unmanaged
-		{
-			var length	= (System.Runtime.CompilerServices.Unsafe.SizeOf<TFrom>() * values.Length) / System.Runtime.CompilerServices.Unsafe.SizeOf<TTo>();
-			var array	= new TTo[length];
-
-			fixed (TFrom* fromPointer = values)
-			{
-				var toPointer = (TTo*)fromPointer;
-
-				for (var index = 0; index < length; index++)
-				{
-					array[index] = toPointer[index];
-				}
-			}
-
-			return array;
+			return Memory.Equals<T>(address + offset, values);
 		}
 
 		static public void Fill<T>(System.IntPtr address, System.Int32 count, T value)
@@ -425,6 +382,49 @@
 			where T : unmanaged
 		{
 			Memory.SafeWrite<T>(address + offset, values);
+		}
+
+		static public TTo To<TFrom, TTo>(TFrom value)
+			where TFrom : unmanaged
+			where TTo : unmanaged
+		{
+			return *(TTo*)&value;
+		}
+
+		static public TTo[] ToArray<TFrom, TTo>(TFrom value)
+			where TFrom : unmanaged
+			where TTo : unmanaged
+		{
+			var length	= System.Runtime.CompilerServices.Unsafe.SizeOf<TFrom>() / System.Runtime.CompilerServices.Unsafe.SizeOf<TTo>();
+			var array	= new TTo[length];
+			var pointer	= (TTo*)&value;
+
+			for (var index = 0; index < length; index++)
+			{
+				array[index] = pointer[index];
+			}
+
+			return array;
+		}
+
+		static public TTo[] ToArray<TFrom, TTo>(TFrom[] values)
+			where TFrom : unmanaged
+			where TTo : unmanaged
+		{
+			var length	= (System.Runtime.CompilerServices.Unsafe.SizeOf<TFrom>() * values.Length) / System.Runtime.CompilerServices.Unsafe.SizeOf<TTo>();
+			var array	= new TTo[length];
+
+			fixed (TFrom* fromPointer = values)
+			{
+				var toPointer = (TTo*)fromPointer;
+
+				for (var index = 0; index < length; index++)
+				{
+					array[index] = toPointer[index];
+				}
+			}
+
+			return array;
 		}
 
 		static public void Write<T>(System.IntPtr address, T value)

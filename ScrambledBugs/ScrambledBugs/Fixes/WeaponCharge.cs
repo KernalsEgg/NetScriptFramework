@@ -7,8 +7,20 @@ namespace ScrambledBugs.Fixes
 {
 	unsafe static internal class WeaponCharge
 	{
-		static public void Fix()
+		static public System.Boolean Fix()
 		{
+			if
+			(
+				!ScrambledBugs.Patterns.Fixes.WeaponCharge.Enchant
+				||
+				!ScrambledBugs.Patterns.Fixes.WeaponCharge.Equip
+				||
+				!ScrambledBugs.Patterns.Fixes.WeaponCharge.Recharge
+			)
+			{
+				return false;
+			}
+			
 			var handleEquippedItem = (delegate* unmanaged[Cdecl]<Actor*, TESBoundObject*, ExtraDataList*, System.Byte, void>)&HandleEquippedItem;
 
 			Trampoline.WriteRelativeCall(ScrambledBugs.Offsets.Fixes.WeaponCharge.Enchant, handleEquippedItem);
@@ -63,6 +75,8 @@ namespace ScrambledBugs.Fixes
 
 				actor->RevertSelectedSpell((EquipType)(rightHand ? 1 : 0), enchantment);
 			}
+
+			return true;
 		}
 
 

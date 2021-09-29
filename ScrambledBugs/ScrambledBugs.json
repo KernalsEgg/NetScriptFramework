@@ -11,7 +11,6 @@
 		"magicEffectConditions":		true,	/* Eliminate floating-point error from the elapsed time of magic effects so that updates to their conditions will not be skipped. Disable this if Bug Fixes SSE is installed and FixAbilityConditionBug is enabled. */
 		"magicEffectFlags":				true,	/* Flags are respected when scaling the duration and magnitude of a magic effect with its effectiveness. */
 		"modArmorWeightPerkEntryPoint":	true,	/* The Mod Armor Weight perk entry point will modify the weight of only worn armor. */
-		"movementSpeed":				true,
 		"quickShot":					true,	/* Account for the Quick Shot perk when calculating the power of an arrow fired by the player. */
 		"quickShotPlaybackSpeed":		2.0,	/* The playback speed of the nocking animation when the player has the Quick Shot perk. */
 		"terrainDecals":				true,	/* Apply decals to terrain in cells that have been partially unloaded. */
@@ -20,21 +19,21 @@
 	},
 	"patches":
 	{
-		"accumulatingMagnitude":		true,	/* The maximum magnitude of accumulating magnitude magic effects scales with effectiveness instead of the rate of accumulation. */
-		"alreadyCaughtPickpocketing":	true,	/* Pickpocket even if you have already been caught. */
+		"accumulatingMagnitude":		false,	/* The maximum magnitude of accumulating magnitude magic effects scales with effectiveness instead of the rate of accumulation. */
+		"alreadyCaughtPickpocketing":	false,	/* Pickpocket even if you have already been caught. */
 		"applySpellPerkEntryPoints":
 		{
 			"castSpells":				true,	/* Spells applied by perk entry points are cast by the source on the target. */
-			"multipleSpells":			true	/* Apply any number of spells at once using perk entry points. */
+			"multipleSpells":			false	/* Apply any number of spells at once using perk entry points. */
 		},
-		"attachHitEffectArt":			true,	/* Hit effect art is attached when an actor is loaded. */
-		"equipBestAmmo":				true,	/* Automatically equip your best playable arrows or bolts when you equip a bow or crossbow. */
+		"attachHitEffectArt":			false,	/* Hit effect art is attached when an actor is loaded. */
+		"equipBestAmmo":				false,	/* Automatically equip your best playable arrows or bolts when you equip a bow or crossbow. */
 		"lockpickingExperience":		true,	/* Earn experience each time you pick a lock. */
-		"multipleHitEffects":			true,	/* Each of a cloaking spells effects can apply hit effects. */
+		"multipleHitEffects":			false,	/* Each of a cloaking spells effects can apply hit effects. */
 		"pausedGameHitEffects":			true,	/* Apply any number of hit effects to the player while the game is paused. */
-		"powerAttackStamina":			true,	/* Power attacks and bashes can only be performed with the required stamina. */
+		"powerAttackStamina":			false,	/* Power attacks and bashes can only be performed with the required stamina. */
 		"reflectDamage":				true,	/* Reflect any amount of damage. */
-		"teammateDifficulty":			true,	/* Teammates use the same difficulty multipliers as the player. */
-		"underfilledSoulGems":			true	/* Trap only souls of the appropriate size in soul gems. */
+		"teammateDifficulty":			false,	/* Teammates use the same difficulty multipliers as the player. */
+		"underfilledSoulGems":			false	/* Trap only souls of the appropriate size in soul gems. */
 	}
 }

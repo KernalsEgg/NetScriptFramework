@@ -7,16 +7,20 @@ namespace ScrambledBugs.Fixes
 {
 	unsafe static internal class QuickShot
 	{
-		static public System.Single quickShotPlaybackSpeed;
-		
-		
-		
-		static public void Fix(System.Single quickShotPlaybackSpeed)
+		static public System.Boolean Fix(System.Single quickShotPlaybackSpeed)
 		{
+			if
+			(
+				!ScrambledBugs.Patterns.Fixes.QuickShot.CreateProjectile
+				||
+				!ScrambledBugs.Patterns.Fixes.QuickShot.KillCamera
+			)
+			{
+				return false;
+			}
+
 			QuickShot.quickShotPlaybackSpeed = quickShotPlaybackSpeed;
 			
-
-
 			var getArrowPower = (delegate* unmanaged[Cdecl]<System.Single, System.Single, System.Single>)&GetArrowPower;
 
 			Trampoline.WriteRelativeCall(ScrambledBugs.Offsets.Fixes.QuickShot.CreateProjectile, getArrowPower);
@@ -66,6 +70,12 @@ namespace ScrambledBugs.Fixes
 					return arrowMinPower + ((pullTime / maximumPullTime) * (1.0F - arrowMinPower));
 				}
 			}
+
+			return true;
 		}
+
+
+
+		static public System.Single quickShotPlaybackSpeed;
 	}
 }

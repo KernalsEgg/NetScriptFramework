@@ -7,8 +7,18 @@ namespace ScrambledBugs.Fixes
 {
 	unsafe static internal class MagicEffectFlags
 	{
-		static public void Fix()
+		static public System.Boolean Fix()
 		{
+			if
+			(
+				!ScrambledBugs.Patterns.Fixes.MagicEffectFlags.ResetEffectiveness
+				||
+				!ScrambledBugs.Patterns.Fixes.MagicEffectFlags.SetEffectiveness
+			)
+			{
+				return false;
+			}
+
 			var setEffectiveness = (delegate* unmanaged[Cdecl]<ActiveEffect*, System.Single, void>)&SetEffectiveness;
 
 			Trampoline.WriteRelativeCall(ScrambledBugs.Offsets.Fixes.MagicEffectFlags.ResetEffectiveness, setEffectiveness);
@@ -54,6 +64,8 @@ namespace ScrambledBugs.Fixes
 					activeEffect->Magnitude(newMagnitude);
 				}
 			}
+
+			return true;
 		}
 	}
 }

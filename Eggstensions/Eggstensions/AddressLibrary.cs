@@ -31,28 +31,17 @@
 
 
 
-		static AddressLibrary()
+		readonly static private System.Collections.Generic.SortedList<System.UInt64, System.IntPtr> offsets = AddressLibrary.Read(Main.ProductVersionMajor, Main.ProductVersionMinor, Main.ProductVersionBuild, Main.ProductVersionPrivate);
+
+
+
+		static private System.Collections.Generic.SortedList<System.UInt64, System.IntPtr> Read(System.Int32 versionMajor, System.Int32 versionMinor, System.Int32 versionBuild, System.Int32 versionPrivate)
 		{
-			AddressLibrary.FileInfo = new System.IO.FileInfo(System.IO.Path.Combine(Main.MainModuleDirectoryName, "Data", "SKSE", "Plugins", "version-" + Main.ProductVersion.Replace(".", "-") + ".bin"));
-			AddressLibrary.offsets = AddressLibrary.Read(AddressLibrary.FileInfo);
-		}
+			var fileInfo			= new System.IO.FileInfo(System.IO.Path.Combine(Main.MainModuleDirectoryName, "Data", "SKSE", "Plugins", $"version-{versionMajor}-{versionMinor}-{versionBuild}-{versionPrivate}.bin"));
+			using var fileStream	= fileInfo.OpenRead();
+			using var binaryReader	= new System.IO.BinaryReader(fileStream, new System.Text.UTF8Encoding());
 
-
-
-		static private System.Collections.Generic.SortedList<System.UInt64, System.IntPtr> offsets { get; }
-
-
-
-		static public System.IO.FileInfo FileInfo { get; }
-
-
-
-		static private System.Collections.Generic.SortedList<System.UInt64, System.IntPtr> Read(System.IO.FileInfo fileInfo)
-		{
-			using var fileStream = fileInfo.OpenRead();
-			using var binaryReader = new System.IO.BinaryReader(fileStream, new System.Text.UTF8Encoding());
-
-			return AddressLibrary.ReadFile(binaryReader, AddressLibrary.ReadHeader(binaryReader));
+			return AddressLibrary.ReadFile(binaryReader, AddressLibrary.ReadHeader(binaryReader, versionMajor, versionMinor, versionBuild, versionPrivate));
 		}
 
 		static private System.Collections.Generic.SortedList<System.UInt64, System.IntPtr> ReadFile(System.IO.BinaryReader binaryReader, AddressLibrary.Header header)
@@ -61,14 +50,15 @@
 
 			System.UInt64 identifier;
 			System.UInt64 offset;
-			System.UInt64 previousIdentifier = 0;
-			System.UInt64 previousOffset = 0;
+
+			System.UInt64 previousIdentifier	= 0;
+			System.UInt64 previousOffset		= 0;
 
 			for (var index = 0; index < header.AddressCount; index++)
 			{
-				var type = binaryReader.ReadByte();
-				var identifierType = type & 0xF;
-				var offsetType = type >> 4;
+				var type			= binaryReader.ReadByte();
+				var identifierType	= type & 0xF;
+				var offsetType		= type >> 4;
 
 				switch ((AddressLibrary.ReadTypes)identifierType)
 				{
@@ -124,11 +114,11 @@
 					{
 						try
 						{
-							throw new System.InvalidOperationException(nameof(identifierType));
+							throw new System.InvalidOperationException($"{nameof(AddressLibrary)}: Unexpected {nameof(identifierType)} encountered, {identifierType}.");
 						}
 						catch (System.Exception exception)
 						{
-							Log.WriteLine($"{exception}");
+							Log.Information($"{exception}");
 
 							throw;
 						}
@@ -191,11 +181,11 @@
 					{
 						try
 						{
-							throw new System.InvalidOperationException(nameof(offsetType));
+							throw new System.InvalidOperationException($"{nameof(AddressLibrary)}: Unexpected {nameof(offsetType)} encountered, {offsetType}.");
 						}
 						catch (System.Exception exception)
 						{
-							Log.WriteLine($"{exception}");
+							Log.Information($"{exception}");
 
 							throw;
 						}
@@ -209,27 +199,27 @@
 
 				offsets.Add(identifier, new System.IntPtr((System.Int64)offset));
 
-				previousIdentifier = identifier;
-				previousOffset = offset;
+				previousIdentifier	= identifier;
+				previousOffset		= offset;
 			}
 
 			return offsets;
 		}
 
-		static private AddressLibrary.Header ReadHeader(System.IO.BinaryReader binaryReader)
+		static private AddressLibrary.Header ReadHeader(System.IO.BinaryReader binaryReader, System.Int32 versionMajor, System.Int32 versionMinor, System.Int32 versionBuild, System.Int32 versionPrivate)
 		{
-			var header = new AddressLibrary.Header();
-			header.Format = binaryReader.ReadInt32();
+			var header		= new AddressLibrary.Header();
+			header.Format	= binaryReader.ReadInt32();
 
 			if (header.Format != 1)
 			{
 				try
 				{
-					throw new System.NotSupportedException(nameof(header.Format));
+					throw new System.NotSupportedException($"{nameof(AddressLibrary)}: Unexpected {nameof(header.Format)} encountered, {header.Format}. Expected 1");
 				}
 				catch (System.Exception exception)
 				{
-					Log.WriteLine($"{exception}");
+					Log.Information($"{exception}");
 
 					throw;
 				}
@@ -237,15 +227,15 @@
 
 			header.VersionMajor = binaryReader.ReadInt32();
 
-			if (header.VersionMajor != Main.ProductVersionMajor)
+			if (header.VersionMajor != versionMajor)
 			{
 				try
 				{
-					throw new System.NotSupportedException(nameof(header.VersionMajor));
+					throw new System.NotSupportedException($"{nameof(AddressLibrary)}: Unexpected {nameof(header.VersionMajor)} encountered, {header.VersionMajor}. Expected {versionMajor}");
 				}
 				catch (System.Exception exception)
 				{
-					Log.WriteLine($"{exception}");
+					Log.Information($"{exception}");
 
 					throw;
 				}
@@ -253,15 +243,15 @@
 
 			header.VersionMinor = binaryReader.ReadInt32();
 
-			if (header.VersionMinor != Main.ProductVersionMinor)
+			if (header.VersionMinor != versionMinor)
 			{
 				try
 				{
-					throw new System.NotSupportedException(nameof(header.VersionMinor));
+					throw new System.NotSupportedException($"{nameof(AddressLibrary)}: Unexpected {nameof(header.VersionMinor)} encountered, {header.VersionMinor}. Expected {versionMinor}");
 				}
 				catch (System.Exception exception)
 				{
-					Log.WriteLine($"{exception}");
+					Log.Information($"{exception}");
 
 					throw;
 				}
@@ -269,15 +259,15 @@
 
 			header.VersionBuild = binaryReader.ReadInt32();
 
-			if (header.VersionBuild != Main.ProductVersionBuild)
+			if (header.VersionBuild != versionBuild)
 			{
 				try
 				{
-					throw new System.NotSupportedException(nameof(header.VersionBuild));
+					throw new System.NotSupportedException($"{nameof(AddressLibrary)}: Unexpected {nameof(header.VersionBuild)} encountered, {header.VersionBuild}. Expected {versionBuild}");
 				}
 				catch (System.Exception exception)
 				{
-					Log.WriteLine($"{exception}");
+					Log.Information($"{exception}");
 
 					throw;
 				}
@@ -285,44 +275,69 @@
 
 			header.VersionPrivate = binaryReader.ReadInt32();
 
-			if (header.VersionPrivate != Main.ProductVersionPrivate)
+			if (header.VersionPrivate != versionPrivate)
 			{
 				try
 				{
-					throw new System.NotSupportedException(nameof(header.VersionPrivate));
+					throw new System.NotSupportedException($"{nameof(AddressLibrary)}: Unexpected {nameof(header.VersionPrivate)} encountered, {header.VersionPrivate}. Expected {versionPrivate}");
 				}
 				catch (System.Exception exception)
 				{
-					Log.WriteLine($"{exception}");
+					Log.Information($"{exception}");
 
 					throw;
 				}
 			}
 
-			header.NameLength = binaryReader.ReadInt32();
-			header.Name = new System.String(binaryReader.ReadChars(header.NameLength));
+			header.NameLength	= binaryReader.ReadInt32();
+			header.Name			= new System.String(binaryReader.ReadChars(header.NameLength));
 
 			if (header.Name != Main.MainModuleName)
 			{
 				try
 				{
-					throw new System.NotSupportedException(nameof(header.Name));
+					throw new System.NotSupportedException($"{nameof(AddressLibrary)}: Unexpected {nameof(header.Name)} encountered, {header.Name}. Expected {Main.MainModuleName}");
 				}
 				catch (System.Exception exception)
 				{
-					Log.WriteLine($"{exception}");
+					Log.Information($"{exception}");
 
 					throw;
 				}
 			}
 
-			header.PointerSize = binaryReader.ReadInt32();
-			header.AddressCount = binaryReader.ReadInt32();
+			header.PointerSize	= binaryReader.ReadInt32();
+			header.AddressCount	= binaryReader.ReadInt32();
 
 			return header;
 		}
 
 
+
+		static public void Dump(System.String path)
+		{
+			var streamWriter = new System.IO.StreamWriter(path, false);
+
+			foreach (var offset in AddressLibrary.offsets)
+			{
+				streamWriter.WriteLine($"{offset.Key}\t{offset.Value:X}");
+			}
+
+			streamWriter.Close();
+		}
+
+		static public void Dump(System.String path, System.Int32 versionMajor, System.Int32 versionMinor, System.Int32 versionBuild, System.Int32 versionPrivate)
+		{
+			var streamWriter	= new System.IO.StreamWriter(path, false);
+			var offsets			= AddressLibrary.Read(versionMajor, versionMinor, versionBuild, versionPrivate);
+
+			foreach (var offset in offsets)
+			{
+				streamWriter.WriteLine($"{offset.Key}\t{offset.Value:X}");
+			}
+
+			streamWriter.Close();
+		}
 
 		static public System.IntPtr GetAddress(System.UInt64 identifier)
 		{
@@ -334,46 +349,38 @@
 			return AddressLibrary.GetAddress(identifier) + offset;
 		}
 
-		static public System.IntPtr GetAddress(System.UInt64 identifier, System.Int32 addressOffset, System.Byte[] pattern, System.Int32 patternOffset = 0)
+		static public System.Boolean MatchPattern(System.IntPtr address, System.Byte[] pattern)
 		{
-			var address = AddressLibrary.GetAddress(identifier) + addressOffset;
+			var equals = Memory.Equals<System.Byte>(address, pattern);
 
-			if (!Memory.Compare(address, patternOffset, pattern))
+			if (!equals)
 			{
-				try
-				{
-					throw new System.InvalidProgramException(nameof(address));
-				}
-				catch (System.Exception exception)
-				{
-					Log.WriteLine($"{exception}");
-
-					throw;
-				}
+				Log.Information($"{nameof(AddressLibrary)}: Unexpected {nameof(pattern)} encountered at {Main.MainModuleName} + {address.ToInt64() - Main.MainModule.BaseAddress.ToInt64():X}, {System.Convert.ToHexString(Memory.ReadArray<System.Byte>(address, pattern.Length))}. Expected {System.Convert.ToHexString(pattern)}.");
 			}
 
-			return address;
+			return equals;
 		}
 
-		static public System.IntPtr GetAddress(System.UInt64 identifier, System.Int32 addressOffset, System.Byte?[] pattern, System.Int32 patternOffset = 0)
+		static public System.Boolean MatchPattern(System.IntPtr address, System.Byte[] pattern, System.Int32 offset)
 		{
-			var address = AddressLibrary.GetAddress(identifier) + addressOffset;
+			return AddressLibrary.MatchPattern(address + offset, pattern);
+		}
 
-			if (!Memory.Compare(address, patternOffset, pattern))
+		static public System.Boolean MatchPattern(System.IntPtr address, System.Byte?[] pattern)
+		{
+			var equals = Memory.Equals<System.Byte>(address, pattern);
+
+			if (!equals)
 			{
-				try
-				{
-					throw new System.InvalidProgramException(nameof(address));
-				}
-				catch (System.Exception exception)
-				{
-					Log.WriteLine($"{exception}");
-
-					throw;
-				}
+				Log.Information($"{nameof(AddressLibrary)}: Unexpected {nameof(pattern)} encountered at {Main.MainModuleName} + {address.ToInt64() - Main.MainModule.BaseAddress.ToInt64():X}, {System.Convert.ToHexString(Memory.ReadArray<System.Byte>(address, pattern.Length))}.");
 			}
 
-			return address;
+			return equals;
+		}
+
+		static public System.Boolean MatchPattern(System.IntPtr address, System.Byte?[] pattern, System.Int32 offset)
+		{
+			return AddressLibrary.MatchPattern(address + offset, pattern);
 		}
 	}
 }

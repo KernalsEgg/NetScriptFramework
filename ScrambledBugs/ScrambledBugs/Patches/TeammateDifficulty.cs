@@ -6,8 +6,13 @@ namespace ScrambledBugs.Patches
 {
 	static internal class TeammateDifficulty
 	{
-		static public void Patch()
+		static public System.Boolean Patch()
 		{
+			if (!ScrambledBugs.Patterns.Patches.TeammateDifficulty.IsPlayer)
+			{
+				return false;
+			}
+
 			var assembly = new UnmanagedArray<System.Byte>();
 
 			assembly.Add(Memory.ReadArray<System.Byte>(ScrambledBugs.Offsets.Patches.TeammateDifficulty.IsPlayer, System.Runtime.CompilerServices.Unsafe.SizeOf<RelativeCall>()));	// mov edx, 18
@@ -35,6 +40,8 @@ namespace ScrambledBugs.Patches
 				||
 				(actor->BoolBits() & ActorBoolBits.PlayerTeammate) == ActorBoolBits.PlayerTeammate
 			*/
+
+			return true;
 		}
 	}
 }

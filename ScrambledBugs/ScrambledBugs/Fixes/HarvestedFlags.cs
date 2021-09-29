@@ -7,15 +7,14 @@ namespace ScrambledBugs.Fixes
 {
 	unsafe static internal class HarvestedFlags
 	{
-		static private delegate* unmanaged[Cdecl]<TESObjectREFR*, System.Byte, void> setHarvestedFlag;
-
-
-
-		static public void Fix()
+		static public System.Boolean Fix()
 		{
+			if (!ScrambledBugs.Patterns.Fixes.HarvestedFlags.RemoveHarvestedFlag)
+			{
+				return false;
+			}
+			
 			HarvestedFlags.setHarvestedFlag = (delegate* unmanaged[Cdecl]<TESObjectREFR*, System.Byte, void>)Memory.ReadRelativeCall(ScrambledBugs.Offsets.Fixes.HarvestedFlags.RemoveHarvestedFlag);
-
-
 
 			var removeChangeFlag = (delegate* unmanaged[Cdecl]<TESObjectREFR*, System.Byte, void>)&RemoveChangeFlag;
 
@@ -43,6 +42,12 @@ namespace ScrambledBugs.Fixes
 					HarvestedFlags.setHarvestedFlag(reference, harvested);
 				}
 			}
+
+			return true;
 		}
+
+
+
+		static private delegate* unmanaged[Cdecl]<TESObjectREFR*, System.Byte, void> setHarvestedFlag;
 	}
 }

@@ -6,8 +6,24 @@ namespace ScrambledBugs.Patches
 {
 	static internal class AttachHitEffectArt
 	{
-		static public void Patch()
+		static public System.Boolean Patch()
 		{
+			if
+			(
+				!ScrambledBugs.Patterns.Patches.AttachHitEffectArt.AddNoHitEffectArtFlag
+				||
+				!ScrambledBugs.Patterns.Patches.AttachHitEffectArt.IsPerspectiveChange
+				||
+				!ScrambledBugs.Patterns.Patches.AttachHitEffectArt.IsPlayerAttach
+				||
+				!ScrambledBugs.Patterns.Patches.AttachHitEffectArt.IsPlayerUpdatePosition
+			)
+			{
+				return false;
+			}
+
+
+
 			Memory.SafeFill<System.Byte>(ScrambledBugs.Offsets.Patches.AttachHitEffectArt.IsPlayerUpdatePosition, 2, Assembly.Nop);
 			Memory.SafeFill<System.Byte>(ScrambledBugs.Offsets.Patches.AttachHitEffectArt.IsPerspectiveChange, 2, Assembly.Nop);
 
@@ -104,6 +120,10 @@ namespace ScrambledBugs.Patches
 
 			return attachRootNode != modelReferenceEffect->HitEffectArtData()->AttachRoot();
 			*/
+
+
+
+			return true;
 		}
 	}
 }

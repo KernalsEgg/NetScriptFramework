@@ -13,12 +13,12 @@
 
 
 
+			static private delegate* unmanaged[Cdecl]<InitTESThread*, void> initializeThread;
+
+
+
 			static public event System.EventHandler After;
 			static public event System.EventHandler Before;
-
-
-
-			static private delegate* unmanaged[Cdecl]<InitTESThread*, void> initializeThread;
 
 
 

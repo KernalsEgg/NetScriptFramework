@@ -6,8 +6,26 @@ namespace ScrambledBugs.Patches
 {
 	unsafe static internal class AccumulatingMagnitude
 	{
-		static public void Patch()
+		static public System.Boolean Patch()
 		{
+			if
+			(
+				!ScrambledBugs.Patterns.Patches.AccumulatingMagnitude.GetMaximumMagnitude
+				||
+				!ScrambledBugs.Patterns.Patches.AccumulatingMagnitude.GetMaximumMagnitudeAndRate
+				||
+				!ScrambledBugs.Patterns.Patches.AccumulatingMagnitude.GetMaximumWardPower
+				||
+				!ScrambledBugs.Patterns.Patches.AccumulatingMagnitude.SetMaximumMagnitude
+				||
+				!ScrambledBugs.Patterns.Patches.AccumulatingMagnitude.SetRate
+			)
+			{
+				return false;
+			}
+
+
+
 			Memory.SafeFill<System.Byte>(ScrambledBugs.Offsets.Patches.AccumulatingMagnitude.SetMaximumMagnitude, 8, Assembly.Nop);
 
 
@@ -119,6 +137,10 @@ namespace ScrambledBugs.Patches
 
 			return actor->GetMaximumWardPower();
 			*/
+
+
+
+			return true;
 		}
 	}
 }
