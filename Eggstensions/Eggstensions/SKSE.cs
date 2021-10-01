@@ -10,7 +10,7 @@
 			[System.Runtime.InteropServices.FieldOffset(0x10)] public System.UInt32 Version;
 		}
 
-		[System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Explicit, Size = 0x18)]
+		[System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Explicit, Size = 0x30)]
 		unsafe public struct SKSEInterface
 		{
 			[System.Runtime.InteropServices.FieldOffset(0x0)] public System.UInt32 SKSEVersion;

@@ -1,5 +1,15 @@
 ﻿[module: System.Runtime.CompilerServices.SkipLocalsInit]
 
+/*
+C# 9.0 function pointers offer better performance and simpler implementation compared to the functions available in the System.Runtime.InteropServices.Marshal class.
+However, there are situations where they can cause crashes, which need to be accounted for. Namely, they are:
+1. The JIT Compiler can optimise a function to send a non-blittable type instead of a blittable type as an argument. For example, a System.Boolean instead of a System.Byte.
+2. If function pointer fields or properties are called and are otherwise only initialized inline using for example the Memory.ReadRelativeCall function.
+These crashes are prevented in the following ways:
+1. Only call function pointers in functions with blittable type arguments and the [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.NoInlining)] attribute.
+2. Always initialize function pointer fields and properties in functions.
+*/
+
 
 
 namespace Eggstensions

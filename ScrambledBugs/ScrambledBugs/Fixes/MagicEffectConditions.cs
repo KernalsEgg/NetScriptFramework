@@ -12,7 +12,16 @@ namespace ScrambledBugs.Fixes
 			{
 				return false;
 			}
-			
+
+			MagicEffectConditions.UpdateConditions();
+
+			return true;
+		}
+
+
+
+		static public void UpdateConditions()
+		{
 			var assembly = new UnmanagedArray<System.Byte>();
 
 			assembly.Add(new System.Byte[3] { 0x0F, 0x57, 0xC0 });																									// xorps xmm0, xmm0
@@ -80,8 +89,6 @@ namespace ScrambledBugs.Fixes
 
 			goto Update;
 			*/
-
-			return true;
 		}
 	}
 }

@@ -21,7 +21,7 @@ namespace ScrambledBugs
 								ScrambledBugs.Offsets.Fixes.ApplySpellPerkEntryPoints.Arrows.ApplyCombatHitSpellArrowProjectile,
 								new System.Byte?[5]
 								{
-									0xE8, null, null, null, null // call
+									0xE8, null, null, null, null // call BGSEntryPointPerkEntry.HandleEntryPoints
 								}
 							);
 						}
@@ -42,7 +42,7 @@ namespace ScrambledBugs
 							ScrambledBugs.Offsets.Fixes.ActorValuePercentage.ActorValueCondition,
 							new System.Byte?[5]
 							{
-								0xE8, null, null, null, null // call
+								0xE8, null, null, null, null // call Actor.GetActorValuePercentage
 							}
 						);
 					}
@@ -57,7 +57,7 @@ namespace ScrambledBugs
 							ScrambledBugs.Offsets.Fixes.ActorValuePercentage.ActorValueEnemyHealth,
 							new System.Byte?[5]
 							{
-								0xE8, null, null, null, null // call
+								0xE8, null, null, null, null // call Actor.GetActorValuePercentage
 							}
 						);
 					}
@@ -72,7 +72,7 @@ namespace ScrambledBugs
 							ScrambledBugs.Offsets.Fixes.ActorValuePercentage.ActorValuePapyrus,
 							new System.Byte?[5]
 							{
-								0xE8, null, null, null, null // call
+								0xE8, null, null, null, null // call Actor.GetActorValuePercentage
 							}
 						);
 					}
@@ -87,7 +87,7 @@ namespace ScrambledBugs
 							ScrambledBugs.Offsets.Fixes.ActorValuePercentage.HealthCondition,
 							new System.Byte?[5]
 							{
-								0xE8, null, null, null, null // call
+								0xE8, null, null, null, null // call Actor.GetHealthPercentage
 							}
 						);
 					}
@@ -102,7 +102,7 @@ namespace ScrambledBugs
 							ScrambledBugs.Offsets.Fixes.ActorValuePercentage.StaminaCondition,
 							new System.Byte?[5]
 							{
-								0xE8, null, null, null, null // call
+								0xE8, null, null, null, null // call Actor.GetStaminaPercentage
 							}
 						);
 					}
@@ -120,7 +120,7 @@ namespace ScrambledBugs
 							ScrambledBugs.Offsets.Fixes.HarvestedFlags.RemoveHarvestedFlag,
 							new System.Byte?[5]
 							{
-								0xE8, null, null, null, null // call
+								0xE8, null, null, null, null // call TESObjectREFR.SetHarvestedFlag
 							}
 						);
 					}
@@ -207,7 +207,7 @@ namespace ScrambledBugs
 							ScrambledBugs.Offsets.Fixes.MagicEffectFlags.ResetEffectiveness,
 							new System.Byte?[5]
 							{
-								0xE8, null, null, null, null // call
+								0xE8, null, null, null, null // call ActiveEffect.SetEffectiveness
 							}
 						);
 					}
@@ -222,7 +222,7 @@ namespace ScrambledBugs
 							ScrambledBugs.Offsets.Fixes.MagicEffectFlags.SetEffectiveness,
 							new System.Byte?[5]
 							{
-								0xE8, null, null, null, null // call
+								0xE8, null, null, null, null // call ActiveEffect.SetEffectiveness
 							}
 						);
 					}
@@ -256,27 +256,9 @@ namespace ScrambledBugs
 							ScrambledBugs.Offsets.Fixes.ModArmorWeightPerkEntryPoint.ModArmorWeightInventoryChanges,
 							new System.Byte?[5 + 9 + 4] // 0x12
 							{
-								0xE8, null, null, null, null,							// call
+								0xE8, null, null, null, null,							// call BGSEntryPointPerkEntry.HandleEntryPoints
 								0xF3, 0x0F, 0x10, 0x8C, 0x24, 0xB0, 0x00, 0x00, 0x00,	// movss xmm1, [rsp+B0]
 								0xF3, 0x0F, 0x58, 0xF1									// addss xmm6, xmm1
-							}
-						);
-					}
-				}
-			}
-
-			unsafe static internal class MovementSpeed
-			{
-				static public System.Boolean SpeedMultSink
-				{
-					get
-					{
-						return AddressLibrary.MatchPattern
-						(
-							ScrambledBugs.Offsets.Fixes.MovementSpeed.ActorValueSinkFunctionTable + System.Runtime.CompilerServices.Unsafe.SizeOf<System.IntPtr>() * (System.Int32)ActorValue.SpeedMult,
-							new System.Byte[8]
-							{
-								0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 // null
 							}
 						);
 					}
@@ -294,7 +276,7 @@ namespace ScrambledBugs
 							ScrambledBugs.Offsets.Fixes.QuickShot.CreateProjectile,
 							new System.Byte?[5]
 							{
-								0xE8, null, null, null, null // call
+								0xE8, null, null, null, null // call ArrowProjectile.GetArrowPower
 							}
 						);
 					}
@@ -309,7 +291,25 @@ namespace ScrambledBugs
 							ScrambledBugs.Offsets.Fixes.QuickShot.KillCamera,
 							new System.Byte?[5]
 							{
-								0xE8, null, null, null, null // call
+								0xE8, null, null, null, null // call ArrowProjectile.GetArrowPower
+							}
+						);
+					}
+				}
+			}
+
+			static internal class SpeedMultUpdates
+			{
+				static public System.Boolean SpeedMultSink
+				{
+					get
+					{
+						return AddressLibrary.MatchPattern
+						(
+							ScrambledBugs.Offsets.Fixes.SpeedMultUpdates.ActorValueSinkFunctionTable + System.Runtime.CompilerServices.Unsafe.SizeOf<System.IntPtr>() * (System.Int32)ActorValue.SpeedMult,
+							new System.Byte[8]
+							{
+								0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 // null
 							}
 						);
 					}
@@ -345,7 +345,7 @@ namespace ScrambledBugs
 							ScrambledBugs.Offsets.Fixes.TrainingMenuText.GetPermanentActorValue,
 							new System.Byte[3]
 							{
-								0xFF, 0x50, 0x10 // call [rax+10]
+								0xFF, 0x50, 0x10 // call [rax+10] (ActorValueOwner.GetPermanentActorValue)
 							}
 						);
 					}
@@ -363,7 +363,7 @@ namespace ScrambledBugs
 							ScrambledBugs.Offsets.Fixes.WeaponCharge.Enchant,
 							new System.Byte?[5]
 							{
-								0xE8, null, null, null, null // call
+								0xE8, null, null, null, null // call Actor.HandleEquippedItem
 							}
 						);
 					}
@@ -378,7 +378,7 @@ namespace ScrambledBugs
 							ScrambledBugs.Offsets.Fixes.WeaponCharge.Equip,
 							new System.Byte?[5]
 							{
-								0xE8, null, null, null, null // call
+								0xE8, null, null, null, null // call Actor.HandleEquippedItem
 							}
 						);
 					}
@@ -393,7 +393,7 @@ namespace ScrambledBugs
 							ScrambledBugs.Offsets.Fixes.WeaponCharge.Recharge,
 							new System.Byte?[5]
 							{
-								0xE8, null, null, null, null // call
+								0xE8, null, null, null, null // call Actor.HandleEquippedItem
 							}
 						);
 					}
@@ -416,7 +416,7 @@ namespace ScrambledBugs
 								ScrambledBugs.Offsets.Patches.ApplySpellPerkEntryPoints.CastSpells.ApplyBashingSpell,
 								new System.Byte?[5]
 								{
-									0xE8, null, null, null, null // call
+									0xE8, null, null, null, null // call Actor.ApplySpell
 								}
 							);
 						}
@@ -431,7 +431,7 @@ namespace ScrambledBugs
 								ScrambledBugs.Offsets.Patches.ApplySpellPerkEntryPoints.CastSpells.ApplyCombatHitSpell,
 								new System.Byte?[5]
 								{
-									0xE8, null, null, null, null // call
+									0xE8, null, null, null, null // call Actor.ApplySpell
 								}
 							);
 						}
@@ -446,7 +446,7 @@ namespace ScrambledBugs
 								ScrambledBugs.Offsets.Patches.ApplySpellPerkEntryPoints.CastSpells.ApplyCombatHitSpellArrowProjectile,
 								new System.Byte?[5]
 								{
-									0xE8, null, null, null, null // call
+									0xE8, null, null, null, null // call Actor.ApplySpell
 								}
 							);
 						}
@@ -461,7 +461,7 @@ namespace ScrambledBugs
 								ScrambledBugs.Offsets.Patches.ApplySpellPerkEntryPoints.CastSpells.ApplyReanimateSpell,
 								new System.Byte?[5]
 								{
-									0xE8, null, null, null, null // call
+									0xE8, null, null, null, null // call Actor.ApplySpell
 								}
 							);
 						}
@@ -476,7 +476,7 @@ namespace ScrambledBugs
 								ScrambledBugs.Offsets.Patches.ApplySpellPerkEntryPoints.CastSpells.ApplyWeaponSwingSpell,
 								new System.Byte?[5]
 								{
-									0xE8, null, null, null, null // call
+									0xE8, null, null, null, null // call Actor.ApplySpell
 								}
 							);
 						}
@@ -494,7 +494,7 @@ namespace ScrambledBugs
 								ScrambledBugs.Offsets.Patches.ApplySpellPerkEntryPoints.MultipleSpells.ApplyBashingSpell,
 								new System.Byte?[5]
 								{
-									0xE8, null, null, null, null // call
+									0xE8, null, null, null, null // call BGSEntryPointPerkEntry.HandleEntryPoints
 								}
 							);
 						}
@@ -509,7 +509,7 @@ namespace ScrambledBugs
 								ScrambledBugs.Offsets.Patches.ApplySpellPerkEntryPoints.MultipleSpells.ApplyCombatHitSpell,
 								new System.Byte?[5]
 								{
-									0xE8, null, null, null, null // call
+									0xE8, null, null, null, null // call BGSEntryPointPerkEntry.HandleEntryPoints
 								}
 							);
 						}
@@ -524,7 +524,7 @@ namespace ScrambledBugs
 								ScrambledBugs.Offsets.Patches.ApplySpellPerkEntryPoints.MultipleSpells.ApplyCombatHitSpellArrowProjectile,
 								new System.Byte?[5]
 								{
-									0xE8, null, null, null, null // call
+									0xE8, null, null, null, null // call BGSEntryPointPerkEntry.HandleEntryPoints
 								}
 							);
 						}
@@ -539,7 +539,7 @@ namespace ScrambledBugs
 								ScrambledBugs.Offsets.Patches.ApplySpellPerkEntryPoints.MultipleSpells.ApplyReanimateSpell,
 								new System.Byte?[5]
 								{
-									0xE8, null, null, null, null // call
+									0xE8, null, null, null, null // call BGSEntryPointPerkEntry.HandleEntryPoints
 								}
 							);
 						}
@@ -554,7 +554,7 @@ namespace ScrambledBugs
 								ScrambledBugs.Offsets.Patches.ApplySpellPerkEntryPoints.MultipleSpells.ApplySneakingSpell,
 								new System.Byte?[5]
 								{
-									0xE8, null, null, null, null // call
+									0xE8, null, null, null, null // call BGSEntryPointPerkEntry.HandleEntryPoints
 								}
 							);
 						}
@@ -569,7 +569,7 @@ namespace ScrambledBugs
 								ScrambledBugs.Offsets.Patches.ApplySpellPerkEntryPoints.MultipleSpells.ApplyWeaponSwingSpell,
 								new System.Byte?[5]
 								{
-									0xE8, null, null, null, null // call
+									0xE8, null, null, null, null // call BGSEntryPointPerkEntry.HandleEntryPoints
 								}
 							);
 						}
@@ -622,7 +622,7 @@ namespace ScrambledBugs
 							ScrambledBugs.Offsets.Patches.AccumulatingMagnitude.GetMaximumWardPower,
 							new System.Byte?[5]
 							{
-								0xE8, null, null, null, null // call
+								0xE8, null, null, null, null // call Actor.GetMaximumWardPower
 							}
 						);
 					}
@@ -655,7 +655,7 @@ namespace ScrambledBugs
 								0x0F, 0x28, 0xD0,								// movaps xmm2, xmm0
 								0xF3, 0x0F, 0x10, 0x8F, 0x9C, 0x00, 0x00, 0x00,	// movss xmm1, [rdi+9C]
 								0x8B, 0x8F, 0x90, 0x00, 0x00, 0x00,				// mov ecx, [rdi+90]
-								0xE8, null, null, null, null,					// call
+								0xE8, null, null, null, null,					// call AccumulatingValueModifierEffect.GetRate
 								0xF3, 0x0F, 0x11, 0x47, 0x78					// movss [rdi+78], xmm0
 							}
 						);
@@ -877,7 +877,7 @@ namespace ScrambledBugs
 							ScrambledBugs.Offsets.Patches.PowerAttackStamina.GetStaminaCostActor,
 							new System.Byte?[5]
 							{
-								0xE8, null, null, null, null // call
+								0xE8, null, null, null, null // call ActorValueOwner.GetStaminaCost
 							}
 						);
 					}
@@ -892,7 +892,7 @@ namespace ScrambledBugs
 							ScrambledBugs.Offsets.Patches.PowerAttackStamina.GetStaminaCostPlayerCharacter,
 							new System.Byte?[5]
 							{
-								0xE8, null, null, null, null // call
+								0xE8, null, null, null, null // call ActorValueOwner.GetStaminaCost
 							}
 						);
 					}

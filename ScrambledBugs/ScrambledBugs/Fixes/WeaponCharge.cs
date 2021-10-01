@@ -20,7 +20,16 @@ namespace ScrambledBugs.Fixes
 			{
 				return false;
 			}
-			
+
+			WeaponCharge.HandleEquippedItem();
+
+			return true;
+		}
+
+
+
+		static public void HandleEquippedItem()
+		{
 			var handleEquippedItem = (delegate* unmanaged[Cdecl]<Actor*, TESBoundObject*, ExtraDataList*, System.Byte, void>)&HandleEquippedItem;
 
 			Trampoline.WriteRelativeCall(ScrambledBugs.Offsets.Fixes.WeaponCharge.Enchant, handleEquippedItem);
@@ -75,13 +84,11 @@ namespace ScrambledBugs.Fixes
 
 				actor->RevertSelectedSpell((EquipType)(rightHand ? 1 : 0), enchantment);
 			}
-
-			return true;
 		}
 
 
 
-		static void RemoveEquippedItemFlags<TPlayerCharacter>(this ref TPlayerCharacter player, System.Byte flags)
+		static public void RemoveEquippedItemFlags<TPlayerCharacter>(this ref TPlayerCharacter player, System.Byte flags)
 			where TPlayerCharacter : unmanaged, IPlayerCharacter
 		{
 			var removeEquippedItemFlags = (delegate* unmanaged[Cdecl]<TPlayerCharacter*, System.Byte, void>)ScrambledBugs.Offsets.Fixes.WeaponCharge.RemoveEquippedItemFlags;

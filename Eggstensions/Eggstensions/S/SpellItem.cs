@@ -16,7 +16,7 @@
 		{
 			// Member
 			/// <summary>SkyrimSE.exe + 0x632180 (VID 37817)</summary>
-			static public void Apply<TSpellItem, TActor1, TActor2>(this ref TSpellItem spell, TActor1* source, TActor2* target)
+			static public void Apply<TSpellItem, TActor1, TActor2>(this ref TSpellItem spell, TActor1* caster, TActor2* target)
 				where TSpellItem : unmanaged, Eggstensions.ISpellItem
 				where TActor1 : unmanaged, Eggstensions.IActor
 				where TActor2 : unmanaged, Eggstensions.IActor
@@ -27,7 +27,7 @@
 				}
 				else
 				{
-					var magicCaster = source->GetMagicCaster(CastingSource.Instant);
+					var magicCaster = caster->GetMagicCaster(CastingSource.Instant);
 
 					magicCaster->Cast(spell.AsPointer(), false, target, 1.0F, false, 0.0F, (Actor*)null);
 				}

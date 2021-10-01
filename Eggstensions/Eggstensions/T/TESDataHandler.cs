@@ -1,7 +1,10 @@
 ﻿namespace Eggstensions
 {
-	[System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Explicit, Size = 0xDC0)]
-	unsafe public struct TESDataHandler
+	public interface ITESDataHandler : IUnmanagedObject
+	{
+	}
+	
+	unsafe public struct TESDataHandler : ITESDataHandler
 	{
 		// Static
 		static public TESForm* GetForm(System.UInt32 formId)

@@ -15,7 +15,7 @@
 			}
 			set
 			{
-				this.Insert(index, value);
+				Insert(index, value);
 			}
 		}
 		
@@ -109,13 +109,13 @@
 		public void Add<TSource>(TSource element)
 			where TSource : unmanaged
 		{
-			this.Add(Memory.ToArray<TSource, TDestination>(element));
+			Add(Memory.ToArray<TSource, TDestination>(element));
 		}
 
 		public void Add<TSource>(TSource[] elements)
 			where TSource : unmanaged
 		{
-			this.Add(Memory.ToArray<TSource, TDestination>(elements));
+			Add(Memory.ToArray<TSource, TDestination>(elements));
 		}
 
 		public void Clear()
@@ -166,7 +166,7 @@
 
 		System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
 		{
-			return this.GetEnumerator();
+			return GetEnumerator();
 		}
 
 		public System.Int32 IndexOf(TDestination element)
@@ -203,11 +203,11 @@
 
 		public System.Boolean Remove(TDestination element)
 		{
-			var index = this.IndexOf(element);
+			var index = IndexOf(element);
 
 			if (index >= 0)
 			{
-				this.RemoveAt(index);
+				RemoveAt(index);
 
 				return true;
 			}

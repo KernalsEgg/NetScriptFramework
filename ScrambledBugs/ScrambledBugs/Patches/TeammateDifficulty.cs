@@ -13,6 +13,15 @@ namespace ScrambledBugs.Patches
 				return false;
 			}
 
+			TeammateDifficulty.IsPlayerOrTeammate();
+
+			return true;
+		}
+
+
+
+		static public void IsPlayerOrTeammate()
+		{
 			var assembly = new UnmanagedArray<System.Byte>();
 
 			assembly.Add(Memory.ReadArray<System.Byte>(ScrambledBugs.Offsets.Patches.TeammateDifficulty.IsPlayer, System.Runtime.CompilerServices.Unsafe.SizeOf<RelativeCall>()));	// mov edx, 18
@@ -36,12 +45,10 @@ namespace ScrambledBugs.Patches
 			Actor* actor; // rcx
 
 			return
-				actor == player
+				(actor == player)
 				||
-				(actor->BoolBits() & ActorBoolBits.PlayerTeammate) == ActorBoolBits.PlayerTeammate
+				((actor->BoolBits() & ActorBoolBits.PlayerTeammate) == ActorBoolBits.PlayerTeammate);
 			*/
-
-			return true;
 		}
 	}
 }

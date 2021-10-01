@@ -73,18 +73,6 @@ namespace ScrambledBugs
 				static public System.IntPtr ModArmorWeightInventoryChanges { get; }	= AddressLibrary.GetAddress(15883, 0x29F);
 			}
 
-			static internal class MovementSpeed
-			{
-				/// <summary>SkyrimSE.exe + 0x2F39A40</summary>
-				static public System.IntPtr ActorValueSinkFunctionTable { get; }	= AddressLibrary.GetAddress(517376);
-
-				/// <summary>SkyrimSE.exe + 0x5ED420</summary>
-				static public System.IntPtr RemoveMovementFlags { get; }			= AddressLibrary.GetAddress(36585);
-
-				/// <summary>SkyrimSE.exe + 0x2F266F8</summary>
-				static public System.IntPtr SaveManager { get; }					= AddressLibrary.GetAddress(516851);
-			}
-
 			static internal class QuickShot
 			{
 				/// <summary>SkyrimSE.exe + 0x74B170</summary>
@@ -92,6 +80,18 @@ namespace ScrambledBugs
 
 				/// <summary>SkyrimSE.exe + 0x6CE720</summary>
 				static public System.IntPtr KillCamera { get; }			= AddressLibrary.GetAddress(40230, 0x87C);
+			}
+
+			static internal class SpeedMultUpdates
+			{
+				/// <summary>SkyrimSE.exe + 0x2F39A40</summary>
+				static public System.IntPtr ActorValueSinkFunctionTable { get; } = AddressLibrary.GetAddress(517376);
+
+				/// <summary>SkyrimSE.exe + 0x5ED420</summary>
+				static public System.IntPtr RemoveMovementFlags { get; } = AddressLibrary.GetAddress(36585);
+
+				/// <summary>SkyrimSE.exe + 0x2F266F8</summary>
+				static public System.IntPtr SaveManager { get; } = AddressLibrary.GetAddress(516851);
 			}
 
 			static internal class TerrainDecals

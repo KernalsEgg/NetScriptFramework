@@ -25,6 +25,15 @@ namespace ScrambledBugs.Patches.ApplySpellPerkEntryPoints
 				return false;
 			}
 
+			CastSpells.ApplySpell();
+
+			return true;
+		}
+
+
+
+		static public void ApplySpell()
+		{
 			var applySpell = (delegate* unmanaged[Cdecl]<Actor*, SpellItem*, Actor*, void>)&ApplySpell;
 
 			Trampoline.WriteRelativeCall(ScrambledBugs.Offsets.Patches.ApplySpellPerkEntryPoints.CastSpells.ApplyBashingSpell, applySpell);
@@ -34,16 +43,14 @@ namespace ScrambledBugs.Patches.ApplySpellPerkEntryPoints
 			Trampoline.WriteRelativeCall(ScrambledBugs.Offsets.Patches.ApplySpellPerkEntryPoints.CastSpells.ApplyWeaponSwingSpell, applySpell);
 
 			[System.Runtime.InteropServices.UnmanagedCallersOnly(CallConvs = new[] { typeof(System.Runtime.CompilerServices.CallConvCdecl) })]
-			static void ApplySpell(Actor* target, SpellItem* spell, Actor* source)
+			static void ApplySpell(Actor* target, SpellItem* spell, Actor* caster)
 			{
 				// target	!= null
 				// spell	!= null
-				// source	!= null
+				// caster	!= null
 
-				spell->Apply(source, target);
+				spell->Apply(caster, target);
 			}
-
-			return true;
 		}
 	}
 }

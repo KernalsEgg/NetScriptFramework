@@ -12,7 +12,16 @@ namespace ScrambledBugs.Fixes.ApplySpellPerkEntryPoints
 			{
 				return false;
 			}
-			
+
+			Arrows.ApplyCombatHitSpell();
+
+			return true;
+		}
+
+
+
+		static public void ApplyCombatHitSpell()
+		{
 			var position = Trampoline.Reserve((7 + 4 + 4 + 2) + System.Runtime.CompilerServices.Unsafe.SizeOf<AbsoluteJump>() + 1);
 
 			Trampoline.Write += (System.Object sender, System.EventArgs arguments) =>
@@ -24,7 +33,7 @@ namespace ScrambledBugs.Fixes.ApplySpellPerkEntryPoints
 				assembly.Add(new System.Byte[4] { 0x41, 0xF6, 0xC2, 0x01 });																									// test r10b, 1
 				assembly.Add(new System.Byte[2] { 0x74, (System.Byte)System.Runtime.CompilerServices.Unsafe.SizeOf<AbsoluteJump>() });											// je E
 
-				assembly.Add(Assembly.AbsoluteJump(Memory.ReadRelativeCall(ScrambledBugs.Offsets.Fixes.ApplySpellPerkEntryPoints.Arrows.ApplyCombatHitSpellArrowProjectile)));	// call
+				assembly.Add(Assembly.AbsoluteJump(Memory.ReadRelativeCall(ScrambledBugs.Offsets.Fixes.ApplySpellPerkEntryPoints.Arrows.ApplyCombatHitSpellArrowProjectile)));	// call BGSEntryPointPerkEntry.HandleEntryPoints
 
 				assembly.Add(new System.Byte[1] { Assembly.Ret });																												// ret
 
@@ -44,8 +53,6 @@ namespace ScrambledBugs.Fixes.ApplySpellPerkEntryPoints
 				return;
 				*/
 			};
-
-			return true;
 		}
 	}
 }

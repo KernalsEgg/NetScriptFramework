@@ -21,8 +21,16 @@ namespace ScrambledBugs.Patches
 				return false;
 			}
 
+			EquipBestAmmo.InitializeDamage();
+			EquipBestAmmo.CompareDamage();
+
+			return true;
+		}
 
 
+
+		static public void InitializeDamage()
+		{
 			var initializeDamage = (delegate* unmanaged[Cdecl]<Context*, void>)&InitializeDamage;
 
 			Memory.SafeFill<System.Byte>(ScrambledBugs.Offsets.Patches.EquipBestAmmo.InitializeDamage, 8, Assembly.Nop);
@@ -33,9 +41,10 @@ namespace ScrambledBugs.Patches
 			{
 				context->Xmm6.Single = System.Single.MinValue;
 			}
+		}
 
-
-
+		static public void CompareDamage()
+		{
 			var compareDamageContainer = (delegate* unmanaged[Cdecl]<Context*, void>)&CompareDamageContainer;
 
 			Trampoline.CaptureContext(ScrambledBugs.Offsets.Patches.EquipBestAmmo.CompareDamageContainer, compareDamageContainer);
@@ -83,10 +92,6 @@ namespace ScrambledBugs.Patches
 
 				context->Rip.IntPtr += 0x10;
 			}
-
-
-
-			return true;
 		}
 	}
 }

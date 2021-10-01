@@ -15,5 +15,7 @@
 		{
 			streamWriter.WriteLine($"[{System.DateTime.Now}] {value}");
 		}
+
+		// Warning
 	}
 }

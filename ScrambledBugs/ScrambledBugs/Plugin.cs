@@ -59,14 +59,14 @@ namespace ScrambledBugs
 						settings.Fixes.ModArmorWeightPerkEntryPoint = ScrambledBugs.Fixes.ModArmorWeightPerkEntryPoint.Fix();
 					}
 
-					if (settings?.Fixes?.MovementSpeed ?? false)
-					{
-						settings.Fixes.MovementSpeed = ScrambledBugs.Fixes.MovementSpeed.Fix();
-					}
-
 					if ((settings?.Fixes?.QuickShot ?? false) && (settings?.Fixes?.QuickShotPlaybackSpeed.HasValue ?? false))
 					{
 						settings.Fixes.QuickShot = ScrambledBugs.Fixes.QuickShot.Fix(settings.Fixes.QuickShotPlaybackSpeed.Value);
+					}
+
+					if (settings?.Fixes?.SpeedMultUpdates ?? false)
+					{
+						settings.Fixes.SpeedMultUpdates = ScrambledBugs.Fixes.SpeedMultUpdates.Fix();
 					}
 
 					if (settings?.Fixes?.TerrainDecals ?? false)

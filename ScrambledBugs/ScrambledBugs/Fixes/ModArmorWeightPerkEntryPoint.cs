@@ -18,9 +18,24 @@ namespace ScrambledBugs.Fixes
 			{
 				return false;
 			}
-			
-			
-			
+
+			ModArmorWeightPerkEntryPoint.ModArmorWeight();
+
+			ModArmorWeightPerkEntryPoint.AddPerkEntry();
+			ModArmorWeightPerkEntryPoint.RemovePerkEntry();
+
+			return true;
+		}
+
+
+
+		static private delegate* unmanaged[Cdecl]<BGSPerkEntry*, Actor*, void> addPerkEntry;
+		static private delegate* unmanaged[Cdecl]<BGSPerkEntry*, Actor*, void> removePerkEntry;
+
+
+
+		static public void ModArmorWeight()
+		{
 			var modArmorWeightContainer = (delegate* unmanaged[Cdecl]<Context*, void>)&ModArmorWeightContainer;
 
 			Trampoline.CaptureContext
@@ -98,9 +113,10 @@ namespace ScrambledBugs.Fixes
 
 				context->Xmm6.Single += armorWeight; // totalModifiedArmorWeight
 			}
+		}
 
-
-
+		static public void AddPerkEntry()
+		{
 			ModArmorWeightPerkEntryPoint.addPerkEntry = (delegate* unmanaged[Cdecl]<BGSPerkEntry*, Actor*, void>)Memory.ReadVirtualFunction(Eggstensions.Offsets.BGSEntryPointPerkEntry.VirtualFunctionTable, 0xA);
 
 			var addPerkEntry = (delegate* unmanaged[Cdecl]<BGSPerkEntry*, Actor*, void>)&AddPerkEntry;
@@ -127,9 +143,10 @@ namespace ScrambledBugs.Fixes
 					ModArmorWeightPerkEntryPoint.addPerkEntry(perkEntry, perkOwner);
 				}
 			}
+		}
 
-
-
+		static public void RemovePerkEntry()
+		{
 			ModArmorWeightPerkEntryPoint.removePerkEntry = (delegate* unmanaged[Cdecl]<BGSPerkEntry*, Actor*, void>)Memory.ReadVirtualFunction(Eggstensions.Offsets.BGSEntryPointPerkEntry.VirtualFunctionTable, 0xB);
 
 			var removePerkEntry = (delegate* unmanaged[Cdecl]<BGSPerkEntry*, Actor*, void>)&RemovePerkEntry;
@@ -156,15 +173,6 @@ namespace ScrambledBugs.Fixes
 					ModArmorWeightPerkEntryPoint.removePerkEntry(perkEntry, perkOwner);
 				}
 			}
-
-
-
-			return true;
 		}
-
-
-
-		static private delegate* unmanaged[Cdecl]<BGSPerkEntry*, Actor*, void> addPerkEntry;
-		static private delegate* unmanaged[Cdecl]<BGSPerkEntry*, Actor*, void> removePerkEntry;
 	}
 }

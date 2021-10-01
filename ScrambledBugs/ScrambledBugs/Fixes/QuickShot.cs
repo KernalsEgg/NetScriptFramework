@@ -20,7 +20,20 @@ namespace ScrambledBugs.Fixes
 			}
 
 			QuickShot.quickShotPlaybackSpeed = quickShotPlaybackSpeed;
-			
+
+			QuickShot.GetArrowPower();
+
+			return true;
+		}
+
+
+
+		static public System.Single quickShotPlaybackSpeed;
+
+
+
+		static public void GetArrowPower()
+		{
 			var getArrowPower = (delegate* unmanaged[Cdecl]<System.Single, System.Single, System.Single>)&GetArrowPower;
 
 			Trampoline.WriteRelativeCall(ScrambledBugs.Offsets.Fixes.QuickShot.CreateProjectile, getArrowPower);
@@ -70,12 +83,6 @@ namespace ScrambledBugs.Fixes
 					return arrowMinPower + ((pullTime / maximumPullTime) * (1.0F - arrowMinPower));
 				}
 			}
-
-			return true;
 		}
-
-
-
-		static public System.Single quickShotPlaybackSpeed;
 	}
 }

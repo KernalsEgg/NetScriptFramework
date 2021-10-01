@@ -19,6 +19,15 @@ namespace ScrambledBugs.Fixes
 				return false;
 			}
 
+			MagicEffectFlags.SetEffectiveness();
+
+			return true;
+		}
+
+
+
+		static public void SetEffectiveness()
+		{
 			var setEffectiveness = (delegate* unmanaged[Cdecl]<ActiveEffect*, System.Single, void>)&SetEffectiveness;
 
 			Trampoline.WriteRelativeCall(ScrambledBugs.Offsets.Fixes.MagicEffectFlags.ResetEffectiveness, setEffectiveness);
@@ -64,8 +73,6 @@ namespace ScrambledBugs.Fixes
 					activeEffect->Magnitude(newMagnitude);
 				}
 			}
-
-			return true;
 		}
 	}
 }

@@ -18,9 +18,9 @@
 			public System.Boolean? MagicEffectConditions { get; set; }
 			public System.Boolean? MagicEffectFlags { get; set; }
 			public System.Boolean? ModArmorWeightPerkEntryPoint { get; set; }
-			public System.Boolean? MovementSpeed { get; set; }
 			public System.Boolean? QuickShot { get; set; }
 			public System.Single? QuickShotPlaybackSpeed { get; set; }
+			public System.Boolean? SpeedMultUpdates { get; set; }
 			public System.Boolean? TerrainDecals { get; set; }
 			public System.Boolean? TrainingMenuText { get; set; }
 			public System.Boolean? WeaponCharge { get; set; }

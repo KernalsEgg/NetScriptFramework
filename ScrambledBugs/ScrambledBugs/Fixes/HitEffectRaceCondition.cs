@@ -12,7 +12,16 @@ namespace ScrambledBugs.Fixes
 			{
 				return false;
 			}
-			
+
+			HitEffectRaceCondition.ShouldUpdate();
+
+			return true;
+		}
+
+
+
+		static public void ShouldUpdate()
+		{
 			var assembly = new UnmanagedArray<System.Byte>();
 
 			assembly.Add(new System.Byte[1] { 0x52 });									// push rdx
@@ -41,14 +50,12 @@ namespace ScrambledBugs.Fixes
 			ActiveEffectFlags flags; // ecx
 
 			return
-				(flags & ActiveEffectFlags.Dispelled) == ActiveEffectFlags.Dispelled
+				((flags & ActiveEffectFlags.Dispelled) == ActiveEffectFlags.Dispelled)
 				||
-				(flags & ActiveEffectFlags.ApplyingVisualEffects) == ActiveEffectFlags.ApplyingVisualEffects
+				((flags & ActiveEffectFlags.ApplyingVisualEffects) == ActiveEffectFlags.ApplyingVisualEffects)
 				||
-				(flags & ActiveEffectFlags.ApplyingSoundEffects) == ActiveEffectFlags.ApplyingSoundEffects;
+				((flags & ActiveEffectFlags.ApplyingSoundEffects) == ActiveEffectFlags.ApplyingSoundEffects);
 			*/
-
-			return true;
 		}
 	}
 }

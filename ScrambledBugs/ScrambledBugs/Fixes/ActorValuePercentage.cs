@@ -25,8 +25,17 @@ namespace ScrambledBugs.Fixes
 				return false;
 			}
 
+			ActorValuePercentage.GetActorValuePercentage();
+			ActorValuePercentage.GetHealthPercentage();
+			ActorValuePercentage.GetStaminaPercentage();
+
+			return true;
+		}
 
 
+
+		static public void GetActorValuePercentage()
+		{
 			var getActorValuePercentage = (delegate* unmanaged[Cdecl]<Actor*, System.Int32, System.Single>)&GetActorValuePercentage;
 
 			Trampoline.WriteRelativeCall(ScrambledBugs.Offsets.Fixes.ActorValuePercentage.ActorValueCondition, getActorValuePercentage);
@@ -38,9 +47,10 @@ namespace ScrambledBugs.Fixes
 			{
 				return ActorValuePercentage.GetActorValuePercentage(actor, (ActorValue)actorValue);
 			}
+		}
 
-
-
+		static public void GetHealthPercentage()
+		{
 			var getHealthPercentage = (delegate* unmanaged[Cdecl]<Actor*, System.Single>)&GetHealthPercentage;
 
 			Trampoline.WriteRelativeCall(ScrambledBugs.Offsets.Fixes.ActorValuePercentage.HealthCondition, getHealthPercentage);
@@ -50,9 +60,10 @@ namespace ScrambledBugs.Fixes
 			{
 				return ActorValuePercentage.GetActorValuePercentage(actor, ActorValue.Health);
 			}
+		}
 
-
-
+		static public void GetStaminaPercentage()
+		{
 			var getStaminaPercentage = (delegate* unmanaged[Cdecl]<Actor*, System.Single>)&GetStaminaPercentage;
 
 			Trampoline.WriteRelativeCall(ScrambledBugs.Offsets.Fixes.ActorValuePercentage.StaminaCondition, getStaminaPercentage);
@@ -65,15 +76,11 @@ namespace ScrambledBugs.Fixes
 
 				return ActorValuePercentage.GetActorValuePercentage((Actor*)movementActor.Reference, ActorValue.Stamina);
 			}
-
-
-
-			return true;
 		}
 
 
 
-		static System.Single GetActorValuePercentage(Actor* actor, ActorValue actorValue)
+		static public System.Single GetActorValuePercentage(Actor* actor, ActorValue actorValue)
 		{
 			var permanentValue = actor->ActorValueOwner()->GetPermanentActorValue(actorValue);
 			var temporaryValue = actor->GetActorValueModifier(ActorValueModifier.Temporary, actorValue);
