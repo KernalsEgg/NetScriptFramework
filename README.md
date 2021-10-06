@@ -3,7 +3,7 @@
 * [DNNE](https://github.com/AaronRobinsonMSFT/DNNE)
 
 ## End-User Dependencies
-* [.NET 5.0 Runtime](https://dotnet.microsoft.com/download)
+* [.NET 5.0 Runtime](https://dotnet.microsoft.com/download/dotnet/5.0/runtime)
 * Pick only one: [SSE Engine Fixes SKSE64 Preloader](https://www.nexusmods.com/skyrimspecialedition/mods/17230) or [DLL Plugin Loader](https://www.nexusmods.com/skyrimspecialedition/mods/10546)
 * [Address Library for SKSE Plugins](https://www.nexusmods.com/skyrimspecialedition/mods/32444)
 
