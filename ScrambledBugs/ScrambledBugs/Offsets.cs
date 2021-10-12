@@ -228,6 +228,12 @@ namespace ScrambledBugs
 				static public System.IntPtr InitializeDamage { get; }				= AddressLibrary.GetAddress(15846, 0x5F);
 			}
 
+			static internal class LeveledCharacters
+			{
+				/// <summary>SkyrimSE.exe + 0x1384D0</summary>
+				static public System.IntPtr IsVeryHard { get; } = AddressLibrary.GetAddress(12448, 0xA);
+			}
+
 			static internal class LockpickingExperience
 			{
 				/// <summary>SkyrimSE.exe + 0x897E10</summary>

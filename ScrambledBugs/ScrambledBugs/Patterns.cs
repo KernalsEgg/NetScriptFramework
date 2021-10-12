@@ -811,6 +811,24 @@ namespace ScrambledBugs
 				}
 			}
 
+			static internal class LeveledCharacters
+			{
+				static public System.Boolean IsVeryHard
+				{
+					get
+					{
+						return AddressLibrary.MatchPattern
+						(
+							ScrambledBugs.Offsets.Patches.LeveledCharacters.IsVeryHard,
+							new System.Byte[2]
+							{
+								0x74, 0x0C // jz C
+							}
+						);
+					}
+				}
+			}
+
 			static internal class LockpickingExperience
 			{
 				static public System.Boolean HasNotBeenUnlocked

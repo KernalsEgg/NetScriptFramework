@@ -41,6 +41,7 @@
 			public JsonPatches.JsonApplySpellPerkEntryPoints ApplySpellPerkEntryPoints { get; set; }
 			public System.Boolean? AttachHitEffectArt { get; set; }
 			public System.Boolean? EquipBestAmmo { get; set; }
+			public System.Boolean? LeveledCharacters { get; set; }
 			public System.Boolean? LockpickingExperience { get; set; }
 			public System.Boolean? MultipleHitEffects { get; set; }
 			public System.Boolean? PausedGameHitEffects { get; set; }

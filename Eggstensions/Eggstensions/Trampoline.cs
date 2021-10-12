@@ -80,9 +80,9 @@
 					{
 						throw new System.InsufficientMemoryException($"{nameof(Trampoline)}: Failed to allocate {Trampoline.position:X} bytes of memory.");
 					}
-					catch (System.Exception exception)
+					catch (System.InsufficientMemoryException insufficientMemoryException)
 					{
-						Log.Information($"{exception}");
+						Log.Information($"{insufficientMemoryException}");
 
 						throw;
 					}

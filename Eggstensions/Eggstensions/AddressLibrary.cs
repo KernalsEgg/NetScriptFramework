@@ -37,11 +37,20 @@
 
 		static private System.Collections.Generic.SortedList<System.UInt64, System.IntPtr> Read(System.Int32 versionMajor, System.Int32 versionMinor, System.Int32 versionBuild, System.Int32 versionPrivate)
 		{
-			var fileInfo			= new System.IO.FileInfo(System.IO.Path.Combine(Main.MainModuleDirectoryName, "Data", "SKSE", "Plugins", $"version-{versionMajor}-{versionMinor}-{versionBuild}-{versionPrivate}.bin"));
-			using var fileStream	= fileInfo.OpenRead();
-			using var binaryReader	= new System.IO.BinaryReader(fileStream, new System.Text.UTF8Encoding());
+			try
+			{
+				var fileInfo = new System.IO.FileInfo(System.IO.Path.Combine(Main.MainModuleDirectoryName, "Data", "SKSE", "Plugins", $"version-{versionMajor}-{versionMinor}-{versionBuild}-{versionPrivate}.bin"));
+				using var fileStream = fileInfo.OpenRead();
+				using var binaryReader = new System.IO.BinaryReader(fileStream, new System.Text.UTF8Encoding());
 
-			return AddressLibrary.ReadFile(binaryReader, AddressLibrary.ReadHeader(binaryReader, versionMajor, versionMinor, versionBuild, versionPrivate));
+				return AddressLibrary.ReadFile(binaryReader, AddressLibrary.ReadHeader(binaryReader, versionMajor, versionMinor, versionBuild, versionPrivate));
+			}
+			catch (System.Exception exception) // System.IO.FileNotFoundException
+			{
+				Log.Information($"{exception}");
+
+				throw;
+			}
 		}
 
 		static private System.Collections.Generic.SortedList<System.UInt64, System.IntPtr> ReadFile(System.IO.BinaryReader binaryReader, AddressLibrary.Header header)
@@ -116,9 +125,9 @@
 						{
 							throw new System.InvalidOperationException($"{nameof(AddressLibrary)}: Unexpected {nameof(identifierType)} encountered, {identifierType}.");
 						}
-						catch (System.Exception exception)
+						catch (System.InvalidOperationException invalidOperationException)
 						{
-							Log.Information($"{exception}");
+							Log.Information($"{invalidOperationException}");
 
 							throw;
 						}
@@ -183,9 +192,9 @@
 						{
 							throw new System.InvalidOperationException($"{nameof(AddressLibrary)}: Unexpected {nameof(offsetType)} encountered, {offsetType}.");
 						}
-						catch (System.Exception exception)
+						catch (System.InvalidOperationException invalidOperationException)
 						{
-							Log.Information($"{exception}");
+							Log.Information($"{invalidOperationException}");
 
 							throw;
 						}
@@ -217,9 +226,9 @@
 				{
 					throw new System.NotSupportedException($"{nameof(AddressLibrary)}: Unexpected {nameof(header.Format)} encountered, {header.Format}. Expected 1");
 				}
-				catch (System.Exception exception)
+				catch (System.NotSupportedException notSupportedException)
 				{
-					Log.Information($"{exception}");
+					Log.Information($"{notSupportedException}");
 
 					throw;
 				}
@@ -233,9 +242,9 @@
 				{
 					throw new System.NotSupportedException($"{nameof(AddressLibrary)}: Unexpected {nameof(header.VersionMajor)} encountered, {header.VersionMajor}. Expected {versionMajor}");
 				}
-				catch (System.Exception exception)
+				catch (System.NotSupportedException notSupportedException)
 				{
-					Log.Information($"{exception}");
+					Log.Information($"{notSupportedException}");
 
 					throw;
 				}
@@ -249,9 +258,9 @@
 				{
 					throw new System.NotSupportedException($"{nameof(AddressLibrary)}: Unexpected {nameof(header.VersionMinor)} encountered, {header.VersionMinor}. Expected {versionMinor}");
 				}
-				catch (System.Exception exception)
+				catch (System.NotSupportedException notSupportedException)
 				{
-					Log.Information($"{exception}");
+					Log.Information($"{notSupportedException}");
 
 					throw;
 				}
@@ -265,9 +274,9 @@
 				{
 					throw new System.NotSupportedException($"{nameof(AddressLibrary)}: Unexpected {nameof(header.VersionBuild)} encountered, {header.VersionBuild}. Expected {versionBuild}");
 				}
-				catch (System.Exception exception)
+				catch (System.NotSupportedException notSupportedException)
 				{
-					Log.Information($"{exception}");
+					Log.Information($"{notSupportedException}");
 
 					throw;
 				}
@@ -281,9 +290,9 @@
 				{
 					throw new System.NotSupportedException($"{nameof(AddressLibrary)}: Unexpected {nameof(header.VersionPrivate)} encountered, {header.VersionPrivate}. Expected {versionPrivate}");
 				}
-				catch (System.Exception exception)
+				catch (System.NotSupportedException notSupportedException)
 				{
-					Log.Information($"{exception}");
+					Log.Information($"{notSupportedException}");
 
 					throw;
 				}
@@ -298,9 +307,9 @@
 				{
 					throw new System.NotSupportedException($"{nameof(AddressLibrary)}: Unexpected {nameof(header.Name)} encountered, {header.Name}. Expected {Main.MainModuleName}");
 				}
-				catch (System.Exception exception)
+				catch (System.NotSupportedException notSupportedException)
 				{
-					Log.Information($"{exception}");
+					Log.Information($"{notSupportedException}");
 
 					throw;
 				}
